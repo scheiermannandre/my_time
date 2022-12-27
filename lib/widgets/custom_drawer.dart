@@ -7,6 +7,31 @@ class CustomDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Drawer();
+    return Drawer(
+      child: ListView(
+        // Important: Remove any padding from the ListView.
+        padding: EdgeInsets.zero,
+        children: [
+          const SizedBox(
+            height: 64.0,
+            child: DrawerHeader(
+              decoration: BoxDecoration(),
+              child: Text(""),
+            ),
+          ),
+          ListTile(
+            trailing: const Icon(
+              Icons.settings,
+              color: Colors.black,
+            ),
+            title: const Text(
+              "Settings",
+              style: TextStyle(color: Colors.black),
+            ),
+            onTap: () async {},
+          ),
+        ],
+      ),
+    );
   }
 }
