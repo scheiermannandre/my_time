@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:my_time/global/globals.dart';
 import 'package:my_time/widgets/project_tile.dart';
 
 class HomePage extends StatefulWidget {
@@ -49,20 +51,43 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     });
   }
 
+  Widget padding() {
+    return const Padding(
+      padding: EdgeInsets.only(top: 15),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    LinearGradient _gradient = const LinearGradient(
+        colors: [
+          GlobalProperties.SecondaryColor,
+          GlobalProperties.SecondaryColor
+        ],
+        begin: FractionalOffset(0.0, 0.0),
+        end: FractionalOffset(0, 1),
+        //stops: [0.0, 1.0],
+        tileMode: TileMode.clamp);
     return Scaffold(
+      //gradient: _gradient,
+      backgroundColor: GlobalProperties.SecondaryColor,
       appBar: AppBar(
-        title: const Text("My Projects"),
+        backgroundColor: GlobalProperties.PrimaryColor,
+        title: const Text(
+          "My Projects",
+          style: TextStyle(color: GlobalProperties.TextAndIconColor),
+        ),
         actions: [
           IconButton(
             icon: AnimatedIcon(
               icon: AnimatedIcons.menu_close,
               progress: _animationController,
+              color: GlobalProperties.TextAndIconColor,
             ),
             onPressed: () {
               animateHamburger();
               showModalBottomSheet(
+                backgroundColor: GlobalProperties.SecondaryColor,
                 transitionAnimationController: controller,
                 isScrollControlled: true,
                 shape: const RoundedRectangleBorder(
@@ -86,7 +111,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                             "Settings",
                             style: TextStyle(color: Colors.black),
                           ),
-                          onTap: () async {},
+                          onTap: () {
+                           GoRouter.of(context).go("/settings");
+                          },
                         ),
                       ],
                     )),
@@ -103,13 +130,40 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         child: Align(
           alignment: Alignment.topCenter,
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+              padding(),
               ProjectTile(title: "Project 1"),
-              ProjectTile(title: "Project 2"), ProjectTile(title: "Project 3"),
-              ProjectTile(title: "Project 4"), ProjectTile(title: "Project 5"),
-              ProjectTile(title: "Project 6"), ProjectTile(title: "Project 7"),
+              padding(),
+
+              ProjectTile(title: "Project 2"),
+              padding(),
+
+              ProjectTile(title: "Project 3"),
+              padding(),
+
+              ProjectTile(title: "Project 4"),
+              padding(),
+
+              ProjectTile(title: "Project 5"),
+              padding(),
+
+              ProjectTile(title: "Project 6"),
+              padding(),
+
+              ProjectTile(title: "Project 7"),
+              padding(),
+              ProjectTile(title: "Project 7"),
+              padding(),
+              ProjectTile(title: "Project 7"),
+              padding(),
+              ProjectTile(title: "Project 7"),
+              padding(),
+              ProjectTile(title: "Project 7"),
+              padding(),
+              ProjectTile(title: "Project 7"),
+              padding(),
 
               // showStartTime
               //     ? SizedBox(width: 200, child: Text("Start: $startTime"))
@@ -147,6 +201,39 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           ),
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: GlobalProperties.PrimaryColor,
+        onPressed: () {},
+        child: const Icon(
+          Icons.add,
+          color: GlobalProperties.TextAndIconColor,
+        ),
+      ),
+    );
+  }
+}
+
+class CustomScaffold extends StatelessWidget {
+  CustomScaffold(
+      {this.body,
+      this.gradient,
+      this.floatingActionButton,
+      this.appBar,
+      this.backgroundColor}); // and maybe other Scaffold properties
+
+  late Widget? body;
+  late Color? backgroundColor;
+  late AppBar? appBar;
+  late Widget? floatingActionButton;
+  late LinearGradient? gradient;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: appBar,
+      body:
+          Container(decoration: BoxDecoration(gradient: gradient), child: body),
+      floatingActionButton: floatingActionButton,
     );
   }
 }
