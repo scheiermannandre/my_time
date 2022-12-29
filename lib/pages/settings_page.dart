@@ -3,6 +3,7 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:go_router/go_router.dart';
 import 'package:my_time/global/globals.dart';
+import 'package:my_time/widgets/custom_flexible_spacebar.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -33,34 +34,44 @@ class _SettingsPageState extends State<SettingsPage>
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
-      backgroundColor: GlobalProperties.SecondaryColor,
+      backgroundColor: GlobalProperties.BackgroundColor,
       body: CustomScrollView(
         slivers: <Widget>[
           SliverAppBar(
-            leading: IconButton(
-                onPressed: () {
-                  GoRouter.of(context).pop();
-                },
-                icon: const Icon(
-                  Icons.arrow_back,
-                  color: GlobalProperties.TextAndIconColor,
-                )),
-            backgroundColor: GlobalProperties.PrimaryColor,
-            expandedHeight: 150.0,
-            flexibleSpace: const FlexibleSpaceBar(
-              title: Text(
-                'Settings',
-                style: TextStyle(color: GlobalProperties.TextAndIconColor),
-              ),
-            ),
-          ),
+              leading: IconButton(
+                  onPressed: () {
+                    GoRouter.of(context).pop();
+                  },
+                  icon: const Icon(
+                    Icons.arrow_back,
+                    color: GlobalProperties.TextAndIconColor,
+                  )),
+              backgroundColor: GlobalProperties.SecondaryAccentColor,
+              // automaticallyImplyLeading: true,
+              // leading: Icon(Icons.arrow_back),
+              expandedHeight: 150,
+              floating: false,
+              pinned: true,
+              flexibleSpace: CustomFlexibleSpaceBar(
+                titlePaddingTween: EdgeInsetsTween(
+                    begin: const EdgeInsets.only(left: 16.0, bottom: 16),
+                    end: const EdgeInsets.only(left: 55.0, bottom: 16)),
+                collapseMode: CollapseMode.pin,
+                centerTitle: false,
+                title: const Text(
+                  'Settings',
+                  style: TextStyle(color: GlobalProperties.TextAndIconColor),
+                ),
+                //background: Placeholder(),
+                // foreground: ,
+              )),
           SliverList(
             delegate: SliverChildBuilderDelegate(
               (_, int index) {
                 return ListTile(
                   onTap: () {
                     showModalBottomSheet(
-                      backgroundColor: GlobalProperties.SecondaryColor,
+                      backgroundColor: GlobalProperties.BackgroundColor,
                       transitionAnimationController: controller,
                       isScrollControlled: true,
                       shape: const RoundedRectangleBorder(
@@ -73,6 +84,18 @@ class _SettingsPageState extends State<SettingsPage>
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
                             children: [
+                              Container(
+                                height: 5,
+                                width: 40,
+                                decoration: BoxDecoration(
+                                    color: GlobalProperties.DragIndicatorColor,
+                                    border: Border.all(
+                                      color:
+                                          GlobalProperties.DragIndicatorColor,
+                                    ),
+                                    borderRadius: const BorderRadius.all(
+                                        Radius.circular(20))),
+                              ),
                               Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
@@ -82,7 +105,8 @@ class _SettingsPageState extends State<SettingsPage>
                                     children: [
                                       Container(
                                         decoration: BoxDecoration(
-                                          color: GlobalProperties.PrimaryColor,
+                                          color: GlobalProperties
+                                              .PrimaryAccentColor,
                                           border: Border.all(
                                               color: GlobalProperties
                                                   .TextAndIconColor),
@@ -92,8 +116,8 @@ class _SettingsPageState extends State<SettingsPage>
                                       ),
                                       Container(
                                         decoration: BoxDecoration(
-                                          color:
-                                              GlobalProperties.SecondaryColor,
+                                          color: GlobalProperties
+                                              .SecondaryAccentColor,
                                           border: Border.all(
                                               color: GlobalProperties
                                                   .TextAndIconColor),
