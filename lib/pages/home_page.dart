@@ -4,6 +4,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:my_time/global/globals.dart';
+import 'package:my_time/logic/project.dart';
 import 'package:my_time/widgets/custom_flexible_spacebar.dart';
 import 'package:my_time/widgets/project_tile.dart';
 
@@ -18,8 +19,9 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
-  late AnimationController controller;
-  late AnimationController _animationController;
+  List<Project> projects = [];
+  late AnimationController bottomSheetController;
+  late AnimationController hamburgerClosedAnimationController;
   bool isPlaying = false;
   bool showStartTime = false;
   DateTime startTime = DateTime(0);
@@ -33,10 +35,10 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   @override
   initState() {
     super.initState();
-    controller = BottomSheet.createAnimationController(this);
-    controller.duration = const Duration(milliseconds: 600);
-    controller.drive(CurveTween(curve: Curves.easeIn));
-    _animationController = AnimationController(
+    bottomSheetController = BottomSheet.createAnimationController(this);
+    bottomSheetController.duration = const Duration(milliseconds: 600);
+    bottomSheetController.drive(CurveTween(curve: Curves.easeIn));
+    hamburgerClosedAnimationController = AnimationController(
         vsync: this,
         duration: const Duration(milliseconds: 600),
         reverseDuration: const Duration(milliseconds: 300));
@@ -44,8 +46,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
   @override
   void dispose() {
-    controller.dispose();
-    _animationController.dispose();
+    bottomSheetController.dispose();
+    hamburgerClosedAnimationController.dispose();
     super.dispose();
   }
 
@@ -53,8 +55,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     setState(() {
       isPlaying = !isPlaying;
       isPlaying
-          ? _animationController.forward()
-          : _animationController.reverse();
+          ? hamburgerClosedAnimationController.forward()
+          : hamburgerClosedAnimationController.reverse();
     });
   }
 
@@ -64,6 +66,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     );
   }
 
+  int index = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -75,14 +78,14 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 IconButton(
                   icon: AnimatedIcon(
                     icon: AnimatedIcons.menu_close,
-                    progress: _animationController,
+                    progress: hamburgerClosedAnimationController,
                     color: GlobalProperties.TextAndIconColor,
                   ),
                   onPressed: () {
                     animateHamburger();
                     showModalBottomSheet(
                       backgroundColor: GlobalProperties.PrimaryAccentColor,
-                      transitionAnimationController: controller,
+                      transitionAnimationController: bottomSheetController,
                       isScrollControlled: true,
                       shape: const RoundedRectangleBorder(
                           borderRadius:
@@ -102,7 +105,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                 decoration: BoxDecoration(
                                     color: GlobalProperties.DragIndicatorColor,
                                     border: Border.all(
-                                    color: GlobalProperties.DragIndicatorColor,
+                                      color:
+                                          GlobalProperties.DragIndicatorColor,
                                     ),
                                     borderRadius: const BorderRadius.all(
                                         Radius.circular(20))),
@@ -152,78 +156,10 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           SliverList(
             delegate: SliverChildBuilderDelegate(
               (_, int index) {
-                return Align(
-                  alignment: Alignment.topCenter,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      padding(),
-                      ProjectTile(title: "Project 1"),
-                      padding(),
-
-                      ProjectTile(title: "Project 2"),
-                      padding(),
-
-                      ProjectTile(title: "Project 3"),
-                      padding(),
-
-                      ProjectTile(title: "Project 4"),
-                      padding(),
-
-                      ProjectTile(title: "Project 5"),
-                      padding(),
-
-                      ProjectTile(title: "Project 6"),
-                      padding(),
-
-                      ProjectTile(title: "Project 7"),
-                      padding(),
-                      ProjectTile(title: "Project 7"),
-                      padding(),
-                      ProjectTile(title: "Project 7"),
-                      padding(),
-                      ProjectTile(title: "Project 7"),
-                      padding(),
-                      ProjectTile(title: "Project 7"),
-                      padding(),
-                      ProjectTile(title: "Project 7"),
-                      padding(),
-
-                      // showStartTime
-                      //     ? SizedBox(width: 200, child: Text("Start: $startTime"))
-                      //     : Container(),
-                      // showEndTime
-                      //     ? SizedBox(width: 200, child: Text("End: $endTime"))
-                      //     : Container(),
-                      // SizedBox(
-                      //   width: 200,
-                      //   child: ElevatedButton(
-                      //     onPressed: () {
-                      //       setState(
-                      //         () {
-                      //           if (!showStartTime && !showEndTime) {
-                      //             showStartTime = true;
-                      //             startTime = DateTime.now().toUtc();
-                      //             btnText = btnStringEnd;
-                      //           } else if (showStartTime && !showEndTime) {
-                      //             showEndTime = true;
-                      //             endTime = DateTime.now().toUtc();
-                      //             btnText = btnStringSave;
-                      //           } else {
-                      //             showStartTime = false;
-                      //             showEndTime = false;
-                      //             btnText = btnStringStart;
-                      //           }
-                      //         },
-                      //       );
-                      //     },
-                      //     style: ElevatedButton.styleFrom(shape: StadiumBorder()),
-                      //     child: Text(btnText),
-                      //   ),
-                      // )
-                    ],
-                  ),
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: _buildChildren(),
                 );
               },
               childCount: 1,
@@ -231,14 +167,107 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           ),
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: GlobalProperties.SecondaryAccentColor,
-        onPressed: () {},
-        child: const Icon(
-          Icons.add,
-          color: GlobalProperties.TextAndIconColor,
-        ),
+    );
+  }
+
+  List<Widget> _buildChildren() {
+    //
+    // SliverList with Rounded Corners on SliverAppbar
+    // https://stackoverflow.com/a/63251876
+    //
+    //
+    List<Widget> children = [];
+    children.add(padding());
+    children.add(
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          const Text(
+            "Projects",
+            style: TextStyle(fontWeight: FontWeight.w400, fontSize: 36),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              setState(() {
+                index++;
+                projects.add(Project(name: "Project" + index.toString()));
+              });
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: GlobalProperties.SecondaryAccentColor,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(5), // <-- Radius
+              ),
+            ),
+            child: const Text(
+              'New Project',
+              style: TextStyle(color: GlobalProperties.TextAndIconColor),
+            ),
+          ),
+        ],
       ),
     );
+    children.addAll(_buildProjects());
+
+    return children;
+  }
+
+  void _removeProject(String name) {
+    // Project tmp = projects.firstWhere((element) => element.name == name);
+    int index = projects.indexWhere((element) => element.name == name);
+    projects.removeAt(index);
+    // projects.remove(tmp);
+    // projects.clear();
+    //projects.removeWhere((element) => element.name == name);
+    //setState(() {});
+  }
+
+  List<Widget> _buildProjects() {
+    List<Widget> projectTiles = [];
+    for (var element in projects) {
+      projectTiles.add(ProjectTile2(
+        remove: (name) {
+          setState(() {
+            _removeProject(name);
+          });
+        },
+        title: element.name,
+        padding: const EdgeInsets.only(top: 10),
+      ));
+    }
+    return projectTiles;
+
+    // showStartTime
+    //     ? SizedBox(width: 200, child: Text("Start: $startTime"))
+    //     : Container(),
+    // showEndTime
+    //     ? SizedBox(width: 200, child: Text("End: $endTime"))
+    //     : Container(),
+    // SizedBox(
+    //   width: 200,
+    //   child: ElevatedButton(
+    //     onPressed: () {
+    //       setState(
+    //         () {
+    //           if (!showStartTime && !showEndTime) {
+    //             showStartTime = true;
+    //             startTime = DateTime.now().toUtc();
+    //             btnText = btnStringEnd;
+    //           } else if (showStartTime && !showEndTime) {
+    //             showEndTime = true;
+    //             endTime = DateTime.now().toUtc();
+    //             btnText = btnStringSave;
+    //           } else {
+    //             showStartTime = false;
+    //             showEndTime = false;
+    //             btnText = btnStringStart;
+    //           }
+    //         },
+    //       );
+    //     },
+    //     style: ElevatedButton.styleFrom(shape: StadiumBorder()),
+    //     child: Text(btnText),
+    //   ),
+    // )
   }
 }

@@ -14,3 +14,10 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
+
+
+# Animation for Project Deletion. because atm the Deletion causes a jump
+# https://www.youtube.com/watch?v=P-s4m6tfhp0
+
+# Custom animated Icons, where Icons are first made in a different tool 
+# https://fireship.io/lessons/animated-navigation-flutter-flare/
