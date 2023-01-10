@@ -1,29 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:my_time/global/globals.dart';
-import 'package:my_time/main.dart';
+import 'package:my_time/logic/project.dart';
 import 'package:my_time/widgets/shake_widget.dart';
 
-class ProjectTile2 extends StatefulWidget {
+class CustomTile extends StatefulWidget {
+  late Widget widget;
   late String title;
   late Alignment alignment;
   late EdgeInsets padding;
-  late Function(String name) remove;
+  late Function(String title) onProjectDeleted;
 
-  ProjectTile2(
+  CustomTile(
       {super.key,
+      required this.widget,
       required this.title,
-      required this.remove,
+      required this.onProjectDeleted,
       this.alignment = Alignment.center,
       this.padding = const EdgeInsets.fromLTRB(0, 0, 0, 0)});
   bool _isInitialValue = true;
   @override
-  State<ProjectTile2> createState() => _ProjectTile2State();
+  State<CustomTile> createState() => _CustomTileState();
 }
 
-class _ProjectTile2State extends State<ProjectTile2>
-    with TickerProviderStateMixin {
+class _CustomTileState extends State<CustomTile> with TickerProviderStateMixin {
   late AnimationController bottomSheetController;
-  late AnimationController hamburgerClosedAnimationController;
 
   @override
   initState() {
@@ -31,34 +32,20 @@ class _ProjectTile2State extends State<ProjectTile2>
     bottomSheetController = BottomSheet.createAnimationController(this);
     bottomSheetController.duration = const Duration(milliseconds: 600);
     bottomSheetController.drive(CurveTween(curve: Curves.easeIn));
-    hamburgerClosedAnimationController = AnimationController(
-        vsync: this,
-        duration: const Duration(milliseconds: 600),
-        reverseDuration: const Duration(milliseconds: 300));
   }
 
   @override
   void dispose() {
     bottomSheetController.dispose();
-    hamburgerClosedAnimationController.dispose();
     super.dispose();
   }
-
-  // void animateHamburger() {
-  //   setState(() {
-  //     isPlaying = !isPlaying;
-  //     isPlaying
-  //         ? hamburgerClosedAnimationController.forward()
-  //         : hamburgerClosedAnimationController.reverse();
-  //   });
-  // }
 
   @override
   Widget build(BuildContext context) {
     final shakeKey = GlobalKey<ShakeWidgetState>();
     double height = MediaQuery.of(context).size.height * 0.075;
-    double width = MediaQuery.of(context).size.width * 0.925;
-    bool _wasIconShaken = false;
+    //double width = MediaQuery.of(context).size.width * 0.925;
+    bool wasIconShaken = false;
     return Padding(
       padding: widget.padding,
       child: Align(
@@ -69,16 +56,16 @@ class _ProjectTile2State extends State<ProjectTile2>
               child: AnimatedContainer(
                 key: ValueKey(widget.title),
                 onEnd: () {
-                  widget.remove(widget.title);
+                  widget.onProjectDeleted(widget.title);
                 },
                 duration: const Duration(milliseconds: 250),
-                width: width,
+                //width: width,
                 height: widget._isInitialValue ? height : 0,
                 decoration: BoxDecoration(
                   boxShadow: const [
                     BoxShadow(
                       color: GlobalProperties.ShadowColor,
-                      blurRadius: 5.0, // soften the shadow
+                      blurRadius: 1.0, // soften the shadow
                       spreadRadius: 0.0, //extend the shadow
                       offset: Offset(
                         0.0, // Move to right 5  horizontally
@@ -115,17 +102,17 @@ class _ProjectTile2State extends State<ProjectTile2>
                 ? Dismissible(
                     //dismissThresholds: ,
                     onUpdate: (details) {
-                      if (details.progress > 0.1 && !_wasIconShaken) {
-                        _wasIconShaken = true;
+                      if (details.progress > 0.1 && !wasIconShaken) {
+                        wasIconShaken = true;
                         shakeKey.currentState!.shake();
                       }
                       if (details.progress == 0) {
-                        _wasIconShaken = false;
+                        wasIconShaken = false;
                       }
                     },
                     direction: DismissDirection.endToStart,
                     confirmDismiss: (DismissDirection direction) async {
-                      bool result = await showModalBottomSheet(
+                      bool? result = await showModalBottomSheet(
                         backgroundColor: GlobalProperties.PrimaryAccentColor,
                         transitionAnimationController: bottomSheetController,
                         isScrollControlled: true,
@@ -154,7 +141,6 @@ class _ProjectTile2State extends State<ProjectTile2>
                                       borderRadius: const BorderRadius.all(
                                           Radius.circular(20))),
                                 ),
-                                //const Text("Confirm"),
                                 const Padding(
                                     padding: EdgeInsets.fromLTRB(0, 20, 0, 0)),
                                 Text(
@@ -219,33 +205,11 @@ class _ProjectTile2State extends State<ProjectTile2>
                           ),
                         ),
                       );
-                      return result;
-                      return await showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return AlertDialog(
-                            title: const Text("Confirm"),
-                            content: Text(
-                                "Are you sure you wish to delete ${widget.title}"),
-                            actionsAlignment: MainAxisAlignment.center,
-                            actions: <Widget>[
-                              Column(
-                                children: [
-                                  ElevatedButton(
-                                      onPressed: () =>
-                                          Navigator.of(context).pop(true),
-                                      child: const Text("DELETE")),
-                                  ElevatedButton(
-                                    onPressed: () =>
-                                        Navigator.of(context).pop(false),
-                                    child: const Text("CANCEL"),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          );
-                        },
-                      );
+                      if (result == null) {
+                        return false;
+                      } else {
+                        return result;
+                      }
                     },
                     onDismissed: (direction) {
                       setState(() {
@@ -255,48 +219,24 @@ class _ProjectTile2State extends State<ProjectTile2>
                     key: ValueKey(widget.title),
                     child: Center(
                       child: InkWell(
-                        //splashColor: Colors.transparent,
-                        //focusColor: Colors.transparent,
-                        onTap: () {
-                          //GoRouter.of(context).goNamed("/project");
+                        onTap: () async {
+                          Navigator.of(context).pushNamed("/project");
                         },
-
                         child: Container(
-                          height: height,
-                          width: width,
-                          padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-                          alignment: Alignment.centerLeft,
-                          decoration: BoxDecoration(
-                            boxShadow: const [
-                              BoxShadow(
-                                color: GlobalProperties.ShadowColor,
-                                blurRadius: 5.0, // soften the shadow
-                                spreadRadius: 0.0, //extend the shadow
-                                offset: Offset(
-                                  0.0, // Move to right 5  horizontally
-                                  0.0, // Move to bottom 5 Vertically
-                                ),
-                              )
-                            ],
-                            color: GlobalProperties.PrimaryAccentColor,
-                            border: Border.all(color: Colors.transparent),
-                            borderRadius: const BorderRadius.all(
-                              Radius.circular(5),
-                            ),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                widget.title,
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.normal,
-                                    fontSize: 18),
+                            height: height,
+                            //width: width,
+                            padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                            alignment: Alignment.centerLeft,
+                            decoration: BoxDecoration(
+                              color: GlobalProperties.PrimaryAccentColor,
+                              border: Border.all(
+                                color: Colors.transparent,
                               ),
-                              //const Icon(Icons.arrow_forward_ios),
-                            ],
-                          ),
-                        ),
+                              borderRadius: const BorderRadius.all(
+                                Radius.circular(5),
+                              ),
+                            ),
+                            child: widget.widget),
                       ),
                     ),
                   )

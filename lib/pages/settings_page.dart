@@ -40,7 +40,7 @@ class _SettingsPageState extends State<SettingsPage>
           SliverAppBar(
               leading: IconButton(
                   onPressed: () {
-                    GoRouter.of(context).pop();
+                    Navigator.of(context).pop();
                   },
                   icon: const Icon(
                     Icons.arrow_back,

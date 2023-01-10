@@ -6,7 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:my_time/global/globals.dart';
 import 'package:my_time/logic/project.dart';
 import 'package:my_time/widgets/custom_flexible_spacebar.dart';
-import 'package:my_time/widgets/project_tile.dart';
+import 'package:my_time/widgets/custom_tile.dart';
 
 // Hints for the SliverAppbar used in here
 //https://stackoverflow.com/a/64583870
@@ -19,19 +19,15 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
-  List<Project> projects = [];
+  List<Project> projects = [Project(name: "Work")];
+  List<String> groups = [
+    "Work",
+  ];
+
   late AnimationController bottomSheetController;
   late AnimationController hamburgerClosedAnimationController;
   bool isPlaying = false;
-  bool showStartTime = false;
-  DateTime startTime = DateTime(0);
-  bool showEndTime = false;
-  DateTime endTime = DateTime(0);
-  static const String btnStringStart = "Start Time";
-  static const String btnStringEnd = "Stop Time";
-  static const String btnStringSave = "Save Time";
 
-  String btnText = btnStringStart;
   @override
   initState() {
     super.initState();
@@ -62,7 +58,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
   Widget padding() {
     return const Padding(
-      padding: EdgeInsets.only(top: 10),
+      padding: EdgeInsets.only(top: 15),
     );
   }
 
@@ -83,6 +79,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                   ),
                   onPressed: () {
                     animateHamburger();
+
                     showModalBottomSheet(
                       backgroundColor: GlobalProperties.PrimaryAccentColor,
                       transitionAnimationController: bottomSheetController,
@@ -120,8 +117,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                   "Settings",
                                   style: TextStyle(color: Colors.black),
                                 ),
-                                onTap: () {
-                                  GoRouter.of(context).go("/settings");
+                                onTap: () async {
+                                  Navigator.of(context).pushNamed("/settings");
                                 },
                               ),
                             ],
@@ -156,10 +153,13 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           SliverList(
             delegate: SliverChildBuilderDelegate(
               (_, int index) {
-                return Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: _buildChildren(),
+                return Padding(
+                  padding: const EdgeInsets.only(left: 10, right: 10),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: _buildChildren(),
+                  ),
                 );
               },
               childCount: 1,
@@ -179,54 +179,117 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     List<Widget> children = [];
     children.add(padding());
     children.add(
+      const Text(
+        "Projects",
+        style: TextStyle(fontWeight: FontWeight.w400, fontSize: 36),
+      ),
+    );
+    children.add(padding());
+    children.add(
       Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            "Projects",
-            style: TextStyle(fontWeight: FontWeight.w400, fontSize: 36),
-          ),
-          ElevatedButton(
-            onPressed: () {
-              setState(() {
-                index++;
-                projects.add(Project(name: "Project" + index.toString()));
-              });
-            },
-            style: ElevatedButton.styleFrom(
-              backgroundColor: GlobalProperties.SecondaryAccentColor,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(5), // <-- Radius
-              ),
+          Container(
+            width: 75,
+            alignment: Alignment.center,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    shape: CircleBorder(),
+                    padding: EdgeInsets.all(15),
+                    backgroundColor: GlobalProperties
+                        .SecondaryAccentColor, // <-- Button color
+                    foregroundColor:
+                        GlobalProperties.TextAndIconColor, // <-- Splash color
+                  ),
+                  onPressed: () async {
+                    dynamic project = await Navigator.of(context)
+                        .pushNamed("/groups", arguments: groups);
+
+                    setState(() {
+                      if (project != null) {
+                        projects.add(project);
+                      }
+                    });
+                  },
+                  child: const Icon(Icons.category),
+                ),
+                const Padding(padding: EdgeInsets.only(bottom: 10)),
+                const Text(
+                  'New Group',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontWeight: FontWeight.w500,
+                    color: GlobalProperties.TextAndIconColor,
+                  ),
+                ),
+              ],
             ),
-            child: const Text(
-              'New Project',
-              style: TextStyle(color: GlobalProperties.TextAndIconColor),
+          ),
+          Container(
+            width: 75,
+            alignment: Alignment.center,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    shape: CircleBorder(),
+                    padding: EdgeInsets.all(15),
+                    backgroundColor: GlobalProperties
+                        .SecondaryAccentColor, // <-- Button color
+                    foregroundColor:
+                        GlobalProperties.TextAndIconColor, // <-- Splash color
+                  ),
+                  onPressed: () async {
+                    dynamic project = await Navigator.of(context)
+                        .pushNamed("/newproject", arguments: groups);
+
+                    setState(() {
+                      if (project != null) {
+                        projects.add(project);
+                      }
+                    });
+                  },
+                  child: const Icon(Icons.work),
+                ),
+                const Padding(padding: EdgeInsets.only(bottom: 10)),
+                const Text(
+                  'New Project',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontWeight: FontWeight.w500,
+                    color: GlobalProperties.TextAndIconColor,
+                  ),
+                ),
+              ],
             ),
           ),
         ],
       ),
     );
+    children.add(padding());
     children.addAll(_buildProjects());
 
     return children;
   }
 
   void _removeProject(String name) {
-    // Project tmp = projects.firstWhere((element) => element.name == name);
-    int index = projects.indexWhere((element) => element.name == name);
-    projects.removeAt(index);
-    // projects.remove(tmp);
-    // projects.clear();
-    //projects.removeWhere((element) => element.name == name);
-    //setState(() {});
+    projects.removeWhere((element) => element.name == name);
   }
 
   List<Widget> _buildProjects() {
     List<Widget> projectTiles = [];
     for (var element in projects) {
-      projectTiles.add(ProjectTile2(
-        remove: (name) {
+      projectTiles.add(CustomTile(
+        widget: Text(
+          element.name,
+          style: const TextStyle(fontWeight: FontWeight.normal, fontSize: 18),
+        ),
+        onProjectDeleted: (name) {
           setState(() {
             _removeProject(name);
           });

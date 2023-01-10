@@ -4,6 +4,5 @@ class Project {
   String name = "";
   String category = "";
   List<TimeEntry> timeEntries = [];
-
-  Project({required this.name});
+  Project({this.name = ""});
 }

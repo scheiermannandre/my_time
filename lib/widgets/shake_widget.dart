@@ -37,7 +37,9 @@ class ShakeWidgetState extends AnimationControllerState<ShakeWidget> {
   @override
   void initState() {
     super.initState();
+
     animationController.addStatusListener(_updateStatus);
+    animationController.drive(CurveTween(curve: Curves.easeInOutBack));
   }
 
   @override
