@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_time/global/globals.dart';
 import 'package:my_time/routing/route_generator.dart';
 
 void main() {
@@ -19,7 +20,7 @@ class MyApp extends StatelessWidget {
       ),
       onGenerateRoute: RouteGenerator.generateRoute,
       //routerConfig: _router,
-      //home: const HomePage(),
+      //home: const Test(),
     );
   }
 
@@ -44,7 +45,6 @@ class MyApp extends StatelessWidget {
 //   // //   ],
 //   // // );
 }
-
 
 // // import 'package:flutter/material.dart';
 
