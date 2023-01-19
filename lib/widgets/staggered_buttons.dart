@@ -42,18 +42,15 @@ class _StaggeredButtonsState extends State<StaggeredButtons>
     );
     size = TweenSequence<Size>(
       <TweenSequenceItem<Size>>[
-        // Animate from .5 to 1 in the first 40/80th of this animation
         TweenSequenceItem<Size>(
           tween: Tween<Size>(begin: Size(500, 50), end: Size(50.0, 50))
               .chain(CurveTween(curve: Curves.ease)),
           weight: 80.0,
         ),
-        // Maintain still at 1.0 for 20/80th
         TweenSequenceItem<Size>(
           tween: ConstantTween<Size>(Size(50.0, 50)),
           weight: 20.0,
         ),
-        // Animate back from 1 to 0.5 for the last 40/80th
         TweenSequenceItem<Size>(
           tween: Tween<Size>(begin: Size(50.0, 50), end: Size(0, 0))
               .chain(CurveTween(curve: Curves.ease)),
@@ -72,18 +69,15 @@ class _StaggeredButtonsState extends State<StaggeredButtons>
     );
     size2 = TweenSequence<Size>(
       <TweenSequenceItem<Size>>[
-        // Animate from .5 to 1 in the first 40/80th of this animation
         TweenSequenceItem<Size>(
           tween: Tween<Size>(begin: Size(0, 0), end: Size(50, 50))
               .chain(CurveTween(curve: Curves.ease)),
           weight: 40.0,
         ),
-        // Maintain still at 1.0 for 20/80th
         TweenSequenceItem<Size>(
           tween: ConstantTween<Size>(Size(50, 50)),
           weight: 20.0,
         ),
-        // Animate back from 1 to 0.5 for the last 40/80th
         TweenSequenceItem<Size>(
           tween: Tween<Size>(begin: Size(50, 50), end: Size(125, 50))
               .chain(CurveTween(curve: Curves.ease)),
@@ -120,105 +114,78 @@ class _StaggeredButtonsState extends State<StaggeredButtons>
   String btnPauseStr = "Pause";
   String btnResumeStr = "Resume";
   String btnPauseResumeText = "Pause";
-// This function is called each time the controller "ticks" a new frame.
-  // When it runs, all of the animation's values will have been
-  // updated to reflect the controller's current value.
+
+  void onStartPressed() {
+    widget.onStart();
+    widget.controller.forward();
+  }
+
+  void onPauseResumePressed() {
+    setState(() {
+      if (widget.timerIsActive) {
+        btnPauseResumeText = btnResumeStr;
+      } else {
+        btnPauseResumeText = btnPauseStr;
+      }
+    });
+    widget.onPause();
+  }
+
+  void onFinishPressed() {
+    widget.onFinish();
+    widget.controller.reverse();
+  }
+
+  Widget _buildButton(double width, double height, double opacity, String text,
+      Function onPressed) {
+    return SizedBox(
+      width: width,
+      height: height,
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          padding: const EdgeInsets.all(12.5),
+          backgroundColor: GlobalProperties.SecondaryAccentColor,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(5), // <-- Radius
+          ),
+        ),
+        onPressed: () {
+          onPressed();
+        },
+        child: _buildText(opacity, text),
+      ),
+    );
+  }
+
+  Widget _buildText(double opacity, String text) {
+    return Opacity(
+      opacity: opacity,
+      child: Text(
+        text,
+        style: const TextStyle(
+          fontSize: 16,
+          color: GlobalProperties.TextAndIconColor,
+        ),
+        maxLines: 1,
+        overflow: TextOverflow.fade,
+      ),
+    );
+  }
+
   Widget _buildAnimation(BuildContext context, Widget? child) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Container(
-          //alignment: Alignment.center,
-          width: size.value.width,
-          height: size.value.height,
-          child: ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              padding: const EdgeInsets.all(12.5),
-              backgroundColor: GlobalProperties.SecondaryAccentColor,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(5), // <-- Radius
-              ),
-            ),
-            onPressed: () {
-              widget.onStart();
-              widget.controller.forward();
-            },
-            child: Opacity(
-              opacity: opacity.value,
-              child: const Text(
-                "Start",
-                style: TextStyle(
-                    fontSize: 16, color: GlobalProperties.TextAndIconColor),
-                maxLines: 1,
-                overflow: TextOverflow.fade,
-              ),
-            ),
-          ),
-        ),
+        _buildButton(size.value.width, size.value.height, opacity.value,
+            "Start", onStartPressed),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            SizedBox(
-              width: size2.value.width,
-              height: size2.value.height,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  padding: const EdgeInsets.all(12.5),
-                  backgroundColor: GlobalProperties.SecondaryAccentColor,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(5), // <-- Radius
-                  ),
-                ),
-                onPressed: () {
-                  setState(() {
-                    if (widget.timerIsActive) {
-                      btnPauseResumeText = btnResumeStr;
-                    } else {
-                      btnPauseResumeText = btnPauseStr;
-                    }
-                  });
-                  widget.onPause();
-                },
-                child: Opacity(
-                  opacity: opacity1.value,
-                  child: Text(
-                    btnPauseResumeText,
-                    style: TextStyle(
-                        fontSize: 16, color: GlobalProperties.TextAndIconColor),
-                    maxLines: 1,
-                    overflow: TextOverflow.fade,
-                  ),
-                ),
-              ),
-            ),
-            SizedBox(
-              width: size2.value.width,
-              height: size2.value.height,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  padding: const EdgeInsets.all(12.5),
-                  backgroundColor: GlobalProperties.SecondaryAccentColor,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(5), // <-- Radius
-                  ),
-                ),
-                onPressed: () {
-                  widget.onFinish();
-                  widget.controller.reverse();
-                },
-                child: Opacity(
-                  opacity: opacity1.value,
-                  child: const Text(
-                    "Finish",
-                    style: TextStyle(
-                        fontSize: 16, color: GlobalProperties.TextAndIconColor),
-                    maxLines: 1,
-                    overflow: TextOverflow.fade,
-                  ),
-                ),
-              ),
-            ),
+            _buildButton(size2.value.width, size2.value.height, opacity1.value,
+                btnPauseResumeText, onPauseResumePressed),
+            _buildButton(size2.value.width, size2.value.height, opacity1.value,
+                "Finish", onFinishPressed),
           ],
         ),
       ],
