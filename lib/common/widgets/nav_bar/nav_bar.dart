@@ -1,0 +1,92 @@
+import 'package:flutter/material.dart';
+import 'package:my_time/common/widgets/nav_bar/nav_bar_item.dart';
+import 'package:my_time/common/widgets/nav_bar/nav_bar_tile.dart';
+
+class NavBar extends StatefulWidget {
+  final ValueChanged<int>? onTap;
+  final List<CustomNavBarItem> items;
+  final int startIndex;
+  final Color backgroundColor;
+  final Color selectedBackgroundColor;
+  final Color unSelectedBackgroundColor;
+  final Color iconColor;
+  final TextStyle style;
+  final EdgeInsets padding;
+  final MainAxisAlignment mainAxisAlignment;
+
+  const NavBar(
+      {super.key,
+      this.onTap,
+      required this.items,
+      this.startIndex = 0,
+      this.backgroundColor = Colors.white,
+      this.selectedBackgroundColor = Colors.blue,
+      this.unSelectedBackgroundColor = Colors.transparent,
+      this.mainAxisAlignment = MainAxisAlignment.spaceAround,
+      this.iconColor = Colors.black,
+      this.style = const TextStyle(),
+      this.padding = const EdgeInsets.fromLTRB(2.5, 0, 2.5, 0)});
+
+  @override
+  State<NavBar> createState() => _NavBarState();
+}
+
+class _NavBarState extends State<NavBar> {
+  late int currentIndex;
+  List<bool> itemsExtendedState = [];
+  List<NavBarTile> tiles = [];
+  @override
+  void initState() {
+    currentIndex = 0;
+    _initItems();
+    super.initState();
+  }
+
+  void _test(int index) {
+    widget.onTap!(index);
+    setState(() {
+      itemsExtendedState[currentIndex] = false;
+      currentIndex = index;
+      itemsExtendedState[currentIndex] = true;
+    });
+  }
+
+  void _initItems() {
+    for (int i = 0; i < widget.items.length; i++) {
+      itemsExtendedState.add(false);
+    }
+    bool allFalse = !itemsExtendedState.any((element) => element == true);
+    if (allFalse) {
+      itemsExtendedState[widget.startIndex] = true;
+    }
+  }
+
+  Widget _itemBuilder(BuildContext context, int index) {
+    return Padding(
+      padding: widget.padding,
+      child: NavBarTile(
+        selectedBackgroundColor: widget.selectedBackgroundColor,
+        unSelectedBackgroundColor: widget.unSelectedBackgroundColor,
+        item: widget.items[index],
+        onTap: _test,
+        index: index,
+        isExtended: itemsExtendedState[index],
+        style: widget.style,
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: kBottomNavigationBarHeight,
+      color: widget.backgroundColor,
+      child: Row(
+        mainAxisAlignment: widget.mainAxisAlignment,
+        children: List<Widget>.generate(
+                widget.items.length, (index) => _itemBuilder(context, index))
+            .toList(),
+      ),
+    );
+  }
+}
