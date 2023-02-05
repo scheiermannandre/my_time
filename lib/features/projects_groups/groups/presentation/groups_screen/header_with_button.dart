@@ -12,7 +12,7 @@ class HeaderWithButton extends StatelessWidget {
       required this.buttonText,
       this.onButtonPressed});
 
-    @override
+  @override
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -22,7 +22,7 @@ class HeaderWithButton extends StatelessWidget {
         ElevatedButton(
           style: ElevatedButton.styleFrom(
             padding: const EdgeInsets.all(12.5),
-            backgroundColor: GlobalProperties.SecondaryAccentColor,
+            backgroundColor: GlobalProperties.secondaryAccentColor,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(5), // <-- Radius
             ),
@@ -41,15 +41,15 @@ class HeaderWithButton extends StatelessWidget {
             //   }
             // });
           },
-          child: Text(buttonText,
+          child: Text(
+            buttonText,
             style: const TextStyle(
-                fontSize: 16, color: GlobalProperties.TextAndIconColor),
+                fontSize: 16, color: GlobalProperties.textAndIconColor),
           ),
         ),
       ],
     );
   }
-
 }
 
 

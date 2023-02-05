@@ -52,12 +52,12 @@ class _NewProjectScreenState extends State<NewProjectScreen>
           },
           icon: const Icon(
             Icons.arrow_back,
-            color: GlobalProperties.TextAndIconColor,
+            color: GlobalProperties.textAndIconColor,
           ),
         ),
-        backgroundColor: GlobalProperties.BackgroundColor,
+        backgroundColor: GlobalProperties.backgroundColor,
       ),
-      backgroundColor: GlobalProperties.BackgroundColor,
+      backgroundColor: GlobalProperties.backgroundColor,
       body: ResponsiveAlign(
         padding: padding,
         alignment: Alignment.topCenter,

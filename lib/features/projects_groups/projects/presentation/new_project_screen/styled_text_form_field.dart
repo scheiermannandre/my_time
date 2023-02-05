@@ -25,7 +25,7 @@ class StyledTextFormField extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextFormField(
       controller: controller,
-      cursorColor: GlobalProperties.SecondaryAccentColor,
+      cursorColor: GlobalProperties.secondaryAccentColor,
       focusNode: focusNode,
       decoration: InputDecoration(
         suffixIcon: suffixIcon,
@@ -33,16 +33,16 @@ class StyledTextFormField extends StatelessWidget {
         fillColor: Colors.grey[100],
         label: Text(
           label,
-          style: const TextStyle(color: GlobalProperties.SecondaryAccentColor),
+          style: const TextStyle(color: GlobalProperties.secondaryAccentColor),
         ),
         enabledBorder: const OutlineInputBorder(
-          borderSide: BorderSide(color: GlobalProperties.SecondaryAccentColor),
+          borderSide: BorderSide(color: GlobalProperties.secondaryAccentColor),
           borderRadius: BorderRadius.all(
             Radius.circular(5),
           ),
         ),
         focusedBorder: const OutlineInputBorder(
-          borderSide: BorderSide(color: GlobalProperties.SecondaryAccentColor),
+          borderSide: BorderSide(color: GlobalProperties.secondaryAccentColor),
           borderRadius: BorderRadius.all(
             Radius.circular(5),
           ),

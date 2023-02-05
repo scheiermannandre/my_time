@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:my_time/common/dialogs/modal_bottom_sheet.dart';
+import 'package:my_time/common/widgets/appbar/custom_app_bar.dart';
 import 'package:my_time/common/widgets/nav_bar/nav_bar_item.dart';
 import 'package:my_time/common/widgets/responsive_center.dart';
 import 'package:my_time/features/projects_groups/projects/domain/custom_timer.dart';
@@ -21,15 +23,21 @@ class _ProjectScreenState extends State<ProjectScreen>
   late PageController _pageController;
   late int initialPage = 0;
   late AnimationController animationController;
+  late AnimationController sheetController;
+
   late CustomTimer timer;
   @override
   void initState() {
+    super.initState();
     animationController = AnimationController(
         duration: const Duration(milliseconds: 2000),
         reverseDuration: const Duration(milliseconds: 2000),
         vsync: this);
-    super.initState();
+
     _pageController = PageController(initialPage: initialPage);
+    sheetController = AnimationController(
+        duration: const Duration(milliseconds: 350), vsync: this);
+
     timer = CustomTimer(stateCallback: () {
       setState(() {});
     });
@@ -39,6 +47,7 @@ class _ProjectScreenState extends State<ProjectScreen>
   void dispose() {
     _pageController.dispose();
     animationController.dispose();
+    sheetController.dispose();
     super.dispose();
   }
 
@@ -52,30 +61,44 @@ class _ProjectScreenState extends State<ProjectScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: GlobalProperties.BackgroundColor,
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: GlobalProperties.BackgroundColor,
-        automaticallyImplyLeading: true,
-        leading: IconButton(
-          icon: const Icon(
-            Icons.arrow_back,
-            color: GlobalProperties.TextAndIconColor,
+      backgroundColor: GlobalProperties.backgroundColor,
+      appBar: CustomAppBar(
+        title: widget.projectId,
+        actions: [
+          IconButton(
+            onPressed: () async {
+              bool? deletePressed = await openBottomSheet(
+                  context: context,
+                  bottomSheetController: sheetController,
+                  title: "Delete Project ${widget.projectId}?",
+                  message: "All Entries for the Project will be lost!",
+                  confirmBtnText: "Confirm",
+                  onCanceled: () {
+                    Navigator.of(context).pop(false);
+                  },
+                  onConfirmed: () {
+                    Navigator.of(context).pop(true);
+                  });
+
+              if (deletePressed ?? false) {
+                //ToDo
+                //Delete Project
+                print("Deleting Project");
+              }
+            },
+            icon: const Icon(Icons.delete),
           ),
-          onPressed: (() {
-            Navigator.of(context).pop();
-          }),
-        ),
+        ],
       ),
       bottomNavigationBar: NavBar(
         onTap: _onItemTapped,
         startIndex: initialPage,
-        backgroundColor: GlobalProperties.BackgroundColor,
-        selectedBackgroundColor: GlobalProperties.SecondaryAccentColor,
-        unSelectedBackgroundColor: GlobalProperties.BackgroundColor,
+        backgroundColor: GlobalProperties.backgroundColor,
+        selectedBackgroundColor: GlobalProperties.secondaryAccentColor,
+        unSelectedBackgroundColor: GlobalProperties.backgroundColor,
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        iconColor: GlobalProperties.TextAndIconColor,
-        style: const TextStyle(color: GlobalProperties.TextAndIconColor),
+        iconColor: GlobalProperties.textAndIconColor,
+        style: const TextStyle(color: GlobalProperties.textAndIconColor),
         items: [
           CustomNavBarItem(
             iconData: Icons.timer_sharp,

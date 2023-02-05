@@ -11,7 +11,7 @@ Future<dynamic> openBottomSheet({
   required Function onConfirmed,
 }) async {
   return await showModalBottomSheet(
-    backgroundColor: GlobalProperties.PrimaryAccentColor,
+    backgroundColor: GlobalProperties.primaryAccentColor,
     transitionAnimationController: bottomSheetController,
     isScrollControlled: true,
     shape: const RoundedRectangleBorder(
@@ -29,9 +29,9 @@ Future<dynamic> openBottomSheet({
               height: 5,
               width: 40,
               decoration: BoxDecoration(
-                  color: GlobalProperties.DragIndicatorColor,
+                  color: GlobalProperties.dragIndicatorColor,
                   border: Border.all(
-                    color: GlobalProperties.DragIndicatorColor,
+                    color: GlobalProperties.dragIndicatorColor,
                   ),
                   borderRadius: const BorderRadius.all(Radius.circular(20))),
             ),
@@ -59,13 +59,13 @@ Future<dynamic> openBottomSheet({
                     "Cancel",
                     style: TextStyle(
                         fontSize: 16,
-                        color: GlobalProperties.SecondaryAccentColor),
+                        color: GlobalProperties.secondaryAccentColor),
                   ),
                 ),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.fromLTRB(0, 12.5, 0, 12.5),
-                    backgroundColor: GlobalProperties.SecondaryAccentColor,
+                    backgroundColor: GlobalProperties.secondaryAccentColor,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(5), // <-- Radius
                     ),
@@ -74,7 +74,7 @@ Future<dynamic> openBottomSheet({
                   child: Text(
                     confirmBtnText,
                     style: const TextStyle(
-                        fontSize: 16, color: GlobalProperties.TextAndIconColor),
+                        fontSize: 16, color: GlobalProperties.textAndIconColor),
                   ),
                 ),
                 const Padding(padding: EdgeInsets.only(bottom: 15))

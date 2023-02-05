@@ -34,7 +34,7 @@ class _DropDownMenuTextFormFieldState extends State<DropDownMenuTextFormField> {
           decoration: BoxDecoration(
               color: Colors.grey[100],
               border: Border.all(
-                color: GlobalProperties.SecondaryAccentColor,
+                color: GlobalProperties.secondaryAccentColor,
               ),
               borderRadius: const BorderRadius.all(Radius.circular(5))),
           duration: const Duration(milliseconds: 200),

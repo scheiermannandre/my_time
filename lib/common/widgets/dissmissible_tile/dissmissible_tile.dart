@@ -56,9 +56,9 @@ class _DismissibleTileState extends State<DismissibleTile>
             duration: const Duration(milliseconds: 250),
             height: widget._isInitialValue ? height : 0,
             decoration: BoxDecoration(
-              boxShadow: const [
+              boxShadow: [
                 BoxShadow(
-                  color: GlobalProperties.ShadowColor,
+                  color: GlobalProperties.shadowColor,
                   blurRadius: 1.0, // soften the shadow
                   spreadRadius: 0.0, //extend the shadow
                 )
@@ -79,7 +79,7 @@ class _DismissibleTileState extends State<DismissibleTile>
                         shakeDuration: const Duration(milliseconds: 375),
                         child: const Icon(
                           Icons.delete,
-                          color: GlobalProperties.BackgroundColor,
+                          color: GlobalProperties.backgroundColor,
                         ),
                       )
                     : const SizedBox.shrink(),
@@ -131,7 +131,7 @@ class _DismissibleTileState extends State<DismissibleTile>
                         padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
                         alignment: Alignment.centerLeft,
                         decoration: BoxDecoration(
-                          color: GlobalProperties.PrimaryAccentColor,
+                          color: GlobalProperties.primaryAccentColor,
                           border: Border.all(
                             color: Colors.transparent,
                           ),

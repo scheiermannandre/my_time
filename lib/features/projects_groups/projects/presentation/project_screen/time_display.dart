@@ -15,12 +15,12 @@ class TimeDisplay extends StatelessWidget {
       alignment: Alignment.center,
       height: 250,
       decoration: const BoxDecoration(
-          color: GlobalProperties.SecondaryAccentColor, shape: BoxShape.circle),
+          color: GlobalProperties.secondaryAccentColor, shape: BoxShape.circle),
       child: Container(
         alignment: Alignment.center,
         height: 245,
         decoration: const BoxDecoration(
-            color: GlobalProperties.BackgroundColor, shape: BoxShape.circle),
+            color: GlobalProperties.backgroundColor, shape: BoxShape.circle),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

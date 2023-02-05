@@ -27,7 +27,7 @@ class _ScreenSliverAppBarState extends State<ScreenSliverAppBar> {
     return SliverAppBar(
       //leading: widget.leadingIconButton,
       actions: _isLeadingConfigured() ? [widget.leadingIconButton!] : null,
-      backgroundColor: GlobalProperties.SecondaryAccentColor,
+      backgroundColor: GlobalProperties.secondaryAccentColor,
       expandedHeight: 150,
       floating: false,
       pinned: true,
@@ -39,7 +39,7 @@ class _ScreenSliverAppBarState extends State<ScreenSliverAppBar> {
         centerTitle: false,
         title: Text(
           widget.title,
-          style: const TextStyle(color: GlobalProperties.TextAndIconColor),
+          style: const TextStyle(color: GlobalProperties.textAndIconColor),
         ),
         //background: Placeholder(),
         // foreground: ,

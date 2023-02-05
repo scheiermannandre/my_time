@@ -23,10 +23,14 @@ class StandardButton extends StatelessWidget {
       width: width,
       height: height,
       child: ElevatedButton(
-        onPressed: onPressed != null ? () => onPressed!() : null,
+        onPressed: (() {
+          if (onPressed != null) {
+            onPressed!();
+          }
+        }),
         style: ElevatedButton.styleFrom(
           padding: const EdgeInsets.fromLTRB(0, 12.5, 0, 12.5),
-          backgroundColor: GlobalProperties.SecondaryAccentColor,
+          backgroundColor: GlobalProperties.secondaryAccentColor,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(5), // <-- Radius
           ),
@@ -37,9 +41,10 @@ class StandardButton extends StatelessWidget {
                 opacity: opacitiy,
                 child: Text(
                   text,
+                  maxLines: 1,
                   textAlign: TextAlign.center,
                   style: const TextStyle(
-                      fontSize: 16, color: GlobalProperties.TextAndIconColor),
+                      fontSize: 16, color: GlobalProperties.textAndIconColor),
                 ),
               ),
       ),

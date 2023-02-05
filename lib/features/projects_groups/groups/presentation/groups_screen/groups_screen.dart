@@ -41,7 +41,7 @@ class _GroupsScreenState extends State<GroupsScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: GlobalProperties.BackgroundColor,
+      backgroundColor: GlobalProperties.backgroundColor,
       body: CustomScrollView(
         slivers: <Widget>[
           ScreenSliverAppBar(
@@ -91,7 +91,7 @@ class _GroupsScreenState extends State<GroupsScreen>
                                         widget: TextFormField(
                                           controller: controller,
                                           cursorColor: GlobalProperties
-                                              .SecondaryAccentColor,
+                                              .secondaryAccentColor,
                                           decoration: const InputDecoration(
                                             border: InputBorder.none,
                                             contentPadding: EdgeInsets.zero,
@@ -107,8 +107,7 @@ class _GroupsScreenState extends State<GroupsScreen>
                                     )
                                   : const SizedBox.shrink(),
                               ListView.builder(
-                                                            padding: EdgeInsets.zero,
-
+                                padding: EdgeInsets.zero,
                                 physics: const NeverScrollableScrollPhysics(),
                                 shrinkWrap: true,
                                 itemCount: groups.length,

@@ -23,13 +23,13 @@ class RoundedLabeldButton extends StatelessWidget {
         children: [
           CircleAvatar(
             radius: 30,
-            backgroundColor: GlobalProperties.SecondaryAccentColor,
+            backgroundColor: GlobalProperties.secondaryAccentColor,
             child: IconButton(
               onPressed: () {
                 onPressed();
               },
               icon: Icon(icon),
-              color: GlobalProperties.TextAndIconColor,
+              color: GlobalProperties.textAndIconColor,
             ),
           ),
           Padding(
@@ -39,7 +39,7 @@ class RoundedLabeldButton extends StatelessWidget {
               textAlign: TextAlign.center,
               style: const TextStyle(
                 fontWeight: FontWeight.w500,
-                color: GlobalProperties.TextAndIconColor,
+                color: GlobalProperties.textAndIconColor,
               ),
             ),
           ),

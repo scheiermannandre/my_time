@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:my_time/common/widgets/nav_bar/nav_bar_item.dart';
 import 'package:my_time/common/widgets/nav_bar/nav_bar_tile.dart';
+import 'package:my_time/common/widgets/responsive_center.dart';
+import 'package:my_time/constants/breakpoints.dart';
 
 class NavBar extends StatefulWidget {
   final ValueChanged<int>? onTap;
@@ -12,9 +14,9 @@ class NavBar extends StatefulWidget {
   final Color iconColor;
   final TextStyle style;
   final EdgeInsets padding;
-  final MainAxisAlignment mainAxisAlignment;
+  late MainAxisAlignment mainAxisAlignment;
 
-  const NavBar(
+  NavBar(
       {super.key,
       this.onTap,
       required this.items,
@@ -42,7 +44,7 @@ class _NavBarState extends State<NavBar> {
     super.initState();
   }
 
-  void _test(int index) {
+  void _onTap(int index) {
     widget.onTap!(index);
     setState(() {
       itemsExtendedState[currentIndex] = false;
@@ -62,30 +64,39 @@ class _NavBarState extends State<NavBar> {
   }
 
   Widget _itemBuilder(BuildContext context, int index) {
-    return Padding(
-      padding: widget.padding,
-      child: NavBarTile(
-        selectedBackgroundColor: widget.selectedBackgroundColor,
-        unSelectedBackgroundColor: widget.unSelectedBackgroundColor,
-        item: widget.items[index],
-        onTap: _test,
-        index: index,
-        isExtended: itemsExtendedState[index],
-        style: widget.style,
+    var maxItemWidth = Breakpoint.mobile;
+    return SizedBox(
+      width: maxItemWidth / widget.items.length,
+      child: Padding(
+        padding: widget.padding,
+        child: NavBarTile(
+          selectedBackgroundColor: widget.selectedBackgroundColor,
+          unSelectedBackgroundColor: widget.unSelectedBackgroundColor,
+          item: widget.items[index],
+          onTap: _onTap,
+          index: index,
+          isExtended: itemsExtendedState[index],
+          style: widget.style,
+        ),
       ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
+    widget.mainAxisAlignment = MainAxisAlignment.spaceBetween;
     return Container(
       height: kBottomNavigationBarHeight,
       color: widget.backgroundColor,
-      child: Row(
-        mainAxisAlignment: widget.mainAxisAlignment,
-        children: List<Widget>.generate(
-                widget.items.length, (index) => _itemBuilder(context, index))
-            .toList(),
+      child: ResponsiveAlign(
+        maxContentWidth: Breakpoint.desktop,
+        padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
+        child: Row(
+          mainAxisAlignment: widget.mainAxisAlignment,
+          children: List<Widget>.generate(
+                  widget.items.length, (index) => _itemBuilder(context, index))
+              .toList(),
+        ),
       ),
     );
   }
