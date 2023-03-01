@@ -6,7 +6,7 @@ import 'package:my_time/common/widgets/appbar/custom_app_bar.dart';
 import 'package:my_time/common/widgets/async_value_widget.dart';
 import 'package:my_time/common/widgets/responsive_center.dart';
 import 'package:my_time/features/projects_groups/data/projects_repository.dart';
-import 'package:my_time/features/projects_groups/presentation/0_groups_list_screen/groups_list_screen.dart';
+import 'package:my_time/common/widgets/custom_list_tile.dart';
 import 'package:my_time/global/globals.dart';
 import 'package:my_time/router/app_route.dart';
 
