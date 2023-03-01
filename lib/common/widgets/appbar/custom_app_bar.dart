@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:my_time/common/widgets/responsive_center.dart';
 import 'package:my_time/global/globals.dart';
+import 'package:my_time/router/app_route.dart';
 
 class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
   final String title;
@@ -50,6 +52,14 @@ class _CustomAppBarState extends State<CustomAppBar> {
         child: widget.actions![index]);
   }
 
+  void pop() {
+    if (context.canPop()) {
+      context.pop();
+    } else {
+      context.pushReplacementNamed(AppRoute.home);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return AnimatedContainer(
@@ -78,10 +88,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     IconButton(
-                      onPressed: () {
-                        //context.pop();
-                        Navigator.of(context).pop();
-                      },
+                      onPressed: () => pop(),
                       icon: const Icon(Icons.arrow_back),
                     ),
                     Row(

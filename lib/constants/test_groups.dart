@@ -1,5 +1,5 @@
-import 'package:my_time/features/projects_groups/groups/domain/group.dart';
-import 'package:my_time/features/projects_groups/projects/domain/project.dart';
+import 'package:my_time/features/projects_groups/domain/group.dart';
+import 'package:my_time/features/projects_groups/domain/project.dart';
 
 /// Test products to be used until a data source is implemented
 final kTestGroups = [

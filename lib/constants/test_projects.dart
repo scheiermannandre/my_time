@@ -1,4 +1,4 @@
-import 'package:my_time/features/projects_groups/projects/domain/project.dart';
+import 'package:my_time/features/projects_groups/domain/project.dart';
 
 /// Test products to be used until a data source is implemented
 final kTestProjects = [
@@ -17,3 +17,5 @@ final kTestProjects = [
   Project(name: "Project 13"),
   Project(name: "Project 14"),
 ];
+
+
