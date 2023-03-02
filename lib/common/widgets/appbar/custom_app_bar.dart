@@ -8,7 +8,6 @@ class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
   final String title;
   final ScrollController? controller;
   final List<IconButton>? actions;
-  //const CustomAppBar({super.key, this.controller, required this.title});
   CustomAppBar({super.key, required this.title, this.controller, this.actions})
       : preferredSize = const Size.fromHeight(kToolbarHeight * 2);
 

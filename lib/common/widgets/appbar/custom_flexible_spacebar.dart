@@ -21,8 +21,7 @@ class CustomFlexibleSpaceBar extends StatefulWidget {
     this.titlePaddingTween,
     this.collapseMode = CollapseMode.parallax,
     this.stretchModes = const <StretchMode>[StretchMode.zoomBackground],
-  })  : assert(collapseMode != null),
-        super(key: key);
+  }) : super(key: key);
 
   /// The primary contents of the flexible space bar when expanded.
   ///
@@ -74,7 +73,6 @@ class _CustomFlexibleSpaceBarState extends State<CustomFlexibleSpaceBar> {
     if (widget.centerTitle != null) {
       return widget.centerTitle;
     }
-    assert(theme.platform != null);
     switch (theme.platform) {
       case TargetPlatform.android:
       case TargetPlatform.fuchsia:
@@ -90,7 +88,6 @@ class _CustomFlexibleSpaceBarState extends State<CustomFlexibleSpaceBar> {
   Alignment _getTitleAlignment(bool effectiveCenterTitle) {
     if (effectiveCenterTitle) return Alignment.bottomCenter;
     final TextDirection textDirection = Directionality.of(context);
-    assert(textDirection != null);
     switch (textDirection) {
       case TextDirection.rtl:
         return Alignment.bottomRight;
@@ -164,15 +161,19 @@ class _CustomFlexibleSpaceBarState extends State<CustomFlexibleSpaceBar> {
             constraints.maxHeight > settings.maxExtent) {
           final double blurAmount =
               (constraints.maxHeight - settings.maxExtent) / 10;
-          children.add(Positioned.fill(
+          children.add(
+            Positioned.fill(
               child: BackdropFilter(
-                  child: Container(
-                    color: Colors.transparent,
-                  ),
-                  filter: ImageFilter.blur(
-                    sigmaX: blurAmount,
-                    sigmaY: blurAmount,
-                  ))));
+                filter: ImageFilter.blur(
+                  sigmaX: blurAmount,
+                  sigmaY: blurAmount,
+                ),
+                child: Container(
+                  color: Colors.transparent,
+                ),
+              ),
+            ),
+          );
         }
       }
 
