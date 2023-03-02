@@ -4,25 +4,29 @@ import 'package:my_time/constants/breakpoints.dart';
 import 'package:my_time/features/projects_groups/presentation/5_time_entry_form/themed_picker.dart';
 import 'package:my_time/global/globals.dart';
 
-class LabeledDateAndTimeFormField extends StatelessWidget {
+class LabeledDateFormField extends StatelessWidget {
   final TextEditingController dateController;
-  final TextEditingController timeController;
 
   final String label;
   final String helpTextDate;
   final String helpTextTime;
   final String? Function(DateTime date) validateDate;
-  final String? Function(TimeOfDay time) validateTime;
 
-  const LabeledDateAndTimeFormField(
+  const LabeledDateFormField(
       {super.key,
       required this.dateController,
       required this.label,
       required this.helpTextDate,
       required this.helpTextTime,
-      required this.timeController,
-      required this.validateDate,
-      required this.validateTime});
+      required this.validateDate});
+
+  void showDatePicker(BuildContext context) async {
+    DateTime? date = await showThemedDatePicker(context: context);
+    if (date == null) {
+      return;
+    }
+    validateDate(date);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,14 +47,7 @@ class LabeledDateAndTimeFormField extends StatelessWidget {
               Expanded(
                 child: TextFormField(
                   controller: dateController,
-                  onTap: () async {
-                    DateTime? date =
-                        await showThemedDatePicker(context: context);
-                    if (date == null) {
-                      return;
-                    }
-                    validateDate(date);
-                  },
+                  onTap: () => showDatePicker(context),
                   cursorColor: GlobalProperties.shadowColor,
                   decoration: const InputDecoration(
                     enabledBorder: OutlineInputBorder(
@@ -64,13 +61,6 @@ class LabeledDateAndTimeFormField extends StatelessWidget {
                   ),
                 ),
               ),
-              // const Padding(padding: EdgeInsets.only(left: 8, right: 8)),
-              // TimePickField(
-              //   validateTime: (time) => validateTime(time),
-              //   helpTextTime: helpTextTime,
-              //   timeController: timeController,
-              //   maxContentWidth: 100,
-              // ),
             ],
           ),
         ],

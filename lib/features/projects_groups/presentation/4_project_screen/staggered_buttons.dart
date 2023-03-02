@@ -28,7 +28,10 @@ class _StaggeredButtonsState extends State<StaggeredButtons>
   late Animation<double> opacityStartBtn;
   late Animation<Size> sizePauseFinishBtn;
   late Animation<double> opacityPauseFinishBtn;
-
+  String btnPauseStr = "Pause";
+  String btnResumeStr = "Resume";
+  String btnPauseResumeText = "Pause";
+  
   @override
   void initState() {
     super.initState();
@@ -46,7 +49,7 @@ class _StaggeredButtonsState extends State<StaggeredButtons>
       <TweenSequenceItem<Size>>[
         TweenSequenceItem<Size>(
           tween: Tween<Size>(
-                  begin:  Size(Breakpoint.mobile, gapH52.height!),
+                  begin: Size(Breakpoint.mobile, gapH52.height!),
                   end: Size(gapW52.width!, gapH52.height!))
               .chain(CurveTween(curve: Curves.ease)),
           weight: 80.0,
@@ -56,9 +59,10 @@ class _StaggeredButtonsState extends State<StaggeredButtons>
           weight: 20.0,
         ),
         TweenSequenceItem<Size>(
-          tween:
-              Tween<Size>(begin: Size(gapW52.width!, gapH52.height!), end: const Size(0, 0))
-                  .chain(CurveTween(curve: Curves.ease)),
+          tween: Tween<Size>(
+                  begin: Size(gapW52.width!, gapH52.height!),
+                  end: const Size(0, 0))
+              .chain(CurveTween(curve: Curves.ease)),
           weight: 40.0,
         ),
       ],
@@ -75,9 +79,10 @@ class _StaggeredButtonsState extends State<StaggeredButtons>
     sizePauseFinishBtn = TweenSequence<Size>(
       <TweenSequenceItem<Size>>[
         TweenSequenceItem<Size>(
-          tween:
-              Tween<Size>(begin: const Size(0, 0), end: Size(gapW52.width!, gapH52.height!))
-                  .chain(CurveTween(curve: Curves.ease)),
+          tween: Tween<Size>(
+                  begin: const Size(0, 0),
+                  end: Size(gapW52.width!, gapH52.height!))
+              .chain(CurveTween(curve: Curves.ease)),
           weight: 40.0,
         ),
         TweenSequenceItem<Size>(
@@ -87,7 +92,8 @@ class _StaggeredButtonsState extends State<StaggeredButtons>
         TweenSequenceItem<Size>(
           tween: Tween<Size>(
                   begin: const Size(52, 52),
-                  end: Size((Breakpoint.mobile - gapW16.width!) / 2, gapH52.height!))
+                  end: Size(
+                      (Breakpoint.mobile - gapW16.width!) / 2, gapH52.height!))
               .chain(CurveTween(curve: Curves.ease)),
           weight: 80.0,
         ),
@@ -118,10 +124,6 @@ class _StaggeredButtonsState extends State<StaggeredButtons>
   void dispose() {
     super.dispose();
   }
-
-  String btnPauseStr = "Pause";
-  String btnResumeStr = "Resume";
-  String btnPauseResumeText = "Pause";
 
   void onStartPressed() {
     widget.onStart();

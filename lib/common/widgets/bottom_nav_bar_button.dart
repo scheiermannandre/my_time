@@ -6,7 +6,9 @@ import 'package:my_time/global/globals.dart';
 class NavBarButton extends StatelessWidget {
   final double btnWidth = Breakpoint.mobile;
   final Function() onBtnTap;
-  const NavBarButton({super.key, required this.onBtnTap});
+  final String btnText;
+  const NavBarButton(
+      {super.key, required this.onBtnTap, required this.btnText});
 
   @override
   Widget build(BuildContext context) {
@@ -27,11 +29,11 @@ class NavBarButton extends StatelessWidget {
                 borderRadius: BorderRadius.circular(5), // <-- Radius
               ),
             ),
-            child: const Text(
-              "Save",
+            child: Text(
+              btnText,
               maxLines: 1,
               textAlign: TextAlign.center,
-              style: TextStyle(
+              style: const TextStyle(
                   fontSize: 16, color: GlobalProperties.textAndIconColor),
             ),
           ),

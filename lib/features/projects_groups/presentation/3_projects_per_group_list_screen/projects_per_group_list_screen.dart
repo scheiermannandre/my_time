@@ -7,6 +7,7 @@ import 'package:my_time/common/widgets/async_value_widget.dart';
 import 'package:my_time/common/widgets/responsive_center.dart';
 import 'package:my_time/features/projects_groups/data/projects_repository.dart';
 import 'package:my_time/common/widgets/custom_list_tile.dart';
+import 'package:my_time/features/projects_groups/domain/project.dart';
 import 'package:my_time/global/globals.dart';
 import 'package:my_time/router/app_route.dart';
 
@@ -23,6 +24,7 @@ class _ProjectsPerGroupListScreenState extends State<ProjectsPerGroupListScreen>
     with TickerProviderStateMixin {
   ScrollController scrollController = ScrollController();
   late AnimationController sheetController;
+  bool showElevation = false;
 
   @override
   void initState() {
@@ -39,8 +41,6 @@ class _ProjectsPerGroupListScreenState extends State<ProjectsPerGroupListScreen>
     super.dispose();
   }
 
-  bool projectButtonSelected = true;
-  bool showElevation = false;
   void changeElevation() {
     setState(() {
       if (scrollController.offset > 0) {
@@ -49,6 +49,39 @@ class _ProjectsPerGroupListScreenState extends State<ProjectsPerGroupListScreen>
         showElevation = false;
       }
     });
+  }
+
+  Future<void> showDeleteBottomSheet(BuildContext context) async {
+    {
+      bool? deletePressed = await openBottomSheet(
+          context: context,
+          bottomSheetController: sheetController,
+          title: "Delete Group ${widget.groupId}?",
+          message: "All Projects and Entries for the whole Group will be lost!",
+          confirmBtnText: "Confirm",
+          onCanceled: () {
+            Navigator.of(context).pop(false);
+          },
+          onConfirmed: () {
+            Navigator.of(context).pop(true);
+          });
+
+      if (deletePressed ?? false) {
+        //ToDo
+        //Delete Group
+      }
+    }
+  }
+
+  void pushNamedAddProject(BuildContext context) {
+    return context
+        .pushNamed(AppRoute.addProject, queryParams: {'gid': widget.groupId});
+  }
+
+  void pushNamedProject(
+      BuildContext context, List<Project> projects, int index) {
+    return context
+        .pushNamed(AppRoute.project, params: {'pid': projects[index].name});
   }
 
   @override
@@ -60,33 +93,11 @@ class _ProjectsPerGroupListScreenState extends State<ProjectsPerGroupListScreen>
         controller: scrollController,
         actions: [
           IconButton(
-            onPressed: () async {
-              bool? deletePressed = await openBottomSheet(
-                  context: context,
-                  bottomSheetController: sheetController,
-                  title: "Delete Group ${widget.groupId}?",
-                  message:
-                      "All Projects and Entries for the whole Group will be lost!",
-                  confirmBtnText: "Confirm",
-                  onCanceled: () {
-                    Navigator.of(context).pop(false);
-                  },
-                  onConfirmed: () {
-                    Navigator.of(context).pop(true);
-                  });
-
-              if (deletePressed ?? false) {
-                //ToDo
-                //Delete Group
-              }
-            },
+            onPressed: () => showDeleteBottomSheet(context),
             icon: const Icon(Icons.delete),
           ),
           IconButton(
-            onPressed: () {
-              context.pushNamed(AppRoute.addProject,
-                  queryParams: {'gid': widget.groupId});
-            },
+            onPressed: () => pushNamedAddProject(context),
             icon: const Icon(Icons.add),
           ),
         ],
@@ -118,10 +129,7 @@ class _ProjectsPerGroupListScreenState extends State<ProjectsPerGroupListScreen>
                             child: CustomListTile(
                               title: projects[index].name,
                               onTap: () =>
-                                  context.pushNamed(AppRoute.project, params: {
-                                //'gid': widget.groupId,
-                                'pid': projects[index].name
-                              }),
+                                  pushNamedProject(context, projects, index),
                             ),
                           );
                         },

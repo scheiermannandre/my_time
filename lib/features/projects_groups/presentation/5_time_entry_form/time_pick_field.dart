@@ -20,6 +20,25 @@ class TimePickField extends StatelessWidget {
       required this.validateTime,
       this.validateField});
 
+  void showTimePicker(BuildContext context) async {
+    TimeOfDay? time = await showThemedTimePicker(
+      context: context,
+      helpText: helpTextTime,
+      initialTime: const TimeOfDay(hour: 09, minute: 00),
+    );
+    if (time == null) {
+      return;
+    }
+    validateTime(time);
+  }
+
+  String? validate() {
+    if (validateField != null) {
+      return validateField!();
+    }
+    return null;
+  }
+
   @override
   Widget build(BuildContext context) {
     return ResponsiveAlign(
@@ -28,24 +47,9 @@ class TimePickField extends StatelessWidget {
           ? maxContentWidth as double
           : Breakpoint.desktop,
       child: TextFormField(
-        validator: (value) {
-          if (validateField != null) {
-            return validateField!();
-          }
-          return null;
-        },
+        validator: (value) => validate(),
         readOnly: true,
-        onTap: () async {
-          TimeOfDay? time = await showThemedTimePicker(
-            context: context,
-            helpText: helpTextTime,
-            initialTime: const TimeOfDay(hour: 09, minute: 00),
-          );
-          if (time == null) {
-            return;
-          }
-          validateTime(time);
-        },
+        onTap: () => showTimePicker(context),
         controller: timeController,
         cursorColor: GlobalProperties.shadowColor,
         decoration: const InputDecoration(

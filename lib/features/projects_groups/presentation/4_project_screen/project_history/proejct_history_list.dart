@@ -21,7 +21,7 @@ class ProjectHistory extends StatelessWidget {
           data: (timeEntries) => timeEntries!.isEmpty
               ? Center(
                   child: Text(
-                    'No projects found',
+                    'No history available',
                     style: Theme.of(context).textTheme.headline4,
                   ),
                 )

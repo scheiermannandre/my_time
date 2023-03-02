@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:my_time/common/widgets/responsive_center.dart';
-import 'package:my_time/features/projects_groups/presentation/1_add_group_screen/bottom_nav_bar_button.dart';
+import 'package:my_time/common/widgets/bottom_nav_bar_button.dart';
 import 'package:my_time/features/projects_groups/presentation/1_add_group_screen/group_name_field.dart';
 import 'package:my_time/global/globals.dart';
 import 'package:my_time/router/app_route.dart';
@@ -42,7 +42,8 @@ class _AddGroupScreenState extends State<AddGroupScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: NavBarButton(onBtnTap: () => onBtnTap()),
+      bottomNavigationBar:
+          NavBarButton(btnText: "Save", onBtnTap: () => onBtnTap()),
       backgroundColor: Colors.white,
       body: Stack(
         children: [
@@ -52,7 +53,7 @@ class _AddGroupScreenState extends State<AddGroupScreen> {
                 Icons.arrow_back,
                 color: GlobalProperties.textAndIconColor,
               ),
-              onPressed: (() => pop()),
+              onPressed: () => pop(),
             ),
             title: const Text(
               "New Group",

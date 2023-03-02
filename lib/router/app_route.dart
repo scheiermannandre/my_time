@@ -5,7 +5,7 @@ import 'package:my_time/features/projects_groups/presentation/2_add_project_scre
 import 'package:my_time/features/projects_groups/presentation/0_groups_list_screen/groups_list_screen.dart';
 import 'package:my_time/features/projects_groups/presentation/3_projects_per_group_list_screen/projects_per_group_list_screen.dart';
 import 'package:my_time/features/projects_groups/presentation/4_project_screen/project_screen.dart';
-import 'package:my_time/features/projects_groups/presentation/5_time_entry_form/time_entry_form.dart';
+import 'package:my_time/features/projects_groups/presentation/5_time_entry_form/time_entry_form_screen.dart';
 import 'package:my_time/router/not_found_screen.dart';
 
 enum _AppRoute {
@@ -90,11 +90,15 @@ final goRouter = GoRouter(
           path: 'timeentryform',
           name: AppRoute.timeEntryForm,
           pageBuilder: (context, state) {
-            final id = state.queryParams['tid'];
+            final id = state.queryParams['tid'] ?? "";
+            final String projectName = state.queryParams['pname'] ?? "";
             return MaterialPage(
               key: state.pageKey,
               fullscreenDialog: false,
-              child: TimeEntryForm(id),
+              child: TimeEntryFormScreen(
+                id,
+                projectName: projectName,
+              ),
             );
           },
         ),

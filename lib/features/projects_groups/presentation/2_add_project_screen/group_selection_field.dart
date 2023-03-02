@@ -4,6 +4,7 @@ import 'package:my_time/common/widgets/async_value_widget.dart';
 import 'package:my_time/common/widgets/custom_expansion_tile.dart';
 import 'package:my_time/common/widgets/responsive_center.dart';
 import 'package:my_time/features/projects_groups/data/groups_repository.dart';
+import 'package:my_time/features/projects_groups/domain/group.dart';
 import 'package:my_time/global/globals.dart';
 
 class GroupSelectionField extends StatefulWidget {
@@ -22,6 +23,15 @@ class GroupSelectionField extends StatefulWidget {
 
 class _GroupSelectionFieldState extends State<GroupSelectionField> {
   final GlobalKey<CustomExpansionTileState> expansionTile = GlobalKey();
+
+  void onListTileTap(List<Group> groups, int index) {
+    widget.onSelectionChanged(groups[index].name);
+    setState(() {
+      widget.selectedGroup = groups[index].name;
+      expansionTile.currentState!.collapse();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -50,13 +60,9 @@ class _GroupSelectionFieldState extends State<GroupSelectionField> {
                       padding: const EdgeInsets.only(top: 5, bottom: 5),
                       child: CustomExpansionTile(
                         isExpandable: widget.isExpandable,
-                        onExpansionChanged: ((value) {}),
+                        onExpansionChanged: (value) {},
                         key: expansionTile,
                         title: Text(widget.selectedGroup),
-                        backgroundColor: Theme.of(context)
-                            .colorScheme
-                            .secondary
-                            .withOpacity(0.025),
                         children: <Widget>[
                           ListView.separated(
                               padding: EdgeInsets.zero,
@@ -65,14 +71,7 @@ class _GroupSelectionFieldState extends State<GroupSelectionField> {
                               itemBuilder: (context, index) {
                                 return ListTile(
                                   title: Text(groups[index].name),
-                                  onTap: () => {
-                                    widget
-                                        .onSelectionChanged(groups[index].name),
-                                    setState(() {
-                                      widget.selectedGroup = groups[index].name;
-                                      expansionTile.currentState!.collapse();
-                                    }),
-                                  },
+                                  onTap: () => onListTileTap(groups, index),
                                   contentPadding: const EdgeInsets.only(
                                       left: 12.0, right: 12.0),
                                 );
