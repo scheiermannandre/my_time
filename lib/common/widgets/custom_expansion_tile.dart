@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_time/global/globals.dart';
 
 const Duration _kExpand = Duration(milliseconds: 200);
 
@@ -12,7 +13,9 @@ class CustomExpansionTile extends StatefulWidget {
       this.children = const <Widget>[],
       this.trailing,
       this.initiallyExpanded = false,
-      this.isExpandable = true})
+      this.isExpandable = true,
+      required this.decoration,
+      required this.contentPadding})
       : super(key: key);
 
   final Widget? leading;
@@ -23,6 +26,8 @@ class CustomExpansionTile extends StatefulWidget {
   final Widget? trailing;
   final bool initiallyExpanded;
   final bool isExpandable;
+  final BoxDecoration decoration;
+  final EdgeInsets contentPadding;
 
   @override
   CustomExpansionTileState createState() => CustomExpansionTileState();
@@ -103,41 +108,38 @@ class CustomExpansionTileState extends State<CustomExpansionTile>
   }
 
   Widget _buildChildren(BuildContext context, Widget? child) {
-    final Color borderSideColor =
-        _borderColor.evaluate(_easeOutAnimation) ?? Colors.transparent;
-    final Color titleColor =
-        _headerColor.evaluate(_easeInAnimation) ?? Colors.blue;
-
     return Container(
-      decoration: BoxDecoration(
-          color: _backgroundColor.evaluate(_easeOutAnimation) ??
-              Colors.transparent,
-          border: Border(
-            top: BorderSide(color: borderSideColor),
-            bottom: BorderSide(color: borderSideColor),
-          )),
+      decoration: widget.decoration,
       child: Column(
-        mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          IconTheme.merge(
-            data: IconThemeData(color: _iconColor.evaluate(_easeInAnimation)),
-            child: ListTile(
-              onTap: toggle,
-              leading: widget.leading,
-              title: DefaultTextStyle(
-                style: Theme.of(context)
-                    .textTheme
-                    .subtitle1!
-                    .copyWith(color: titleColor),
-                child: widget.title!,
+          InkWell(
+            onTap: () => toggle(),
+            child: Padding(
+              padding: widget.contentPadding,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  SizedBox(child: widget.title
+                      // DefaultTextStyle(
+                      //   style: Theme.of(context)
+                      //       .textTheme
+                      //       .subtitle1!
+                      //       .copyWith(color: GlobalProperties.textAndIconColor),
+                      //   child: !,
+                      // ),
+                      ),
+                  widget.isExpandable
+                      ? RotationTransition(
+                          turns: _iconTurns,
+                          child: const Icon(
+                            Icons.expand_more,
+                            size: 24,
+                            color: GlobalProperties.textAndIconColor,
+                          ),
+                        )
+                      : const SizedBox.shrink(),
+                ],
               ),
-              trailing: widget.isExpandable
-                  ? widget.trailing ??
-                      RotationTransition(
-                        turns: _iconTurns,
-                        child: const Icon(Icons.expand_more),
-                      )
-                  : null,
             ),
           ),
           ClipRect(

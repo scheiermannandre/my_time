@@ -26,7 +26,7 @@ class _GroupsListScreenState extends State<GroupsListScreen>
   late AnimationController hamburgerClosedAnimationController;
   final GlobalKey<CustomExpansionTileState> expansionTile = GlobalKey();
   bool isPlaying = false;
-  
+
   @override
   initState() {
     super.initState();
@@ -144,9 +144,20 @@ class _GroupsListScreenState extends State<GroupsListScreen>
                   data: (dto) => Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      ResponsiveAlign(
+                      Padding(
                         padding: const EdgeInsets.only(top: 5, bottom: 5),
                         child: CustomExpansionTile(
+                          contentPadding:
+                              const EdgeInsets.fromLTRB(12, 12, 12, 12),
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: GlobalProperties.shadowColor,
+                              strokeAlign: StrokeAlign.outside,
+                            ),
+                            borderRadius: const BorderRadius.all(
+                              Radius.circular(5),
+                            ),
+                          ),
                           onExpansionChanged: (value) {},
                           key: expansionTile,
                           title: const Text("Favourite Projects"),
@@ -176,13 +187,6 @@ class _GroupsListScreenState extends State<GroupsListScreen>
                           ],
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 12.0),
-                        child: Text(
-                          'Groups',
-                          style: Theme.of(context).textTheme.headline4,
-                        ),
-                      ),
                       dto.groups.isEmpty
                           ? Text(
                               'No groups found',
@@ -194,7 +198,7 @@ class _GroupsListScreenState extends State<GroupsListScreen>
                               shrinkWrap: true,
                               itemCount: dto.groups.length,
                               itemBuilder: (context, index) {
-                                return ResponsiveAlign(
+                                return Padding(
                                   padding:
                                       const EdgeInsets.only(top: 5, bottom: 5),
                                   child: CustomListTile(

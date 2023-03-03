@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:my_time/global/globals.dart';
 
@@ -32,49 +31,39 @@ class _CustomListTileState extends State<CustomListTile> {
           Radius.circular(5),
         ),
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          InkWell(
-            onTap: () {
-              if (widget.onTap != null) {
-                widget.onTap!();
-              }
-            },
-            child: Container(
-              padding: const EdgeInsets.fromLTRB(12, 18, 12, 18),
-              decoration: const BoxDecoration(
-                color: GlobalProperties.backgroundColor,
-                borderRadius: BorderRadius.vertical(
-                  top: Radius.circular(4),
-                  bottom: Radius.circular(4),
-                ),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        widget.title,
-                        style: const TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.bold),
-                      ),
-                    ],
-                  ),
-                  const RotatedBox(
-                    quarterTurns: 2,
-                    child: Icon(
-                      Icons.arrow_back_ios,
-                      size: 16,
-                    ),
-                  ),
-                ],
-              ),
+      child: InkWell(
+        onTap: () {
+          if (widget.onTap != null) {
+            widget.onTap!();
+          }
+        },
+        child: Container(
+          padding: const EdgeInsets.fromLTRB(12, 18, 12, 18),
+          decoration: const BoxDecoration(
+            color: GlobalProperties.backgroundColor,
+            borderRadius: BorderRadius.vertical(
+              top: Radius.circular(4),
+              bottom: Radius.circular(4),
             ),
           ),
-        ],
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                widget.title,
+                style: const TextStyle(
+                    fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+              const RotatedBox(
+                quarterTurns: 3,
+                child: Icon(
+                  Icons.expand_more,
+                  size: 24,
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

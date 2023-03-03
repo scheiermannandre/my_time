@@ -57,8 +57,15 @@ class _GroupSelectionFieldState extends State<GroupSelectionField> {
                       ),
                     )
                   : ResponsiveAlign(
-                      padding: const EdgeInsets.only(top: 5, bottom: 5),
+                      padding: const EdgeInsets.only(top: 0, bottom: 5),
                       child: CustomExpansionTile(
+                        contentPadding: const EdgeInsets.only(bottom: 8),
+                        decoration: BoxDecoration(
+                          border: Border(
+                            bottom:
+                                BorderSide(color: GlobalProperties.shadowColor),
+                          ),
+                        ),
                         isExpandable: widget.isExpandable,
                         onExpansionChanged: (value) {},
                         key: expansionTile,

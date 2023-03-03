@@ -106,6 +106,7 @@ class _AddProjectScreenState extends State<AddProjectScreen> {
                           });
                         },
                       ),
+                      const Padding(padding: EdgeInsets.only(bottom: 10)),
                       ProjectNameField(
                         projectNameController: projectNameController,
                       ),
