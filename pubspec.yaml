@@ -42,7 +42,11 @@ dependencies:
   assorted_layout_widgets: ^7.0.0
   google_nav_bar: ^5.0.6
   persistent_bottom_nav_bar: ^5.0.2
-  flutter_riverpod: ^2.1.3
+  flutter_riverpod: ^2.3.0
+  flutter_hooks: ^0.18.6
+  hooks_riverpod: ^2.3.0
+  rxdart: ^0.27.7
+  shimmer: ^2.0.0
 
 dev_dependencies:
   flutter_test:

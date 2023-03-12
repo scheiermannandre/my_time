@@ -150,7 +150,8 @@ class TimeEntryFormScreen extends ConsumerWidget {
                 color: GlobalProperties.textAndIconColor),
             onPressed: () => context.pop()),
       ),
-      bottomNavigationBar: NavBarButton(
+      bottomNavigationBar: NavBarSubmitButton(
+        isLoading: false,
         btnText: "Save",
         onBtnTap: () => onBtnTap(context),
       ),

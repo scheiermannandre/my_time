@@ -1,122 +1,82 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:my_time/common/widgets/responsive_center.dart';
-import 'package:my_time/common/widgets/standard_button.dart';
-import 'package:my_time/constants/breakpoints.dart';
-import 'package:my_time/features/projects_groups/presentation/2_add_project_screen/group_selection_field.dart';
-import 'package:my_time/features/projects_groups/presentation/2_add_project_screen/project_name_field.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:my_time/common/extensions/async_value_extensions.dart';
+import 'package:my_time/common/widgets/async_value_widget.dart';
+import 'package:my_time/common/widgets/bottom_nav_bar_button.dart';
+import 'package:my_time/features/projects_groups/presentation/2_add_project_screen/add_project_screen_controller.dart';
+import 'package:my_time/features/projects_groups/presentation/2_add_project_screen/group_and_project_fields.dart';
 import 'package:my_time/global/globals.dart';
-import 'package:my_time/router/app_route.dart';
 
-class AddProjectScreen extends StatefulWidget {
+class AddProjectScreen extends HookConsumerWidget {
+  const AddProjectScreen({Key? key, this.group}) : super(key: key);
   final String? group;
-  const AddProjectScreen({
-    Key? key,
-    this.group,
-  }) : super(key: key);
-
   @override
-  State<AddProjectScreen> createState() => _AddProjectScreenState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    final projectNameController = useTextEditingController(text: '');
+    final controller =
+        ref.watch(addProjectScreenControllerProvider(group).notifier);
+    final state = ref.watch(addProjectScreenControllerProvider(group));
 
-class _AddProjectScreenState extends State<AddProjectScreen> {
-  final String selectGroupText = "Select a Group";
-  late String selectedGroup;
-  late bool isExpandable = false;
-  TextEditingController projectNameController = TextEditingController();
+    final groupsListValue = ref.watch(groupsProvider(group));
 
-  @override
-  void initState() {
-    super.initState();
-    selectedGroup = widget.group ?? selectGroupText;
-    if (selectedGroup == selectGroupText) {
-      isExpandable = true;
-    }
-  }
-
-  void onBtnTap() {
-    if (selectedGroup == selectGroupText ||
-        projectNameController.text.isEmpty) {
-      return;
-    }
-    pop();
-  }
-
-  void pop() {
-    if (context.canPop()) {
-      context.pop();
-    } else {
-      context.pushReplacementNamed(AppRoute.home);
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
+    ref.listen<AsyncValue>(
+      groupsProvider(group),
+      (_, state) => state.showAlertDialogOnError(context),
+    );
     return Scaffold(
-      bottomNavigationBar: SizedBox(
-        height: kBottomNavigationBarHeight,
-        child: ResponsiveAlign(
-          alignment: Alignment.center,
-          maxContentWidth: Breakpoint.desktop,
-          padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
-          child: StandardButton(
-            text: "Save",
-            width: Breakpoint.mobile,
-            onPressed: () => onBtnTap(),
+      appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(
+            Icons.arrow_back,
+            color: GlobalProperties.textAndIconColor,
           ),
+          onPressed: () => controller.pop(context),
+        ),
+        title: const Text(
+          "New Project",
+          style: TextStyle(color: GlobalProperties.textAndIconColor),
+        ),
+        elevation: 0,
+        backgroundColor: GlobalProperties.secondaryAccentColor,
+      ),
+      bottomNavigationBar: Container(
+        color: GlobalProperties.backgroundColor,
+        child: NavBarSubmitButton(
+          isLoading: state.isLoading,
+          btnText: "Save",
+          onBtnTap: state.isLoading
+              ? null
+              : () => controller.onBtnTap(context, projectNameController.text),
         ),
       ),
-      backgroundColor: Colors.white,
-      body: Stack(
-        children: [
-          AppBar(
-            leading: IconButton(
-              icon: const Icon(
-                Icons.arrow_back,
-                color: GlobalProperties.textAndIconColor,
-              ),
-              onPressed: () => pop(),
-            ),
-            title: const Text(
-              "New Project",
-              style: TextStyle(color: GlobalProperties.textAndIconColor),
-            ),
-            elevation: 0,
-            backgroundColor: GlobalProperties.secondaryAccentColor,
+      backgroundColor: GlobalProperties.secondaryAccentColor,
+      body: Padding(
+        padding: const EdgeInsets.only(top: 100),
+        child: Container(
+          decoration: const BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
           ),
-          Padding(
-            padding: const EdgeInsets.only(top: 200),
-            child: Container(
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-              ),
-              child: ResponsiveAlign(
-                alignment: Alignment.topCenter,
-                padding: const EdgeInsets.fromLTRB(16, 30, 16, 0),
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      GroupSelectionField(
-                        selectedGroup: selectedGroup,
-                        isExpandable: isExpandable,
-                        onSelectionChanged: (selectedValue) {
-                          setState(() {
-                            selectedGroup = selectedValue;
-                          });
-                        },
-                      ),
-                      const Padding(padding: EdgeInsets.only(bottom: 10)),
-                      ProjectNameField(
-                        projectNameController: projectNameController,
-                      ),
-                    ],
+          child: group == null
+              ? AsyncValueWidget(
+                  value: groupsListValue,
+                  data: (groups) => GroupAndProjectFields(
+                    groups: groups,
+                    expansionTile: state.expansionTile,
+                    selectedGroup: state.selectedGroup,
+                    isExpandable: state.isExpandable,
+                    onListTileTap: (groups, index) =>
+                        controller.onGroupDropDownListTileTap(groups, index),
+                    controller: projectNameController,
                   ),
+                )
+              : GroupAndProjectFields(
+                  groups: const [],
+                  controller: projectNameController,
+                  selectedGroup: state.selectedGroup,
                 ),
-              ),
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }

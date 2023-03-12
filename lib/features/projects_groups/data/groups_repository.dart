@@ -7,6 +7,7 @@ import 'package:my_time/features/projects_groups/domain/project.dart';
 
 class GroupsRepository {
   final List<Group> _groups = kTestGroups;
+  final List<Project> _projects = kTestProjects;
 
   List<Group> getProjectsList() {
     return _groups;
@@ -33,10 +34,39 @@ class GroupsRepository {
         .map((groups) => groups.firstWhere((project) => project.name == name));
   }
 
+  Future<HomePageDTO> fetchHomePageDto() async {
+    await Future.delayed(const Duration(seconds: 2));
+    return Future.value(HomePageDTO(groups: _groups, projects: _projects));
+  }
+
+  Future<HomePageDTO> getData() {
+    try {
+      return Future.value(
+          HomePageDTO(groups: _groups, projects: kTestProjects));
+    } catch (ex) {
+      return Future.error(ex);
+    }
+  }
+
   Stream<HomePageDTO> watchHomePageData() async* {
     await Future.delayed(const Duration(seconds: 2));
-    yield HomePageDTO(kTestGroups, kTestProjects);
-    //return Stream.value(_groups);
+    try {
+      yield await getData();
+    } catch (ex) {
+      yield* Stream.fromFuture(Future.error(Exception()));
+    }
+  }
+
+  Future<bool> addGroup(Group group) async {
+    await Future.delayed(const Duration(seconds: 2));
+    _groups.add(group);
+    return Future(() => true);
+  }
+
+  Future<bool> addProject(Project project) async {
+    await Future.delayed(const Duration(seconds: 2));
+    _projects.add(project);
+    return Future(() => true);
   }
 }
 
@@ -69,6 +99,5 @@ final valueStreamProvider = StreamProvider.autoDispose<HomePageDTO>((ref) {
 class HomePageDTO {
   final List<Group> groups;
   final List<Project> projects;
-
-  HomePageDTO(this.groups, this.projects);
+  HomePageDTO({this.groups = const [], this.projects = const []});
 }

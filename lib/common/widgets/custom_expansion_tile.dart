@@ -61,7 +61,7 @@ class CustomExpansionTileState extends State<CustomExpansionTile>
     _backgroundColor = ColorTween();
 
     _isExpanded =
-        PageStorage.of(context)?.readState(context) ?? widget.initiallyExpanded;
+        PageStorage.of(context).readState(context) ?? widget.initiallyExpanded;
     if (_isExpanded) {
       _controller.value = 1.0;
     }
@@ -101,7 +101,7 @@ class CustomExpansionTileState extends State<CustomExpansionTile>
             });
           });
         }
-        PageStorage.of(context)?.writeState(context, _isExpanded);
+        PageStorage.of(context).writeState(context, _isExpanded);
       });
       widget.onExpansionChanged?.call(_isExpanded);
     }

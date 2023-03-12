@@ -3,12 +3,17 @@ import 'package:my_time/common/widgets/responsive_center.dart';
 import 'package:my_time/constants/breakpoints.dart';
 import 'package:my_time/global/globals.dart';
 
-class NavBarButton extends StatelessWidget {
+class NavBarSubmitButton extends StatelessWidget {
   final double btnWidth = Breakpoint.mobile;
-  final Function() onBtnTap;
+  final VoidCallback? onBtnTap;
   final String btnText;
-  const NavBarButton(
-      {super.key, required this.onBtnTap, required this.btnText});
+  final bool isLoading;
+
+  const NavBarSubmitButton(
+      {super.key,
+      required this.onBtnTap,
+      required this.btnText,
+      required this.isLoading});
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +26,7 @@ class NavBarButton extends StatelessWidget {
         child: SizedBox(
           width: btnWidth,
           child: ElevatedButton(
-            onPressed: () => onBtnTap(),
+            onPressed: onBtnTap,
             style: ElevatedButton.styleFrom(
               padding: const EdgeInsets.fromLTRB(0, 12.5, 0, 12.5),
               backgroundColor: GlobalProperties.secondaryAccentColor,
@@ -29,13 +34,19 @@ class NavBarButton extends StatelessWidget {
                 borderRadius: BorderRadius.circular(5), // <-- Radius
               ),
             ),
-            child: Text(
-              btnText,
-              maxLines: 1,
-              textAlign: TextAlign.center,
-              style: const TextStyle(
-                  fontSize: 16, color: GlobalProperties.textAndIconColor),
-            ),
+            child: isLoading
+                ? const SizedBox(
+                    height: kBottomNavigationBarHeight/2,
+                    width: kBottomNavigationBarHeight/2 ,
+                    child: CircularProgressIndicator())
+                : Text(
+                    btnText,
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleLarge!
+                        .copyWith(color: Colors.white),
+                  ),
           ),
         ),
       ),

@@ -25,7 +25,7 @@ class _CustomListTileState extends State<CustomListTile> {
         color: Colors.white,
         border: Border.all(
           color: GlobalProperties.shadowColor,
-          strokeAlign: StrokeAlign.outside,
+          strokeAlign: BorderSide.strokeAlignOutside,
         ),
         borderRadius: const BorderRadius.all(
           Radius.circular(5),

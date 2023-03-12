@@ -1,149 +1,97 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
-import 'package:my_time/common/dialogs/bottom_sheet_dialog.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_time/common/widgets/appbar/screen_sliver_appbar.dart';
-import 'package:my_time/common/widgets/async_value_widget.dart';
 import 'package:my_time/common/widgets/custom_expansion_tile.dart';
+import 'package:my_time/common/widgets/loading_error_widget.dart';
 import 'package:my_time/common/widgets/responsive_center.dart';
-import 'package:my_time/features/projects_groups/data/groups_repository.dart';
 import 'package:my_time/common/widgets/custom_list_tile.dart';
-import 'package:my_time/features/projects_groups/domain/project.dart';
+import 'package:my_time/features/projects_groups/presentation/0_groups_list_screen/groups_list_loading_state.dart';
+import 'package:my_time/features/projects_groups/presentation/0_groups_list_screen/groups_list_screen_controller.dart';
 import 'package:my_time/features/projects_groups/presentation/0_groups_list_screen/rounded_labeled_button.dart';
 import 'package:my_time/features/projects_groups/presentation/0_groups_list_screen/scrollable_rounded_button_row.dart';
 import 'package:my_time/global/globals.dart';
-import 'package:my_time/router/app_route.dart';
 
-class GroupsListScreen extends StatefulWidget {
+class GroupsListScreen extends HookConsumerWidget {
   const GroupsListScreen({super.key});
   @override
-  State<GroupsListScreen> createState() => _GroupsListScreenState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    const duration = Duration(milliseconds: 600);
+    const padding = EdgeInsets.fromLTRB(10, 10, 10, 10);
 
-class _GroupsListScreenState extends State<GroupsListScreen>
-    with TickerProviderStateMixin {
-  late AnimationController bottomSheetController;
-  late AnimationController hamburgerClosedAnimationController;
-  final GlobalKey<CustomExpansionTileState> expansionTile = GlobalKey();
-  bool isPlaying = false;
+    final bottomSheetAnimController =
+        useAnimationController(duration: duration);
+    final hamburgerAnimController = useAnimationController(duration: duration);
 
-  @override
-  initState() {
-    super.initState();
-    bottomSheetController = BottomSheet.createAnimationController(this);
-    bottomSheetController.duration = const Duration(milliseconds: 600);
-    bottomSheetController.drive(CurveTween(curve: Curves.easeIn));
-    hamburgerClosedAnimationController = AnimationController(
-        vsync: this,
-        duration: const Duration(milliseconds: 600),
-        reverseDuration: const Duration(milliseconds: 300));
-  }
-
-  @override
-  void dispose() {
-    bottomSheetController.dispose();
-    hamburgerClosedAnimationController.dispose();
-    super.dispose();
-  }
-
-  void onProjectTileTap(
-      BuildContext context, List<Project> projects, int index) {
-    context.pushNamed(AppRoute.project, params: {
-      'pid': projects[index].name,
+    ref.listen<GroupsListState>(groupsListScreenControllerProvider,
+        (previous, next) {
+      if (next.isPlaying) {
+        hamburgerAnimController.forward();
+      } else {
+        hamburgerAnimController.reverse();
+      }
     });
-    setState(() {
-      expansionTile.currentState!.collapse();
-    });
-  }
+    final controller = ref.watch(groupsListScreenControllerProvider.notifier);
+    final state = ref.watch(groupsListScreenControllerProvider);
+    final data = ref.watch(dataProvider);
 
-  void animateHamburger() {
-    setState(() {
-      isPlaying = !isPlaying;
-      isPlaying
-          ? hamburgerClosedAnimationController.forward()
-          : hamburgerClosedAnimationController.reverse();
-    });
-  }
-
-  void onHamburgerTab() {
-    animateHamburger();
-    showBottomSheetWithWidgets(
-      context: context,
-      bottomSheetController: bottomSheetController,
-      widgets: [
-        ListTile(
-          trailing: const Icon(
-            Icons.settings,
-            color: Colors.black,
-          ),
-          title: const Text(
-            "Settings",
-            style: TextStyle(color: Colors.black),
-          ),
-          onTap: () {
-            GoRouter.of(context).go("/settings");
-          },
-        ),
-      ],
-      whenComplete: () => animateHamburger(),
-    );
-  }
-
-  void pushNamedAddGroup(BuildContext context) =>
-      context.pushNamed(AppRoute.addGroup);
-
-  void pushNamedAddProject(BuildContext context) =>
-      context.pushNamed(AppRoute.addProject);
-
-  void pushNamedGroups(BuildContext context, HomePageDTO dto, int index) {
-    return context
-        .pushNamed(AppRoute.group, params: {'gid': dto.groups[index].name});
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    EdgeInsets padding = const EdgeInsets.fromLTRB(10, 10, 10, 10);
     return Scaffold(
       backgroundColor: GlobalProperties.backgroundColor,
-      body: CustomScrollView(
-        slivers: [
-          ScreenSliverAppBar(
-            title: "Groups",
-            leadingIconButton: IconButton(
-              icon: AnimatedIcon(
-                icon: AnimatedIcons.menu_close,
-                progress: hamburgerClosedAnimationController,
-                color: GlobalProperties.textAndIconColor,
-              ),
-              onPressed: () => onHamburgerTab(),
-            ),
+      body: RefreshIndicator(
+        key: ref.read(groupsListScreenControllerProvider).refreshIndicatorKey,
+        onRefresh: () async {
+          await AsyncValue.guard(() => ref
+              .refresh(dataProvider.future)
+              .timeout(const Duration(seconds: 20)));
+          return;
+        },
+        child: ScrollConfiguration(
+          behavior: ScrollConfiguration.of(context).copyWith(
+            dragDevices: {
+              PointerDeviceKind.touch,
+              PointerDeviceKind.mouse,
+            },
           ),
-          ResponsiveSliverAlign(
-            padding: padding,
-            child: ScrollableRoundendButtonRow(
-              children: [
-                RoundedLabeldButton(
-                    icon: Icons.category,
-                    text: "Add Group",
-                    onPressed: () => pushNamedAddGroup(context)),
-                RoundedLabeldButton(
-                  icon: Icons.work,
-                  text: "Add Project",
-                  onPressed: () => pushNamedAddProject(context),
+          child: CustomScrollView(
+            slivers: [
+              ScreenSliverAppBar(
+                title: "Groups",
+                leadingIconButton: IconButton(
+                  icon: AnimatedIcon(
+                    icon: AnimatedIcons.menu_close,
+                    progress: hamburgerAnimController,
+                    color: GlobalProperties.textAndIconColor,
+                  ),
+                  onPressed: () => controller.onHamburgerTab(
+                      context, bottomSheetAnimController),
                 ),
-              ],
-            ),
-          ),
-          ResponsiveSliverAlign(
-            padding: padding,
-            child: Consumer(
-              builder: (context, ref, child) {
-                final value = ref.watch(valueStreamProvider);
-                return AsyncValueWidget(
-                  value: value,
+              ),
+              ResponsiveSliverAlign(
+                padding: padding,
+                child: data.when(
+                  error: (error, stackTrace) => LoadingErrorWidget(
+                      onRefresh: () =>
+                          state.refreshIndicatorKey.currentState?.show()),
+                  loading: () => const GroupsListLoadingState(),
                   data: (dto) => Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      ScrollableRoundendButtonRow(
+                        children: [
+                          RoundedLabeldButton(
+                              icon: Icons.category,
+                              text: "Add Group",
+                              onPressed: () =>
+                                  controller.pushNamedAddGroup(context)),
+                          RoundedLabeldButton(
+                            icon: Icons.work,
+                            text: "Add Project",
+                            onPressed: () =>
+                                controller.pushNamedAddProject(context),
+                          ),
+                        ],
+                      ),
                       Padding(
                         padding: const EdgeInsets.only(top: 5, bottom: 5),
                         child: CustomExpansionTile(
@@ -152,14 +100,16 @@ class _GroupsListScreenState extends State<GroupsListScreen>
                           decoration: BoxDecoration(
                             border: Border.all(
                               color: GlobalProperties.shadowColor,
-                              strokeAlign: StrokeAlign.outside,
+                              strokeAlign: BorderSide.strokeAlignOutside,
                             ),
                             borderRadius: const BorderRadius.all(
                               Radius.circular(5),
                             ),
                           ),
                           onExpansionChanged: (value) {},
-                          key: expansionTile,
+                          key: ref
+                              .read(groupsListScreenControllerProvider)
+                              .expansionTile,
                           title: const Text("Favourite Projects"),
                           children: <Widget>[
                             ListView.separated(
@@ -169,7 +119,7 @@ class _GroupsListScreenState extends State<GroupsListScreen>
                                 itemBuilder: (context, index) {
                                   return ListTile(
                                     title: Text(dto.projects[index].name),
-                                    onTap: () => onProjectTileTap(
+                                    onTap: () => controller.onProjectTileTap(
                                         context, dto.projects, index),
                                     contentPadding: const EdgeInsets.only(
                                         left: 12.0, right: 12.0),
@@ -190,7 +140,7 @@ class _GroupsListScreenState extends State<GroupsListScreen>
                       dto.groups.isEmpty
                           ? Text(
                               'No groups found',
-                              style: Theme.of(context).textTheme.headline4,
+                              style: Theme.of(context).textTheme.headlineMedium,
                             )
                           : ListView.builder(
                               padding: EdgeInsets.zero,
@@ -202,8 +152,8 @@ class _GroupsListScreenState extends State<GroupsListScreen>
                                   padding:
                                       const EdgeInsets.only(top: 5, bottom: 5),
                                   child: CustomListTile(
-                                    onTap: () =>
-                                        pushNamedGroups(context, dto, index),
+                                    onTap: () => controller.pushNamedGroups(
+                                        context, dto, index),
                                     title: dto.groups[index].name,
                                   ),
                                 );
@@ -211,11 +161,11 @@ class _GroupsListScreenState extends State<GroupsListScreen>
                             ),
                     ],
                   ),
-                );
-              },
-            ),
+                ),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
