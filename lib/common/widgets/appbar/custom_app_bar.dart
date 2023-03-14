@@ -9,7 +9,7 @@ class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
   final ScrollController? controller;
   final List<IconButton>? actions;
   CustomAppBar({super.key, required this.title, this.controller, this.actions})
-      : preferredSize = const Size.fromHeight(kToolbarHeight * 2);
+      : preferredSize = const Size.fromHeight(kToolbarHeight * 1);
 
   @override
   late Size preferredSize;
@@ -19,7 +19,7 @@ class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
 
 class _CustomAppBarState extends State<CustomAppBar> {
   bool showElevation = false;
-  int appBarRows = 2;
+  int appBarRows = 1;
   EdgeInsets padding = const EdgeInsets.fromLTRB(10, 10, 10, 10);
 
   @override
@@ -90,6 +90,13 @@ class _CustomAppBarState extends State<CustomAppBar> {
                       onPressed: () => pop(),
                       icon: const Icon(Icons.arrow_back),
                     ),
+                    Text(
+                      widget.title,
+                      style: const TextStyle(
+                          fontSize: 28,
+                          color: GlobalProperties.textAndIconColor,
+                          fontWeight: FontWeight.w500),
+                    ),
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -100,21 +107,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
                     ),
                   ]),
             ),
-          ),
-          SizedBox(
-            height: kToolbarHeight,
-            width: double.infinity,
-            child: ResponsiveAlign(
-              padding: padding,
-              child: Text(
-                widget.title,
-                style: const TextStyle(
-                    fontSize: 28,
-                    color: GlobalProperties.textAndIconColor,
-                    fontWeight: FontWeight.w500),
-              ),
-            ),
-          ),
+          )
         ]),
       ),
     );

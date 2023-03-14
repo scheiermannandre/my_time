@@ -1,78 +1,37 @@
-import 'package:my_time/features/projects_groups/domain/group.dart';
-import 'package:my_time/features/projects_groups/domain/project.dart';
+import 'package:my_time/layers/interface/dto/group_dto.dart';
+import 'package:my_time/layers/interface/dto/project_dto.dart';
 
 /// Test products to be used until a data source is implemented
 final kTestGroups = [
-  Group(
+  GroupDTO(
     name: "Group 1",
-    projects: [
-      Project(name: "Project 1"),
-      Project(name: "Project 2"),
-      Project(name: "Project 3"),
-    ],
   ),
-  Group(
-    name: "Group 2",
-    projects: [
-      Project(name: "Project 1"),
-      Project(name: "Project 2"),
-      Project(name: "Project 3"),
-    ],
-  ),
-  Group(
-    name: "Group 3",
-    projects: [
-      Project(name: "Project 1"),
-      Project(name: "Project 2"),
-      Project(name: "Project 3"),
-    ],
-  ),
-  Group(
-    name: "Group 1",
-    projects: [
-      Project(name: "Project 1"),
-      Project(name: "Project 2"),
-      Project(name: "Project 3"),
-    ],
-  ),
-  Group(
-    name: "Group 2",
-    projects: [
-      Project(name: "Project 1"),
-      Project(name: "Project 2"),
-      Project(name: "Project 3"),
-    ],
-  ),
-  Group(
-    name: "Group 3",
-    projects: [
-      Project(name: "Project 1"),
-      Project(name: "Project 2"),
-      Project(name: "Project 3"),
-    ],
-  ),
-  Group(
-    name: "Group 1",
-    projects: [
-      Project(name: "Project 1"),
-      Project(name: "Project 2"),
-      Project(name: "Project 3"),
-    ],
-  ),
-  Group(
-    name: "Group 2",
-    projects: [
-      Project(name: "Project 1"),
-      Project(name: "Project 2"),
-      Project(name: "Project 3"),
-    ],
-  ),
-  Group(
-    name: "Group 3",
-    projects: [
-      Project(name: "Project 1"),
-      Project(name: "Project 2"),
-      Project(name: "Project 3"),
-    ],
-  ),
+  // GroupDTO(
+  //   name: "Group 2",
+  // ),
+  // GroupDTO(
+  //   name: "Group 3",
+  // ),
+  // GroupDTO(
+  //   name: "Group 1",
+  // ),
+  // GroupDTO(
+  //   name: "Group 2",
+  // ),
+  // GroupDTO(
+  //   name: "Group 3",
+  // ),
+  // GroupDTO(
+  //   name: "Group 1",
+  // ),
+  // GroupDTO(
+  //   name: "Group 2",
+  // ),
+  // GroupDTO(
+  //   name: "Group 3",
+  // ),
+];
+
+final kTestProjects = [
+  ProjectDTO(name: "Project 1", parentId: kTestGroups[0].id),
 ];

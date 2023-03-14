@@ -66,8 +66,8 @@ class BooleanController extends StateNotifier<AsyncValue<BoolObject>> {
   BooleanController() : super(AsyncValue.data(BoolObject()));
 
   void toggle() {
-    final tmp =  !state.value!.value;
-    state = AsyncValue.data(BoolObject(value:  !state.value!.value));
+    final tmp = !state.value!.value;
+    state = AsyncValue.data(BoolObject(value: !state.value!.value));
     print(state.value!.value);
   }
 }
