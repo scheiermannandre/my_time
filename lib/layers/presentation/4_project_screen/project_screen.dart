@@ -1,126 +1,56 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:my_time/common/dialogs/modal_bottom_sheet.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_time/common/widgets/appbar/custom_app_bar.dart';
 import 'package:my_time/common/widgets/nav_bar/nav_bar_item.dart';
 import 'package:my_time/common/widgets/responsive_center.dart';
 import 'package:my_time/layers/presentation/4_project_screen/project_history/proejct_history_list.dart';
+import 'package:my_time/layers/presentation/4_project_screen/project_screen_controller.dart';
 import 'package:my_time/layers/presentation/4_project_screen/project_timer/timer_widget.dart';
-import 'package:my_time/layers/presentation/5_time_entry_form/domain/custom_timer.dart';
-import 'package:my_time/layers/domain/time_entry.dart';
 import 'package:my_time/global/globals.dart';
 import 'package:my_time/common/widgets/nav_bar/nav_bar.dart';
-import 'package:my_time/router/app_route.dart';
 
-class ProjectScreen extends StatefulWidget {
-  final String projectId;
+class ProjectScreen extends HookConsumerWidget {
   const ProjectScreen({super.key, required this.projectId});
 
+  final String projectId;
+  
   @override
-  State<ProjectScreen> createState() => _ProjectScreenState();
-}
-
-class _ProjectScreenState extends State<ProjectScreen>
-    with TickerProviderStateMixin {
-  late PageController _pageController;
-  late int initialPage = 0;
-  late AnimationController animationController;
-  late AnimationController sheetController;
-
-  late CustomTimer timer;
-  @override
-  void initState() {
-    super.initState();
-    animationController = AnimationController(
-        duration: const Duration(milliseconds: 2000),
-        reverseDuration: const Duration(milliseconds: 2000),
-        vsync: this);
-
-    _pageController = PageController(initialPage: initialPage);
-    sheetController = AnimationController(
-        duration: const Duration(milliseconds: 350), vsync: this);
-
-    timer = CustomTimer(stateCallback: () {
-      setState(() {});
-    });
-  }
-
-  @override
-  void dispose() {
-    _pageController.dispose();
-    animationController.dispose();
-    sheetController.dispose();
-    super.dispose();
-  }
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _pageController.animateToPage(index,
-          duration: const Duration(milliseconds: 500), curve: Curves.easeOut);
-    });
-  }
-
-  void pop() {
-    if (context.canPop()) {
-      context.pop();
-    } else {
-      context.pushReplacementNamed(AppRoute.home);
-    }
-  }
-
-  Future<void> showDeleteBottomSheet(BuildContext context) async {
-    {
-      bool? deletePressed = await openBottomSheet(
-          context: context,
-          bottomSheetController: sheetController,
-          title: "Delete Project ${widget.projectId}?",
-          message: "All Entries for the Project will be lost!",
-          confirmBtnText: "Confirm",
-          onCanceled: () {
-            Navigator.of(context).pop(false);
-          },
-          onConfirmed: () {
-            Navigator.of(context).pop(true);
-          });
-
-      if (deletePressed ?? false) {
-        //ToDo
-        //Delete Project
-      }
-    }
-  }
-
-  void pushNamedTimeEntryForm(BuildContext context, [TimeEntry? entry]) {
-    String tid = entry?.id ?? "";
-    return context.pushNamed(
-      AppRoute.timeEntryForm,
-      params: {
-        'pid': widget.projectId,
-      },
-      queryParams: {'tid': tid, 'pname': widget.projectId},
+  Widget build(BuildContext context, WidgetRef ref) {
+    final controller = ref.watch(projectScreenControllerProvider.notifier);
+    final timerData = ref.watch(timerDataProvider(projectId));
+    final pageController = usePageController(initialPage: 0);
+    final animationController = useAnimationController(
+      duration: const Duration(milliseconds: 2000),
+      reverseDuration: const Duration(milliseconds: 2000),
     );
-  }
+    final sheetController = useAnimationController(
+      duration: const Duration(milliseconds: 350),
+    );
 
-  @override
-  Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: GlobalProperties.backgroundColor,
       appBar: CustomAppBar(
-        title: widget.projectId,
+        title: projectId,
         actions: [
           IconButton(
-            onPressed: () => showDeleteBottomSheet(context),
+            onPressed: () => controller.showDeleteBottomSheet(
+              context,
+              projectId,
+              sheetController,
+            ),
             icon: const Icon(Icons.delete),
           ),
           IconButton(
-            onPressed: () => pushNamedTimeEntryForm(context),
+            onPressed: () =>
+                controller.pushNamedTimeEntryForm(context, projectId),
             icon: const Icon(Icons.add),
           ),
         ],
       ),
       bottomNavigationBar: NavBar(
-        onTap: _onItemTapped,
-        startIndex: initialPage,
+        onTap: (index) => controller.onItemTapped(pageController, index),
+        startIndex: 0,
         backgroundColor: GlobalProperties.backgroundColor,
         selectedBackgroundColor: GlobalProperties.secondaryAccentColor,
         unSelectedBackgroundColor: GlobalProperties.backgroundColor,
@@ -140,19 +70,34 @@ class _ProjectScreenState extends State<ProjectScreen>
       ),
       body: PageView(
         physics: const NeverScrollableScrollPhysics(),
-        controller: _pageController,
+        controller: pageController,
         onPageChanged: (index) {},
         children: <Widget>[
-          ResponsiveAlign(
-            padding: const EdgeInsets.all(10),
-            alignment: Alignment.center,
-            child: TimerWidget(
-              controller: animationController,
-              timer: timer,
+          timerData.when(
+            data: (data) => ResponsiveAlign(
+              padding: const EdgeInsets.all(10),
+              alignment: Alignment.center,
+              child: TimerWidget(
+                controller: animationController,
+                duration: timerData.value!.duration,
+                onStartTimer: () => controller.startTimer(projectId),
+                onStopTimer: () => controller.stopTimer(projectId),
+                onPauseResumeTimer: () =>
+                    controller.pauseResumeTimer(projectId),
+                timerState: timerData.value!.state,
+              ),
+            ),
+            error: (error, stackTrace) => const Center(child: Text("ERROR")),
+            loading: () => const Center(
+              child: CircularProgressIndicator(),
             ),
           ),
           ProjectHistory(
-            onClicked: (entry) => pushNamedTimeEntryForm(context, entry),
+            onClicked: (entry) => controller.pushNamedTimeEntryForm(
+              context,
+              projectId,
+              entry,
+            ),
           )
         ],
       ),

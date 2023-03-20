@@ -20,7 +20,7 @@ class AddGroupScreen extends HookConsumerWidget {
     final state = ref.watch(addGroupScreenControllerProvider);
 
     ref.listen<AsyncValue>(
-      addGroupScreenControllerProvider.select((state) => state.value),
+      addGroupScreenControllerProvider,
       (_, state) => state.showAlertDialogOnError(context),
     );
     return Scaffold(

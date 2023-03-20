@@ -14,7 +14,7 @@ class HomePageService {
 
   Future<List<GroupDTO>> getGroups() async {
     await Future.delayed(const Duration(seconds: 2));
-    return await groupsRepository.getGroups();
+    return await groupsRepository.fetchGroups();
   }
 
   Future<List<ProjectDTO>> getFavouriteProjects() async {
@@ -22,17 +22,20 @@ class HomePageService {
     return await projectsRespository.fetchFavouriteProjects();
   }
 
-  Future<HomePageDTO> getHomePageData() async {
-    final groups = await groupsRepository.getGroups();
+  Future<HomePageDTO> fetchHomePageData() async {
+    final groups = await groupsRepository.fetchGroups();
     final projects = await projectsRespository.fetchFavouriteProjects();
     return HomePageDTO(groups: groups, projects: projects);
   }
 
   Stream<HomePageDTO> watchData() async* {
-    try {
-      yield* Stream.fromFuture(getHomePageData());
-    } catch (ex) {
-      yield* Stream.error(ex);
+    while (true) {
+      await Future.delayed(const Duration(milliseconds: 500));
+      try {
+        yield* Stream.fromFuture(fetchHomePageData());
+      } catch (ex) {
+        yield* Stream.error(ex);
+      }
     }
   }
 }

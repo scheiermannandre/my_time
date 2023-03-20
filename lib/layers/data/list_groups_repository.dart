@@ -7,31 +7,30 @@ import 'package:my_time/layers/interface/dto/group_dto.dart';
 
 class ListGroupsRepository implements GroupsRepository {
   @override
-  Future<List<GroupDTO>> getGroups() async {
-    await Future.delayed(const Duration(seconds: 2));
-    return await Future(() => kTestGroups);
+  Future<List<GroupDTO>> fetchGroups() async {
+    return await Future(() => kTestGroupsMap.values.toList());
   }
 
   @override
   Future<bool> addGroup(GroupDTO group) async {
-    await Future.delayed(const Duration(seconds: 2));
-    kTestGroups.add(group);
+    //await Future.delayed(const Duration(seconds: 2));
+    kTestGroupsMap[group.id] = group;
     return Future(() => true);
   }
 
   @override
-  Future<GroupDTO?> getGroup(String groupId) async {
-    await Future.delayed(const Duration(seconds: 2));
-    GroupDTO? group = kTestGroups.firstWhereOrNull(
-      (element) => element.id == groupId,
-    );
+  Future<GroupDTO?> fetchGroup(String groupId) async {
+    GroupDTO? group;
+    if (kTestGroupsMap.containsKey(groupId)) {
+      group = kTestGroupsMap[groupId];
+    }
     return group;
   }
 
   @override
   Future<bool> deleteGroup(String groupId) async {
-    await Future.delayed(const Duration(seconds: 2));
-    kTestGroups.removeWhere((element) => element.id == groupId);
+    //await Future.delayed(const Duration(seconds: 2));
+    kTestGroupsMap.remove(groupId);
     return true;
   }
 

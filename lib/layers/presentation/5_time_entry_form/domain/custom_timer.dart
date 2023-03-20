@@ -1,21 +1,28 @@
 import 'dart:async';
 
+import 'package:my_time/layers/presentation/5_time_entry_form/domain/timer_data.dart';
+
+enum TimerState {
+  off,
+  running,
+  paused,
+}
+
 class CustomTimer {
+  CustomTimer();
   Timer? _timer;
-  final Function stateCallback;
+  //final Function stateCallback;
+  late TimerData data;
   Duration duration = const Duration(seconds: 0);
   final int secondsPerDay = 86400;
-  CustomTimer({required this.stateCallback});
-  bool isActive() {
-    if (_timer == null) {
-      return false;
-    } else {
-      return _timer!.isActive;
-    }
+
+  TimerData watchTimerData(int i) {
+    return data;
   }
 
   void startTimer() {
     _timer = Timer.periodic(const Duration(seconds: 1), (_) => _addTime());
+    data = TimerData(duration: duration, state: TimerState.running);
   }
 
   void stopTimer() {
@@ -24,8 +31,9 @@ class CustomTimer {
     }
     _timer?.cancel();
     _timer = null;
-    duration = const Duration(seconds: 0);
-    stateCallback();
+    //duration = const Duration(seconds: 0);
+    data = TimerData(duration: duration,  state: TimerState.off);
+    //stateCallback();
   }
 
   void _addTime() {
@@ -34,7 +42,11 @@ class CustomTimer {
     } else {
       int seconds = duration.inSeconds + 1;
       duration = Duration(seconds: seconds);
-      stateCallback();
+      data = TimerData(duration: duration,  state: TimerState.running);
+      if (seconds % 10 == 0) {
+        print("Timer alive");
+      }
+      //stateCallback();
     }
   }
 
@@ -44,6 +56,7 @@ class CustomTimer {
     }
     if (_timer!.isActive) {
       _timer?.cancel();
+      data = TimerData(duration: duration,  state: TimerState.paused);
     } else {
       startTimer();
     }

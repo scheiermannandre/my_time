@@ -11,22 +11,28 @@ import 'package:my_time/layers/interface/dto/project_dto.dart';
 class ListProjectsRepository implements ProjectsRepository {
   @override
   Future<List<ProjectDTO>> fetchFavouriteProjects() async {
-    await Future.delayed(const Duration(seconds: 2));
-    return await Future(() => kTestProjects);
+    final result = await Future(() => kTestProjectsMap["favourites"]!);
+    return result;
   }
 
   @override
   Future<bool> addProject(ProjectDTO project) async {
-    await Future.delayed(const Duration(seconds: 2));
-    kTestProjects.add(project);
+    //await Future.delayed(const Duration(seconds: 2));
+    if (kTestProjectsMap.containsKey(project.parentId)) {
+      kTestProjectsMap[project.parentId]!.add(project);
+    } else {
+      kTestProjectsMap[project.parentId] = [project];
+    }
     return Future(() => true);
   }
 
   @override
   Future<List<ProjectDTO>> fetchProjectsByGroupId(String groupId) async {
-    await Future.delayed(const Duration(seconds: 2));
-    return await Future(() =>
-        kTestProjects.where((element) => element.parentId == groupId).toList());
+    if (kTestProjectsMap.containsKey(groupId)) {
+      return kTestProjectsMap[groupId]!;
+    } else {
+      return [];
+    }
   }
 
   @override
@@ -36,9 +42,12 @@ class ListProjectsRepository implements ProjectsRepository {
 
   @override
   Future<bool> deleteProjects(List<ProjectDTO> projects) async {
-    await Future.delayed(const Duration(seconds: 2));
-    for (ProjectDTO projectToDelete in projects) {
-      kTestProjects.removeWhere((project) => project.id == projectToDelete.id);
+    if (projects.isEmpty) {
+      return true;
+    }
+    final key = projects.first.parentId;
+    if (kTestProjectsMap.containsKey(key)) {
+      kTestProjectsMap.remove(key);
     }
     return true;
   }

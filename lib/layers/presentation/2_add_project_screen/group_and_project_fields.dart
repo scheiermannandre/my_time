@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:my_time/common/widgets/custom_expansion_tile.dart';
 import 'package:my_time/common/widgets/responsive_center.dart';
 import 'package:my_time/layers/interface/dto/group_dto.dart';
-import 'package:my_time/layers/presentation/2_add_group_screen/group_selection_field.dart';
-import 'package:my_time/layers/presentation/2_add_group_screen/project_name_field.dart';
+import 'package:my_time/layers/presentation/2_add_project_screen/group_selection_field.dart';
+import 'package:my_time/layers/presentation/2_add_project_screen/project_name_field.dart';
 
 class GroupAndProjectFields extends StatelessWidget {
   const GroupAndProjectFields(

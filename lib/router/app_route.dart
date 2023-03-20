@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:my_time/layers/presentation/0_home_screen/groups_list_screen.dart';
 import 'package:my_time/layers/presentation/1_add_group_screen/add_group_screen.dart';
-import 'package:my_time/layers/presentation/2_add_group_screen/add_project_screen.dart';
+import 'package:my_time/layers/presentation/2_add_project_screen/add_project_screen.dart';
 import 'package:my_time/layers/presentation/3_projects_per_group_list_screen/projects_per_group_list_screen.dart';
 import 'package:my_time/layers/presentation/4_project_screen/project_screen.dart';
 import 'package:my_time/layers/presentation/5_time_entry_form/time_entry_form_screen.dart';
@@ -34,20 +34,18 @@ final goRouter = GoRouter(
       path: '/',
       name: AppRoute.home,
       builder: (context, state) => const GroupsListScreen(),
-      routes: [
-        GoRoute(
-          path: 'group/:gid',
-          name: AppRoute.group,
-          pageBuilder: (context, state) {
-            final groupId = state.params['gid']!;
-            return MaterialPage(
-              key: state.pageKey,
-              fullscreenDialog: false,
-              child: ProjectsPerGroupListScreen(groupId: groupId),
-            );
-          },
-        ),
-      ],
+    ),
+    GoRoute(
+      path: '/group/:gid',
+      name: AppRoute.group,
+      pageBuilder: (context, state) {
+        final groupId = state.params['gid']!;
+        return MaterialPage(
+          key: state.pageKey,
+          fullscreenDialog: false,
+          child: ProjectsPerGroupListScreen(groupId: groupId),
+        );
+      },
     ),
     GoRoute(
       path: '/newgroup',

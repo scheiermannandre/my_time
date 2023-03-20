@@ -17,6 +17,10 @@ class GroupsListScreen extends HookConsumerWidget {
   const GroupsListScreen({super.key});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final controller = ref.watch(groupsListScreenControllerProvider.notifier);
+    final state = ref.watch(groupsListScreenControllerProvider);
+    final data = ref.watch(homePageDataProvider);
+
     const duration = Duration(milliseconds: 600);
     const padding = EdgeInsets.fromLTRB(10, 10, 10, 10);
 
@@ -27,7 +31,7 @@ class GroupsListScreen extends HookConsumerWidget {
       duration: duration,
     );
 
-    ref.listen<GroupsListState>(groupsListScreenControllerProvider,
+    ref.listen<GroupsListState>(groupsListScreenControllerProvider.select((state) => state.value!),
         (previous, next) {
       if (next.isPlaying) {
         hamburgerAnimController.forward();
@@ -35,17 +39,14 @@ class GroupsListScreen extends HookConsumerWidget {
         hamburgerAnimController.reverse();
       }
     });
-    final controller = ref.watch(groupsListScreenControllerProvider.notifier);
-    final state = ref.watch(groupsListScreenControllerProvider);
-    final data = ref.watch(dataProvider);
 
     return Scaffold(
       backgroundColor: GlobalProperties.backgroundColor,
       body: RefreshIndicator(
-        key: ref.read(groupsListScreenControllerProvider).refreshIndicatorKey,
+        key: ref.read(groupsListScreenControllerProvider).value!.refreshIndicatorKey,
         onRefresh: () async {
           await AsyncValue.guard(() => ref
-              .refresh(dataProvider.future)
+              .refresh(homePageDataProvider.future)
               .timeout(const Duration(seconds: 20)));
           return;
         },
@@ -76,7 +77,7 @@ class GroupsListScreen extends HookConsumerWidget {
                   child: data.when(
                     error: (error, stackTrace) => LoadingErrorWidget(
                         onRefresh: () =>
-                            state.refreshIndicatorKey.currentState?.show()),
+                            state.value!.refreshIndicatorKey.currentState?.show()),
                     loading: () => const GroupsListLoadingState(),
                     data: (dto) => Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -116,7 +117,7 @@ class GroupsListScreen extends HookConsumerWidget {
                                   onExpansionChanged: (value) {},
                                   key: ref
                                       .read(groupsListScreenControllerProvider)
-                                      .expansionTile,
+                                      .value!.expansionTile,
                                   title: const Text("Favourite Projects"),
                                   children: <Widget>[
                                     ListView.separated(

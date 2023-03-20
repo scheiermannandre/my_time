@@ -16,7 +16,7 @@ class ProjectsPerGroupScreenService {
   final ProjectsRepository projectsRespository;
 
   Future<GroupDTO> fetchGroup(String groupId) async {
-    GroupDTO? group = await groupsRepository.getGroup(groupId);
+    GroupDTO? group = await groupsRepository.fetchGroup(groupId);
     if (group == null) {
       throw Exception("Group was null");
     }
@@ -28,7 +28,7 @@ class ProjectsPerGroupScreenService {
   }
 
   Future<GroupWithProjectsDTO> fetchGroupWithProjectsDTO(String groupId) async {
-    final group = await groupsRepository.getGroup(groupId) as GroupDTO;
+    final group = await groupsRepository.fetchGroup(groupId) as GroupDTO;
     final projects = await projectsRespository.fetchProjectsByGroupId(groupId);
     return GroupWithProjectsDTO(group: group, projects: projects);
   }

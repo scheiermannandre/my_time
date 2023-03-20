@@ -5,9 +5,11 @@ import 'package:my_time/common/dialogs/bottom_sheet_dialog.dart';
 import 'package:my_time/common/widgets/custom_expansion_tile.dart';
 import 'package:my_time/layers/application/home_page_service.dart';
 import 'package:my_time/layers/domain/home_page_dto.dart';
-import 'package:my_time/layers/data/list_groups_repository.dart';
 import 'package:my_time/layers/interface/dto/project_dto.dart';
 import 'package:my_time/router/app_route.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
+
+part 'groups_list_screen_controller.g.dart';
 
 class GroupsListState {
   GroupsListState({this.isPlaying = false});
@@ -38,16 +40,16 @@ class GroupsListState {
   }
 }
 
-class GroupsListScreenController extends StateNotifier<GroupsListState> {
-  GroupsListScreenController({
-    required this.groupRepository,
-  }) : super(GroupsListState());
-  final ListGroupsRepository groupRepository;
-
-  late AutoDisposeStreamProvider<HomePageDTO> dataProvider;
+@riverpod
+class GroupsListScreenController extends _$GroupsListScreenController {
+  @override
+  FutureOr<GroupsListState> build() {
+    return GroupsListState();
+  }
 
   void animateHamburger() {
-    state = state.copyWith(isPlaying: !state.isPlaying);
+    state =
+        AsyncData(state.value!.copyWith(isPlaying: !state.value!.isPlaying));
   }
 
   void onHamburgerTab(BuildContext context, AnimationController controller) {
@@ -90,17 +92,19 @@ class GroupsListScreenController extends StateNotifier<GroupsListState> {
     context.pushNamed(AppRoute.project, params: {
       'pid': projects[index].name,
     });
-    state.expansionTile.currentState!.collapse();
+    state.value!.expansionTile.currentState!.collapse();
   }
 }
 
-final groupsListScreenControllerProvider = StateNotifierProvider.autoDispose<
-    GroupsListScreenController, GroupsListState>((ref) {
-  final groupRepository = ref.watch(groupsRepositoryProvider);
-  return GroupsListScreenController(groupRepository: groupRepository);
-});
 
-final dataProvider = StreamProvider.autoDispose<HomePageDTO>((ref) {
+
+// final groupsListScreenControllerProvider = StateNotifierProvider.autoDispose<
+//     GroupsListScreenController, GroupsListState>((ref) {
+//   final service = ref.watch(homePageServiceProvider);
+//   return GroupsListScreenController(homePageService: service);
+// });
+
+final homePageDataProvider = StreamProvider.autoDispose<HomePageDTO>((ref) {
   final homePageService = ref.watch(homePageServiceProvider);
   return homePageService.watchData();
 });

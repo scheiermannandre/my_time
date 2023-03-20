@@ -3,20 +3,21 @@ import 'package:my_time/common/widgets/responsive_center.dart';
 import 'package:my_time/common/widgets/standard_button.dart';
 import 'package:my_time/constants/app_sizes.dart';
 import 'package:my_time/constants/breakpoints.dart';
+import 'package:my_time/layers/presentation/5_time_entry_form/domain/custom_timer.dart';
 
 class StaggeredButtons extends StatefulWidget {
   final Function onStart;
   final Function onFinish;
   final Function onPause;
   final AnimationController controller;
-  late bool timerIsActive;
-  StaggeredButtons(
+  final TimerState timerState;
+  const StaggeredButtons(
       {super.key,
       required this.onStart,
       required this.onFinish,
       required this.onPause,
       required this.controller,
-      required this.timerIsActive});
+      required this.timerState});
 
   @override
   State<StaggeredButtons> createState() => _StaggeredButtonsState();
@@ -31,10 +32,25 @@ class _StaggeredButtonsState extends State<StaggeredButtons>
   String btnPauseStr = "Pause";
   String btnResumeStr = "Resume";
   String btnPauseResumeText = "Pause";
-  
+
   @override
   void initState() {
     super.initState();
+    // set initial Value of the Animation
+    // 0 = start -> timer is not active
+    // 1 = end -> timer is running or paused
+    if (widget.timerState == TimerState.off) {
+      widget.controller.value = 0;
+    } else {
+      widget.controller.value = 1;
+    }
+
+    if (widget.timerState == TimerState.running) {
+      btnPauseResumeText = btnPauseStr;
+    } else if (widget.timerState == TimerState.paused) {
+      btnPauseResumeText = btnResumeStr;
+    }
+
     opacityStartBtn = Tween<double>(begin: 1, end: 0).animate(
       CurvedAnimation(
         parent: widget.controller.view,
@@ -120,25 +136,20 @@ class _StaggeredButtonsState extends State<StaggeredButtons>
     );
   }
 
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
   void onStartPressed() {
     widget.onStart();
     widget.controller.forward();
   }
 
   void onPauseResumePressed() {
+    widget.onPause();
     setState(() {
-      if (widget.timerIsActive) {
+      if (widget.timerState == TimerState.running) {
         btnPauseResumeText = btnResumeStr;
       } else {
         btnPauseResumeText = btnPauseStr;
       }
     });
-    widget.onPause();
   }
 
   void onFinishPressed() {

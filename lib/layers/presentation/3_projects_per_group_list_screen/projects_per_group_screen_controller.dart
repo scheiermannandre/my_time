@@ -1,39 +1,46 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:my_time/common/dialogs/modal_bottom_sheet.dart';
 import 'package:my_time/layers/application/projects_per_group_screen_service.dart';
 import 'package:my_time/layers/interface/dto/group_with_projects_dto.dart';
 import 'package:my_time/layers/interface/dto/project_dto.dart';
+import 'package:my_time/layers/presentation/0_home_screen/groups_list_screen_controller.dart';
 import 'package:my_time/router/app_route.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
+part 'projects_per_group_screen_controller.g.dart';
 
 class ProjectsPerGroupScreenState {
   ProjectsPerGroupScreenState({
     this.showElevation = false,
-    this.value = const AsyncValue.data(null),
   });
+  final GlobalKey<RefreshIndicatorState> refreshIndicatorKey =
+      GlobalKey<RefreshIndicatorState>();
   final bool showElevation;
-  final AsyncValue<void> value;
-  bool get isLoading => value.isLoading;
 
   ProjectsPerGroupScreenState copyWith({
     bool? showElevation,
-    AsyncValue<void>? value,
   }) {
     return ProjectsPerGroupScreenState(
       showElevation: showElevation ?? this.showElevation,
-      value: value ?? this.value,
     );
   }
 }
 
+@riverpod
 class ProjectsPerGroupScreenController
-    extends StateNotifier<ProjectsPerGroupScreenState> {
-  ProjectsPerGroupScreenController({required this.service})
-      : super(ProjectsPerGroupScreenState());
-  final ProjectsPerGroupScreenService service;
+    extends _$ProjectsPerGroupScreenController {
+  final initial = Object();
+  late var current = initial;
+  // An [Object] instance is equal to itself only.
+  bool get mounted => current == initial;
+  @override
+  FutureOr<ProjectsPerGroupScreenState> build() {
+    ref.onDispose(() => current = Object());
+    // nothing to do
+    return ProjectsPerGroupScreenState();
+  }
 
   void pushNamedAddProject(BuildContext context, GroupWithProjectsDTO dto) {
     return context
@@ -43,7 +50,7 @@ class ProjectsPerGroupScreenController
   void pushNamedProject(
       BuildContext context, List<ProjectDTO> projects, int index) {
     return context
-        .pushNamed(AppRoute.project, params: {'pid': projects[index].name});
+        .pushNamed(AppRoute.project, params: {'pid': projects[index].id});
   }
 
   void pop(BuildContext context) {
@@ -74,34 +81,35 @@ class ProjectsPerGroupScreenController
           });
 
       if (deletePressed ?? false) {
-        _delete(context, dto);
+        if (mounted) {
+          _delete(context, dto);
+        }
       }
     }
   }
 
   Future<void> _delete(BuildContext context, GroupWithProjectsDTO dto) async {
-    state = state.copyWith(value: const AsyncLoading());
-    if (await service.deleteGroup(dto)) {
-      pop(context);
+    state = const AsyncLoading();
+    final result =
+        await ref.read(projectsPerGroupScreenServiceProvider).deleteGroup(dto);
+    if (result) {
+      await ref.refresh(homePageDataProvider.future);
+      if (mounted) {
+        pop(context);
+      }
     }
   }
 
   void changeElevation(ScrollController controller) {
     if (controller.offset > 0) {
-      state.copyWith(showElevation: true);
+      state = AsyncData(state.value!.copyWith(showElevation: true));
     } else {
-      state.copyWith(showElevation: false);
+      state = AsyncData(state.value!.copyWith(showElevation: false));
     }
   }
 }
 
-final groupsListScreenControllerProvider = StateNotifierProvider.autoDispose<
-    ProjectsPerGroupScreenController, ProjectsPerGroupScreenState>((ref) {
-  final service = ref.watch(projectsPerGroupScreenServiceProvider);
-  return ProjectsPerGroupScreenController(service: service);
-});
-
-final dataProvider = StreamProvider.autoDispose
+final groupWithProjectsDTOProvider = StreamProvider.autoDispose
     .family<GroupWithProjectsDTO, String>((ref, groupId) {
   final service = ref.watch(projectsPerGroupScreenServiceProvider);
   return service.watchData(groupId);
