@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:my_time/common/dialogs/bottom_sheet_dialog.dart';
 import 'package:my_time/common/widgets/custom_expansion_tile.dart';
@@ -90,19 +89,11 @@ class GroupsListScreenController extends _$GroupsListScreenController {
   void onProjectTileTap(
       BuildContext context, List<ProjectDTO> projects, int index) {
     context.pushNamed(AppRoute.project, params: {
-      'pid': projects[index].name,
+      'pid': projects[index].id,
     });
     state.value!.expansionTile.currentState!.collapse();
   }
 }
-
-
-
-// final groupsListScreenControllerProvider = StateNotifierProvider.autoDispose<
-//     GroupsListScreenController, GroupsListState>((ref) {
-//   final service = ref.watch(homePageServiceProvider);
-//   return GroupsListScreenController(homePageService: service);
-// });
 
 final homePageDataProvider = StreamProvider.autoDispose<HomePageDTO>((ref) {
   final homePageService = ref.watch(homePageServiceProvider);

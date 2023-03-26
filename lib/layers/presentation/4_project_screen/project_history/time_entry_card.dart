@@ -6,7 +6,7 @@ import 'package:my_time/layers/domain/time_entry.dart';
 import 'package:my_time/global/globals.dart';
 
 class TimeEntryCard extends StatelessWidget {
-  final TimeEntry timeEntry;
+  final TimeEntryDTO timeEntry;
   final Function? onClick;
   const TimeEntryCard({super.key, required this.timeEntry, required this.onClick});
 

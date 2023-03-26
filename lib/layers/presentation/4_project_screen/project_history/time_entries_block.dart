@@ -5,8 +5,8 @@ import 'package:my_time/layers/presentation/4_project_screen/project_history/tim
 import 'package:my_time/global/globals.dart';
 
 class TimeEntriesBlock extends StatelessWidget {
-  final List<TimeEntry> timeEntries;
-  final Function(TimeEntry entry) onClick;
+  final List<TimeEntryDTO> timeEntries;
+  final Function(TimeEntryDTO entry) onClick;
 
   const TimeEntriesBlock(
       {super.key, required this.timeEntries, required this.onClick});

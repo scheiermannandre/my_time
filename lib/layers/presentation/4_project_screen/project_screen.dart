@@ -12,38 +12,56 @@ import 'package:my_time/common/widgets/nav_bar/nav_bar.dart';
 
 class ProjectScreen extends HookConsumerWidget {
   const ProjectScreen({super.key, required this.projectId});
-
   final String projectId;
-  
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final controller = ref.watch(projectScreenControllerProvider.notifier);
-    final timerData = ref.watch(timerDataProvider(projectId));
+    final project = ref.watch(projectNameProvider(projectId));
     final pageController = usePageController(initialPage: 0);
-    final animationController = useAnimationController(
-      duration: const Duration(milliseconds: 2000),
-      reverseDuration: const Duration(milliseconds: 2000),
-    );
     final sheetController = useAnimationController(
       duration: const Duration(milliseconds: 350),
     );
-
+    String projectTitle =
+        project.hasValue && !project.hasError && !project.isLoading
+            ? project.value!.name
+            : "";
     return Scaffold(
       backgroundColor: GlobalProperties.backgroundColor,
       appBar: CustomAppBar(
-        title: projectId,
+        title: projectTitle,
         actions: [
+          project.hasValue
+              ? IconButton(
+                  onPressed: () => controller.markAsFavourite(project.value!),
+                  icon: project.value!.isMarkedAsFavourite
+                      ? const Icon(
+                          Icons.star,
+                          color: Colors.black,
+                        )
+                      : const Icon(Icons.star_border),
+                )
+              : IconButton(
+                  icon: const Icon(
+                    Icons.star_border,
+                    color: GlobalProperties.backgroundColor,
+                  ),
+                  onPressed: () {},
+                ),
           IconButton(
-            onPressed: () => controller.showDeleteBottomSheet(
-              context,
-              projectId,
-              sheetController,
-            ),
+            onPressed: () => project.hasValue
+                ? controller.showDeleteBottomSheet(
+                    context,
+                    project.value!,
+                    sheetController,
+                  )
+                : null,
             icon: const Icon(Icons.delete),
           ),
           IconButton(
-            onPressed: () =>
-                controller.pushNamedTimeEntryForm(context, projectId),
+            onPressed: () => project.hasValue
+                ? controller.pushNamedTimeEntryForm(context, projectId)
+                : null,
             icon: const Icon(Icons.add),
           ),
         ],
@@ -73,31 +91,15 @@ class ProjectScreen extends HookConsumerWidget {
         controller: pageController,
         onPageChanged: (index) {},
         children: <Widget>[
-          timerData.when(
-            data: (data) => ResponsiveAlign(
-              padding: const EdgeInsets.all(10),
-              alignment: Alignment.center,
-              child: TimerWidget(
-                controller: animationController,
-                duration: timerData.value!.duration,
-                onStartTimer: () => controller.startTimer(projectId),
-                onStopTimer: () => controller.stopTimer(projectId),
-                onPauseResumeTimer: () =>
-                    controller.pauseResumeTimer(projectId),
-                timerState: timerData.value!.state,
-              ),
-            ),
-            error: (error, stackTrace) => const Center(child: Text("ERROR")),
-            loading: () => const Center(
-              child: CircularProgressIndicator(),
+          ResponsiveAlign(
+            padding: const EdgeInsets.all(10),
+            alignment: Alignment.center,
+            child: TimerWidget(
+              projectId: projectId,
             ),
           ),
           ProjectHistory(
-            onClicked: (entry) => controller.pushNamedTimeEntryForm(
-              context,
-              projectId,
-              entry,
-            ),
+            projectId: projectId,
           )
         ],
       ),

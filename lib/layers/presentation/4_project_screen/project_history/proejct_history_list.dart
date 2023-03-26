@@ -1,49 +1,54 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_time/common/extensions/date_time_extension.dart';
-import 'package:my_time/common/widgets/async_value_widget.dart';
-import 'package:my_time/layers/data/list_projects_repository.dart';
-import 'package:my_time/layers/domain/time_entry.dart';
+import 'package:my_time/common/widgets/loading_error_widget.dart';
 import 'package:my_time/layers/presentation/4_project_screen/project_history/labeled_block.dart';
+import 'package:my_time/layers/presentation/4_project_screen/project_screen_controller.dart';
 
-class ProjectHistory extends StatelessWidget {
-  final Function(TimeEntry id, ) onClicked;
+class ProjectHistory extends HookConsumerWidget {
+  final String projectId;
 
-  const ProjectHistory({super.key, required this.onClicked});
+  const ProjectHistory({super.key, required this.projectId});
 
   @override
-  Widget build(BuildContext context) {
-    return Consumer(
-      builder: (context, ref, child) {
-        final timeEntriesList = ref.watch(projectTimeEntriesProvider(""));
-        return AsyncValueWidget(
-          value: timeEntriesList,
-          data: (timeEntries) => timeEntries!.isEmpty
-              ? Center(
-                  child: Text(
-                    'No history available',
-                    style: Theme.of(context).textTheme.headline4,
-                  ),
-                )
-              : SingleChildScrollView(
-                  child: ListView.builder(
-                    itemCount: timeEntries.length,
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemBuilder: (context, index) {
-                      return LabeledBlock(
-                        onClicked: (entry) => onClicked(entry),
-                        timeEntries: timeEntries[index],
-                        label: timeEntries[index]
-                            .first
-                            .startTime
-                            .toMonthAndYearString(),
-                      );
-                    },
-                  ),
-                ),
-        );
-      },
+  Widget build(BuildContext context, WidgetRef ref) {
+    final projectScreenController =
+        ref.watch(projectScreenControllerProvider.notifier);
+
+    final timeEntriesList = ref.watch(projectTimeEntriesProvider(projectId));
+    return timeEntriesList.when(
+      data: (data) => data!.isEmpty
+          ? Center(
+              child: Text(
+                'No history available',
+                style: Theme.of(context).textTheme.headlineMedium,
+              ),
+            )
+          : SingleChildScrollView(
+              child: ListView.builder(
+                itemCount: data.length,
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemBuilder: (context, index) {
+                  return LabeledBlock(
+                    onClicked: (entry) =>
+                        projectScreenController.pushNamedTimeEntryForm(
+                      context,
+                      projectId,
+                      entry,
+                    ),
+                    timeEntries: data[index],
+                    label: data[index].first.startTime.toMonthAndYearString(),
+                  );
+                },
+              ),
+            ),
+      error: (error, stackTrace) => LoadingErrorWidget(
+        onRefresh: () {},
+      ),
+      loading: () => const Center(
+        child: CircularProgressIndicator(),
+      ),
     );
   }
 }

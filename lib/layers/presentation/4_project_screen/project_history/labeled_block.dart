@@ -4,8 +4,8 @@ import 'package:my_time/layers/domain/time_entry.dart';
 import 'package:my_time/layers/presentation/4_project_screen/project_history/time_entries_block.dart';
 
 class LabeledBlock extends StatelessWidget {
-  final List<TimeEntry> timeEntries;
-  final Function(TimeEntry entry) onClicked;
+  final List<TimeEntryDTO> timeEntries;
+  final Function(TimeEntryDTO entry) onClicked;
   final String label;
   const LabeledBlock(
       {super.key,

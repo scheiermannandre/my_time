@@ -6,4 +6,8 @@ abstract class ProjectsRepository {
   Future<List<ProjectDTO>> fetchProjectsByGroupId(String groupId);
   Stream<List<ProjectDTO>> watchProjectsByGroupId(String groupId);
   Future<bool> deleteProjects(List<ProjectDTO> projects);
+  Future<bool> deleteProject(ProjectDTO project);
+  Future<void> changeProjectsIsFavouriteState(ProjectDTO project);
+  Future<void> updateProject(ProjectDTO project);
+  Future<ProjectDTO?> fetchProject(String projectId);
 }

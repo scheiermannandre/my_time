@@ -48,7 +48,7 @@ class AddProjectScreenController extends _$AddProjectScreenController {
     }
     final project = ProjectDTO(
       name: projectName,
-      parentId: state.value!.selectedGroup!.id,
+      groupId: state.value!.selectedGroup!.id,
     );
     if (await _addProject(
       project,
@@ -62,7 +62,7 @@ class AddProjectScreenController extends _$AddProjectScreenController {
 
   Future<void> _refreshData(ProjectDTO project) async {
     await ref.refresh(homePageDataProvider.future);
-    await ref.refresh(groupWithProjectsDTOProvider(project.parentId).future);
+    await ref.refresh(groupWithProjectsDTOProvider(project.groupId).future);
   }
 
   Future<bool> _addProject(ProjectDTO project) async {

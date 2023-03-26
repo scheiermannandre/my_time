@@ -1,53 +1,56 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:my_time/common/widgets/loading_error_widget.dart';
 import 'package:my_time/constants/app_sizes.dart';
+import 'package:my_time/layers/presentation/4_project_screen/project_screen_controller.dart';
 import 'package:my_time/layers/presentation/4_project_screen/project_timer/time_display.dart';
 import 'package:my_time/layers/presentation/4_project_screen/staggered_buttons.dart';
-import 'package:my_time/layers/presentation/5_time_entry_form/domain/custom_timer.dart';
 
-class TimerWidget extends StatefulWidget {
-  // late CustomTimer timer;
-  final Duration duration;
-  final AnimationController controller;
-  late EdgeInsets padding;
-  final VoidCallback onStartTimer;
-  final VoidCallback onStopTimer;
-  final VoidCallback onPauseResumeTimer;
-  final TimerState timerState;
+class TimerWidget extends HookConsumerWidget {
+  final EdgeInsets padding;
+  final String projectId;
 
-  TimerWidget({
+  const TimerWidget({
     super.key,
-    //required this.timer,
-    required this.controller,
     this.padding = const EdgeInsets.only(left: 15, right: 15),
-    required this.duration,
-    required this.onStartTimer,
-    required this.onStopTimer,
-    required this.onPauseResumeTimer,
-    required this.timerState,
+    required this.projectId,
   });
 
   @override
-  State<TimerWidget> createState() => _TimerWidgetState();
-}
-
-class _TimerWidgetState extends State<TimerWidget> {
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-        TimeDisplay(duration: widget.duration),
-        SizedBox(
-          height: gapH52.height!,
-          child: StaggeredButtons(
-            controller: widget.controller,
-            timerState: widget.timerState,
-            onStart: widget.onStartTimer,
-            onFinish: widget.onStopTimer,
-            onPause: widget.onPauseResumeTimer,
+  Widget build(BuildContext context, WidgetRef ref) {
+    final projectScreenController =
+        ref.watch(projectScreenControllerProvider.notifier);
+    final timerData = ref.watch(timerDataProvider(projectId));
+    final animationController = useAnimationController(
+      duration: const Duration(milliseconds: 2000),
+      reverseDuration: const Duration(milliseconds: 2000),
+    );
+    return timerData.when(
+      data: (data) => Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          TimeDisplay(duration: timerData.value!.duration),
+          SizedBox(
+            height: gapH52.height!,
+            child: StaggeredButtons(
+              controller: animationController,
+              timerState: timerData.value!.state,
+              onStart: () => projectScreenController.startTimer(projectId),
+              onFinish: () =>
+                  projectScreenController.stopTimer(context, projectId),
+              onPause: () =>
+                  projectScreenController.pauseResumeTimer(projectId),
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
+      error: (error, stackTrace) => LoadingErrorWidget(
+        onRefresh: () {},
+      ),
+      loading: () => const Center(
+        child: CircularProgressIndicator(),
+      ),
     );
   }
 }
