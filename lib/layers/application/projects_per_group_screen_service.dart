@@ -43,9 +43,6 @@ class ProjectsPerGroupScreenService {
 
   Future<bool> deleteGroup(GroupWithProjectsDTO dto) async {
     bool deleteGroupResult = await groupsRepository.deleteGroup(dto.group.id);
-    bool deleteProjectsResult =
-        await projectsRespository.deleteProjects(dto.projects);
-    //ToDo if deleteProjects fails restore group!
     return deleteGroupResult;
   }
 }

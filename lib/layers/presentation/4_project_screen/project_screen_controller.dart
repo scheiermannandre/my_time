@@ -91,13 +91,11 @@ class ProjectScreenController extends _$ProjectScreenController {
   }
 
   Future<void> markAsFavourite(ProjectDTO project) async {
-    project =
-        project.copyWith(isMarkedAsFavourite: !project.isMarkedAsFavourite);
-    print(project.toString());
-    ref
-        .read(projectsRepositoryProvider)
-        .changeProjectsIsFavouriteState(project);
-    await ref.refresh(projectNameProvider(project.id).future);
+    project = project.copyWith(
+      isMarkedAsFavourite: !project.isMarkedAsFavourite,
+    );
+    await ref.read(projectsRepositoryProvider).updateIsFavouriteState(project);
+    await ref.refresh(projectProvider(project.id).future);
     await ref.refresh(homePageDataProvider.future);
   }
 
@@ -182,7 +180,7 @@ final projectTimeEntriesProvider = StreamProvider.autoDispose
   return service.watchAllEntriesGroupedByMonth(projectId);
 });
 
-final projectNameProvider = FutureProvider.autoDispose
+final projectProvider = FutureProvider.autoDispose
     .family<ProjectDTO?, String>((ref, projectId) async {
   final projectRepo = ref.read(projectsRepositoryProvider);
   return await projectRepo.fetchProject(projectId);

@@ -1,15 +1,15 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:uuid/uuid.dart';
 
-class TimeEntry {
-  final String id;
-  late DateTime startTime;
-  late DateTime endTime;
-  late Duration totalTime;
-  late Duration breakTime;
-  late String description;
-  TimeEntry(this.id, this.startTime, this.endTime, this.totalTime);
-}
+// class TimeEntry {
+//   final String id;
+//   late DateTime startTime;
+//   late DateTime endTime;
+//   late Duration totalTime;
+//   late Duration breakTime;
+//   late String description;
+//   TimeEntry(this.id, this.startTime, this.endTime, this.totalTime);
+// }
 
 class TimeEntryDTO {
   final String id;

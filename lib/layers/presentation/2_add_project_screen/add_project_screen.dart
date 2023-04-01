@@ -20,7 +20,8 @@ class AddProjectScreen extends HookConsumerWidget {
     final projectNameController = useTextEditingController(text: '');
     final controller =
         ref.watch(addProjectScreenControllerProvider(groupId ?? "").notifier);
-    final state = ref.watch(addProjectScreenControllerProvider(groupId ?? "")).value;
+    final state =
+        ref.watch(addProjectScreenControllerProvider(groupId ?? "")).value;
 
     final AsyncValue<List<GroupDTO>> groupsListValue;
     if (groupId == null) {

@@ -10,7 +10,6 @@ import 'package:my_time/layers/presentation/4_project_screen/staggered_buttons.d
 class TimerWidget extends HookConsumerWidget {
   final EdgeInsets padding;
   final String projectId;
-
   const TimerWidget({
     super.key,
     this.padding = const EdgeInsets.only(left: 15, right: 15),

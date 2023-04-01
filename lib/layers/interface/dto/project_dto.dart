@@ -8,7 +8,7 @@ class ProjectDTO {
   })  : id = const Uuid().v1(),
         isMarkedAsFavourite = false;
 
-  ProjectDTO._private({
+  ProjectDTO.factory({
     required this.name,
     required this.groupId,
     required this.id,
@@ -25,7 +25,7 @@ class ProjectDTO {
     String? id,
     bool? isMarkedAsFavourite,
   }) {
-    return ProjectDTO._private(
+    return ProjectDTO.factory(
       groupId: groupId ?? this.groupId,
       name: name ?? this.name,
       id: id ?? this.id,
@@ -36,20 +36,19 @@ class ProjectDTO {
   @override
   bool operator ==(covariant ProjectDTO other) {
     if (identical(this, other)) return true;
-  
-    return 
-      other.groupId == groupId &&
-      other.name == name &&
-      other.id == id &&
-      other.isMarkedAsFavourite == isMarkedAsFavourite;
+
+    return other.groupId == groupId &&
+        other.name == name &&
+        other.id == id &&
+        other.isMarkedAsFavourite == isMarkedAsFavourite;
   }
 
   @override
   int get hashCode {
     return groupId.hashCode ^
-      name.hashCode ^
-      id.hashCode ^
-      isMarkedAsFavourite.hashCode;
+        name.hashCode ^
+        id.hashCode ^
+        isMarkedAsFavourite.hashCode;
   }
 
   @override

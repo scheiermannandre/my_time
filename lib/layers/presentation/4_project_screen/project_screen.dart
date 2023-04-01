@@ -17,7 +17,7 @@ class ProjectScreen extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final controller = ref.watch(projectScreenControllerProvider.notifier);
-    final project = ref.watch(projectNameProvider(projectId));
+    final project = ref.watch(projectProvider(projectId));
     final pageController = usePageController(initialPage: 0);
     final sheetController = useAnimationController(
       duration: const Duration(milliseconds: 350),
