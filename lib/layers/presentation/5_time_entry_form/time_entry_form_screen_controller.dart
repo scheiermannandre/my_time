@@ -19,9 +19,10 @@ class TimeEntryFormScreenController extends _$TimeEntryFormScreenController {
   // An [Object] instance is equal to itself only.
   bool get mounted => current == initial;
   @override
-  FutureOr<TimeEntryFormScreenState> build(String? id) {
+  FutureOr<TimeEntryFormScreenState> build(
+      String projectId, String? timeEntryid) {
     ref.onDispose(() => current = Object());
-    return TimeEntryFormScreenState(id);
+    return TimeEntryFormScreenState(projectId, timeEntryid);
   }
 
   void init({TimeEntryDTO? entry}) {
@@ -45,8 +46,24 @@ class TimeEntryFormScreenController extends _$TimeEntryFormScreenController {
     bool isFormValid = state.value!.formKey.currentState!.validate();
     if (isFormValid) {
       final data = state.value!.getEntry();
-      await ref.read(timeEntriesRepositoryProvider).saveTimeEntry(data);
-      await ref.refresh(projectTimeEntriesProvider(data.projectId));
+      final result =
+          await ref.read(timeEntriesRepositoryProvider).saveTimeEntry(data);
+      if (result) {
+        await ref.refresh(projectTimeEntriesProvider(data.projectId).future);
+        if (mounted) {
+          context.pop();
+        }
+      }
+    }
+  }
+
+  void deleteEntry(BuildContext context, TimeEntryDTO entry) async {
+    final data = state.value!.getEntry();
+
+    final result =
+        await ref.read(timeEntriesRepositoryProvider).deleteEntry(data);
+    if (result) {
+      await ref.refresh(projectTimeEntriesProvider(data.projectId).future);
       if (mounted) {
         context.pop();
       }
@@ -71,17 +88,18 @@ class TimeEntryFormScreenState {
   late TimeEntryDTO timeEntry;
   late TimeEntryDTO defaultEntry;
 
-  TimeEntryFormScreenState(String? id) {
-    id = id ?? "";
+  TimeEntryFormScreenState(String projectId, String? timeEntryId) {
+    timeEntryId = timeEntryId ?? "";
     DateTime startTime;
     DateTime endTime;
     Duration totalTime;
     DateTime now = DateTime.now();
-    totalTime = const Duration(hours: 9);
+    const int defaultWorkingTime = 8;
+    totalTime = const Duration(hours: defaultWorkingTime);
     startTime = DateTime(now.year, now.month, now.day).add(totalTime);
-    endTime = startTime.add(const Duration(hours: 8));
+    endTime = startTime.add(const Duration(hours: defaultWorkingTime));
     defaultEntry = TimeEntryDTO(
-      projectId: "ERROR ",
+      projectId: projectId,
       startTime: startTime,
       endTime: endTime,
       totalTime: totalTime,

@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 import 'package:my_time/common/extensions/date_time_extension.dart';
 import 'package:my_time/common/extensions/iterable_extension.dart';
 import 'package:my_time/common/extensions/duration_extension.dart';
@@ -15,14 +16,11 @@ class TimeEntriesRepository {
   Future<List<List<TimeEntryDTO>>> getAllProjectEntriesGroupedByMonth(
       String projectId) async {
     List<List<TimeEntryDTO>> groupedLists = [];
-
     final project = realm.all<Project>().query("id == '$projectId'").first;
     final entriesDB = project.timeEntries.toList();
-    final test = realm.all<TimeEntry>().toList();
-
     List<TimeEntryDTO> entries = [];
     for (var element in entriesDB) {
-      entries.add(convertEntryFromDB(element));
+      entries.add(_convertEntryFromDB(element));
     }
     if (entries.isEmpty) {
       return groupedLists;
@@ -52,6 +50,11 @@ class TimeEntriesRepository {
     final project =
         realm.all<Project>().query("id == '${entry.projectId}'").first;
 
+    final entries = project.timeEntries.toList();
+    if (_checkSameDateEntries(entry, entries)) {
+      return false;
+      //throw Exception("Overlap");
+    }
     await realm.writeAsync(() {
       final newEntryDB = TimeEntry(
         entry.id,
@@ -78,21 +81,50 @@ class TimeEntriesRepository {
     });
     return true;
   }
+  Future<bool> deleteEntry(TimeEntryDTO entry) async {
+    final entryDB = realm.all<TimeEntry>().query("id == '${entry.id}'").first;
+    await realm.writeAsync(() {
+      realm.delete<TimeEntry>(entryDB);
+    });
+    return true;
+  }
+
+  bool _checkSameDateEntries(
+      TimeEntryDTO newEntry, List<TimeEntry> currentEntries) {
+    final entriesSameDate = currentEntries.where((element) {
+      final elementDate = DateFormat('yyyy-MM-dd').format(element.startTime);
+      final entryDate = DateFormat('yyyy-MM-dd').format(newEntry.startTime);
+      if (elementDate == entryDate) {
+        return true;
+      }
+      return false;
+    });
+    bool dateRangesOverlap = false;
+
+    for (var element in entriesSameDate) {
+      final entryDB = _convertEntryFromDB(element);
+      dateRangesOverlap = newEntry.checkEntriesIntersect(entryDB);
+      if (dateRangesOverlap) {
+        break;
+      }
+    }
+    return dateRangesOverlap;
+  }
 
   Future<TimeEntryDTO?> getEntryById(String id) async {
     var entries = realm.all<TimeEntry>().query("id == '$id'");
     if (entries.isEmpty) {
       return null;
     }
-    return convertEntryFromDB(entries.first);
+    return _convertEntryFromDB(entries.first);
   }
 
-  TimeEntryDTO convertEntryFromDB(TimeEntry entryDB) {
+  TimeEntryDTO _convertEntryFromDB(TimeEntry entryDB) {
     return TimeEntryDTO.factory(
         id: entryDB.id,
         projectId: entryDB.projectId,
-        startTime: entryDB.startTime,
-        endTime: entryDB.endTime,
+        startTime: entryDB.startTime.toLocal(),
+        endTime: entryDB.endTime.toLocal(),
         totalTime: DurationExtension.parseDuration(entryDB.totalTimeStr),
         breakTime: DurationExtension.parseDuration(entryDB.breakTimeStr),
         description: entryDB.description);

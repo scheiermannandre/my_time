@@ -88,13 +88,15 @@ final goRouter = GoRouter(
           path: 'timeentryform',
           name: AppRoute.timeEntryForm,
           pageBuilder: (context, state) {
-            final id = state.queryParams['tid'] ?? "";
+            final projectID = state.params['pid'] ?? "";
+            final tid = state.queryParams['tid'] ?? "";
             final String projectName = state.queryParams['pname'] ?? "";
             return MaterialPage(
               key: state.pageKey,
               fullscreenDialog: false,
               child: TimeEntryFormScreen(
-                id,
+                timeEntryId: tid,
+                projectId: projectID,
                 projectName: projectName,
               ),
             );

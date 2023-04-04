@@ -13,12 +13,10 @@ class HomePageService {
   final ProjectsRepository projectsRespository;
 
   Future<List<GroupDTO>> getGroups() async {
-    await Future.delayed(const Duration(seconds: 2));
     return await groupsRepository.fetchGroups();
   }
 
   Future<List<ProjectDTO>> getFavouriteProjects() async {
-    await Future.delayed(const Duration(seconds: 2));
     return await projectsRespository.fetchFavouriteProjects();
   }
 
@@ -30,7 +28,6 @@ class HomePageService {
 
   Stream<HomePageDTO> watchData() async* {
     while (true) {
-      await Future.delayed(const Duration(milliseconds: 500));
       try {
         yield* Stream.fromFuture(fetchHomePageData());
       } catch (ex) {

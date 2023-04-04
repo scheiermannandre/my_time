@@ -27,23 +27,23 @@ class ProjectScreenController extends _$ProjectScreenController {
     ref.onDispose(() => current = Object());
   }
 
-  void startTimer(String projectId) {
-    ref.read(projectsScreenServiceProvider).startTimer(projectId);
+  void startTimer(ProjectDTO project) {
+    ref.read(projectsScreenServiceProvider).startTimer(project.id);
   }
 
-  void stopTimer(BuildContext context, String projectId) async {
+  void stopTimer(BuildContext context, ProjectDTO project) async {
     final entry =
-        await ref.read(projectsScreenServiceProvider).stopTimer(projectId);
+        await ref.read(projectsScreenServiceProvider).stopTimer(project.id);
     if (entry != null) {
-      await ref.refresh(projectTimeEntriesProvider(projectId).future);
+      await ref.refresh(projectTimeEntriesProvider(project.id).future);
       if (mounted) {
-        pushNamedTimeEntryForm(context, projectId, entry);
+        pushNamedTimeEntryForm(context, project, entry);
       }
     }
   }
 
-  void pauseResumeTimer(String projectId) {
-    ref.read(projectsScreenServiceProvider).pauseResumeTimer(projectId);
+  void pauseResumeTimer(ProjectDTO project) {
+    ref.read(projectsScreenServiceProvider).pauseResumeTimer(project.id);
   }
 
   void onItemTapped(PageController controller, int index) {
@@ -54,15 +54,15 @@ class ProjectScreenController extends _$ProjectScreenController {
     );
   }
 
-  void pushNamedTimeEntryForm(BuildContext context, String projectId,
+  void pushNamedTimeEntryForm(BuildContext context, ProjectDTO project,
       [TimeEntryDTO? entry]) {
     String tid = entry?.id ?? "";
     return context.pushNamed(
       AppRoute.timeEntryForm,
       params: {
-        'pid': projectId,
+        'pid': project.id,
       },
-      queryParams: {'tid': tid},
+      queryParams: {'tid': tid, 'pname': project.name},
     );
   }
 

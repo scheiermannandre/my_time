@@ -8,25 +8,26 @@ import 'package:my_time/layers/presentation/5_time_entry_form/time_entry_form_wi
 import 'package:my_time/global/globals.dart';
 
 class TimeEntryFormScreen extends ConsumerWidget {
-
-  late String? id;
+  final String? timeEntryId;
+  final String projectId;
   final String projectName;
 
-  TimeEntryFormScreen(
-    this.id, {
+  const TimeEntryFormScreen({
     super.key,
+    required this.timeEntryId,
+    required this.projectId,
     required this.projectName,
   });
 
-  
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final controller =
-        ref.watch(timeEntryFormScreenControllerProvider(id).notifier);
-    final state = ref.watch(timeEntryFormScreenControllerProvider(id)).value;
-    final value = ref.watch(projectTimeEntryProvider(id!));
-    String localId = id ?? "";
+    final controller = ref.watch(
+        timeEntryFormScreenControllerProvider(projectId, timeEntryId).notifier);
+    final state = ref
+        .watch(timeEntryFormScreenControllerProvider(projectId, timeEntryId))
+        .value;
+    final entry = ref.watch(projectTimeEntryProvider(timeEntryId!));
+    String localId = timeEntryId ?? "";
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -39,6 +40,14 @@ class TimeEntryFormScreen extends ConsumerWidget {
             icon: const Icon(Icons.arrow_back,
                 color: GlobalProperties.textAndIconColor),
             onPressed: () => context.pop()),
+        actions: [
+          entry.value != null
+              ? IconButton(
+                  icon: const Icon(Icons.delete,
+                      color: GlobalProperties.textAndIconColor),
+                  onPressed: () => controller.deleteEntry(context, entry.value!))
+              : const SizedBox.shrink(),
+        ],
       ),
       bottomNavigationBar: NavBarSubmitButton(
         isLoading: false,
@@ -63,7 +72,7 @@ class TimeEntryFormScreen extends ConsumerWidget {
                   state.validateTotalTimePositive(),
             )
           : AsyncValueWidget(
-              value: value,
+              value: entry,
               data: (entry) => entry == null
                   ? Center(
                       child: Text(

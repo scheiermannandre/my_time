@@ -57,7 +57,6 @@ class ProjectsScreenService {
 
   Stream<List<List<TimeEntryDTO>>?> watchAllEntriesGroupedByMonth(
       String projectId) async* {
-    await Future.delayed(const Duration(milliseconds: 1000));
     final timeEntriesRepository = ref.read(timeEntriesRepositoryProvider);
 
     yield* Stream.fromFuture(

@@ -7,7 +7,7 @@ part of 'time_entry_form_screen_controller.dart';
 // **************************************************************************
 
 String _$timeEntryFormScreenControllerHash() =>
-    r'92ac718f96a6e1992f18a67b3c940c5b4cce33e1';
+    r'c73b9555afa08e16e5bacea7d7a11fcdc996f99c';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -32,10 +32,12 @@ class _SystemHash {
 
 abstract class _$TimeEntryFormScreenController
     extends BuildlessAutoDisposeAsyncNotifier<TimeEntryFormScreenState> {
-  late final String? id;
+  late final String projectId;
+  late final String? timeEntryid;
 
   FutureOr<TimeEntryFormScreenState> build(
-    String? id,
+    String projectId,
+    String? timeEntryid,
   );
 }
 
@@ -52,10 +54,12 @@ class TimeEntryFormScreenControllerFamily
 
   /// See also [TimeEntryFormScreenController].
   TimeEntryFormScreenControllerProvider call(
-    String? id,
+    String projectId,
+    String? timeEntryid,
   ) {
     return TimeEntryFormScreenControllerProvider(
-      id,
+      projectId,
+      timeEntryid,
     );
   }
 
@@ -64,7 +68,8 @@ class TimeEntryFormScreenControllerFamily
     covariant TimeEntryFormScreenControllerProvider provider,
   ) {
     return call(
-      provider.id,
+      provider.projectId,
+      provider.timeEntryid,
     );
   }
 
@@ -89,9 +94,12 @@ class TimeEntryFormScreenControllerProvider
         TimeEntryFormScreenState> {
   /// See also [TimeEntryFormScreenController].
   TimeEntryFormScreenControllerProvider(
-    this.id,
+    this.projectId,
+    this.timeEntryid,
   ) : super.internal(
-          () => TimeEntryFormScreenController()..id = id,
+          () => TimeEntryFormScreenController()
+            ..projectId = projectId
+            ..timeEntryid = timeEntryid,
           from: timeEntryFormScreenControllerProvider,
           name: r'timeEntryFormScreenControllerProvider',
           debugGetCreateSourceHash:
@@ -103,17 +111,21 @@ class TimeEntryFormScreenControllerProvider
               TimeEntryFormScreenControllerFamily._allTransitiveDependencies,
         );
 
-  final String? id;
+  final String projectId;
+  final String? timeEntryid;
 
   @override
   bool operator ==(Object other) {
-    return other is TimeEntryFormScreenControllerProvider && other.id == id;
+    return other is TimeEntryFormScreenControllerProvider &&
+        other.projectId == projectId &&
+        other.timeEntryid == timeEntryid;
   }
 
   @override
   int get hashCode {
     var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, id.hashCode);
+    hash = _SystemHash.combine(hash, projectId.hashCode);
+    hash = _SystemHash.combine(hash, timeEntryid.hashCode);
 
     return _SystemHash.finish(hash);
   }
@@ -123,7 +135,8 @@ class TimeEntryFormScreenControllerProvider
     covariant TimeEntryFormScreenController notifier,
   ) {
     return notifier.build(
-      id,
+      projectId,
+      timeEntryid,
     );
   }
 }

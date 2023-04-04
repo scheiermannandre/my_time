@@ -2,20 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_time/common/extensions/date_time_extension.dart';
 import 'package:my_time/common/widgets/loading_error_widget.dart';
+import 'package:my_time/layers/interface/dto/project_dto.dart';
 import 'package:my_time/layers/presentation/4_project_screen/project_history/labeled_block.dart';
 import 'package:my_time/layers/presentation/4_project_screen/project_screen_controller.dart';
 
 class ProjectHistory extends HookConsumerWidget {
-  final String projectId;
+  final ProjectDTO project;
 
-  const ProjectHistory({super.key, required this.projectId});
+  const ProjectHistory({super.key, required this.project});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final projectScreenController =
         ref.watch(projectScreenControllerProvider.notifier);
 
-    final timeEntriesList = ref.watch(projectTimeEntriesProvider(projectId));
+    final timeEntriesList = ref.watch(projectTimeEntriesProvider(project.id));
     return timeEntriesList.when(
       data: (data) => data!.isEmpty
           ? Center(
@@ -34,7 +35,7 @@ class ProjectHistory extends HookConsumerWidget {
                     onClicked: (entry) =>
                         projectScreenController.pushNamedTimeEntryForm(
                       context,
-                      projectId,
+                      project,
                       entry,
                     ),
                     timeEntries: data[index],

@@ -60,7 +60,7 @@ class ProjectScreen extends HookConsumerWidget {
           ),
           IconButton(
             onPressed: () => project.hasValue
-                ? controller.pushNamedTimeEntryForm(context, projectId)
+                ? controller.pushNamedTimeEntryForm(context, project.value!)
                 : null,
             icon: const Icon(Icons.add),
           ),
@@ -86,23 +86,25 @@ class ProjectScreen extends HookConsumerWidget {
           ),
         ],
       ),
-      body: PageView(
+      body: project.hasValue
+              ?PageView(
         physics: const NeverScrollableScrollPhysics(),
         controller: pageController,
         onPageChanged: (index) {},
         children: <Widget>[
-          ResponsiveAlign(
-            padding: const EdgeInsets.all(10),
-            alignment: Alignment.center,
-            child: TimerWidget(
-              projectId: projectId,
-            ),
-          ),
+           ResponsiveAlign(
+                  padding: const EdgeInsets.all(10),
+                  alignment: Alignment.center,
+                  child: TimerWidget(
+                    project: project.value!,
+                  ),
+                ),
+              
           ProjectHistory(
-            projectId: projectId,
+            project: project.value!,
           )
         ],
-      ),
+      ): const SizedBox.shrink(),
     );
   }
 }

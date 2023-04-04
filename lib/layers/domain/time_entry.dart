@@ -59,4 +59,16 @@ class TimeEntryDTO {
       description: description ?? this.description,
     );
   }
+
+  bool checkEntriesIntersect(TimeEntryDTO entry2) {
+    bool intersect = _compareEntriesIntersection(this, entry2);
+    if (!intersect) {
+      intersect = _compareEntriesIntersection(entry2, this);
+    }
+    return intersect;
+  }
+  static bool _compareEntriesIntersection(TimeEntryDTO entry1, TimeEntryDTO entry2) {
+    return (entry1.startTime.isBefore(entry2.endTime) &&
+        entry2.startTime.isBefore(entry1.endTime));
+  }
 }
