@@ -42,7 +42,7 @@ class TimeEntryFormScreenController extends _$TimeEntryFormScreenController {
     state.value!.descriptionController.text = entry.description;
   }
 
-  void onBtnTap(BuildContext context) async {
+  void saveEntry(BuildContext context) async {
     bool isFormValid = state.value!.formKey.currentState!.validate();
     if (isFormValid) {
       final data = state.value!.getEntry();
@@ -111,27 +111,16 @@ class TimeEntryFormScreenState {
     return timeEntry.copyWith(description: descriptionController.text);
   }
 
-  String? validateStartDate(DateTime date) {
+  String? validateDate(DateTime date) {
     timeEntry = timeEntry.copyWith(
-      startTime: DateTime(date.year, date.month, date.day,
-          timeEntry.startTime.hour, timeEntry.startTime.minute),
-    );
-    timeEntry = timeEntry.copyWith(
-        totalTime: timeEntry.endTime.difference(timeEntry.startTime));
-
-    startDateController.text = timeEntry.startTime.toFormattedDateString();
-    totalTimeController.text = timeEntry.totalTime.toFormattedString();
-    formKey.currentState!.validate();
-    return null;
-  }
-
-  String? validateEndDate(DateTime date) {
-    timeEntry = timeEntry.copyWith(
+        startTime: DateTime(date.year, date.month, date.day,
+            timeEntry.startTime.hour, timeEntry.startTime.minute),
         endTime: DateTime(date.year, date.month, date.day,
             timeEntry.endTime.hour, timeEntry.endTime.minute));
     timeEntry = timeEntry.copyWith(
         totalTime: timeEntry.endTime.difference(timeEntry.startTime));
-    endDateController.text = date.toFormattedDateString();
+
+    startDateController.text = timeEntry.startTime.toFormattedDateString();
     totalTimeController.text = timeEntry.totalTime.toFormattedString();
     formKey.currentState!.validate();
     return null;

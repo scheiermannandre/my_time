@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:my_time/common/widgets/responsive_center.dart';
 import 'package:my_time/constants/breakpoints.dart';
@@ -7,13 +6,13 @@ import 'package:my_time/layers/presentation/5_time_entry_form/labeled_descriptio
 import 'package:my_time/layers/presentation/5_time_entry_form/time_pick_field.dart';
 
 class TimeEntryFormWidget extends StatelessWidget {
-  final TextEditingController startDateController;
+  final TextEditingController dateController;
   final TextEditingController startTimeController;
   final TextEditingController endTimeController;
   final TextEditingController totalTimeController;
   final TextEditingController descriptionController;
   final GlobalKey<FormState> formKey;
-  final String? Function(DateTime date) validateStartDate;
+  final String? Function(DateTime date) validateDate;
   final String? Function(TimeOfDay time) validateStartTime;
   final String? Function(TimeOfDay time) validateEndTime;
   final String? Function(TimeOfDay time) validateTotalTime;
@@ -22,13 +21,13 @@ class TimeEntryFormWidget extends StatelessWidget {
 
   const TimeEntryFormWidget(
       {super.key,
-      required this.startDateController,
+      required this.dateController,
       required this.startTimeController,
       required this.endTimeController,
       required this.totalTimeController,
       required this.descriptionController,
       required this.formKey,
-      required this.validateStartDate,
+      required this.validateDate,
       required this.validateStartTime,
       required this.validateEndTime,
       required this.validateTotalTime,
@@ -49,8 +48,8 @@ class TimeEntryFormWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               LabeledDateFormField(
-                validateDate: (date) => validateStartDate(date),
-                dateController: startDateController,
+                validateDate: (date) => validateDate(date),
+                dateController: dateController,
                 label: "Date",
                 helpTextDate: "Start Date",
                 helpTextTime: "Start Time",

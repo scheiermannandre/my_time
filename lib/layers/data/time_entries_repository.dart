@@ -46,14 +46,10 @@ class TimeEntriesRepository {
     return groupedLists;
   }
 
-  Future<bool> saveTimeEntry(TimeEntryDTO entry) async {
-    final project =
-        realm.all<Project>().query("id == '${entry.projectId}'").first;
-
-    final entries = project.timeEntries.toList();
-    if (_checkSameDateEntries(entry, entries)) {
-      return false;
-      //throw Exception("Overlap");
+  Future<bool> addTimeEntry(Project project, TimeEntryDTO entry) async {
+    if (_checkSameDateEntries(entry, project.timeEntries)) {
+      //return false;
+      throw Exception("Given Timerange is overlapping with an existing Timerange!");
     }
     await realm.writeAsync(() {
       final newEntryDB = TimeEntry(
@@ -66,21 +62,36 @@ class TimeEntriesRepository {
         entry.breakTime.toString(),
         description: entry.description,
       );
-      final entryDB = project.timeEntries
-          .firstWhereOrNull((element) => element.id == newEntryDB.id);
-
-      if (entryDB == null) {
-        project.timeEntries.add(newEntryDB);
-      } else {
-        entryDB.startTime = newEntryDB.startTime;
-        entryDB.endTime = newEntryDB.endTime;
-        entryDB.totalTimeStr = newEntryDB.totalTimeStr;
-        entryDB.breakTimeStr = newEntryDB.breakTimeStr;
-        entryDB.description = newEntryDB.description;
-      }
+      project.timeEntries.add(newEntryDB);
     });
     return true;
   }
+
+  Future<bool> updateTimeEntry(
+      TimeEntry entry, TimeEntryDTO updatedEntry) async {
+    await realm.writeAsync(() {
+      entry.startTime = updatedEntry.startTime;
+      entry.endTime = updatedEntry.endTime;
+      entry.totalTimeStr = updatedEntry.totalTime.toString();
+      entry.breakTimeStr = updatedEntry.breakTime.toString();
+      entry.description = updatedEntry.description;
+    });
+    return true;
+  }
+
+  Future<bool> saveTimeEntry(TimeEntryDTO entry) async {
+    final project =
+        realm.all<Project>().query("id == '${entry.projectId}'").first;
+    final entries = project.timeEntries.toList();
+    final entryDB = entries.firstWhereOrNull(
+      (element) => element.id == entry.id,
+    );
+    if (entryDB == null) {
+      return await addTimeEntry(project, entry);
+    }
+    return await updateTimeEntry(entryDB, entry);
+  }
+
   Future<bool> deleteEntry(TimeEntryDTO entry) async {
     final entryDB = realm.all<TimeEntry>().query("id == '${entry.id}'").first;
     await realm.writeAsync(() {

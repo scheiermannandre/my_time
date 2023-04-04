@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:my_time/common/widgets/responsive_center.dart';
+import 'package:my_time/constants/app_sizes.dart';
 import 'package:my_time/global/globals.dart';
 import 'package:my_time/router/app_route.dart';
 
 class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
   final String title;
   final ScrollController? controller;
-  final List<IconButton>? actions;
+  final List<Widget>? actions;
   CustomAppBar({super.key, required this.title, this.controller, this.actions})
       : preferredSize = const Size.fromHeight(kToolbarHeight * 1);
 
@@ -84,19 +85,23 @@ class _CustomAppBarState extends State<CustomAppBar> {
               height: kToolbarHeight,
               child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     IconButton(
                       onPressed: () => pop(),
                       icon: const Icon(Icons.arrow_back),
                     ),
-                    Text(
-                      widget.title,
-                      style: const TextStyle(
-                          fontSize: 28,
-                          color: GlobalProperties.textAndIconColor,
-                          fontWeight: FontWeight.w500),
+                    gapW8,
+                    Expanded(
+                      child: Text(
+                        widget.title,
+                        style: const TextStyle(
+                            fontSize: 28,
+                            color: GlobalProperties.textAndIconColor,
+                            fontWeight: FontWeight.w500),
+                      ),
                     ),
+                    gapW8,
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
