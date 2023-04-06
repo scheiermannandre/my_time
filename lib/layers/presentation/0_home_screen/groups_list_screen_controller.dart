@@ -95,7 +95,8 @@ class GroupsListScreenController extends _$GroupsListScreenController {
   }
 }
 
-final homePageDataProvider = StreamProvider.autoDispose<HomePageDTO>((ref) {
+final homePageDataProvider =
+    StreamProvider.autoDispose<HomePageDTO>((ref) {
   final homePageService = ref.watch(homePageServiceProvider);
   return homePageService.watchData();
 });

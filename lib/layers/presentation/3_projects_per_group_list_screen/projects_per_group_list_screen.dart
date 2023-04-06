@@ -5,8 +5,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_time/common/widgets/appbar/custom_app_bar.dart';
 import 'package:my_time/common/widgets/custom_list_tile.dart';
 import 'package:my_time/common/widgets/loading_error_widget.dart';
+import 'package:my_time/common/widgets/no_items_found_widget.dart';
 import 'package:my_time/common/widgets/responsive_center.dart';
-import 'package:my_time/constants/breakpoints.dart';
 import 'package:my_time/global/globals.dart';
 import 'package:my_time/layers/presentation/3_projects_per_group_list_screen/projects_per_group_screen_controller.dart';
 import 'package:my_time/layers/presentation/3_projects_per_group_list_screen/projects_per_group_screen_loading_state.dart';
@@ -82,76 +82,17 @@ class ProjectsPerGroupListScreen extends HookConsumerWidget {
             ),
             child: data.when(
               data: (dto) => dto.projects.isEmpty
-                  ? ResponsiveAlign(
-                      maxContentWidth: Breakpoint.mobile,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          const Icon(
-                            //Icons.wifi_off_sharp,
-                            Icons.search,
-                            size: 60,
-                          ),
-                          const Padding(
-                            padding: EdgeInsets.symmetric(vertical: 5),
-                            child: Text(
-                              "No Projects found",
-                              style: TextStyle(
-                                  fontSize: 24, fontWeight: FontWeight.w500),
-                            ),
-                          ),
-                          const Padding(
-                            padding: EdgeInsets.symmetric(vertical: 5),
-                            child: Text(
-                              "Click on the button below to add a new Project",
-                              style: TextStyle(fontSize: 16),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 10),
-                            child: ElevatedButton(
-                              onPressed: () => !state.isLoading
-                                  ? controller.pushNamedAddProject(
-                                      context,
-                                      dto,
-                                    )
-                                  : null,
-                              style: ElevatedButton.styleFrom(
-                                padding:
-                                    const EdgeInsets.fromLTRB(0, 12.5, 0, 12.5),
-                                backgroundColor:
-                                    GlobalProperties.secondaryAccentColor,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius:
-                                      BorderRadius.circular(5), // <-- Radius
-                                ),
-                              ),
-                              child: Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 16),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: const [
-                                    Text(
-                                      "Create New Project",
-                                      style: TextStyle(
-                                          color:
-                                              GlobalProperties.textAndIconColor,
-                                          fontSize: 18),
-                                    ),
-                                    Icon(
-                                      Icons.add,
-                                      color: GlobalProperties.textAndIconColor,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
+                  ? NoItemsFoundWidget(
+                      onBtnTap: () => !state.isLoading
+                          ? controller.pushNamedAddProject(
+                              context,
+                              dto,
+                            )
+                          : null,
+                      title: "No Projects found",
+                      description:
+                          "Click on the button below to add a new Project",
+                      btnLabel: "Create new Project",
                     )
                   : ResponsiveAlign(
                       alignment: Alignment.topCenter,

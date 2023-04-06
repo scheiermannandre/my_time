@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_time/common/common.dart';
+import 'package:my_time/common/widgets/no_items_found_widget.dart';
 import 'package:my_time/global/globals.dart';
 
 import 'home_screen_exports.dart';
@@ -25,7 +26,8 @@ class GroupsListScreen extends HookConsumerWidget {
       duration: duration,
     );
 
-    ref.listen<GroupsListState>(groupsListScreenControllerProvider.select((state) => state.value!),
+    ref.listen<GroupsListState>(
+        groupsListScreenControllerProvider.select((state) => state.value!),
         (previous, next) {
       if (next.isPlaying) {
         hamburgerAnimController.forward();
@@ -37,7 +39,10 @@ class GroupsListScreen extends HookConsumerWidget {
     return Scaffold(
       backgroundColor: GlobalProperties.backgroundColor,
       body: RefreshIndicator(
-        key: ref.read(groupsListScreenControllerProvider).value!.refreshIndicatorKey,
+        key: ref
+            .read(groupsListScreenControllerProvider)
+            .value!
+            .refreshIndicatorKey,
         onRefresh: () async {
           await AsyncValue.guard(() => ref
               .refresh(homePageDataProvider.future)
@@ -70,8 +75,9 @@ class GroupsListScreen extends HookConsumerWidget {
                   padding: padding,
                   child: data.when(
                     error: (error, stackTrace) => LoadingErrorWidget(
-                        onRefresh: () =>
-                            state.value!.refreshIndicatorKey.currentState?.show()),
+                        onRefresh: () => state
+                            .value!.refreshIndicatorKey.currentState
+                            ?.show()),
                     loading: () => const GroupsListLoadingState(),
                     data: (dto) => Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -111,7 +117,8 @@ class GroupsListScreen extends HookConsumerWidget {
                                   onExpansionChanged: (value) {},
                                   key: ref
                                       .read(groupsListScreenControllerProvider)
-                                      .value!.expansionTile,
+                                      .value!
+                                      .expansionTile,
                                   title: const Text("Favourite Projects"),
                                   children: <Widget>[
                                     ListView.separated(
@@ -147,10 +154,18 @@ class GroupsListScreen extends HookConsumerWidget {
                               )
                             : const SizedBox.shrink(),
                         dto.groups.isEmpty
-                            ? Text(
-                                'No groups found',
-                                style:
-                                    Theme.of(context).textTheme.headlineMedium,
+                            ? Expanded(
+                                child: NoItemsFoundWidget(
+                                  onBtnTap: () => !state.isLoading
+                                      ? controller.pushNamedAddGroup(
+                                          context,
+                                        )
+                                      : null,
+                                  title: "No Groups found",
+                                  description:
+                                      "Click on the button below to add a new Group",
+                                  btnLabel: "Create new Group",
+                                ),
                               )
                             : ListView.builder(
                                 padding: EdgeInsets.zero,
