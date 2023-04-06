@@ -7,12 +7,12 @@ part of 'project_screen_controller.dart';
 // **************************************************************************
 
 String _$projectScreenControllerHash() =>
-    r'421e7dbfba8c6ce4914369db3f7d001dc2068a32';
+    r'e53b55b82aedfd2ffc5668bbb81dfe6454fe0a55';
 
 /// See also [ProjectScreenController].
 @ProviderFor(ProjectScreenController)
-final projectScreenControllerProvider =
-    AutoDisposeAsyncNotifierProvider<ProjectScreenController, void>.internal(
+final projectScreenControllerProvider = AutoDisposeAsyncNotifierProvider<
+    ProjectScreenController, ProjectScreenState>.internal(
   ProjectScreenController.new,
   name: r'projectScreenControllerProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -22,5 +22,6 @@ final projectScreenControllerProvider =
   allTransitiveDependencies: null,
 );
 
-typedef _$ProjectScreenController = AutoDisposeAsyncNotifier<void>;
+typedef _$ProjectScreenController
+    = AutoDisposeAsyncNotifier<ProjectScreenState>;
 // ignore_for_file: unnecessary_raw_strings, subtype_of_sealed_class, invalid_use_of_internal_member, do_not_use_environment, prefer_const_constructors, public_member_api_docs, avoid_private_typedef_functions

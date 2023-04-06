@@ -11,6 +11,7 @@ class ListGroupsRepository implements GroupsRepository {
   final Realm realm;
 
   ListGroupsRepository(this.realm);
+
   @override
   Future<List<GroupDTO>> fetchGroups() async {
     final groupsFromDB = realm.all<Group>();

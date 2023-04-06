@@ -46,7 +46,7 @@ class ProjectsScreenService {
   }
 
   Stream<TimerData> watchTimerData(String projectId) async* {
-    yield* Stream.periodic(const Duration(milliseconds: 1000), (index) {
+    yield* Stream.periodic(const Duration(milliseconds: 500), (index) {
       if (timers.containsKey(projectId)) {
         final data = timers[projectId]!.getData();
         return data;

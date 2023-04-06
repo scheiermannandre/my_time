@@ -15,6 +15,7 @@ class ProjectHistory extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final projectScreenController =
         ref.watch(projectScreenControllerProvider.notifier);
+    final projectScreenState = ref.watch(projectScreenControllerProvider);
 
     final timeEntriesList = ref.watch(projectTimeEntriesProvider(project.id));
     return timeEntriesList.when(
@@ -45,7 +46,8 @@ class ProjectHistory extends HookConsumerWidget {
               ),
             ),
       error: (error, stackTrace) => LoadingErrorWidget(
-        onRefresh: () {},
+        onRefresh: () =>
+            projectScreenState.value!.refreshIndicatorKey.currentState!.show(),
       ),
       loading: () => const Center(
         child: CircularProgressIndicator(),

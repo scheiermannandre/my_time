@@ -1,15 +1,14 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:my_time/layers/data/time_entries_repository.dart';
 import 'package:my_time/layers/presentation/4_project_screen/project_screen_controller.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-
 import 'package:my_time/common/extensions/date_time_extension.dart';
 import 'package:my_time/common/extensions/duration_extension.dart';
 import 'package:my_time/common/extensions/time_of_day_extension.dart';
 import 'package:my_time/layers/domain/time_entry.dart';
-
 part 'time_entry_form_screen_controller.g.dart';
 
 @riverpod
@@ -78,6 +77,8 @@ final projectTimeEntryProvider =
 });
 
 class TimeEntryFormScreenState {
+  final GlobalKey<RefreshIndicatorState> refreshIndicatorKey =
+      GlobalKey<RefreshIndicatorState>();
   final TextEditingController startDateController = TextEditingController();
   final TextEditingController endDateController = TextEditingController();
   final TextEditingController startTimeController = TextEditingController();

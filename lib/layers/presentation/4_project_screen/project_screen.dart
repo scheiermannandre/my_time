@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:my_time/common/common.dart';
+import 'package:my_time/common/extensions/async_value_extensions.dart';
 import 'package:my_time/common/widgets/appbar/custom_app_bar.dart';
 import 'package:my_time/common/widgets/nav_bar/nav_bar_item.dart';
-import 'package:my_time/common/widgets/responsive_center.dart';
 import 'package:my_time/layers/presentation/4_project_screen/project_history/proejct_history_list.dart';
 import 'package:my_time/layers/presentation/4_project_screen/project_screen_controller.dart';
 import 'package:my_time/layers/presentation/4_project_screen/project_timer/timer_widget.dart';
@@ -17,10 +18,16 @@ class ProjectScreen extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final controller = ref.watch(projectScreenControllerProvider.notifier);
+    final state = ref.watch(projectScreenControllerProvider);
     final project = ref.watch(projectProvider(projectId));
     final pageController = usePageController(initialPage: 0);
     final sheetController = useAnimationController(
       duration: const Duration(milliseconds: 350),
+    );
+    ref.listen<AsyncValue>(
+      projectProvider(projectId),
+      (_, state) => state.showAlertDialogOnError(context),
+      onError: (error, stackTrace) {},
     );
     String projectTitle =
         project.hasValue && !project.hasError && !project.isLoading
@@ -44,7 +51,7 @@ class ProjectScreen extends HookConsumerWidget {
               : IconButton(
                   icon: const Icon(
                     Icons.star_border,
-                    color: GlobalProperties.backgroundColor,
+                    color: Colors.black,
                   ),
                   onPressed: () {},
                 ),
@@ -67,7 +74,7 @@ class ProjectScreen extends HookConsumerWidget {
         ],
       ),
       bottomNavigationBar: NavBar(
-        onTap: (index) => controller.onItemTapped(pageController, index),
+        onTap: (index) => {controller.onItemTapped(pageController, index)},
         startIndex: 0,
         backgroundColor: GlobalProperties.backgroundColor,
         selectedBackgroundColor: GlobalProperties.secondaryAccentColor,
@@ -86,25 +93,54 @@ class ProjectScreen extends HookConsumerWidget {
           ),
         ],
       ),
-      body: project.hasValue
-              ?PageView(
-        physics: const NeverScrollableScrollPhysics(),
-        controller: pageController,
-        onPageChanged: (index) {},
-        children: <Widget>[
-           ResponsiveAlign(
-                  padding: const EdgeInsets.all(10),
-                  alignment: Alignment.center,
-                  child: TimerWidget(
-                    project: project.value!,
-                  ),
-                ),
-              
-          ProjectHistory(
-            project: project.value!,
-          )
-        ],
-      ): const SizedBox.shrink(),
+      body: RefreshIndicator(
+        key: ref
+            .read(projectScreenControllerProvider)
+            .value!
+            .refreshIndicatorKey,
+        onRefresh: () async {
+          await AsyncValue.guard(() => ref
+              .refresh(projectProvider(projectId).future)
+              .timeout(const Duration(seconds: 5)));
+          await AsyncValue.guard(() => ref
+              .refresh(timerDataProvider(projectId).future)
+              .timeout(const Duration(seconds: 5)));
+          await AsyncValue.guard(() => ref
+              .refresh(projectTimeEntriesProvider(projectId).future)
+              .timeout(const Duration(seconds: 5)));
+          return;
+        },
+        child: project.when(
+          data: (dto) => dto != null
+              ? PageView(
+                  physics: const NeverScrollableScrollPhysics(),
+                  controller: pageController,
+                  onPageChanged: (index) {},
+                  children: <Widget>[
+                    ResponsiveAlign(
+                      padding: const EdgeInsets.all(10),
+                      alignment: Alignment.center,
+                      child: TimerWidget(
+                        project: project.value!,
+                      ),
+                    ),
+                    ProjectHistory(
+                      project: project.value!,
+                    )
+                  ],
+                )
+              : const Text("Data shall not be null!"),
+          error: (ex, st) => LoadingErrorWidget(
+            onRefresh: () =>
+                state.value!.refreshIndicatorKey.currentState?.show(),
+          ),
+          loading: () => const Center(
+            child: CircularProgressIndicator(
+              color: Colors.red,
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

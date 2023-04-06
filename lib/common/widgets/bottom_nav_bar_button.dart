@@ -8,21 +8,25 @@ class NavBarSubmitButton extends StatelessWidget {
   final VoidCallback? onBtnTap;
   final String btnText;
   final bool isLoading;
+  final Alignment align;
+  final EdgeInsets padding;
 
   const NavBarSubmitButton(
       {super.key,
       required this.onBtnTap,
       required this.btnText,
-      required this.isLoading});
+      required this.isLoading,
+      this.align = Alignment.center,
+      this.padding = const EdgeInsets.fromLTRB(16, 0, 16, 0)});
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       height: kBottomNavigationBarHeight,
       child: ResponsiveAlign(
-        alignment: Alignment.center,
+        alignment: align,
         maxContentWidth: Breakpoint.desktop,
-        padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
+        padding: padding,
         child: SizedBox(
           width: btnWidth,
           child: ElevatedButton(
@@ -36,8 +40,8 @@ class NavBarSubmitButton extends StatelessWidget {
             ),
             child: isLoading
                 ? const SizedBox(
-                    height: kBottomNavigationBarHeight/2,
-                    width: kBottomNavigationBarHeight/2 ,
+                    height: kBottomNavigationBarHeight / 2,
+                    width: kBottomNavigationBarHeight / 2,
                     child: CircularProgressIndicator())
                 : Text(
                     btnText,

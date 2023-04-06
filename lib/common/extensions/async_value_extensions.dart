@@ -4,6 +4,7 @@ import 'package:my_time/common/dialogs/allert_dialog.dart';
 
 extension AsyncValueUI on AsyncValue {
   Future<bool?> showAlertDialogOnError(BuildContext context) async {
+    print("isLoading : $isLoading  hasError: $hasError");
     if (!isLoading && hasError) {
       return await showExceptionAlertDialog(
         context: context,

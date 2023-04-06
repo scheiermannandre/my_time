@@ -16,6 +16,12 @@ import 'package:my_time/router/app_route.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'project_screen_controller.g.dart';
 
+class ProjectScreenState {
+  ProjectScreenState();
+  final GlobalKey<RefreshIndicatorState> refreshIndicatorKey =
+      GlobalKey<RefreshIndicatorState>();
+}
+
 @riverpod
 class ProjectScreenController extends _$ProjectScreenController {
   final initial = Object();
@@ -23,8 +29,9 @@ class ProjectScreenController extends _$ProjectScreenController {
   // An [Object] instance is equal to itself only.
   bool get mounted => current == initial;
   @override
-  FutureOr<void> build() {
+  FutureOr<ProjectScreenState> build() {
     ref.onDispose(() => current = Object());
+    return ProjectScreenState();
   }
 
   void startTimer(ProjectDTO project) {
@@ -175,13 +182,12 @@ final projectTimeEntriesProvider = StreamProvider.autoDispose
   ref.onResume(() {
     timer?.cancel();
   });
-
   final service = ref.read(projectsScreenServiceProvider);
   return service.watchAllEntriesGroupedByMonth(projectId);
 });
 
-final projectProvider = FutureProvider.autoDispose
-    .family<ProjectDTO?, String>((ref, projectId) async {
+final projectProvider =
+    FutureProvider.autoDispose.family<ProjectDTO?, String>((ref, projectId) {
   final projectRepo = ref.read(projectsRepositoryProvider);
-  return await projectRepo.fetchProject(projectId);
+  return projectRepo.fetchProject(projectId);
 });

@@ -21,6 +21,7 @@ class TimerWidget extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final projectScreenController =
         ref.watch(projectScreenControllerProvider.notifier);
+    final projectScreenState = ref.watch(projectScreenControllerProvider);
     final timerData = ref.watch(timerDataProvider(project.id));
     final animationController = useAnimationController(
       duration: const Duration(milliseconds: 2000),
@@ -39,14 +40,14 @@ class TimerWidget extends HookConsumerWidget {
               onStart: () => projectScreenController.startTimer(project),
               onFinish: () =>
                   projectScreenController.stopTimer(context, project),
-              onPause: () =>
-                  projectScreenController.pauseResumeTimer(project),
+              onPause: () => projectScreenController.pauseResumeTimer(project),
             ),
           ),
         ],
       ),
       error: (error, stackTrace) => LoadingErrorWidget(
-        onRefresh: () {},
+        onRefresh: () =>
+            projectScreenState.value!.refreshIndicatorKey.currentState!.show(),
       ),
       loading: () => const Center(
         child: CircularProgressIndicator(),
