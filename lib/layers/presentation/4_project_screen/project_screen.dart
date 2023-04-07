@@ -7,6 +7,7 @@ import 'package:my_time/common/widgets/appbar/custom_app_bar.dart';
 import 'package:my_time/common/widgets/nav_bar/nav_bar_item.dart';
 import 'package:my_time/layers/presentation/4_project_screen/project_history/proejct_history_list.dart';
 import 'package:my_time/layers/presentation/4_project_screen/project_screen_controller.dart';
+import 'package:my_time/layers/presentation/4_project_screen/project_screen_loading_state.dart';
 import 'package:my_time/layers/presentation/4_project_screen/project_timer/timer_widget.dart';
 import 'package:my_time/global/globals.dart';
 import 'package:my_time/common/widgets/nav_bar/nav_bar.dart';
@@ -94,6 +95,8 @@ class ProjectScreen extends HookConsumerWidget {
         ],
       ),
       body: RefreshIndicator(
+                color: GlobalProperties.secondaryAccentColor ,
+
         key: ref
             .read(projectScreenControllerProvider)
             .value!
@@ -134,11 +137,7 @@ class ProjectScreen extends HookConsumerWidget {
             onRefresh: () =>
                 state.value!.refreshIndicatorKey.currentState?.show(),
           ),
-          loading: () => const Center(
-            child: CircularProgressIndicator(
-              color: Colors.red,
-            ),
-          ),
+          loading: () => const ProjectScreenLoadingState(),
         ),
       ),
     );

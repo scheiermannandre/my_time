@@ -5,6 +5,7 @@ import 'package:my_time/common/widgets/loading_error_widget.dart';
 import 'package:my_time/common/widgets/no_items_found_widget.dart';
 import 'package:my_time/layers/interface/dto/project_dto.dart';
 import 'package:my_time/layers/presentation/4_project_screen/project_history/labeled_block.dart';
+import 'package:my_time/layers/presentation/4_project_screen/project_history/project_history_list_loading_state.dart';
 import 'package:my_time/layers/presentation/4_project_screen/project_screen_controller.dart';
 
 class ProjectHistory extends HookConsumerWidget {
@@ -55,9 +56,7 @@ class ProjectHistory extends HookConsumerWidget {
         onRefresh: () =>
             projectScreenState.value!.refreshIndicatorKey.currentState!.show(),
       ),
-      loading: () => const Center(
-        child: CircularProgressIndicator(),
-      ),
+      loading: () => const ProjectHistoryListLoadingState(),
     );
   }
 }

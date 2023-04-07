@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:my_time/common/widgets/responsive_center.dart';
 import 'package:my_time/constants/breakpoints.dart';
@@ -10,12 +9,14 @@ class NoItemsFoundWidget extends StatelessWidget {
       required this.onBtnTap,
       required this.title,
       required this.description,
-      required this.btnLabel});
+      required this.btnLabel,
+      this.icon = Icons.add});
 
   final Function() onBtnTap;
   final String title;
   final String description;
   final String btnLabel;
+  final IconData icon;
   @override
   Widget build(BuildContext context) {
     return ResponsiveAlign(
@@ -65,8 +66,8 @@ class NoItemsFoundWidget extends StatelessWidget {
                           color: GlobalProperties.textAndIconColor,
                           fontSize: 18),
                     ),
-                    const Icon(
-                      Icons.add,
+                    Icon(
+                      icon,
                       color: GlobalProperties.textAndIconColor,
                     ),
                   ],

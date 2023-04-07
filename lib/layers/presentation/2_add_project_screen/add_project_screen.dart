@@ -68,6 +68,7 @@ class AddProjectScreen extends HookConsumerWidget {
       body: Padding(
         padding: const EdgeInsets.only(top: 100),
         child: RefreshIndicator(
+          color: GlobalProperties.secondaryAccentColor,
           key: state.refreshIndicatorKey,
           onRefresh: () async {
             await AsyncValue.guard(() => ref

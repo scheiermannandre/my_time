@@ -49,7 +49,8 @@ class TimeEntriesRepository {
   Future<bool> addTimeEntry(Project project, TimeEntryDTO entry) async {
     if (_checkSameDateEntries(entry, project.timeEntries)) {
       //return false;
-      throw Exception("Given Timerange is overlapping with an existing Timerange!");
+      throw Exception(
+          "Given Timerange is overlapping with an existing Timerange!");
     }
     await realm.writeAsync(() {
       final newEntryDB = TimeEntry(

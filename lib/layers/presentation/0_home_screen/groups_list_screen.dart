@@ -39,6 +39,7 @@ class GroupsListScreen extends HookConsumerWidget {
     return Scaffold(
       backgroundColor: GlobalProperties.backgroundColor,
       body: RefreshIndicator(
+        color: GlobalProperties.secondaryAccentColor ,
         key: ref
             .read(groupsListScreenControllerProvider)
             .value!

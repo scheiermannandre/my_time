@@ -5,6 +5,7 @@ import 'package:my_time/common/widgets/loading_error_widget.dart';
 import 'package:my_time/constants/app_sizes.dart';
 import 'package:my_time/layers/interface/dto/project_dto.dart';
 import 'package:my_time/layers/presentation/4_project_screen/project_screen_controller.dart';
+import 'package:my_time/layers/presentation/4_project_screen/project_screen_loading_state.dart';
 import 'package:my_time/layers/presentation/4_project_screen/project_timer/time_display.dart';
 import 'package:my_time/layers/presentation/4_project_screen/staggered_buttons.dart';
 
@@ -49,9 +50,7 @@ class TimerWidget extends HookConsumerWidget {
         onRefresh: () =>
             projectScreenState.value!.refreshIndicatorKey.currentState!.show(),
       ),
-      loading: () => const Center(
-        child: CircularProgressIndicator(),
-      ),
+      loading: () => const ProjectScreenLoadingState(),
     );
   }
 }

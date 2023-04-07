@@ -35,6 +35,7 @@ class ProjectsPerGroupListScreen extends HookConsumerWidget {
     }, [scrollController]);
 
     return RefreshIndicator(
+      color: GlobalProperties.secondaryAccentColor,
       onRefresh: () async {
         return await ref.refresh(groupWithProjectsDTOProvider(groupId).future);
       },
@@ -66,6 +67,7 @@ class ProjectsPerGroupListScreen extends HookConsumerWidget {
           ],
         ),
         body: RefreshIndicator(
+          color: GlobalProperties.secondaryAccentColor,
           key: state.value!.refreshIndicatorKey,
           onRefresh: () async {
             await AsyncValue.guard(() => ref
