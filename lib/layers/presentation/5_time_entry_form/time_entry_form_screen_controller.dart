@@ -9,6 +9,7 @@ import 'package:my_time/common/extensions/date_time_extension.dart';
 import 'package:my_time/common/extensions/duration_extension.dart';
 import 'package:my_time/common/extensions/time_of_day_extension.dart';
 import 'package:my_time/layers/domain/time_entry.dart';
+
 part 'time_entry_form_screen_controller.g.dart';
 
 @riverpod
@@ -19,9 +20,9 @@ class TimeEntryFormScreenController extends _$TimeEntryFormScreenController {
   bool get mounted => current == initial;
   @override
   FutureOr<TimeEntryFormScreenState> build(
-      String projectId, String? timeEntryid) {
+      String projectId, String? timeEntryid, String invalidMessage) {
     ref.onDispose(() => current = Object());
-    return TimeEntryFormScreenState(projectId, timeEntryid);
+    return TimeEntryFormScreenState(projectId, timeEntryid, invalidMessage);
   }
 
   void init({TimeEntryDTO? entry}) {
@@ -88,13 +89,16 @@ class TimeEntryFormScreenState {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   late TimeEntryDTO timeEntry;
   late TimeEntryDTO defaultEntry;
-
-  TimeEntryFormScreenState(String projectId, String? timeEntryId) {
+late String invalidMessage;
+  TimeEntryFormScreenState(
+      String projectId, String? timeEntryId, String invalidMessageParam) {
     timeEntryId = timeEntryId ?? "";
+    invalidMessage = invalidMessageParam;
     DateTime startTime;
     DateTime endTime;
     Duration totalTime;
     DateTime now = DateTime.now();
+
     const int defaultWorkingTime = 8;
     totalTime = const Duration(hours: defaultWorkingTime);
     startTime = DateTime(now.year, now.month, now.day).add(totalTime);
@@ -175,7 +179,7 @@ class TimeEntryFormScreenState {
 
   String? validateTotalTimePositive() {
     if (timeEntry.totalTime.isNegative) {
-      return "Total Time needs to be positive!";
+      return invalidMessage;
     }
     return null;
   }

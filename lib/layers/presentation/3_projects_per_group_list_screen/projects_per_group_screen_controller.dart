@@ -9,6 +9,8 @@ import 'package:my_time/layers/interface/dto/project_dto.dart';
 import 'package:my_time/layers/presentation/0_home_screen/groups_list_screen_controller.dart';
 import 'package:my_time/router/app_route.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 part 'projects_per_group_screen_controller.g.dart';
 
 class ProjectsPerGroupScreenState {
@@ -70,9 +72,12 @@ class ProjectsPerGroupScreenController
       bool? deletePressed = await openBottomSheet(
           context: context,
           bottomSheetController: controller,
-          title: "Delete Group ${dto.group.name}?",
-          message: "All Projects and Entries for the whole Group will be lost!",
-          confirmBtnText: "Confirm",
+          title: AppLocalizations.of(context)!.deleteGroupTitle(dto.group.name),
+          message: AppLocalizations.of(context)!.deleteGroupMessage,
+          confirmBtnText:
+              AppLocalizations.of(context)!.deleteGroupConfirmBtnLabel,
+          cancelBtnText:
+              AppLocalizations.of(context)!.deleteGroupCancelBtnLabel,
           onCanceled: () {
             Navigator.of(context).pop(false);
           },

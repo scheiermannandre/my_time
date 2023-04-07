@@ -9,13 +9,11 @@ class TimePickField extends StatelessWidget {
   final String? Function(TimeOfDay time) validateTime;
   final String? Function()? validateField;
 
-  final String helpTextTime;
   final double? maxContentWidth;
 
   const TimePickField(
       {super.key,
       required this.timeController,
-      required this.helpTextTime,
       this.maxContentWidth,
       required this.validateTime,
       this.validateField});
@@ -23,7 +21,6 @@ class TimePickField extends StatelessWidget {
   void showTimePicker(BuildContext context) async {
     TimeOfDay? time = await showThemedTimePicker(
       context: context,
-      helpText: helpTextTime,
       initialTime: const TimeOfDay(hour: 09, minute: 00),
     );
     if (time == null) {

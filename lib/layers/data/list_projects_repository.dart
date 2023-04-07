@@ -8,7 +8,6 @@ import 'package:my_time/layers/interface/dto/time_entry.dart';
 import 'package:realm/realm.dart';
 
 class ListProjectsRepository implements ProjectsRepository {
-  static const String favourites = "favourites";
   final Realm realm;
 
   ListProjectsRepository(this.realm);

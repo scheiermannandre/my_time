@@ -11,6 +11,7 @@ import 'package:my_time/layers/presentation/2_add_project_screen/add_project_scr
 import 'package:my_time/layers/presentation/2_add_project_screen/add_project_screen_controller.dart';
 import 'package:my_time/layers/presentation/2_add_project_screen/group_and_project_fields.dart';
 import 'package:my_time/global/globals.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AddProjectScreen extends HookConsumerWidget {
   const AddProjectScreen({Key? key, this.groupId}) : super(key: key);
@@ -47,9 +48,9 @@ class AddProjectScreen extends HookConsumerWidget {
           ),
           onPressed: () => controller.pop(context),
         ),
-        title: const Text(
-          "New Project",
-          style: TextStyle(color: GlobalProperties.textAndIconColor),
+        title: Text(
+          AppLocalizations.of(context)!.addProjectScreenTitle,
+          style: const TextStyle(color: GlobalProperties.textAndIconColor),
         ),
         elevation: 0,
         backgroundColor: GlobalProperties.secondaryAccentColor,
@@ -58,7 +59,7 @@ class AddProjectScreen extends HookConsumerWidget {
         color: GlobalProperties.backgroundColor,
         child: NavBarSubmitButton(
           isLoading: state!.isLoading,
-          btnText: "Save",
+          btnText: AppLocalizations.of(context)!.addProjectScreenBtnLabel,
           onBtnTap: state.isLoading
               ? null
               : () => controller.onBtnTap(context, projectNameController.text),
@@ -93,6 +94,8 @@ class AddProjectScreen extends HookConsumerWidget {
                   groups: groups,
                   expansionTile: state.expansionTile,
                   selectedGroup: state.selectedGroupName,
+                  defaultSelectedGroup: AppLocalizations.of(context)!
+                      .addProjectScreenGroupFieldDropDownDefaultLabel,
                   isExpandable: state.isExpandable,
                   onListTileTap: (groups, index) =>
                       controller.onGroupDropDownListTileTap(groups, index),

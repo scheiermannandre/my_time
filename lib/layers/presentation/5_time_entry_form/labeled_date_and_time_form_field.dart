@@ -8,16 +8,12 @@ class LabeledDateFormField extends StatelessWidget {
   final TextEditingController dateController;
 
   final String label;
-  final String helpTextDate;
-  final String helpTextTime;
   final String? Function(DateTime date) validateDate;
 
   const LabeledDateFormField(
       {super.key,
       required this.dateController,
       required this.label,
-      required this.helpTextDate,
-      required this.helpTextTime,
       required this.validateDate});
 
   void showDatePicker(BuildContext context) async {

@@ -7,7 +7,7 @@ part of 'time_entry_form_screen_controller.dart';
 // **************************************************************************
 
 String _$timeEntryFormScreenControllerHash() =>
-    r'08a0ce67c59a5a4dd826dfb00662d08e892f0f96';
+    r'c20ce855205743968badfec42c21dcf72a5b0d40';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -34,10 +34,12 @@ abstract class _$TimeEntryFormScreenController
     extends BuildlessAutoDisposeAsyncNotifier<TimeEntryFormScreenState> {
   late final String projectId;
   late final String? timeEntryid;
+  late final String invalidMessage;
 
   FutureOr<TimeEntryFormScreenState> build(
     String projectId,
     String? timeEntryid,
+    String invalidMessage,
   );
 }
 
@@ -56,10 +58,12 @@ class TimeEntryFormScreenControllerFamily
   TimeEntryFormScreenControllerProvider call(
     String projectId,
     String? timeEntryid,
+    String invalidMessage,
   ) {
     return TimeEntryFormScreenControllerProvider(
       projectId,
       timeEntryid,
+      invalidMessage,
     );
   }
 
@@ -70,6 +74,7 @@ class TimeEntryFormScreenControllerFamily
     return call(
       provider.projectId,
       provider.timeEntryid,
+      provider.invalidMessage,
     );
   }
 
@@ -96,10 +101,12 @@ class TimeEntryFormScreenControllerProvider
   TimeEntryFormScreenControllerProvider(
     this.projectId,
     this.timeEntryid,
+    this.invalidMessage,
   ) : super.internal(
           () => TimeEntryFormScreenController()
             ..projectId = projectId
-            ..timeEntryid = timeEntryid,
+            ..timeEntryid = timeEntryid
+            ..invalidMessage = invalidMessage,
           from: timeEntryFormScreenControllerProvider,
           name: r'timeEntryFormScreenControllerProvider',
           debugGetCreateSourceHash:
@@ -113,12 +120,14 @@ class TimeEntryFormScreenControllerProvider
 
   final String projectId;
   final String? timeEntryid;
+  final String invalidMessage;
 
   @override
   bool operator ==(Object other) {
     return other is TimeEntryFormScreenControllerProvider &&
         other.projectId == projectId &&
-        other.timeEntryid == timeEntryid;
+        other.timeEntryid == timeEntryid &&
+        other.invalidMessage == invalidMessage;
   }
 
   @override
@@ -126,6 +135,7 @@ class TimeEntryFormScreenControllerProvider
     var hash = _SystemHash.combine(0, runtimeType.hashCode);
     hash = _SystemHash.combine(hash, projectId.hashCode);
     hash = _SystemHash.combine(hash, timeEntryid.hashCode);
+    hash = _SystemHash.combine(hash, invalidMessage.hashCode);
 
     return _SystemHash.finish(hash);
   }
@@ -137,6 +147,7 @@ class TimeEntryFormScreenControllerProvider
     return notifier.build(
       projectId,
       timeEntryid,
+      invalidMessage,
     );
   }
 }

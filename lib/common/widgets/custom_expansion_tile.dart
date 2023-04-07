@@ -36,7 +36,6 @@ class CustomExpansionTile extends StatefulWidget {
 class CustomExpansionTileState extends State<CustomExpansionTile>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
-  late CurvedAnimation _easeOutAnimation;
   late CurvedAnimation _easeInAnimation;
   late ColorTween _borderColor;
   late ColorTween _headerColor;
@@ -50,8 +49,6 @@ class CustomExpansionTileState extends State<CustomExpansionTile>
   void initState() {
     super.initState();
     _controller = AnimationController(duration: _kExpand, vsync: this);
-    _easeOutAnimation =
-        CurvedAnimation(parent: _controller, curve: Curves.easeOut);
     _easeInAnimation =
         CurvedAnimation(parent: _controller, curve: Curves.easeIn);
     _borderColor = ColorTween();
@@ -158,7 +155,7 @@ class CustomExpansionTileState extends State<CustomExpansionTile>
     final ThemeData theme = Theme.of(context);
     _borderColor.end = theme.dividerColor;
     _headerColor
-      ..begin = theme.textTheme.subtitle1!.color
+      ..begin = theme.textTheme.titleMedium!.color
       ..end = theme.colorScheme.secondary;
     _iconColor
       ..begin = theme.unselectedWidgetColor

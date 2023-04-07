@@ -26,7 +26,7 @@ class AddProjectScreenController extends _$AddProjectScreenController {
     ref.onDispose(() => current = Object());
 
     return AddProjectState(
-      selectedGroupName: arg.isEmpty ? AddProjectState.selectGroupText : arg,
+      //selectedGroupName: arg.isEmpty ? AddProjectState.selectGroupText : arg,
       isExpandable: arg.isEmpty ? false : true,
       expansionTile: GlobalKey<CustomExpansionTileState>(),
     );
@@ -124,17 +124,16 @@ final singleGroupProvider =
 class AddProjectState {
   AddProjectState({
     this.selectedGroup,
-    this.selectedGroupName = selectGroupText,
+    this.selectedGroupName,
     this.isExpandable = true,
     this.value = const AsyncValue.data(null),
     required this.expansionTile,
   });
   final GlobalKey<RefreshIndicatorState> refreshIndicatorKey =
       GlobalKey<RefreshIndicatorState>();
-  static const String selectGroupText = "Select a Group";
   final GroupDTO? selectedGroup;
 
-  final String selectedGroupName;
+  final String? selectedGroupName;
   final bool isExpandable;
   final GlobalKey<CustomExpansionTileState> expansionTile;
 

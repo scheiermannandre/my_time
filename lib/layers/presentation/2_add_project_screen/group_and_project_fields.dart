@@ -13,9 +13,11 @@ class GroupAndProjectFields extends StatelessWidget {
       this.isExpandable = false,
       this.onListTileTap,
       required this.controller,
-      required this.groups});
+      required this.groups, required this.defaultSelectedGroup});
   final GlobalKey<CustomExpansionTileState>? expansionTile;
-  final String selectedGroup;
+  final String? selectedGroup;
+  final String defaultSelectedGroup;
+
   final bool isExpandable;
   final Function(List<GroupDTO>, int)? onListTileTap;
   final TextEditingController controller;
@@ -32,6 +34,7 @@ class GroupAndProjectFields extends StatelessWidget {
                 groups: groups,
                 expansionTile: expansionTile,
                 selectedGroup: selectedGroup,
+                defaultSelectedGroup: defaultSelectedGroup,
                 isExpandable: isExpandable,
                 onListTileTap: (groups, index) => {
                       if (onListTileTap != null) {onListTileTap!(groups, index)}

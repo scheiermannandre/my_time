@@ -14,6 +14,7 @@ import 'package:my_time/layers/presentation/3_projects_per_group_list_screen/pro
 import 'package:my_time/layers/presentation/5_time_entry_form/domain/timer_data.dart';
 import 'package:my_time/router/app_route.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 part 'project_screen_controller.g.dart';
 
 class ProjectScreenState {
@@ -79,9 +80,12 @@ class ProjectScreenController extends _$ProjectScreenController {
       bool? deletePressed = await openBottomSheet(
           context: context,
           bottomSheetController: controller,
-          title: "Delete Project ${project.name}?",
-          message: "All Entries for the Project will be lost!",
-          confirmBtnText: "Confirm",
+          title: AppLocalizations.of(context)!.deleteProjectTitle(project.name),
+          message: AppLocalizations.of(context)!.deleteProjectMessage,
+          confirmBtnText:
+              AppLocalizations.of(context)!.deleteProjectConfirmBtnLabel,
+          cancelBtnText:
+              AppLocalizations.of(context)!.deleteProjectCancelBtnLabel,
           onCanceled: () {
             Navigator.of(context).pop(false);
           },

@@ -1,0 +1,86 @@
+{
+    "@HomePage": {},
+
+    "groups": "Gruppen",
+    "addGroup": "Neue Gruppe",
+    "addProject": "Neues Projekt",
+    "favourites": "Favoriten",
+    "noGroupsFoundTitle": "Keine Gruppen gefunden",
+    "noGroupsFoundDescription": "Drück den Knopf, um eine Gruppe zu erstellen",
+    "noGroupsFoundBtnLabel": "Neue Gruppe erstellen",
+
+    "@LoadingErrorWidget": {},
+
+    "loadingErrorWidgetTitle": "Hoppla, etwas ist schief gelaufen",
+    "loadingErrorWidgetDescription": "Bitte überprüfe deine Internetverbindung und versuche es erneut",
+    "loadingErrorWidgetBtnLabel": "Erneut laden",
+
+    "@AddGroupScreen": {},
+
+    "addGroupScreenTitle": "Neue Gruppe",
+    "addGroupScreenBtnLabel": "Speichern",
+    "addGroupScreenNameFieldLabel": "Name",
+
+    "@AddProjectScreen": {},
+
+    "addProjectScreenTitle": "Neues Projekt",
+    "addProjectScreenBtnLabel": "Speichern",
+    "addProjectScreenGroupFieldLabel": "Gruppe",
+    "addProjectScreenNameFieldLabel": "Name",
+    "addProjectScreenGroupFieldDropDownDefaultLabel": "Wähle eine Gruppe",
+    
+    "@ProjectsPerGroupListScreen": {},
+
+    "noProjectsFoundTitle": "Keine Projekte gefunden",
+    "noProjectsFoundDescription": "Drück den Knopf, um ein Projekt zu erstellen",
+    "noProjectsFoundBtnLabel": "Neues Projekt erstellen",
+    "deleteGroupTitle": "Gruppe '{groupName}' wirklich löschen?",
+    "@deleteGroupTitle": {
+        "placeholders": {
+            "groupName": {
+                "type": "String"
+            }
+        }
+    },
+    "deleteGroupMessage": "Alle Projekte und deren Einträge werden unwiderruflich gelöscht!",
+    "deleteGroupConfirmBtnLabel": "Bestätigen",
+    "deleteGroupCancelBtnLabel": "Abbrechen",
+
+    "@ProjectsScreen": {},
+
+    "timerTabLabel": "Timer",
+    "historyTabLabel": "Verlauf",
+    "btnStartLabel": "Start",
+    "btnFinishLabel": "Beenden",
+    "btnPauseLabel": "Pause",
+    "btnResumeLabel": "Fortsetzen",
+    "noHistoryFoundTitle": "Keine Einträge gefunden",
+    "noHistoryFoundDescription": "Drück den Knopf, um einen Eintrag zu erstellen",
+    "noHistoryFoundBtnLabel": "Neuen Eintrag erstellen",
+    "deleteProjectTitle": "Projekt '{projectName}' wirklich löschen?",
+    "@deleteProjectTitle": {
+        "placeholders": {
+            "projectName": {
+                "type": "String"
+            }
+        }
+    },
+    "deleteProjectMessage": "Alle Einträge des Projektes werden unwiderruflich gelöscht!",
+    "deleteProjectConfirmBtnLabel": "Bestätigen",
+    "deleteProjectCancelBtnLabel": "Abbrechen",
+
+    "@TimeEntryFormScreen": {},
+
+    "datePickFieldLabel": "Datum",
+    "startTimePickFieldLabel": "Start",
+    "endTimePickFieldLabel": "Ende",
+    "totalTimePickFieldLabel": "Gesamt",
+    "descriptionFieldLabel": "Beschreibung",
+    "saveEntryBtnLabel": "Speichern",
+    "invalidTotalTimeMessage": "Gesamtzeit muss positiv sein!",
+    "noEntryFoundTitle": "Eintrag nicht gefunden",
+    "noEntryFoundDescription": "Bitte aktualisiere die Seite",
+    "noEntryFoundBtnLabel": "Aktualisieren"
+
+    
+}

@@ -7,6 +7,7 @@ Future<dynamic> openBottomSheet({
   required String title,
   required String message,
   required String confirmBtnText,
+  required String cancelBtnText,
   required Function onCanceled,
   required Function onConfirmed,
 }) async {
@@ -55,9 +56,9 @@ Future<dynamic> openBottomSheet({
               children: [
                 TextButton(
                   onPressed: () => onCanceled(),
-                  child: const Text(
-                    "Cancel",
-                    style: TextStyle(
+                  child: Text(
+                    cancelBtnText,
+                    style: const TextStyle(
                         fontSize: 16,
                         color: GlobalProperties.secondaryAccentColor),
                   ),

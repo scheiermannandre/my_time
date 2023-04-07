@@ -5,7 +5,8 @@ import 'package:my_time/global/globals.dart';
 
 class LabeledDescriptionFormField extends StatelessWidget {
   final TextEditingController controller;
-  const LabeledDescriptionFormField({super.key, required this.controller});
+  final String label;
+  const LabeledDescriptionFormField({super.key, required this.controller, required this.label});
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +17,7 @@ class LabeledDescriptionFormField extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text("Description",
+          Text(label,
               style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
           const Padding(padding: EdgeInsets.only(bottom: 12)),
           TextField(

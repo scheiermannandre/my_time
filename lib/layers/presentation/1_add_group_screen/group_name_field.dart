@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_time/global/globals.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class GroupNameField extends StatelessWidget {
   final TextEditingController groupNameController;
@@ -10,9 +11,9 @@ class GroupNameField extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
-        const Text(
-          "Group Name",
-          style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+        Text(
+          AppLocalizations.of(context)!.addGroupScreenNameFieldLabel,
+          style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
         ),
         TextField(
           controller: groupNameController,

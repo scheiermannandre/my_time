@@ -4,13 +4,11 @@ import 'package:my_time/global/globals.dart';
 Future<TimeOfDay?> showThemedTimePicker({
   required BuildContext context,
   required TimeOfDay initialTime,
-  String? helpText,
 }) async {
   assert(debugCheckHasMaterialLocalizations(context));
 
   final Widget dialog = TimePickerDialog(
     initialTime: initialTime,
-    helpText: helpText,
   );
   return showDialog<TimeOfDay>(
     context: context,
@@ -42,7 +40,7 @@ final theme = ThemeData.light().copyWith(
               : Colors.black),
       entryModeIconColor: Colors.black),
   textTheme: const TextTheme(
-    overline: TextStyle(
+    labelSmall: TextStyle(
       color: Colors.black,
     ),
   ),

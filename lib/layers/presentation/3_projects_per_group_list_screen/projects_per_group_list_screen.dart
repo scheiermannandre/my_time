@@ -10,6 +10,7 @@ import 'package:my_time/common/widgets/responsive_center.dart';
 import 'package:my_time/global/globals.dart';
 import 'package:my_time/layers/presentation/3_projects_per_group_list_screen/projects_per_group_screen_controller.dart';
 import 'package:my_time/layers/presentation/3_projects_per_group_list_screen/projects_per_group_screen_loading_state.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ProjectsPerGroupListScreen extends HookConsumerWidget {
   const ProjectsPerGroupListScreen({
@@ -91,10 +92,11 @@ class ProjectsPerGroupListScreen extends HookConsumerWidget {
                               dto,
                             )
                           : null,
-                      title: "No Projects found",
-                      description:
-                          "Click on the button below to add a new Project",
-                      btnLabel: "Create new Project",
+                      title: AppLocalizations.of(context)!.noProjectsFoundTitle,
+                      description: AppLocalizations.of(context)!
+                          .noProjectsFoundDescription,
+                      btnLabel:
+                          AppLocalizations.of(context)!.noProjectsFoundBtnLabel,
                     )
                   : ResponsiveAlign(
                       alignment: Alignment.topCenter,

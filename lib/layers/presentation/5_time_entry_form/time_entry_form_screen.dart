@@ -7,6 +7,7 @@ import 'package:my_time/layers/presentation/5_time_entry_form/time_entry_form_sc
 import 'package:my_time/layers/presentation/5_time_entry_form/time_entry_form_screen_loading_state.dart';
 import 'package:my_time/layers/presentation/5_time_entry_form/time_entry_form_widget.dart';
 import 'package:my_time/global/globals.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class TimeEntryFormScreen extends ConsumerWidget {
   final String? timeEntryId;
@@ -22,10 +23,15 @@ class TimeEntryFormScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final controller = ref.watch(
-        timeEntryFormScreenControllerProvider(projectId, timeEntryId).notifier);
+    final invalidTotalTimeMessage =
+        AppLocalizations.of(context)!.invalidTotalTimeMessage;
+
+    final controller = ref.watch(timeEntryFormScreenControllerProvider(
+            projectId, timeEntryId, invalidTotalTimeMessage)
+        .notifier);
     final state = ref
-        .watch(timeEntryFormScreenControllerProvider(projectId, timeEntryId))
+        .watch(timeEntryFormScreenControllerProvider(
+            projectId, timeEntryId, invalidTotalTimeMessage))
         .value;
     var entry = ref.watch(projectTimeEntryProvider(timeEntryId!));
     String localId = timeEntryId ?? "";
@@ -64,7 +70,7 @@ class TimeEntryFormScreen extends ConsumerWidget {
               color: GlobalProperties.secondaryAccentColor,
               key: ref
                   .read(timeEntryFormScreenControllerProvider(
-                      projectId, timeEntryId))
+                      projectId, timeEntryId, invalidTotalTimeMessage))
                   .value!
                   .refreshIndicatorKey,
               onRefresh: () async {
@@ -76,11 +82,14 @@ class TimeEntryFormScreen extends ConsumerWidget {
               child: entry.when(
                   data: (entry) => entry == null
                       ? NoItemsFoundWidget(
-                          btnLabel: "Refresh",
+                          btnLabel: AppLocalizations.of(context)!
+                              .noEntryFoundBtnLabel,
                           onBtnTap: () =>
                               state!.refreshIndicatorKey.currentState?.show(),
-                          title: "Entry not found",
-                          description: "Please refresh the screen",
+                          title:
+                              AppLocalizations.of(context)!.noEntryFoundTitle,
+                          description: AppLocalizations.of(context)!
+                              .noEntryFoundDescription,
                           icon: Icons.refresh,
                         )
                       : TimeEntryFormWidget(

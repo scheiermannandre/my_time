@@ -11,6 +11,7 @@ import 'package:my_time/layers/presentation/4_project_screen/project_screen_load
 import 'package:my_time/layers/presentation/4_project_screen/project_timer/timer_widget.dart';
 import 'package:my_time/global/globals.dart';
 import 'package:my_time/common/widgets/nav_bar/nav_bar.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ProjectScreen extends HookConsumerWidget {
   const ProjectScreen({super.key, required this.projectId});
@@ -86,17 +87,16 @@ class ProjectScreen extends HookConsumerWidget {
         items: [
           CustomNavBarItem(
             iconData: Icons.timer_sharp,
-            label: "Timer",
+            label: AppLocalizations.of(context)!.timerTabLabel,
           ),
           CustomNavBarItem(
             iconData: Icons.history,
-            label: "History",
+            label: AppLocalizations.of(context)!.historyTabLabel,
           ),
         ],
       ),
       body: RefreshIndicator(
-                color: GlobalProperties.secondaryAccentColor ,
-
+        color: GlobalProperties.secondaryAccentColor,
         key: ref
             .read(projectScreenControllerProvider)
             .value!
@@ -132,7 +132,10 @@ class ProjectScreen extends HookConsumerWidget {
                     )
                   ],
                 )
-              : const Text("Data shall not be null!"),
+              : LoadingErrorWidget(
+                  onRefresh: () =>
+                      state.value!.refreshIndicatorKey.currentState?.show(),
+                ),
           error: (ex, st) => LoadingErrorWidget(
             onRefresh: () =>
                 state.value!.refreshIndicatorKey.currentState?.show(),

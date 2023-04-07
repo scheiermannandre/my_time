@@ -7,6 +7,7 @@ import 'package:my_time/layers/interface/dto/project_dto.dart';
 import 'package:my_time/layers/presentation/4_project_screen/project_history/labeled_block.dart';
 import 'package:my_time/layers/presentation/4_project_screen/project_history/project_history_list_loading_state.dart';
 import 'package:my_time/layers/presentation/4_project_screen/project_screen_controller.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ProjectHistory extends HookConsumerWidget {
   final ProjectDTO project;
@@ -29,9 +30,10 @@ class ProjectHistory extends HookConsumerWidget {
                       project,
                     )
                   : null,
-              title: "No history available",
-              description: "Click on the button below to add a new Entry",
-              btnLabel: "Add new Entry",
+              title: AppLocalizations.of(context)!.noHistoryFoundTitle,
+              description:
+                  AppLocalizations.of(context)!.noHistoryFoundDescription,
+              btnLabel: AppLocalizations.of(context)!.noHistoryFoundBtnLabel,
             )
           : SingleChildScrollView(
               child: ListView.builder(

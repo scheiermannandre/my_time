@@ -36,7 +36,6 @@ class LabeledTimePickFormField extends StatelessWidget {
             maxContentWidth: 100,
             validateTime: (time) => validateTime(time),
             validateField: validateField,
-            helpTextTime: helpText,
             timeController: controller,
           ),
         ],

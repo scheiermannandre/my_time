@@ -5,8 +5,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_time/common/common.dart';
 import 'package:my_time/common/widgets/no_items_found_widget.dart';
 import 'package:my_time/global/globals.dart';
-
 import 'home_screen_exports.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class GroupsListScreen extends HookConsumerWidget {
   const GroupsListScreen({super.key});
@@ -19,27 +19,27 @@ class GroupsListScreen extends HookConsumerWidget {
     const duration = Duration(milliseconds: 600);
     const padding = EdgeInsets.fromLTRB(10, 10, 10, 10);
 
-    final bottomSheetAnimController = useAnimationController(
-      duration: duration,
-    );
-    final hamburgerAnimController = useAnimationController(
-      duration: duration,
-    );
+    // final bottomSheetAnimController = useAnimationController(
+    //   duration: duration,
+    // );
+    // final hamburgerAnimController = useAnimationController(
+    //   duration: duration,
+    // );
 
-    ref.listen<GroupsListState>(
-        groupsListScreenControllerProvider.select((state) => state.value!),
-        (previous, next) {
-      if (next.isPlaying) {
-        hamburgerAnimController.forward();
-      } else {
-        hamburgerAnimController.reverse();
-      }
-    });
+    // ref.listen<GroupsListState>(
+    //     groupsListScreenControllerProvider.select((state) => state.value!),
+    //     (previous, next) {
+    //   if (next.isPlaying) {
+    //     hamburgerAnimController.forward();
+    //   } else {
+    //     hamburgerAnimController.reverse();
+    //   }
+    // });
 
     return Scaffold(
       backgroundColor: GlobalProperties.backgroundColor,
       body: RefreshIndicator(
-        color: GlobalProperties.secondaryAccentColor ,
+        color: GlobalProperties.secondaryAccentColor,
         key: ref
             .read(groupsListScreenControllerProvider)
             .value!
@@ -60,16 +60,17 @@ class GroupsListScreen extends HookConsumerWidget {
           child: CustomScrollView(
             slivers: [
               ScreenSliverAppBar(
-                title: "Groups",
-                leadingIconButton: IconButton(
-                  icon: AnimatedIcon(
-                    icon: AnimatedIcons.menu_close,
-                    progress: hamburgerAnimController,
-                    color: GlobalProperties.textAndIconColor,
-                  ),
-                  onPressed: () => controller.onHamburgerTab(
-                      context, bottomSheetAnimController),
-                ),
+                title: AppLocalizations.of(context)!.groups,
+                // leadingIconButton: IconButton(
+                //   icon: AnimatedIcon(
+                //     icon: AnimatedIcons.menu_close,
+                //     progress: hamburgerAnimController,
+                //     color: GlobalProperties.textAndIconColor,
+                //   ),
+                //   onPressed: () => 
+                //    controller.onHamburgerTab(
+                //        context, bottomSheetAnimController),
+                // ),
               ),
               SliverFillRemaining(
                 child: ResponsiveAlign(
@@ -87,12 +88,12 @@ class GroupsListScreen extends HookConsumerWidget {
                           children: [
                             RoundedLabeldButton(
                                 icon: Icons.category,
-                                text: "Add Group",
+                                text: AppLocalizations.of(context)!.addGroup,
                                 onPressed: () =>
                                     controller.pushNamedAddGroup(context)),
                             RoundedLabeldButton(
                               icon: Icons.work,
-                              text: "Add Project",
+                              text: AppLocalizations.of(context)!.addProject,
                               onPressed: () =>
                                   controller.pushNamedAddProject(context),
                             ),
@@ -120,7 +121,8 @@ class GroupsListScreen extends HookConsumerWidget {
                                       .read(groupsListScreenControllerProvider)
                                       .value!
                                       .expansionTile,
-                                  title: const Text("Favourite Projects"),
+                                  title: Text(
+                                      AppLocalizations.of(context)!.favourites),
                                   children: <Widget>[
                                     ListView.separated(
                                         padding: EdgeInsets.zero,
@@ -162,10 +164,10 @@ class GroupsListScreen extends HookConsumerWidget {
                                           context,
                                         )
                                       : null,
-                                  title: "No Groups found",
-                                  description:
-                                      "Click on the button below to add a new Group",
-                                  btnLabel: "Create new Group",
+                                  title: AppLocalizations.of(context)!
+                                      .noGroupsFoundTitle,
+                                  description: AppLocalizations.of(context)!.noGroupsFoundDescription,
+                                  btnLabel: AppLocalizations.of(context)!.noGroupsFoundBtnLabel,
                                 ),
                               )
                             : ListView.builder(

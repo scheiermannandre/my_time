@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:my_time/common/widgets/responsive_center.dart';
 import 'package:my_time/constants/breakpoints.dart';
 import 'package:my_time/global/globals.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class LoadingErrorWidget extends StatelessWidget {
   final VoidCallback onRefresh;
@@ -20,18 +21,18 @@ class LoadingErrorWidget extends StatelessWidget {
             Icons.error_outline,
             size: 60,
           ),
-          const Padding(
-            padding: EdgeInsets.symmetric(vertical: 5),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 5),
             child: Text(
-              "Ooops, something went wrong!",
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.w500),
+              AppLocalizations.of(context)!.loadingErrorWidgetTitle,
+              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.w500),
             ),
           ),
-          const Padding(
-            padding: EdgeInsets.symmetric(vertical: 5),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 5),
             child: Text(
-              "Please check your internet connection and try again.",
-              style: TextStyle(fontSize: 16),
+              AppLocalizations.of(context)!.loadingErrorWidgetDescription,
+              style: const TextStyle(fontSize: 16),
             ),
           ),
           Padding(
@@ -50,14 +51,14 @@ class LoadingErrorWidget extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: const [
+                  children: [
                     Text(
-                      "Reload",
-                      style: TextStyle(
+                      AppLocalizations.of(context)!.loadingErrorWidgetBtnLabel,
+                      style: const TextStyle(
                           color: GlobalProperties.textAndIconColor,
                           fontSize: 18),
                     ),
-                    Icon(
+                    const Icon(
                       Icons.autorenew,
                       color: GlobalProperties.textAndIconColor,
                     ),

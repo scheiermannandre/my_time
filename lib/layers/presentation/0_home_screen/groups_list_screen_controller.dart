@@ -51,29 +51,29 @@ class GroupsListScreenController extends _$GroupsListScreenController {
         AsyncData(state.value!.copyWith(isPlaying: !state.value!.isPlaying));
   }
 
-  void onHamburgerTab(BuildContext context, AnimationController controller) {
-    animateHamburger();
-    showBottomSheetWithWidgets(
-      context: context,
-      bottomSheetController: controller,
-      widgets: [
-        ListTile(
-          trailing: const Icon(
-            Icons.settings,
-            color: Colors.black,
-          ),
-          title: const Text(
-            "Settings",
-            style: TextStyle(color: Colors.black),
-          ),
-          onTap: () {
-            GoRouter.of(context).go("/settings");
-          },
-        ),
-      ],
-      whenComplete: () => animateHamburger(),
-    );
-  }
+  // void onHamburgerTab(BuildContext context, AnimationController controller) {
+  //   animateHamburger();
+  //   showBottomSheetWithWidgets(
+  //     context: context,
+  //     bottomSheetController: controller,
+  //     widgets: [
+  //       ListTile(
+  //         trailing: const Icon(
+  //           Icons.settings,
+  //           color: Colors.black,
+  //         ),
+  //         title: const Text(
+  //           "Settings",
+  //           style: TextStyle(color: Colors.black),
+  //         ),
+  //         onTap: () {
+  //           GoRouter.of(context).go("/settings");
+  //         },
+  //       ),
+  //     ],
+  //     whenComplete: () => animateHamburger(),
+  //   );
+  // }
 
   void pushNamedAddGroup(BuildContext context) =>
       context.pushNamed(AppRoute.addGroup);

@@ -11,13 +11,22 @@ class StaggeredButtons extends StatefulWidget {
   final Function onPause;
   final AnimationController controller;
   final TimerState timerState;
+  final String btnPauseLabel;
+  final String btnResumeLabel;
+  final String btnStartLabel;
+  final String btnFinishLabel;
+
   const StaggeredButtons(
       {super.key,
       required this.onStart,
       required this.onFinish,
       required this.onPause,
       required this.controller,
-      required this.timerState});
+      required this.timerState,
+      required this.btnPauseLabel,
+      required this.btnResumeLabel,
+      required this.btnStartLabel,
+      required this.btnFinishLabel});
 
   @override
   State<StaggeredButtons> createState() => _StaggeredButtonsState();
@@ -29,13 +38,17 @@ class _StaggeredButtonsState extends State<StaggeredButtons>
   late Animation<double> opacityStartBtn;
   late Animation<Size> sizePauseFinishBtn;
   late Animation<double> opacityPauseFinishBtn;
-  String btnPauseStr = "Pause";
-  String btnResumeStr = "Resume";
-  String btnPauseResumeText = "Pause";
+  late String btnPauseStr;
+  late String btnResumeStr;
+  late String btnPauseResumeText;
 
   @override
   void initState() {
     super.initState();
+    btnPauseStr = widget.btnPauseLabel;
+    btnResumeStr = widget.btnResumeLabel;
+    btnPauseResumeText = btnPauseStr;
+
     // set initial Value of the Animation
     // 0 = start -> timer is not active
     // 1 = end -> timer is running or paused
@@ -165,7 +178,7 @@ class _StaggeredButtonsState extends State<StaggeredButtons>
           children: [
             Center(
               child: StandardButton(
-                text: "Start",
+                text: widget.btnStartLabel,
                 width: sizeStartBtn.value.width,
                 height: sizeStartBtn.value.height,
                 opacitiy: opacityStartBtn.value,
@@ -190,7 +203,7 @@ class _StaggeredButtonsState extends State<StaggeredButtons>
                   gapW16,
                   Center(
                     child: StandardButton(
-                      text: "Finish",
+                      text: widget.btnFinishLabel,
                       width: sizePauseFinishBtn.value.width,
                       height: sizePauseFinishBtn.value.height,
                       opacitiy: opacityPauseFinishBtn.value,

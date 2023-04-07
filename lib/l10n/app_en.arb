@@ -1,0 +1,85 @@
+{
+    "@HomePage": {},
+
+    "groups": "Groups",
+    "addGroup": "Add Group",
+    "addProject": "Add Project",
+    "favourites": "Favourites",
+    "noGroupsFoundTitle": "No Groups found",
+    "noGroupsFoundDescription": "Click on the button below to add a new Group",
+    "noGroupsFoundBtnLabel": "Create new Group",
+
+    "@LoadingErrorWidget": {},
+
+    "loadingErrorWidgetTitle": "Ooops, something went wrong",
+    "loadingErrorWidgetDescription": "Please check your internet connection and try again",
+    "loadingErrorWidgetBtnLabel": "Reload",
+
+    "@AddGroupScreen": {},
+
+    "addGroupScreenTitle": "New Group",
+    "addGroupScreenBtnLabel": "Save",
+    "addGroupScreenNameFieldLabel": "Name",
+
+    "@AddProjectScreen": {},
+
+    "addProjectScreenTitle": "New Project",
+    "addProjectScreenBtnLabel": "Save",
+    "addProjectScreenGroupFieldLabel": "Group",
+    "addProjectScreenNameFieldLabel": "Name",
+    "addProjectScreenGroupFieldDropDownDefaultLabel": "Select a Group",
+    
+    "@ProjectsPerGroupListScreen": {},
+
+    "noProjectsFoundTitle": "No Projects found",
+    "noProjectsFoundDescription": "Click on the button below to add a new Project",
+    "noProjectsFoundBtnLabel": "Create new Project",
+    "deleteGroupTitle": "Delete Group '{groupName}'?",
+    "@deleteGroupTitle": {
+        "placeholders": {
+            "groupName": {
+                "type": "String"
+            }
+        }
+    },
+    "deleteGroupMessage": "All Projects and Entries for the whole Group will be lost!",
+    "deleteGroupConfirmBtnLabel": "Confirm",
+    "deleteGroupCancelBtnLabel": "Cancel",
+
+    "@ProjectsScreen": {},
+
+    "timerTabLabel": "Timer",
+    "historyTabLabel": "History",
+    "btnStartLabel": "Start",
+    "btnFinishLabel": "Finish",
+    "btnPauseLabel": "Pause",
+    "btnResumeLabel": "Resume",
+    "noHistoryFoundTitle": "No history available",
+    "noHistoryFoundDescription": "Click on the button below to add a new Entry",
+    "noHistoryFoundBtnLabel": "Add new Entry",
+    "deleteProjectTitle": "Delete Project '{projectName}'?",
+    "@deleteProjectTitle": {
+        "placeholders": {
+            "projectName": {
+                "type": "String"
+            }
+        }
+    },
+    "deleteProjectMessage": "All Entries for the Project will be lost!",
+    "deleteProjectConfirmBtnLabel": "Confirm",
+    "deleteProjectCancelBtnLabel": "Cancel",
+
+    "@TimeEntryFormScreen": {},
+
+    "datePickFieldLabel": "Date",
+    "startTimePickFieldLabel": "Start",
+    "endTimePickFieldLabel": "End",
+    "totalTimePickFieldLabel": "Total",
+    "descriptionFieldLabel": "Description",
+    "saveEntryBtnLabel": "Save",
+    "invalidTotalTimeMessage": "Total Time needs to be positive!",
+    "noEntryFoundTitle": "Entry not found",
+    "noEntryFoundDescription": "Please refresh the screen",
+    "noEntryFoundBtnLabel": "Refresh"
+
+}

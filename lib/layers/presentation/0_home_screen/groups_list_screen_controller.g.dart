@@ -7,7 +7,7 @@ part of 'groups_list_screen_controller.dart';
 // **************************************************************************
 
 String _$groupsListScreenControllerHash() =>
-    r'53daae45dcccbe6f51bbe1522442d2600ab0019a';
+    r'e3af31769a28fd0867847e09a91cb4f958d1b5e3';
 
 /// See also [GroupsListScreenController].
 @ProviderFor(GroupsListScreenController)

@@ -5,6 +5,7 @@ import 'package:my_time/constants/breakpoints.dart';
 import 'package:my_time/layers/presentation/5_time_entry_form/labeled_date_and_time_form_field.dart';
 import 'package:my_time/layers/presentation/5_time_entry_form/labeled_description_form_field.dart';
 import 'package:my_time/layers/presentation/5_time_entry_form/time_pick_field.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class TimeEntryFormWidget extends StatelessWidget {
   final TextEditingController dateController;
@@ -56,9 +57,7 @@ class TimeEntryFormWidget extends StatelessWidget {
                   LabeledDateFormField(
                     validateDate: (date) => validateDate(date),
                     dateController: dateController,
-                    label: "Date",
-                    helpTextDate: "Start Date",
-                    helpTextTime: "Start Time",
+                    label: AppLocalizations.of(context)!.datePickFieldLabel,
                   ),
                   const Padding(padding: EdgeInsets.only(bottom: 16)),
                   ResponsiveAlign(
@@ -70,14 +69,15 @@ class TimeEntryFormWidget extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Text("Start",
-                                style: TextStyle(
+                            Text(
+                                AppLocalizations.of(context)!
+                                    .startTimePickFieldLabel,
+                                style: const TextStyle(
                                     fontSize: 16, fontWeight: FontWeight.w500)),
                             const Padding(padding: EdgeInsets.only(bottom: 12)),
                             TimePickField(
                                 maxContentWidth: 100,
                                 timeController: startTimeController,
-                                helpTextTime: "Start Time",
                                 validateTime: (time) =>
                                     validateStartTime(time)),
                           ],
@@ -86,14 +86,15 @@ class TimeEntryFormWidget extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Text("End",
-                                style: TextStyle(
+                            Text(
+                                AppLocalizations.of(context)!
+                                    .endTimePickFieldLabel,
+                                style: const TextStyle(
                                     fontSize: 16, fontWeight: FontWeight.w500)),
                             const Padding(padding: EdgeInsets.only(bottom: 12)),
                             TimePickField(
                                 maxContentWidth: 100,
                                 timeController: endTimeController,
-                                helpTextTime: "End Time",
                                 validateTime: (time) => validateEndTime(time)),
                           ],
                         ),
@@ -101,9 +102,10 @@ class TimeEntryFormWidget extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Text(
-                              "Total",
-                              style: TextStyle(
+                            Text(
+                              AppLocalizations.of(context)!
+                                  .totalTimePickFieldLabel,
+                              style: const TextStyle(
                                   fontSize: 16, fontWeight: FontWeight.w500),
                             ),
                             const Padding(
@@ -112,7 +114,6 @@ class TimeEntryFormWidget extends StatelessWidget {
                             TimePickField(
                               maxContentWidth: 100,
                               timeController: totalTimeController,
-                              helpTextTime: "Total Time",
                               validateTime: (time) => validateTotalTime(time),
                               validateField: () => validateTotalTimePositive(),
                             ),
@@ -123,11 +124,13 @@ class TimeEntryFormWidget extends StatelessWidget {
                   ),
                   const Padding(padding: EdgeInsets.only(bottom: 16)),
                   LabeledDescriptionFormField(
+                      label:
+                          AppLocalizations.of(context)!.descriptionFieldLabel,
                       controller: descriptionController),
                   Expanded(
                     child: NavBarSubmitButton(
                       isLoading: false,
-                      btnText: "Save",
+                      btnText: AppLocalizations.of(context)!.saveEntryBtnLabel,
                       onBtnTap: onBtnTap,
                       align: Alignment.bottomCenter,
                       padding: const EdgeInsets.all(0),

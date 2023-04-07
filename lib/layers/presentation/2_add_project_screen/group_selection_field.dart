@@ -3,9 +3,11 @@ import 'package:my_time/common/widgets/custom_expansion_tile.dart';
 import 'package:my_time/common/widgets/responsive_center.dart';
 import 'package:my_time/layers/interface/dto/group_dto.dart';
 import 'package:my_time/global/globals.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class GroupSelectionField extends StatelessWidget {
-  final String selectedGroup;
+  final String? selectedGroup;
+  final String defaultSelectedGroup;
   final bool isExpandable;
   final GlobalKey<CustomExpansionTileState>? expansionTile;
   final List<GroupDTO> groups;
@@ -16,18 +18,19 @@ class GroupSelectionField extends StatelessWidget {
       required this.isExpandable,
       required this.expansionTile,
       required this.onListTileTap,
-      required this.groups});
+      required this.groups,
+      required this.defaultSelectedGroup});
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Padding(
-          padding: EdgeInsets.only(bottom: 12),
+        Padding(
+          padding: const EdgeInsets.only(bottom: 12),
           child: Text(
-            "Group",
-            style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+            AppLocalizations.of(context)!.addProjectScreenGroupFieldLabel,
+            style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
           ),
         ),
         ResponsiveAlign(
@@ -42,7 +45,7 @@ class GroupSelectionField extends StatelessWidget {
             isExpandable: isExpandable,
             onExpansionChanged: (value) {},
             key: expansionTile,
-            title: Text(selectedGroup),
+            title: Text(selectedGroup ?? defaultSelectedGroup),
             children: <Widget>[
               ListView.separated(
                   padding: EdgeInsets.zero,
