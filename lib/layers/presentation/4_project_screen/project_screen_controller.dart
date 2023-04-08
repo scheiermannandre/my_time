@@ -77,7 +77,17 @@ class ProjectScreenController extends _$ProjectScreenController {
   Future<void> showDeleteBottomSheet(BuildContext context, ProjectDTO project,
       AnimationController controller) async {
     {
-      bool? deletePressed = await openBottomSheet(
+      bool? deletePressed = false;
+      listener(status) {
+        if (status == AnimationStatus.dismissed) {
+          _delete(context, project, deletePressed);
+        }
+      }
+
+      controller.removeStatusListener(listener);
+      controller.addStatusListener(listener);
+
+      deletePressed = await openBottomSheet(
           context: context,
           bottomSheetController: controller,
           title: AppLocalizations.of(context)!.deleteProjectTitle(project.name),
@@ -92,12 +102,6 @@ class ProjectScreenController extends _$ProjectScreenController {
           onConfirmed: () {
             Navigator.of(context).pop(true);
           });
-
-      if (deletePressed ?? false) {
-        if (mounted) {
-          _delete(context, project);
-        }
-      }
     }
   }
 
@@ -110,14 +114,17 @@ class ProjectScreenController extends _$ProjectScreenController {
     await ref.refresh(homePageDataProvider.future);
   }
 
-  Future<void> _delete(BuildContext context, ProjectDTO project) async {
-    final result =
-        await ref.read(projectsScreenServiceProvider).deleteProject(project);
-    if (result) {
-      await ref.refresh(groupWithProjectsDTOProvider(project.groupId).future);
-      await ref.refresh(homePageDataProvider.future);
-      if (mounted) {
-        pop(context);
+  Future<void> _delete(
+      BuildContext context, ProjectDTO project, bool? deletePressed) async {
+    if (deletePressed ?? false) {
+      final result =
+          await ref.read(projectsScreenServiceProvider).deleteProject(project);
+      if (result) {
+        await ref.refresh(groupWithProjectsDTOProvider(project.groupId).future);
+        await ref.refresh(homePageDataProvider.future);
+        if (mounted) {
+          pop(context);
+        }
       }
     }
   }

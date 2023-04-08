@@ -1,6 +1,5 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_time/common/common.dart';
 import 'package:my_time/common/widgets/no_items_found_widget.dart';
@@ -67,12 +66,12 @@ class GroupsListScreen extends HookConsumerWidget {
                 //     progress: hamburgerAnimController,
                 //     color: GlobalProperties.textAndIconColor,
                 //   ),
-                //   onPressed: () => 
+                //   onPressed: () =>
                 //    controller.onHamburgerTab(
                 //        context, bottomSheetAnimController),
                 // ),
               ),
-              SliverFillRemaining(
+              SliverToBoxAdapter(
                 child: ResponsiveAlign(
                   padding: padding,
                   child: data.when(
@@ -84,20 +83,23 @@ class GroupsListScreen extends HookConsumerWidget {
                     data: (dto) => Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        ScrollableRoundendButtonRow(
-                          children: [
-                            RoundedLabeldButton(
-                                icon: Icons.category,
-                                text: AppLocalizations.of(context)!.addGroup,
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 10),
+                          child: ScrollableRoundendButtonRow(
+                            children: [
+                              RoundedLabeldButton(
+                                  icon: Icons.category,
+                                  text: AppLocalizations.of(context)!.addGroup,
+                                  onPressed: () =>
+                                      controller.pushNamedAddGroup(context)),
+                              RoundedLabeldButton(
+                                icon: Icons.work,
+                                text: AppLocalizations.of(context)!.addProject,
                                 onPressed: () =>
-                                    controller.pushNamedAddGroup(context)),
-                            RoundedLabeldButton(
-                              icon: Icons.work,
-                              text: AppLocalizations.of(context)!.addProject,
-                              onPressed: () =>
-                                  controller.pushNamedAddProject(context),
-                            ),
-                          ],
+                                    controller.pushNamedAddProject(context),
+                              ),
+                            ],
+                          ),
                         ),
                         dto.projects.isNotEmpty
                             ? Padding(
@@ -157,18 +159,18 @@ class GroupsListScreen extends HookConsumerWidget {
                               )
                             : const SizedBox.shrink(),
                         dto.groups.isEmpty
-                            ? Expanded(
-                                child: NoItemsFoundWidget(
-                                  onBtnTap: () => !state.isLoading
-                                      ? controller.pushNamedAddGroup(
-                                          context,
-                                        )
-                                      : null,
-                                  title: AppLocalizations.of(context)!
-                                      .noGroupsFoundTitle,
-                                  description: AppLocalizations.of(context)!.noGroupsFoundDescription,
-                                  btnLabel: AppLocalizations.of(context)!.noGroupsFoundBtnLabel,
-                                ),
+                            ? NoItemsFoundWidget(
+                                onBtnTap: () => !state.isLoading
+                                    ? controller.pushNamedAddGroup(
+                                        context,
+                                      )
+                                    : null,
+                                title: AppLocalizations.of(context)!
+                                    .noGroupsFoundTitle,
+                                description: AppLocalizations.of(context)!
+                                    .noGroupsFoundDescription,
+                                btnLabel: AppLocalizations.of(context)!
+                                    .noGroupsFoundBtnLabel,
                               )
                             : ListView.builder(
                                 padding: EdgeInsets.zero,

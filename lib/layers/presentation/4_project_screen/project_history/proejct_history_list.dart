@@ -41,7 +41,10 @@ class ProjectHistory extends HookConsumerWidget {
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 itemBuilder: (context, index) {
+                  final languageCode =
+                      Localizations.localeOf(context).languageCode;
                   return LabeledBlock(
+                    languageCode: languageCode,
                     onClicked: (entry) =>
                         projectScreenController.pushNamedTimeEntryForm(
                       context,
@@ -49,7 +52,10 @@ class ProjectHistory extends HookConsumerWidget {
                       entry,
                     ),
                     timeEntries: data[index],
-                    label: data[index].first.startTime.toMonthAndYearString(),
+                    label: data[index]
+                        .first
+                        .startTime
+                        .toMonthAndYearString(languageCode),
                   );
                 },
               ),

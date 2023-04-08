@@ -69,7 +69,16 @@ class ProjectsPerGroupScreenController
     GroupWithProjectsDTO dto,
   ) async {
     {
-      bool? deletePressed = await openBottomSheet(
+      bool? deletePressed = false;
+      listener(status) {
+        if (status == AnimationStatus.dismissed) {
+          _delete(context, dto, deletePressed);
+        }
+      }
+
+      controller.removeStatusListener(listener);
+      controller.addStatusListener(listener);
+      deletePressed = await openBottomSheet(
           context: context,
           bottomSheetController: controller,
           title: AppLocalizations.of(context)!.deleteGroupTitle(dto.group.name),
@@ -83,24 +92,22 @@ class ProjectsPerGroupScreenController
           },
           onConfirmed: () {
             Navigator.of(context).pop(true);
-          });
-
-      if (deletePressed ?? false) {
-        if (mounted) {
-          _delete(context, dto);
-        }
-      }
+          }).whenComplete(() {});
     }
   }
 
-  Future<void> _delete(BuildContext context, GroupWithProjectsDTO dto) async {
-    state = const AsyncLoading();
-    final result =
-        await ref.read(projectsPerGroupScreenServiceProvider).deleteGroup(dto);
-    if (result) {
-      await ref.refresh(homePageDataProvider.future);
-      if (mounted) {
-        pop(context);
+  Future<void> _delete(BuildContext context, GroupWithProjectsDTO dto,
+      bool? deletePressed) async {
+    if (deletePressed ?? false) {
+      state = const AsyncLoading();
+      final result = await ref
+          .read(projectsPerGroupScreenServiceProvider)
+          .deleteGroup(dto);
+      if (result) {
+        await ref.refresh(homePageDataProvider.future);
+        if (mounted) {
+          pop(context);
+        }
       }
     }
   }

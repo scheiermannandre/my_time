@@ -7,7 +7,7 @@ part of 'time_entry_form_screen_controller.dart';
 // **************************************************************************
 
 String _$timeEntryFormScreenControllerHash() =>
-    r'c20ce855205743968badfec42c21dcf72a5b0d40';
+    r'8370302427b9e5d556c62594548e78e8c32d7105';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -35,11 +35,13 @@ abstract class _$TimeEntryFormScreenController
   late final String projectId;
   late final String? timeEntryid;
   late final String invalidMessage;
+  late final String languageCode;
 
   FutureOr<TimeEntryFormScreenState> build(
     String projectId,
     String? timeEntryid,
     String invalidMessage,
+    String languageCode,
   );
 }
 
@@ -59,11 +61,13 @@ class TimeEntryFormScreenControllerFamily
     String projectId,
     String? timeEntryid,
     String invalidMessage,
+    String languageCode,
   ) {
     return TimeEntryFormScreenControllerProvider(
       projectId,
       timeEntryid,
       invalidMessage,
+      languageCode,
     );
   }
 
@@ -75,6 +79,7 @@ class TimeEntryFormScreenControllerFamily
       provider.projectId,
       provider.timeEntryid,
       provider.invalidMessage,
+      provider.languageCode,
     );
   }
 
@@ -102,11 +107,13 @@ class TimeEntryFormScreenControllerProvider
     this.projectId,
     this.timeEntryid,
     this.invalidMessage,
+    this.languageCode,
   ) : super.internal(
           () => TimeEntryFormScreenController()
             ..projectId = projectId
             ..timeEntryid = timeEntryid
-            ..invalidMessage = invalidMessage,
+            ..invalidMessage = invalidMessage
+            ..languageCode = languageCode,
           from: timeEntryFormScreenControllerProvider,
           name: r'timeEntryFormScreenControllerProvider',
           debugGetCreateSourceHash:
@@ -121,13 +128,15 @@ class TimeEntryFormScreenControllerProvider
   final String projectId;
   final String? timeEntryid;
   final String invalidMessage;
+  final String languageCode;
 
   @override
   bool operator ==(Object other) {
     return other is TimeEntryFormScreenControllerProvider &&
         other.projectId == projectId &&
         other.timeEntryid == timeEntryid &&
-        other.invalidMessage == invalidMessage;
+        other.invalidMessage == invalidMessage &&
+        other.languageCode == languageCode;
   }
 
   @override
@@ -136,6 +145,7 @@ class TimeEntryFormScreenControllerProvider
     hash = _SystemHash.combine(hash, projectId.hashCode);
     hash = _SystemHash.combine(hash, timeEntryid.hashCode);
     hash = _SystemHash.combine(hash, invalidMessage.hashCode);
+    hash = _SystemHash.combine(hash, languageCode.hashCode);
 
     return _SystemHash.finish(hash);
   }
@@ -148,6 +158,7 @@ class TimeEntryFormScreenControllerProvider
       projectId,
       timeEntryid,
       invalidMessage,
+      languageCode,
     );
   }
 }

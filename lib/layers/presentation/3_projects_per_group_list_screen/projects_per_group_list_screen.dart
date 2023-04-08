@@ -38,7 +38,10 @@ class ProjectsPerGroupListScreen extends HookConsumerWidget {
     return RefreshIndicator(
       color: GlobalProperties.secondaryAccentColor,
       onRefresh: () async {
-        return await ref.refresh(groupWithProjectsDTOProvider(groupId).future);
+        await AsyncValue.guard(() => ref
+            .refresh(groupWithProjectsDTOProvider(groupId).future)
+            .timeout(const Duration(seconds: 20)));
+        return;
       },
       child: Scaffold(
         backgroundColor: GlobalProperties.backgroundColor,
@@ -67,83 +70,59 @@ class ProjectsPerGroupListScreen extends HookConsumerWidget {
             ),
           ],
         ),
-        body: RefreshIndicator(
-          color: GlobalProperties.secondaryAccentColor,
-          key: state.value!.refreshIndicatorKey,
-          onRefresh: () async {
-            await AsyncValue.guard(() => ref
-                .refresh(groupWithProjectsDTOProvider(groupId).future)
-                .timeout(const Duration(seconds: 20)));
-            return;
-          },
-          child: ScrollConfiguration(
-            behavior: ScrollConfiguration.of(context).copyWith(
-              dragDevices: {
-                PointerDeviceKind.touch,
-                PointerDeviceKind.mouse,
-              },
-            ),
-            child: data.when(
-              data: (dto) => dto.projects.isEmpty
-                  ? NoItemsFoundWidget(
-                      onBtnTap: () => !state.isLoading
-                          ? controller.pushNamedAddProject(
-                              context,
-                              dto,
-                            )
-                          : null,
-                      title: AppLocalizations.of(context)!.noProjectsFoundTitle,
-                      description: AppLocalizations.of(context)!
-                          .noProjectsFoundDescription,
-                      btnLabel:
-                          AppLocalizations.of(context)!.noProjectsFoundBtnLabel,
-                    )
-                  : ResponsiveAlign(
-                      alignment: Alignment.topCenter,
-                      padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
-                      child: SingleChildScrollView(
-                        controller: scrollController,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 12),
-                              child: Text(
-                                dto.group.name,
-                                style: const TextStyle(
-                                    fontSize: 28,
-                                    color: GlobalProperties.textAndIconColor,
-                                    fontWeight: FontWeight.w500),
-                              ),
-                            ),
-                            ListView.builder(
-                              padding: EdgeInsets.zero,
-                              physics: const NeverScrollableScrollPhysics(),
-                              shrinkWrap: true,
-                              itemCount: dto.projects.length,
-                              itemBuilder: (context, index) {
-                                return CustomListTile(
-                                  title: dto.projects[index].name,
-                                  onTap: () => controller.pushNamedProject(
-                                      context, dto.projects, index),
-                                );
-                              },
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-              error: (ex, st) => LoadingErrorWidget(
-                onRefresh: () =>
-                    state.value!.refreshIndicatorKey.currentState?.show(),
-              ),
-              loading: () => ResponsiveAlign(
-                alignment: Alignment.topCenter,
-                padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
-                child: SingleChildScrollView(
+        body: ScrollConfiguration(
+          behavior: ScrollConfiguration.of(context).copyWith(
+            dragDevices: {
+              PointerDeviceKind.touch,
+              PointerDeviceKind.mouse,
+            },
+          ),
+          child: data.when(
+            data: (dto) => dto.projects.isEmpty
+                ? NoItemsFoundWidget(
+                    onBtnTap: () => !state.isLoading
+                        ? controller.pushNamedAddProject(
+                            context,
+                            dto,
+                          )
+                        : null,
+                    title: AppLocalizations.of(context)!.noProjectsFoundTitle,
+                    description: AppLocalizations.of(context)!
+                        .noProjectsFoundDescription,
+                    btnLabel:
+                        AppLocalizations.of(context)!.noProjectsFoundBtnLabel,
+                  )
+                : SingleChildScrollView(
                     controller: scrollController,
-                    child: const ProjectsPerGroupListScreenLoadingState()),
-              ),
+                    child: ListView.builder(
+                      controller: scrollController,
+                      padding: const EdgeInsets.only(top: 10),
+                      physics: const NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: dto.projects.length,
+                      itemBuilder: (context, index) {
+                        return ResponsiveAlign(
+                          alignment: Alignment.topCenter,
+                          padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
+                          child: CustomListTile(
+                            title: dto.projects[index].name,
+                            onTap: () => controller.pushNamedProject(
+                                context, dto.projects, index),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+            error: (ex, st) => LoadingErrorWidget(
+              onRefresh: () =>
+                  state.value!.refreshIndicatorKey.currentState?.show(),
+            ),
+            loading: () => ResponsiveAlign(
+              alignment: Alignment.topCenter,
+              padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
+              child: SingleChildScrollView(
+                  controller: scrollController,
+                  child: const ProjectsPerGroupListScreenLoadingState()),
             ),
           ),
         ),

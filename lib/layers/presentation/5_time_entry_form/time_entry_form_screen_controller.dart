@@ -19,19 +19,22 @@ class TimeEntryFormScreenController extends _$TimeEntryFormScreenController {
   // An [Object] instance is equal to itself only.
   bool get mounted => current == initial;
   @override
-  FutureOr<TimeEntryFormScreenState> build(
-      String projectId, String? timeEntryid, String invalidMessage) {
+  FutureOr<TimeEntryFormScreenState> build(String projectId,
+      String? timeEntryid, String invalidMessage, String languageCode) {
     ref.onDispose(() => current = Object());
-    return TimeEntryFormScreenState(projectId, timeEntryid, invalidMessage);
+    //this.languageCode = languageCode;
+    return TimeEntryFormScreenState(
+        projectId, timeEntryid, invalidMessage, languageCode);
   }
 
-  void init({TimeEntryDTO? entry}) {
+  void init({TimeEntryDTO? entry, required BuildContext context}) {
     entry ??= state.value!.defaultEntry;
     state.value!.timeEntry = entry;
 
     state.value!.startDateController.text =
-        entry.startTime.toFormattedDateString();
-    state.value!.endDateController.text = entry.endTime.toFormattedDateString();
+        entry.startTime.toFormattedDateString(languageCode);
+    state.value!.endDateController.text =
+        entry.endTime.toFormattedDateString(languageCode);
     state.value!.startTimeController.text =
         entry.startTime.toFormattedTimeOfDayString();
     state.value!.endTimeController.text =
@@ -89,9 +92,10 @@ class TimeEntryFormScreenState {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   late TimeEntryDTO timeEntry;
   late TimeEntryDTO defaultEntry;
-late String invalidMessage;
-  TimeEntryFormScreenState(
-      String projectId, String? timeEntryId, String invalidMessageParam) {
+  late String invalidMessage;
+  final String languageCode;
+  TimeEntryFormScreenState(String projectId, String? timeEntryId,
+      String invalidMessageParam, this.languageCode) {
     timeEntryId = timeEntryId ?? "";
     invalidMessage = invalidMessageParam;
     DateTime startTime;
@@ -125,7 +129,8 @@ late String invalidMessage;
     timeEntry = timeEntry.copyWith(
         totalTime: timeEntry.endTime.difference(timeEntry.startTime));
 
-    startDateController.text = timeEntry.startTime.toFormattedDateString();
+    startDateController.text =
+        timeEntry.startTime.toFormattedDateString(languageCode);
     totalTimeController.text = timeEntry.totalTime.toFormattedString();
     formKey.currentState!.validate();
     return null;
@@ -170,8 +175,10 @@ late String invalidMessage;
 
     startTimeController.text = defaultStartTime.toFormattedString();
     endTimeController.text = resultingEndTime.toFormattedString();
-    startDateController.text = timeEntry.startTime.toFormattedDateString();
-    endDateController.text = timeEntry.endTime.toFormattedDateString();
+    startDateController.text =
+        timeEntry.startTime.toFormattedDateString(languageCode);
+    endDateController.text =
+        timeEntry.endTime.toFormattedDateString(languageCode);
     totalTimeController.text = time.toFormattedString();
     formKey.currentState!.validate();
     return null;

@@ -23,15 +23,16 @@ class TimeEntryFormScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final languageCode = Localizations.localeOf(context).languageCode;
     final invalidTotalTimeMessage =
         AppLocalizations.of(context)!.invalidTotalTimeMessage;
 
     final controller = ref.watch(timeEntryFormScreenControllerProvider(
-            projectId, timeEntryId, invalidTotalTimeMessage)
+            projectId, timeEntryId, invalidTotalTimeMessage, languageCode)
         .notifier);
     final state = ref
         .watch(timeEntryFormScreenControllerProvider(
-            projectId, timeEntryId, invalidTotalTimeMessage))
+            projectId, timeEntryId, invalidTotalTimeMessage, languageCode))
         .value;
     var entry = ref.watch(projectTimeEntryProvider(timeEntryId!));
     String localId = timeEntryId ?? "";
@@ -51,7 +52,7 @@ class TimeEntryFormScreen extends ConsumerWidget {
       backgroundColor: GlobalProperties.backgroundColor,
       body: localId.isEmpty
           ? TimeEntryFormWidget(
-              init: () => controller.init(),
+              init: () => controller.init(context: context),
               formKey: state!.formKey,
               dateController: state.startDateController,
               startTimeController: state.startTimeController,
@@ -70,7 +71,7 @@ class TimeEntryFormScreen extends ConsumerWidget {
               color: GlobalProperties.secondaryAccentColor,
               key: ref
                   .read(timeEntryFormScreenControllerProvider(
-                      projectId, timeEntryId, invalidTotalTimeMessage))
+                      projectId, timeEntryId, invalidTotalTimeMessage, languageCode))
                   .value!
                   .refreshIndicatorKey,
               onRefresh: () async {
@@ -94,7 +95,7 @@ class TimeEntryFormScreen extends ConsumerWidget {
                         )
                       : TimeEntryFormWidget(
                           formKey: state!.formKey,
-                          init: () => controller.init(entry: entry),
+                          init: () => controller.init(entry: entry, context: context),
                           dateController: state.startDateController,
                           startTimeController: state.startTimeController,
                           endTimeController: state.endTimeController,

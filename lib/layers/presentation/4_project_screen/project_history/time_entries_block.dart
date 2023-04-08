@@ -7,9 +7,10 @@ import 'package:my_time/global/globals.dart';
 class TimeEntriesBlock extends StatelessWidget {
   final List<TimeEntryDTO> timeEntries;
   final Function(TimeEntryDTO entry) onClick;
+  final String languageCode;
 
   const TimeEntriesBlock(
-      {super.key, required this.timeEntries, required this.onClick});
+      {super.key, required this.timeEntries, required this.onClick, required this.languageCode});
 
   @override
   Widget build(BuildContext context) {
@@ -37,6 +38,7 @@ class TimeEntriesBlock extends StatelessWidget {
           physics: const NeverScrollableScrollPhysics(),
           itemCount: timeEntries.length,
           itemBuilder: (context, index) => TimeEntryCard(
+            languageCode: languageCode,
             onClick: () {
               onClick(timeEntries[index]);
             },

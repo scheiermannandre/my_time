@@ -8,7 +8,8 @@ import 'package:my_time/global/globals.dart';
 class TimeEntryCard extends StatelessWidget {
   final TimeEntryDTO timeEntry;
   final Function? onClick;
-  const TimeEntryCard({super.key, required this.timeEntry, required this.onClick});
+  final String languageCode;
+  const TimeEntryCard({super.key, required this.timeEntry, required this.onClick, required this.languageCode});
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +27,7 @@ class TimeEntryCard extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(timeEntry.startTime.toFormattedWeekDayString(),
+                Text(timeEntry.startTime.toFormattedWeekDayString(languageCode),
                     style: const TextStyle(fontSize: 18)),
                 const Padding(padding: EdgeInsets.fromLTRB(0, 8, 0, 0)),
                 Row(

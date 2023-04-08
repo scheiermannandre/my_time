@@ -7,11 +7,12 @@ class LabeledBlock extends StatelessWidget {
   final List<TimeEntryDTO> timeEntries;
   final Function(TimeEntryDTO entry) onClicked;
   final String label;
+  final String languageCode;
   const LabeledBlock(
       {super.key,
       required this.timeEntries,
       required this.label,
-      required this.onClicked});
+      required this.onClicked, required this.languageCode});
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +29,7 @@ class LabeledBlock extends StatelessWidget {
             padding: EdgeInsets.only(bottom: 12),
           ),
           TimeEntriesBlock(
+            languageCode: languageCode,
             onClick: (entry) => onClicked(entry),
             timeEntries: timeEntries,
           )
