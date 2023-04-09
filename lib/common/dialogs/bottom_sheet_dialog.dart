@@ -8,7 +8,7 @@ Future<dynamic> showBottomSheetWithWidgets({
   required List<Widget> widgets,
 }) async {
   return await showModalBottomSheet(
-    backgroundColor: GlobalProperties.primaryAccentColor,
+    backgroundColor: GlobalProperties.backgroundColor,
     transitionAnimationController: bottomSheetController,
     isScrollControlled: true,
     shape: const RoundedRectangleBorder(

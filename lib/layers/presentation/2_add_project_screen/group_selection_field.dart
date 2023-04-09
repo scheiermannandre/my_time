@@ -30,7 +30,7 @@ class GroupSelectionField extends StatelessWidget {
           padding: const EdgeInsets.only(bottom: 12),
           child: Text(
             AppLocalizations.of(context)!.addProjectScreenGroupFieldLabel,
-            style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+            style: Theme.of(context).textTheme.titleLarge,
           ),
         ),
         ResponsiveAlign(

@@ -6,7 +6,6 @@ import 'package:my_time/common/widgets/responsive_center.dart';
 import 'package:my_time/common/widgets/bottom_nav_bar_button.dart';
 import 'package:my_time/layers/presentation/1_add_group_screen/add_group_screen_controller.dart';
 import 'package:my_time/layers/presentation/1_add_group_screen/group_name_field.dart';
-import 'package:my_time/global/globals.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AddGroupScreen extends HookConsumerWidget {
@@ -29,19 +28,17 @@ class AddGroupScreen extends HookConsumerWidget {
         leading: IconButton(
           icon: const Icon(
             Icons.arrow_back,
-            color: GlobalProperties.textAndIconColor,
           ),
           onPressed: () => controller.pop(context),
         ),
         title: Text(
           AppLocalizations.of(context)!.addGroupScreenTitle,
-          style: const TextStyle(color: GlobalProperties.textAndIconColor),
         ),
         elevation: 0,
-        backgroundColor: GlobalProperties.secondaryAccentColor,
+        backgroundColor: Theme.of(context).colorScheme.primary,
       ),
       bottomNavigationBar: Container(
-        color: GlobalProperties.backgroundColor,
+        color: Theme.of(context).colorScheme.background,
         child: NavBarSubmitButton(
             isLoading: state.isLoading,
             btnText: AppLocalizations.of(context)!.addGroupScreenBtnLabel,
@@ -49,7 +46,7 @@ class AddGroupScreen extends HookConsumerWidget {
                 ? null
                 : () => controller.onBtnTap(context, groupNameController.text)),
       ),
-      backgroundColor: GlobalProperties.secondaryAccentColor,
+      backgroundColor: Theme.of(context).colorScheme.primary,
       body: Padding(
         padding: const EdgeInsets.only(top: 100),
         child: Container(

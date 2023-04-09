@@ -33,9 +33,10 @@ class LabeledDateFormField extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(label,
-              style:
-                  const TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
+          Text(
+            label,
+            style: Theme.of(context).textTheme.titleMedium,
+          ),
           const Padding(padding: EdgeInsets.only(bottom: 12)),
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -45,14 +46,14 @@ class LabeledDateFormField extends StatelessWidget {
                   controller: dateController,
                   onTap: () => showDatePicker(context),
                   cursorColor: GlobalProperties.shadowColor,
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide(
-                          color: GlobalProperties.secondaryAccentColor),
+                          color: Theme.of(context).colorScheme.primary),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(
-                          color: GlobalProperties.secondaryAccentColor),
+                          color: Theme.of(context).colorScheme.primary),
                     ),
                   ),
                 ),

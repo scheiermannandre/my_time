@@ -13,7 +13,7 @@ class GroupNameField extends StatelessWidget {
       children: <Widget>[
         Text(
           AppLocalizations.of(context)!.addGroupScreenNameFieldLabel,
-          style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+          style: Theme.of(context).textTheme.titleLarge,
         ),
         TextField(
           controller: groupNameController,

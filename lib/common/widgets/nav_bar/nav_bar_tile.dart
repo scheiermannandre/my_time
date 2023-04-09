@@ -72,6 +72,7 @@ class _NavBarTileState extends State<NavBarTile> {
               widget.item.iconData,
               size: 26,
             ),
+            const Padding(padding: EdgeInsets.only(left: 5)),
             AnimatedContainer(
               width: !widget.isExtended ? 0 : _textSize(text).width, //50,
               duration: const Duration(milliseconds: 300),

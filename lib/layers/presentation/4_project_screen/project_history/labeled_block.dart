@@ -12,7 +12,8 @@ class LabeledBlock extends StatelessWidget {
       {super.key,
       required this.timeEntries,
       required this.label,
-      required this.onClicked, required this.languageCode});
+      required this.onClicked,
+      required this.languageCode});
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +24,7 @@ class LabeledBlock extends StatelessWidget {
         children: [
           Text(
             label,
-            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+            style: Theme.of(context).textTheme.titleLarge,
           ),
           const Padding(
             padding: EdgeInsets.only(bottom: 12),

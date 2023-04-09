@@ -27,6 +27,8 @@ class HomePageService {
   }
 
   Stream<HomePageDTO> watchData() async* {
+    yield* Stream.fromFuture(fetchHomePageData());
+
     while (true) {
       try {
         yield* Stream.fromFuture(fetchHomePageData());

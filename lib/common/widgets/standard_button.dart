@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:my_time/global/globals.dart';
 
 class StandardButton extends StatelessWidget {
   const StandardButton(
@@ -28,13 +27,6 @@ class StandardButton extends StatelessWidget {
             onPressed!();
           }
         }),
-        style: ElevatedButton.styleFrom(
-          padding: const EdgeInsets.fromLTRB(0, 12.5, 0, 12.5),
-          backgroundColor: GlobalProperties.secondaryAccentColor,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(5), // <-- Radius
-          ),
-        ),
         child: isLoading
             ? const CircularProgressIndicator()
             : Opacity(
@@ -43,8 +35,7 @@ class StandardButton extends StatelessWidget {
                   text,
                   maxLines: 1,
                   textAlign: TextAlign.center,
-                  style: const TextStyle(
-                      fontSize: 16, color: GlobalProperties.textAndIconColor),
+                  style: Theme.of(context).textTheme.titleMedium,
                 ),
               ),
       ),

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_time/constants/app_sizes.dart';
 import 'package:my_time/constants/breakpoints.dart';
-import 'package:my_time/global/globals.dart';
 import 'package:shimmer/shimmer.dart';
 
 class ProjectScreenLoadingState extends StatelessWidget {
@@ -21,8 +20,8 @@ class ProjectScreenLoadingState extends StatelessWidget {
           Container(
             alignment: Alignment.center,
             height: 250,
-            decoration: const BoxDecoration(
-                color: GlobalProperties.secondaryAccentColor,
+            decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.primary,
                 shape: BoxShape.circle),
           ),
           ClipRRect(

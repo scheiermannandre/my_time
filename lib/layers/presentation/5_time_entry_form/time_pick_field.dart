@@ -49,14 +49,14 @@ class TimePickField extends StatelessWidget {
         onTap: () => showTimePicker(context),
         controller: timeController,
         cursorColor: GlobalProperties.shadowColor,
-        decoration: const InputDecoration(
+        decoration: InputDecoration(
           enabledBorder: OutlineInputBorder(
             borderSide:
-                BorderSide(color: GlobalProperties.secondaryAccentColor),
+                BorderSide(color: Theme.of(context).colorScheme.primary),
           ),
           focusedBorder: OutlineInputBorder(
             borderSide:
-                BorderSide(color: GlobalProperties.secondaryAccentColor),
+                BorderSide(color: Theme.of(context).colorScheme.primary),
           ),
         ),
       ),

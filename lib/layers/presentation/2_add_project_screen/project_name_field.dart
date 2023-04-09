@@ -14,7 +14,7 @@ class ProjectNameField extends StatelessWidget {
       children: <Widget>[
         Text(
           AppLocalizations.of(context)!.addProjectScreenNameFieldLabel,
-          style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+          style: Theme.of(context).textTheme.titleLarge,
         ),
         TextField(
           controller: projectNameController,

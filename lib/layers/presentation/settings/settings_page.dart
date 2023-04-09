@@ -31,7 +31,6 @@ class _SettingsPageState extends State<SettingsPage>
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
-      backgroundColor: GlobalProperties.backgroundColor,
       body: CustomScrollView(
         slivers: <Widget>[
           SliverAppBar(
@@ -41,9 +40,8 @@ class _SettingsPageState extends State<SettingsPage>
                   },
                   icon: const Icon(
                     Icons.arrow_back,
-                    color: GlobalProperties.textAndIconColor,
                   )),
-              backgroundColor: GlobalProperties.secondaryAccentColor,
+              backgroundColor: Theme.of(context).colorScheme.primary,
               // automaticallyImplyLeading: true,
               // leading: Icon(Icons.arrow_back),
               expandedHeight: 150,
@@ -68,7 +66,7 @@ class _SettingsPageState extends State<SettingsPage>
                 return ListTile(
                   onTap: () {
                     showModalBottomSheet(
-                      backgroundColor: GlobalProperties.backgroundColor,
+                      backgroundColor: Theme.of(context).colorScheme.background,
                       transitionAnimationController: controller,
                       isScrollControlled: true,
                       shape: const RoundedRectangleBorder(
@@ -102,8 +100,9 @@ class _SettingsPageState extends State<SettingsPage>
                                     children: [
                                       Container(
                                         decoration: BoxDecoration(
-                                          color: GlobalProperties
-                                              .primaryAccentColor,
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .background,
                                           border: Border.all(
                                               color: GlobalProperties
                                                   .textAndIconColor),
@@ -113,8 +112,7 @@ class _SettingsPageState extends State<SettingsPage>
                                       ),
                                       Container(
                                         decoration: BoxDecoration(
-                                          color: GlobalProperties
-                                              .secondaryAccentColor,
+                                          color: GlobalProperties.primaryColor,
                                           border: Border.all(
                                               color: GlobalProperties
                                                   .textAndIconColor),

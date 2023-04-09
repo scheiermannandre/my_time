@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:my_time/global/globals.dart';
 import 'package:my_time/l10n/l10n.dart';
 import 'package:my_time/router/app_route.dart';
 // ignore:depend_on_referenced_packages
@@ -61,6 +62,109 @@ class MyApp extends StatelessWidget {
       ],
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        indicatorColor: Colors.red, // GlobalProperties.primaryColor,
+        colorScheme: const ColorScheme.light().copyWith(
+          primary: GlobalProperties.primaryColor,
+          secondary: GlobalProperties.secondaryColor,
+          background: GlobalProperties.backgroundColor,
+        ),
+        scaffoldBackgroundColor: GlobalProperties.backgroundColor,
+
+        // ---Icon--- //
+        listTileTheme: const ListTileThemeData(
+          iconColor: GlobalProperties.textAndIconColor,
+        ),
+        iconTheme: const IconThemeData(
+          color: GlobalProperties.textAndIconColor,
+        ),
+        iconButtonTheme: const IconButtonThemeData(
+          style: ButtonStyle(
+              iconColor:
+                  MaterialStatePropertyAll(GlobalProperties.textAndIconColor)),
+        ),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ButtonStyle(
+            shape: const MaterialStatePropertyAll(
+              RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(5)),
+              ),
+            ),
+            padding: MaterialStateProperty.all(
+                const EdgeInsets.fromLTRB(0, 12.5, 0, 12.5)),
+            backgroundColor: MaterialStateProperty.all(
+              GlobalProperties.primaryColor,
+            ),
+            foregroundColor: MaterialStateProperty.all(
+              GlobalProperties.textAndIconColor,
+            ),
+          ),
+        ),
+        appBarTheme: AppBarTheme(
+          backgroundColor: GlobalProperties.backgroundColor,
+          foregroundColor: GlobalProperties.textAndIconColor,
+          iconTheme: const IconThemeData(
+            color: GlobalProperties.textAndIconColor,
+          ),
+          toolbarTextStyle: const TextTheme(
+            titleLarge: TextStyle(
+              color: GlobalProperties.textAndIconColor,
+              fontSize: 20,
+              fontWeight: FontWeight.w500,
+              letterSpacing: 0.15,
+            ),
+          ).bodyMedium,
+          titleTextStyle: const TextTheme(
+            titleLarge: TextStyle(
+              color: GlobalProperties.textAndIconColor,
+              fontSize: 20,
+              fontWeight: FontWeight.w500,
+              letterSpacing: 0.15,
+            ),
+          ).titleLarge,
+        ),
+        // ---Icon--- //
+        textTheme: TextTheme(
+          // ---Title--- //
+          displayLarge: Theme.of(context).textTheme.displayLarge!.copyWith(
+                color: GlobalProperties.textAndIconColor,
+              ),
+          displayMedium: Theme.of(context).textTheme.displayMedium!.copyWith(
+                color: GlobalProperties.textAndIconColor,
+              ),
+          displaySmall: Theme.of(context).textTheme.displaySmall!.copyWith(
+                color: GlobalProperties.textAndIconColor,
+              ),
+          headlineMedium: Theme.of(context).textTheme.headlineMedium!.copyWith(
+                color: GlobalProperties.textAndIconColor,
+              ),
+          headlineSmall: Theme.of(context).textTheme.headlineSmall!.copyWith(
+                color: GlobalProperties.textAndIconColor,
+              ),
+          titleLarge: Theme.of(context).textTheme.titleLarge!.copyWith(
+                color: GlobalProperties.textAndIconColor,
+              ),
+          titleMedium: Theme.of(context).textTheme.titleMedium!.copyWith(
+                color: GlobalProperties.textAndIconColor,
+              ),
+          titleSmall: Theme.of(context).textTheme.titleSmall!.copyWith(
+                color: GlobalProperties.textAndIconColor,
+              ),
+          bodyLarge: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                color: GlobalProperties.textAndIconColor,
+              ),
+          bodyMedium: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                color: GlobalProperties.textAndIconColor,
+              ),
+          labelLarge: Theme.of(context).textTheme.labelLarge!.copyWith(
+                color: GlobalProperties.textAndIconColor,
+              ),
+          bodySmall: Theme.of(context).textTheme.bodySmall!.copyWith(
+                color: GlobalProperties.textAndIconColor,
+              ),
+          labelSmall: Theme.of(context).textTheme.labelSmall!.copyWith(
+                color: GlobalProperties.textAndIconColor,
+              ),
+        ),
       ),
     );
   }

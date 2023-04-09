@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:my_time/common/widgets/appbar/custom_flexible_spacebar.dart';
 import 'package:my_time/common/widgets/responsive_center.dart';
 
-import 'package:my_time/global/globals.dart';
-
 class ScreenSliverAppBar extends StatefulWidget {
   late IconButton? leadingIconButton;
   late String title;
@@ -27,7 +25,7 @@ class _ScreenSliverAppBarState extends State<ScreenSliverAppBar> {
   Widget build(BuildContext context) {
     return SliverAppBar(
       actions: _isLeadingConfigured() ? [widget.leadingIconButton!] : null,
-      backgroundColor: GlobalProperties.secondaryAccentColor,
+      backgroundColor: Theme.of(context).colorScheme.primary,
       expandedHeight: 175,
       floating: false,
       pinned: true,
@@ -40,13 +38,10 @@ class _ScreenSliverAppBarState extends State<ScreenSliverAppBar> {
           centerTitle: false,
           title: Text(
             widget.title,
-            style: const TextStyle(
-                color: GlobalProperties.textAndIconColor,
-                fontSize: 24,
-                fontWeight: FontWeight.normal),
+            style: Theme.of(context).textTheme.titleLarge,
           ),
           background: Container(
-            color: GlobalProperties.secondaryAccentColor,
+            color: Theme.of(context).colorScheme.primary,
             child: Stack(
               fit: StackFit.expand, // expand stack
               children: [

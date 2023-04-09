@@ -26,14 +26,14 @@ final theme = ThemeData.light().copyWith(
       backgroundColor: Colors.white,
       hourMinuteColor: MaterialStateColor.resolveWith((states) =>
           states.contains(MaterialState.selected)
-              ? GlobalProperties.secondaryAccentColor
+              ? GlobalProperties.primaryColor
               : Colors.transparent),
       hourMinuteTextColor: MaterialStateColor.resolveWith((states) =>
           states.contains(MaterialState.selected)
               ? Colors.black
               : Colors.black),
       dialHandColor: Colors.white,
-      dialBackgroundColor: GlobalProperties.secondaryAccentColor,
+      dialBackgroundColor: GlobalProperties.primaryColor,
       dialTextColor: MaterialStateColor.resolveWith((states) =>
           states.contains(MaterialState.selected)
               ? Colors.black
@@ -49,7 +49,7 @@ final theme = ThemeData.light().copyWith(
       backgroundColor:
           MaterialStateColor.resolveWith((states) => Colors.transparent),
       foregroundColor: MaterialStateColor.resolveWith(
-          (states) => GlobalProperties.tertiaryAccentColor),
+          (states) => GlobalProperties.secondaryColor),
       overlayColor:
           MaterialStateColor.resolveWith((states) => Colors.transparent),
     ),
@@ -66,15 +66,14 @@ Future<DateTime?> showThemedDatePicker({
       return Theme(
         data: Theme.of(context).copyWith(
           colorScheme: const ColorScheme.light(
-            primary: GlobalProperties
-                .secondaryAccentColor, // header background color
+            primary: GlobalProperties.primaryColor, // header background color
             onPrimary: Colors.black, // header text color
             onSurface: Colors.black, // body text color
           ),
           textButtonTheme: TextButtonThemeData(
             style: TextButton.styleFrom(
               foregroundColor:
-                  GlobalProperties.secondaryAccentColor, // button text color
+                  GlobalProperties.primaryColor, // button text color
             ),
           ),
         ),

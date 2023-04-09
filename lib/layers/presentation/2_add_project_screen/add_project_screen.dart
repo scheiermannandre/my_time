@@ -10,7 +10,6 @@ import 'package:my_time/layers/interface/dto/group_dto.dart';
 import 'package:my_time/layers/presentation/2_add_project_screen/add_project_screen_loading_state.dart';
 import 'package:my_time/layers/presentation/2_add_project_screen/add_project_screen_controller.dart';
 import 'package:my_time/layers/presentation/2_add_project_screen/group_and_project_fields.dart';
-import 'package:my_time/global/globals.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AddProjectScreen extends HookConsumerWidget {
@@ -44,19 +43,17 @@ class AddProjectScreen extends HookConsumerWidget {
         leading: IconButton(
           icon: const Icon(
             Icons.arrow_back,
-            color: GlobalProperties.textAndIconColor,
           ),
           onPressed: () => controller.pop(context),
         ),
         title: Text(
           AppLocalizations.of(context)!.addProjectScreenTitle,
-          style: const TextStyle(color: GlobalProperties.textAndIconColor),
         ),
         elevation: 0,
-        backgroundColor: GlobalProperties.secondaryAccentColor,
+        backgroundColor: Theme.of(context).colorScheme.primary,
       ),
       bottomNavigationBar: Container(
-        color: GlobalProperties.backgroundColor,
+        color: Theme.of(context).colorScheme.background,
         child: NavBarSubmitButton(
           isLoading: state!.isLoading,
           btnText: AppLocalizations.of(context)!.addProjectScreenBtnLabel,
@@ -65,11 +62,11 @@ class AddProjectScreen extends HookConsumerWidget {
               : () => controller.onBtnTap(context, projectNameController.text),
         ),
       ),
-      backgroundColor: GlobalProperties.secondaryAccentColor,
+      backgroundColor: Theme.of(context).colorScheme.primary,
       body: Padding(
         padding: const EdgeInsets.only(top: 100),
         child: RefreshIndicator(
-          color: GlobalProperties.secondaryAccentColor,
+          color: Theme.of(context).colorScheme.primary,
           key: state.refreshIndicatorKey,
           onRefresh: () async {
             await AsyncValue.guard(() => ref

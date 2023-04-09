@@ -131,7 +131,6 @@ class CustomExpansionTileState extends State<CustomExpansionTile>
                           child: const Icon(
                             Icons.expand_more,
                             size: 24,
-                            color: GlobalProperties.textAndIconColor,
                           ),
                         )
                       : const SizedBox.shrink(),

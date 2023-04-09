@@ -70,10 +70,10 @@ class TimeEntryFormWidget extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                                AppLocalizations.of(context)!
-                                    .startTimePickFieldLabel,
-                                style: const TextStyle(
-                                    fontSize: 16, fontWeight: FontWeight.w500)),
+                              AppLocalizations.of(context)!
+                                  .startTimePickFieldLabel,
+                              style: Theme.of(context).textTheme.titleMedium,
+                            ),
                             const Padding(padding: EdgeInsets.only(bottom: 12)),
                             TimePickField(
                                 maxContentWidth: 100,
@@ -87,10 +87,10 @@ class TimeEntryFormWidget extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                                AppLocalizations.of(context)!
-                                    .endTimePickFieldLabel,
-                                style: const TextStyle(
-                                    fontSize: 16, fontWeight: FontWeight.w500)),
+                              AppLocalizations.of(context)!
+                                  .endTimePickFieldLabel,
+                              style: Theme.of(context).textTheme.titleMedium,
+                            ),
                             const Padding(padding: EdgeInsets.only(bottom: 12)),
                             TimePickField(
                                 maxContentWidth: 100,
@@ -105,8 +105,7 @@ class TimeEntryFormWidget extends StatelessWidget {
                             Text(
                               AppLocalizations.of(context)!
                                   .totalTimePickFieldLabel,
-                              style: const TextStyle(
-                                  fontSize: 16, fontWeight: FontWeight.w500),
+                              style: Theme.of(context).textTheme.titleMedium,
                             ),
                             const Padding(
                               padding: EdgeInsets.only(bottom: 12),

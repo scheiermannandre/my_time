@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_time/common/widgets/responsive_center.dart';
 import 'package:my_time/constants/breakpoints.dart';
-import 'package:my_time/global/globals.dart';
 
 class NavBarSubmitButton extends StatelessWidget {
   final double btnWidth = Breakpoint.mobile;
@@ -31,13 +30,6 @@ class NavBarSubmitButton extends StatelessWidget {
           width: btnWidth,
           child: ElevatedButton(
             onPressed: onBtnTap,
-            style: ElevatedButton.styleFrom(
-              padding: const EdgeInsets.fromLTRB(0, 12.5, 0, 12.5),
-              backgroundColor: GlobalProperties.secondaryAccentColor,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(5), // <-- Radius
-              ),
-            ),
             child: isLoading
                 ? const SizedBox(
                     height: kBottomNavigationBarHeight / 2,
@@ -46,10 +38,7 @@ class NavBarSubmitButton extends StatelessWidget {
                 : Text(
                     btnText,
                     textAlign: TextAlign.center,
-                    style: Theme.of(context)
-                        .textTheme
-                        .titleLarge!
-                        .copyWith(color: Colors.white),
+                    style: Theme.of(context).textTheme.titleSmall,
                   ),
           ),
         ),

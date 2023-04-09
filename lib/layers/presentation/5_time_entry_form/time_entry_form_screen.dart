@@ -6,7 +6,6 @@ import 'package:my_time/common/widgets/no_items_found_widget.dart';
 import 'package:my_time/layers/presentation/5_time_entry_form/time_entry_form_screen_controller.dart';
 import 'package:my_time/layers/presentation/5_time_entry_form/time_entry_form_screen_loading_state.dart';
 import 'package:my_time/layers/presentation/5_time_entry_form/time_entry_form_widget.dart';
-import 'package:my_time/global/globals.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class TimeEntryFormScreen extends ConsumerWidget {
@@ -42,14 +41,12 @@ class TimeEntryFormScreen extends ConsumerWidget {
         actions: [
           entry.hasValue && !entry.hasError
               ? IconButton(
-                  icon: const Icon(Icons.delete,
-                      color: GlobalProperties.textAndIconColor),
+                  icon: const Icon(Icons.delete),
                   onPressed: () =>
                       controller.deleteEntry(context, entry.value!))
               : const SizedBox.shrink(),
         ],
       ),
-      backgroundColor: GlobalProperties.backgroundColor,
       body: localId.isEmpty
           ? TimeEntryFormWidget(
               init: () => controller.init(context: context),
@@ -68,10 +65,10 @@ class TimeEntryFormScreen extends ConsumerWidget {
               onBtnTap: () => controller.saveEntry(context),
             )
           : RefreshIndicator(
-              color: GlobalProperties.secondaryAccentColor,
+              color: Theme.of(context).colorScheme.primary,
               key: ref
-                  .read(timeEntryFormScreenControllerProvider(
-                      projectId, timeEntryId, invalidTotalTimeMessage, languageCode))
+                  .read(timeEntryFormScreenControllerProvider(projectId,
+                      timeEntryId, invalidTotalTimeMessage, languageCode))
                   .value!
                   .refreshIndicatorKey,
               onRefresh: () async {
@@ -95,7 +92,8 @@ class TimeEntryFormScreen extends ConsumerWidget {
                         )
                       : TimeEntryFormWidget(
                           formKey: state!.formKey,
-                          init: () => controller.init(entry: entry, context: context),
+                          init: () =>
+                              controller.init(entry: entry, context: context),
                           dateController: state.startDateController,
                           startTimeController: state.startTimeController,
                           endTimeController: state.endTimeController,

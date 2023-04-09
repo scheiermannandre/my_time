@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_time/common/widgets/responsive_center.dart';
 import 'package:my_time/constants/breakpoints.dart';
-import 'package:my_time/global/globals.dart';
 
 class NoItemsFoundWidget extends StatelessWidget {
   const NoItemsFoundWidget(
@@ -34,27 +33,18 @@ class NoItemsFoundWidget extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 5),
             child: Text(
               title,
-              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.w500),
+              style: Theme.of(context).textTheme.titleLarge,
             ),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 5),
-            child: Text(
-              description,
-              style: const TextStyle(fontSize: 16),
-            ),
+            child:
+                Text(description, style: Theme.of(context).textTheme.bodyLarge),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 10),
             child: ElevatedButton(
               onPressed: onBtnTap,
-              style: ElevatedButton.styleFrom(
-                padding: const EdgeInsets.fromLTRB(0, 12.5, 0, 12.5),
-                backgroundColor: GlobalProperties.secondaryAccentColor,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(5), // <-- Radius
-                ),
-              ),
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Row(
@@ -62,13 +52,10 @@ class NoItemsFoundWidget extends StatelessWidget {
                   children: [
                     Text(
                       btnLabel,
-                      style: const TextStyle(
-                          color: GlobalProperties.textAndIconColor,
-                          fontSize: 18),
+                      style: Theme.of(context).textTheme.titleLarge,
                     ),
                     Icon(
                       icon,
-                      color: GlobalProperties.textAndIconColor,
                     ),
                   ],
                 ),

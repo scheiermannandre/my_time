@@ -39,9 +39,9 @@ class _CustomListTileState extends State<CustomListTile> {
         },
         child: Container(
           padding: const EdgeInsets.fromLTRB(12, 18, 12, 18),
-          decoration: const BoxDecoration(
-            color: GlobalProperties.backgroundColor,
-            borderRadius: BorderRadius.vertical(
+          decoration: BoxDecoration(
+            color: Theme.of(context).colorScheme.background,
+            borderRadius: const BorderRadius.vertical(
               top: Radius.circular(4),
               bottom: Radius.circular(4),
             ),
@@ -51,8 +51,7 @@ class _CustomListTileState extends State<CustomListTile> {
             children: [
               Text(
                 widget.title,
-                style: const TextStyle(
-                    fontSize: 20, fontWeight: FontWeight.bold),
+                style: Theme.of(context).textTheme.titleLarge,               
               ),
               const RotatedBox(
                 quarterTurns: 3,

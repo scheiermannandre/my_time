@@ -36,7 +36,6 @@ class ProjectScreen extends HookConsumerWidget {
             ? project.value!.name
             : "";
     return Scaffold(
-      backgroundColor: GlobalProperties.backgroundColor,
       appBar: CustomAppBar(
         title: projectTitle,
         actions: [
@@ -46,14 +45,12 @@ class ProjectScreen extends HookConsumerWidget {
                   icon: project.value!.isMarkedAsFavourite
                       ? const Icon(
                           Icons.star,
-                          color: Colors.black,
                         )
                       : const Icon(Icons.star_border),
                 )
               : IconButton(
                   icon: const Icon(
                     Icons.star_border,
-                    color: Colors.black,
                   ),
                   onPressed: () {},
                 ),
@@ -78,9 +75,9 @@ class ProjectScreen extends HookConsumerWidget {
       bottomNavigationBar: NavBar(
         onTap: (index) => {controller.onItemTapped(pageController, index)},
         startIndex: 0,
-        backgroundColor: GlobalProperties.backgroundColor,
-        selectedBackgroundColor: GlobalProperties.secondaryAccentColor,
-        unSelectedBackgroundColor: GlobalProperties.backgroundColor,
+        backgroundColor: Theme.of(context).colorScheme.background,
+        selectedBackgroundColor: Theme.of(context).colorScheme.primary,
+        unSelectedBackgroundColor: Theme.of(context).colorScheme.background,
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         iconColor: GlobalProperties.textAndIconColor,
         style: const TextStyle(color: GlobalProperties.textAndIconColor),
@@ -96,7 +93,7 @@ class ProjectScreen extends HookConsumerWidget {
         ],
       ),
       body: RefreshIndicator(
-        color: GlobalProperties.secondaryAccentColor,
+        color: Theme.of(context).colorScheme.primary,
         key: ref
             .read(projectScreenControllerProvider)
             .value!

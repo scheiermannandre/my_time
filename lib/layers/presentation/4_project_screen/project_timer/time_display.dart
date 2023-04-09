@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:my_time/global/globals.dart';
 
 class TimeDisplay extends StatelessWidget {
   final Duration duration;
@@ -14,13 +13,14 @@ class TimeDisplay extends StatelessWidget {
     return Container(
       alignment: Alignment.center,
       height: 250,
-      decoration: const BoxDecoration(
-          color: GlobalProperties.secondaryAccentColor, shape: BoxShape.circle),
+      decoration: BoxDecoration(
+          color: Theme.of(context).colorScheme.primary, shape: BoxShape.circle),
       child: Container(
         alignment: Alignment.center,
         height: 245,
-        decoration: const BoxDecoration(
-            color: GlobalProperties.backgroundColor, shape: BoxShape.circle),
+        decoration: BoxDecoration(
+            color: Theme.of(context).colorScheme.background,
+            shape: BoxShape.circle),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -29,24 +29,24 @@ class TimeDisplay extends StatelessWidget {
               children: [
                 Text(
                   hours,
-                  style: const TextStyle(
-                      fontSize: 64, fontWeight: FontWeight.w500),
+                  style: Theme.of(context).textTheme.displayMedium,
                 ),
-                const Text(
+                Text(
                   ":",
-                  style: TextStyle(fontSize: 64, fontWeight: FontWeight.w500),
+                  style: Theme.of(context).textTheme.displayMedium,
                 ),
                 Text(
                   minutes,
-                  style: const TextStyle(
-                      fontSize: 64, fontWeight: FontWeight.w500),
+                  style: Theme.of(context).textTheme.displayMedium,
                 ),
               ],
             ),
             Text(
               seconds,
-              style: const TextStyle(
-                  fontWeight: FontWeight.w500, color: Color(0xff855827)),
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyMedium!
+                  .copyWith(color: Theme.of(context).colorScheme.secondary),
             )
           ],
         ),

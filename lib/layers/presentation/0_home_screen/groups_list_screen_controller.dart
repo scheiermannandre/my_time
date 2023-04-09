@@ -60,7 +60,6 @@ class GroupsListScreenController extends _$GroupsListScreenController {
   //       ListTile(
   //         trailing: const Icon(
   //           Icons.settings,
-  //           color: Colors.black,
   //         ),
   //         title: const Text(
   //           "Settings",

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:my_time/common/widgets/responsive_center.dart';
 import 'package:my_time/constants/app_sizes.dart';
-import 'package:my_time/global/globals.dart';
 import 'package:my_time/router/app_route.dart';
 
 class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
@@ -65,7 +64,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
     return AnimatedContainer(
       duration: const Duration(milliseconds: 150),
       decoration: BoxDecoration(
-        color: GlobalProperties.secondaryAccentColor,
+        color: Theme.of(context).colorScheme.primary,
         boxShadow: showElevation
             ? <BoxShadow>[
                 const BoxShadow(
@@ -80,7 +79,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
           ResponsiveAlign(
             maxContentWidth: double.infinity,
             child: Container(
-              color: GlobalProperties.secondaryAccentColor,
+              color: Theme.of(context).colorScheme.primary,
               padding: const EdgeInsets.fromLTRB(4, 10, 10, 4),
               height: kToolbarHeight,
               child: Row(
@@ -95,10 +94,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
                     Expanded(
                       child: Text(
                         widget.title,
-                        style: const TextStyle(
-                            fontSize: 28,
-                            color: GlobalProperties.textAndIconColor,
-                            fontWeight: FontWeight.w500),
+                        style: Theme.of(context).textTheme.titleLarge,
                       ),
                     ),
                     gapW8,

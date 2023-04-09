@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:my_time/global/globals.dart';
 
 class RoundedLabeldButton extends StatelessWidget {
   final IconData icon;
   final String text;
-  late Function onPressed;
-  RoundedLabeldButton(
+  final Function onPressed;
+  const RoundedLabeldButton(
       {super.key,
       required this.icon,
       required this.text,
@@ -21,15 +20,17 @@ class RoundedLabeldButton extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          CircleAvatar(
-            radius: 30,
-            backgroundColor: GlobalProperties.secondaryAccentColor,
+          Container(
+            height: 55,
+            width: 55,
+            decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.primary,
+                shape: BoxShape.circle),
             child: IconButton(
               onPressed: () {
                 onPressed();
               },
               icon: Icon(icon),
-              color: GlobalProperties.textAndIconColor,
             ),
           ),
           Padding(
@@ -37,10 +38,7 @@ class RoundedLabeldButton extends StatelessWidget {
             child: Text(
               text,
               textAlign: TextAlign.center,
-              style: const TextStyle(
-                fontWeight: FontWeight.w500,
-                color: GlobalProperties.textAndIconColor,
-              ),
+              style: Theme.of(context).textTheme.bodyLarge,
             ),
           ),
         ],

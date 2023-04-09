@@ -12,7 +12,7 @@ Future<dynamic> openBottomSheet({
   required Function onConfirmed,
 }) async {
   return await showModalBottomSheet(
-    backgroundColor: GlobalProperties.primaryAccentColor,
+    backgroundColor: GlobalProperties.backgroundColor,
     transitionAnimationController: bottomSheetController,
     isScrollControlled: true,
     shape: const RoundedRectangleBorder(
@@ -40,16 +40,13 @@ Future<dynamic> openBottomSheet({
             Text(
               title,
               textAlign: TextAlign.center,
-              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+              style: Theme.of(context).textTheme.titleLarge,
             ),
             const Padding(padding: EdgeInsets.fromLTRB(0, 20, 0, 0)),
             Text(
               message,
               textAlign: TextAlign.center,
-              style: const TextStyle(
-                fontWeight: FontWeight.normal,
-                //fontSize: 18,
-              ),
+              style: Theme.of(context).textTheme.bodyMedium,
             ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -58,24 +55,17 @@ Future<dynamic> openBottomSheet({
                   onPressed: () => onCanceled(),
                   child: Text(
                     cancelBtnText,
-                    style: const TextStyle(
-                        fontSize: 16,
-                        color: GlobalProperties.secondaryAccentColor),
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleSmall!
+                        .copyWith(color: Theme.of(context).colorScheme.primary),
                   ),
                 ),
                 ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    padding: const EdgeInsets.fromLTRB(0, 12.5, 0, 12.5),
-                    backgroundColor: GlobalProperties.secondaryAccentColor,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(5), // <-- Radius
-                    ),
-                  ),
                   onPressed: () => onConfirmed(),
                   child: Text(
                     confirmBtnText,
-                    style: const TextStyle(
-                        fontSize: 16, color: GlobalProperties.textAndIconColor),
+                    style: Theme.of(context).textTheme.titleSmall,
                   ),
                 ),
                 const Padding(padding: EdgeInsets.only(bottom: 15))

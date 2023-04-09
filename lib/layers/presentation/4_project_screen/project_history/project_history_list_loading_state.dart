@@ -64,7 +64,7 @@ class LabeledBlockLoadingState extends StatelessWidget {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text("", style: TextStyle(fontSize: 18)),
+                          const Text(""),
                           const Padding(
                               padding: EdgeInsets.fromLTRB(0, 8, 0, 0)),
                           Row(
