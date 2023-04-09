@@ -5,20 +5,17 @@ import 'package:intl/intl.dart';
 extension DateTimeExtension on DateTime {
   String toFormattedDateString(String languageCode) {
     final locale = Platform.localeName;
-    final format = DateFormat('EEE, MMM d, y', locale);
-    return format.format(this);
+    return DateFormat.yMMMMEEEEd(locale).format(this);
   }
 
   String toFormattedWeekDayString(String languageCode) {
     final locale = Platform.localeName;
-    final format = DateFormat('EEEE, d', locale);
-    return format.format(this);
+    return DateFormat.MMMMEEEEd(locale).format(this);
   }
 
   String toMonthAndYearString(String languageCode) {
     final locale = Platform.localeName;
-    final format = DateFormat('MMMM y', locale);
-    return format.format(this);
+    return DateFormat.yMMMM(locale).format(this);
   }
 
   String toFormattedTimeOfDayString() {

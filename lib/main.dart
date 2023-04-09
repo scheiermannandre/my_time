@@ -1,10 +1,7 @@
-import 'dart:io';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:intl/intl.dart';
 import 'package:my_time/l10n/l10n.dart';
 import 'package:my_time/router/app_route.dart';
 // ignore:depend_on_referenced_packages
@@ -12,60 +9,6 @@ import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 void main() async {
-    // make a list of type DateFormat nad add every possible DateFormat of the class DateFormat into it
-  final formats = <DateFormat>[
-    DateFormat.yMd(),
-    DateFormat.yMEd(),
-    DateFormat.yMMMMd(),
-    DateFormat.yMMMMEEEEd(),
-    DateFormat.MMMMd(),
-    DateFormat.E(),
-    DateFormat.EEEE(),
-    DateFormat.Hm(),
-    DateFormat.Hms(),
-    DateFormat.jm(),
-    DateFormat.jms(),
-    DateFormat.Md(),
-    DateFormat.MEd(),
-    DateFormat.MMMd(),
-    DateFormat.MMMEd(),
-    DateFormat.MMMMEEEEd(),
-    DateFormat.MMMMd(),
-    DateFormat.MMMM(),
-    DateFormat.y(),
-    DateFormat.yM(),
-    DateFormat.yMd(),
-    DateFormat.yMEd(),
-    DateFormat.yMMM(),
-    DateFormat.yMMMd(),
-    DateFormat.yMMMEd(),
-    DateFormat.yMMMM(),
-    DateFormat.yMMMMd(),
-    DateFormat.yMMMMEEEEd(),
-    DateFormat.H(),
-    DateFormat.Hm(),
-    DateFormat.Hms(),
-    DateFormat.j(),
-    DateFormat.jm(),
-    DateFormat.jms(),
-    DateFormat.m(),
-    DateFormat.ms(),
-    DateFormat.s(),
-    DateFormat.E(),
-    DateFormat.EEEE(),
-    DateFormat.Hms(),
-    DateFormat.jms(),
-    DateFormat.m(),
-    DateFormat.ms(),
-    DateFormat.s()
-  ];
-
-// for each format in the list of formats, print the format for DateTime.Now() and print the name of the format method
-  for (final format in formats) {
-    print('${format.format(DateTime.now())} - ${format.pattern}');
-  }
-
-
   WidgetsFlutterBinding.ensureInitialized();
   // turn off the # in the URLs on the web
   usePathUrlStrategy();
