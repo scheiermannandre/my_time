@@ -26,7 +26,6 @@ class AddProjectScreenController extends _$AddProjectScreenController {
     ref.onDispose(() => current = Object());
 
     return AddProjectState(
-      //selectedGroupName: arg.isEmpty ? AddProjectState.selectGroupText : arg,
       isExpandable: arg.isEmpty ? false : true,
       expansionTile: GlobalKey<CustomExpansionTileState>(),
     );

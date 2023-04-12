@@ -80,6 +80,10 @@
     "invalidTotalTimeMessage": "Total Time needs to be positive!",
     "noEntryFoundTitle": "Entry not found",
     "noEntryFoundDescription": "Please refresh the screen",
-    "noEntryFoundBtnLabel": "Refresh"
+    "noEntryFoundBtnLabel": "Refresh",
+    "deleteEntryTitle": "Delete Entry?",
+    "deleteEntryMessage": "The Entry can't be restored once it's deleted!",
+    "deleteEntryConfirmBtnLabel": "Confirm",
+    "deleteEntryCancelBtnLabel": "Cancel"
 
 }

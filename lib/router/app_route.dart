@@ -89,12 +89,14 @@ final goRouter = GoRouter(
           name: AppRoute.timeEntryForm,
           pageBuilder: (context, state) {
             final projectID = state.params['pid'] ?? "";
+            final isEdit = state.queryParams['isEdit'] ?? "false";
             final tid = state.queryParams['tid'] ?? "";
             final String projectName = state.queryParams['pname'] ?? "";
             return MaterialPage(
               key: state.pageKey,
               fullscreenDialog: false,
               child: TimeEntryFormScreen(
+                isEdit: isEdit == "true" ? true : false,
                 timeEntryId: tid,
                 projectId: projectID,
                 projectName: projectName,

@@ -66,7 +66,8 @@ class ProjectScreen extends HookConsumerWidget {
           ),
           IconButton(
             onPressed: () => project.hasValue
-                ? controller.pushNamedTimeEntryForm(context, project.value!)
+                ? controller.pushNamedTimeEntryForm(
+                    context, project.value!, false)
                 : null,
             icon: const Icon(Icons.add),
           ),

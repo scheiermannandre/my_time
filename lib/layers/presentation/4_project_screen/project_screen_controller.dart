@@ -45,7 +45,7 @@ class ProjectScreenController extends _$ProjectScreenController {
     if (entry != null) {
       await ref.refresh(projectTimeEntriesProvider(project.id).future);
       if (mounted) {
-        pushNamedTimeEntryForm(context, project, entry);
+        pushNamedTimeEntryForm(context, project, true, entry);
       }
     }
   }
@@ -62,7 +62,8 @@ class ProjectScreenController extends _$ProjectScreenController {
     );
   }
 
-  void pushNamedTimeEntryForm(BuildContext context, ProjectDTO project,
+  void pushNamedTimeEntryForm(
+      BuildContext context, ProjectDTO project, bool isEdit,
       [TimeEntryDTO? entry]) {
     String tid = entry?.id ?? "";
     return context.pushNamed(
@@ -70,7 +71,11 @@ class ProjectScreenController extends _$ProjectScreenController {
       params: {
         'pid': project.id,
       },
-      queryParams: {'tid': tid, 'pname': project.name},
+      queryParams: {
+        'tid': tid,
+        'pname': project.name,
+        'isEdit': isEdit.toString(),
+      },
     );
   }
 
@@ -88,20 +93,34 @@ class ProjectScreenController extends _$ProjectScreenController {
       controller.addStatusListener(listener);
 
       deletePressed = await openBottomSheet(
-          context: context,
-          bottomSheetController: controller,
-          title: AppLocalizations.of(context)!.deleteProjectTitle(project.name),
-          message: AppLocalizations.of(context)!.deleteProjectMessage,
-          confirmBtnText:
-              AppLocalizations.of(context)!.deleteProjectConfirmBtnLabel,
-          cancelBtnText:
-              AppLocalizations.of(context)!.deleteProjectCancelBtnLabel,
-          onCanceled: () {
-            Navigator.of(context).pop(false);
-          },
-          onConfirmed: () {
-            Navigator.of(context).pop(true);
-          });
+        context: context,
+        bottomSheetController: controller,
+        title: AppLocalizations.of(context)!.deleteProjectTitle(project.name),
+        message: AppLocalizations.of(context)!.deleteProjectMessage,
+        confirmBtnText:
+            AppLocalizations.of(context)!.deleteProjectConfirmBtnLabel,
+        cancelBtnText:
+            AppLocalizations.of(context)!.deleteProjectCancelBtnLabel,
+        onCanceled: () {
+          Navigator.of(context).pop(false);
+        },
+        onConfirmed: () async {
+          final result = await ref
+              .read(projectsScreenServiceProvider)
+              .deleteProject(project);
+
+          return result;
+        },
+        whenCompleted: (result, mounted) async {
+          if (result) {
+            ref.invalidate(homePageDataProvider);
+            ref.invalidate(groupWithProjectsDTOProvider(project.groupId));
+          }
+          if (result && !mounted) {
+            ref.invalidate(projectProvider(project.id));
+          }
+        },
+      );
     }
   }
 
@@ -117,14 +136,8 @@ class ProjectScreenController extends _$ProjectScreenController {
   Future<void> _delete(
       BuildContext context, ProjectDTO project, bool? deletePressed) async {
     if (deletePressed ?? false) {
-      final result =
-          await ref.read(projectsScreenServiceProvider).deleteProject(project);
-      if (result) {
-        await ref.refresh(groupWithProjectsDTOProvider(project.groupId).future);
-        await ref.refresh(homePageDataProvider.future);
-        if (mounted) {
-          pop(context);
-        }
+      if (mounted) {
+        pop(context);
       }
     }
   }

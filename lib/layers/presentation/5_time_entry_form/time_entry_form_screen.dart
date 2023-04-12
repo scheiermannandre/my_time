@@ -1,20 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:my_time/common/extensions/async_value_extensions.dart';
 import 'package:my_time/common/widgets/appbar/custom_app_bar.dart';
 import 'package:my_time/common/widgets/loading_error_widget.dart';
 import 'package:my_time/common/widgets/no_items_found_widget.dart';
+import 'package:my_time/layers/domain/time_entry.dart';
 import 'package:my_time/layers/presentation/5_time_entry_form/time_entry_form_screen_controller.dart';
 import 'package:my_time/layers/presentation/5_time_entry_form/time_entry_form_screen_loading_state.dart';
 import 'package:my_time/layers/presentation/5_time_entry_form/time_entry_form_widget.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class TimeEntryFormScreen extends ConsumerWidget {
+class TimeEntryFormScreen extends HookConsumerWidget {
   final String? timeEntryId;
   final String projectId;
   final String projectName;
+  final bool isEdit;
 
   const TimeEntryFormScreen({
     super.key,
+    required this.isEdit,
     required this.timeEntryId,
     required this.projectId,
     required this.projectName,
@@ -25,52 +30,48 @@ class TimeEntryFormScreen extends ConsumerWidget {
     final languageCode = Localizations.localeOf(context).languageCode;
     final invalidTotalTimeMessage =
         AppLocalizations.of(context)!.invalidTotalTimeMessage;
+    final provider = timeEntryFormScreenControllerProvider(
+        projectId, timeEntryId, isEdit, invalidTotalTimeMessage, languageCode);
 
-    final controller = ref.watch(timeEntryFormScreenControllerProvider(
-            projectId, timeEntryId, invalidTotalTimeMessage, languageCode)
-        .notifier);
-    final state = ref
-        .watch(timeEntryFormScreenControllerProvider(
-            projectId, timeEntryId, invalidTotalTimeMessage, languageCode))
-        .value;
-    var entry = ref.watch(projectTimeEntryProvider(timeEntryId!));
-    String localId = timeEntryId ?? "";
+    final controller = ref.watch(provider.notifier);
+    final state = ref.watch(provider);
+    final key = state.value != null ? state.value!.refreshIndicatorKey : null;
+    late AsyncValue<TimeEntryDTO> entry = const AsyncValue.loading();
+    if (isEdit) {
+      entry = ref.watch(projectTimeEntryProvider(timeEntryId!));
+      ref.listen<AsyncValue>(
+        projectTimeEntryProvider(timeEntryId!),
+        (_, state) => state.showAlertDialogOnError(context),
+      );
+    }
+    print(entry);
+    final AnimationController sheetController = useAnimationController(
+      duration: const Duration(milliseconds: 350),
+    );
     return Scaffold(
       appBar: CustomAppBar(
         title: projectName,
         actions: [
-          entry.hasValue && !entry.hasError
+          isEdit && entry.hasValue
               ? IconButton(
                   icon: const Icon(Icons.delete),
-                  onPressed: () =>
-                      controller.deleteEntry(context, entry.value!))
+                  onPressed: () => controller.showDeleteBottomSheet(
+                    context,
+                    sheetController,
+                    entry.value!,
+                  ),
+                )
               : const SizedBox.shrink(),
         ],
       ),
-      body: localId.isEmpty
+      body: !isEdit
           ? TimeEntryFormWidget(
-              init: () => controller.init(context: context),
-              formKey: state!.formKey,
-              dateController: state.startDateController,
-              startTimeController: state.startTimeController,
-              endTimeController: state.endTimeController,
-              totalTimeController: state.totalTimeController,
-              descriptionController: state.descriptionController,
-              validateDate: (date) => state.validateDate(date),
-              validateStartTime: (time) => state.validateStartTime(time),
-              validateEndTime: (time) => state.validateEndTime(time),
-              validateTotalTime: (time) => state.validateTotalTime(time),
-              validateTotalTimePositive: () =>
-                  state.validateTotalTimePositive(),
+              state: state.value,
               onBtnTap: () => controller.saveEntry(context),
             )
           : RefreshIndicator(
               color: Theme.of(context).colorScheme.primary,
-              key: ref
-                  .read(timeEntryFormScreenControllerProvider(projectId,
-                      timeEntryId, invalidTotalTimeMessage, languageCode))
-                  .value!
-                  .refreshIndicatorKey,
+              key: key,
               onRefresh: () async {
                 await AsyncValue.guard(() => ref
                     .refresh(projectTimeEntryProvider(timeEntryId!).future)
@@ -82,8 +83,9 @@ class TimeEntryFormScreen extends ConsumerWidget {
                       ? NoItemsFoundWidget(
                           btnLabel: AppLocalizations.of(context)!
                               .noEntryFoundBtnLabel,
-                          onBtnTap: () =>
-                              state!.refreshIndicatorKey.currentState?.show(),
+                          onBtnTap: () => state
+                              .value!.refreshIndicatorKey.currentState
+                              ?.show(),
                           title:
                               AppLocalizations.of(context)!.noEntryFoundTitle,
                           description: AppLocalizations.of(context)!
@@ -91,28 +93,13 @@ class TimeEntryFormScreen extends ConsumerWidget {
                           icon: Icons.refresh,
                         )
                       : TimeEntryFormWidget(
-                          formKey: state!.formKey,
-                          init: () =>
-                              controller.init(entry: entry, context: context),
-                          dateController: state.startDateController,
-                          startTimeController: state.startTimeController,
-                          endTimeController: state.endTimeController,
-                          totalTimeController: state.totalTimeController,
-                          descriptionController: state.descriptionController,
-                          validateDate: (date) => state.validateDate(date),
-                          validateStartTime: (time) =>
-                              state.validateStartTime(time),
-                          validateEndTime: (time) =>
-                              state.validateEndTime(time),
-                          validateTotalTime: (time) =>
-                              state.validateTotalTime(time),
-                          validateTotalTimePositive: () =>
-                              state.validateTotalTimePositive(),
+                          state: state.value!,
                           onBtnTap: () => controller.saveEntry(context),
                         ),
                   error: (error, stackTrace) => LoadingErrorWidget(
-                      onRefresh: () =>
-                          state!.refreshIndicatorKey.currentState?.show()),
+                      onRefresh: () => state
+                          .value!.refreshIndicatorKey.currentState
+                          ?.show()),
                   loading: () => const TimeEntryFormScreenLoadingState()),
             ),
     );

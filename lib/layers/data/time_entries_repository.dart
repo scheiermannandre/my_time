@@ -48,7 +48,6 @@ class TimeEntriesRepository {
 
   Future<bool> addTimeEntry(Project project, TimeEntryDTO entry) async {
     if (_checkSameDateEntries(entry, project.timeEntries)) {
-      //return false;
       throw Exception(
           "Given Timerange is overlapping with an existing Timerange!");
     }
@@ -123,10 +122,10 @@ class TimeEntriesRepository {
     return dateRangesOverlap;
   }
 
-  Future<TimeEntryDTO?> getEntryById(String id) async {
+  Future<TimeEntryDTO> getEntryById(String id) async {
     var entries = realm.all<TimeEntry>().query("id == '$id'");
     if (entries.isEmpty) {
-      return null;
+      throw Exception("No Entry with given ID found!");
     }
     return _convertEntryFromDB(entries.first);
   }

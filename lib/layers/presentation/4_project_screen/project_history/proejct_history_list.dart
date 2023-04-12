@@ -28,6 +28,7 @@ class ProjectHistory extends HookConsumerWidget {
                   ? projectScreenController.pushNamedTimeEntryForm(
                       context,
                       project,
+                      false,
                     )
                   : null,
               title: AppLocalizations.of(context)!.noHistoryFoundTitle,
@@ -49,6 +50,7 @@ class ProjectHistory extends HookConsumerWidget {
                         projectScreenController.pushNamedTimeEntryForm(
                       context,
                       project,
+                      true,
                       entry,
                     ),
                     timeEntries: data[index],

@@ -45,16 +45,18 @@ class TimeEntryDTO {
     String? projectId,
     DateTime? startTime,
     DateTime? endTime,
-    Duration? totalTime,
     Duration? breakTime,
     String? description,
   }) {
+    DateTime tmpStartTime = startTime ?? this.startTime;
+    DateTime tmpEndTime = endTime ?? this.endTime;
+
     return TimeEntryDTO.factory(
       id: id ?? this.id,
       projectId: projectId ?? this.projectId,
-      startTime: startTime ?? this.startTime,
-      endTime: endTime ?? this.endTime,
-      totalTime: totalTime ?? this.totalTime,
+      startTime: tmpStartTime,
+      endTime: tmpEndTime,
+      totalTime: tmpEndTime.difference(tmpStartTime),
       breakTime: breakTime ?? this.breakTime,
       description: description ?? this.description,
     );
@@ -67,7 +69,9 @@ class TimeEntryDTO {
     }
     return intersect;
   }
-  static bool _compareEntriesIntersection(TimeEntryDTO entry1, TimeEntryDTO entry2) {
+
+  static bool _compareEntriesIntersection(
+      TimeEntryDTO entry1, TimeEntryDTO entry2) {
     return (entry1.startTime.isBefore(entry2.endTime) &&
         entry2.startTime.isBefore(entry1.endTime));
   }

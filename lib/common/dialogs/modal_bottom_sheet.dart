@@ -9,7 +9,8 @@ Future<dynamic> openBottomSheet({
   required String confirmBtnText,
   required String cancelBtnText,
   required Function onCanceled,
-  required Function onConfirmed,
+  required Future<bool> Function() onConfirmed,
+  required Future<void> Function(bool, bool) whenCompleted,
 }) async {
   return await showModalBottomSheet(
     backgroundColor: GlobalProperties.backgroundColor,
@@ -18,7 +19,46 @@ Future<dynamic> openBottomSheet({
     shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
     context: context,
-    builder: (context) => FractionallySizedBox(
+    builder: (context) => ModalBottomSheet(
+      title: title,
+      message: message,
+      confirmBtnText: confirmBtnText,
+      cancelBtnText: cancelBtnText,
+      onCanceled: onCanceled,
+      onConfirmed: onConfirmed,
+      whenCompleted: whenCompleted,
+    ),
+  );
+}
+
+class ModalBottomSheet extends StatefulWidget {
+  final String title;
+  final String message;
+  final String confirmBtnText;
+  final String cancelBtnText;
+  final Function onCanceled;
+  final Future<bool> Function() onConfirmed;
+  final Future<void> Function(bool, bool) whenCompleted;
+
+  const ModalBottomSheet(
+      {super.key,
+      required this.title,
+      required this.message,
+      required this.confirmBtnText,
+      required this.cancelBtnText,
+      required this.onCanceled,
+      required this.onConfirmed,
+      required this.whenCompleted});
+
+  @override
+  State<ModalBottomSheet> createState() => _ModalBottomSheetState();
+}
+
+class _ModalBottomSheetState extends State<ModalBottomSheet> {
+  bool isLoading = false;
+  @override
+  Widget build(BuildContext context) {
+    return FractionallySizedBox(
       //heightFactor: 0.9,
       child: Container(
         padding: const EdgeInsets.all(16),
@@ -38,13 +78,13 @@ Future<dynamic> openBottomSheet({
             ),
             const Padding(padding: EdgeInsets.fromLTRB(0, 20, 0, 0)),
             Text(
-              title,
+              widget.title,
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.titleLarge,
             ),
             const Padding(padding: EdgeInsets.fromLTRB(0, 20, 0, 0)),
             Text(
-              message,
+              widget.message,
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.bodyMedium,
             ),
@@ -52,21 +92,41 @@ Future<dynamic> openBottomSheet({
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 TextButton(
-                  onPressed: () => onCanceled(),
+                  onPressed: !isLoading ? () => widget.onCanceled() : null,
                   child: Text(
-                    cancelBtnText,
-                    style: Theme.of(context)
-                        .textTheme
-                        .titleSmall!
-                        .copyWith(color: Theme.of(context).colorScheme.primary),
+                    widget.cancelBtnText,
                   ),
                 ),
                 ElevatedButton(
-                  onPressed: () => onConfirmed(),
-                  child: Text(
-                    confirmBtnText,
-                    style: Theme.of(context).textTheme.titleSmall,
-                  ),
+                  onPressed: !isLoading
+                      ? () async {
+                          setState(() {
+                            isLoading = true;
+                          });
+                          final bool confirmed = await widget.onConfirmed();
+                          if (confirmed) {
+                            await widget.whenCompleted(confirmed, mounted);
+                            if (mounted) {
+                              Navigator.of(context).pop(true);
+                            }
+                          }
+                          if (mounted) {
+                            setState(() {
+                              isLoading = false;
+                            });
+                          }
+                        }
+                      : null,
+                  child: !isLoading
+                      ? Text(
+                          widget.confirmBtnText,
+                          style: Theme.of(context).textTheme.titleSmall,
+                        )
+                      : const SizedBox(
+                          height: 20.0,
+                          width: 20.0,
+                          child: CircularProgressIndicator(),
+                        ),
                 ),
                 const Padding(padding: EdgeInsets.only(bottom: 15))
               ],
@@ -74,6 +134,6 @@ Future<dynamic> openBottomSheet({
           ],
         )),
       ),
-    ),
-  );
+    );
+  }
 }

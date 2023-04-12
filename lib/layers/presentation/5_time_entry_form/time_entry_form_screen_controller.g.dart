@@ -7,7 +7,7 @@ part of 'time_entry_form_screen_controller.dart';
 // **************************************************************************
 
 String _$timeEntryFormScreenControllerHash() =>
-    r'8370302427b9e5d556c62594548e78e8c32d7105';
+    r'61bf5ab98dd35589c2037b6276a7258189263177';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -33,13 +33,15 @@ class _SystemHash {
 abstract class _$TimeEntryFormScreenController
     extends BuildlessAutoDisposeAsyncNotifier<TimeEntryFormScreenState> {
   late final String projectId;
-  late final String? timeEntryid;
+  late final String? timeEntryId;
+  late final bool isEdit;
   late final String invalidMessage;
   late final String languageCode;
 
   FutureOr<TimeEntryFormScreenState> build(
     String projectId,
-    String? timeEntryid,
+    String? timeEntryId,
+    bool isEdit,
     String invalidMessage,
     String languageCode,
   );
@@ -59,13 +61,15 @@ class TimeEntryFormScreenControllerFamily
   /// See also [TimeEntryFormScreenController].
   TimeEntryFormScreenControllerProvider call(
     String projectId,
-    String? timeEntryid,
+    String? timeEntryId,
+    bool isEdit,
     String invalidMessage,
     String languageCode,
   ) {
     return TimeEntryFormScreenControllerProvider(
       projectId,
-      timeEntryid,
+      timeEntryId,
+      isEdit,
       invalidMessage,
       languageCode,
     );
@@ -77,7 +81,8 @@ class TimeEntryFormScreenControllerFamily
   ) {
     return call(
       provider.projectId,
-      provider.timeEntryid,
+      provider.timeEntryId,
+      provider.isEdit,
       provider.invalidMessage,
       provider.languageCode,
     );
@@ -105,13 +110,15 @@ class TimeEntryFormScreenControllerProvider
   /// See also [TimeEntryFormScreenController].
   TimeEntryFormScreenControllerProvider(
     this.projectId,
-    this.timeEntryid,
+    this.timeEntryId,
+    this.isEdit,
     this.invalidMessage,
     this.languageCode,
   ) : super.internal(
           () => TimeEntryFormScreenController()
             ..projectId = projectId
-            ..timeEntryid = timeEntryid
+            ..timeEntryId = timeEntryId
+            ..isEdit = isEdit
             ..invalidMessage = invalidMessage
             ..languageCode = languageCode,
           from: timeEntryFormScreenControllerProvider,
@@ -126,7 +133,8 @@ class TimeEntryFormScreenControllerProvider
         );
 
   final String projectId;
-  final String? timeEntryid;
+  final String? timeEntryId;
+  final bool isEdit;
   final String invalidMessage;
   final String languageCode;
 
@@ -134,7 +142,8 @@ class TimeEntryFormScreenControllerProvider
   bool operator ==(Object other) {
     return other is TimeEntryFormScreenControllerProvider &&
         other.projectId == projectId &&
-        other.timeEntryid == timeEntryid &&
+        other.timeEntryId == timeEntryId &&
+        other.isEdit == isEdit &&
         other.invalidMessage == invalidMessage &&
         other.languageCode == languageCode;
   }
@@ -143,7 +152,8 @@ class TimeEntryFormScreenControllerProvider
   int get hashCode {
     var hash = _SystemHash.combine(0, runtimeType.hashCode);
     hash = _SystemHash.combine(hash, projectId.hashCode);
-    hash = _SystemHash.combine(hash, timeEntryid.hashCode);
+    hash = _SystemHash.combine(hash, timeEntryId.hashCode);
+    hash = _SystemHash.combine(hash, isEdit.hashCode);
     hash = _SystemHash.combine(hash, invalidMessage.hashCode);
     hash = _SystemHash.combine(hash, languageCode.hashCode);
 
@@ -156,7 +166,8 @@ class TimeEntryFormScreenControllerProvider
   ) {
     return notifier.build(
       projectId,
-      timeEntryid,
+      timeEntryId,
+      isEdit,
       invalidMessage,
       languageCode,
     );

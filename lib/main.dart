@@ -91,8 +91,13 @@ class MyApp extends StatelessWidget {
             ),
             padding: MaterialStateProperty.all(
                 const EdgeInsets.fromLTRB(0, 12.5, 0, 12.5)),
-            backgroundColor: MaterialStateProperty.all(
-              GlobalProperties.primaryColor,
+            backgroundColor: MaterialStateProperty.resolveWith<Color>(
+              (states) {
+                if (states.contains(MaterialState.disabled)) {
+                  return Colors.black.withOpacity(.25); // Disabled color
+                }
+                return GlobalProperties.primaryColor; // Regular color
+              },
             ),
             foregroundColor: MaterialStateProperty.all(
               GlobalProperties.textAndIconColor,
@@ -164,6 +169,21 @@ class MyApp extends StatelessWidget {
           labelSmall: Theme.of(context).textTheme.labelSmall!.copyWith(
                 color: GlobalProperties.textAndIconColor,
               ),
+        ),
+        progressIndicatorTheme: const ProgressIndicatorThemeData(
+          color: GlobalProperties.secondaryColor,
+        ),
+        textButtonTheme: TextButtonThemeData(
+          style: ButtonStyle(
+            foregroundColor: MaterialStateProperty.resolveWith<Color>(
+              (states) {
+                if (states.contains(MaterialState.disabled)) {
+                  return Colors.black.withOpacity(.25); // Disabled color
+                }
+                return GlobalProperties.primaryColor; // Regular color
+              },
+            ),
+          ),
         ),
       ),
     );

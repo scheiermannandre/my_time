@@ -7,7 +7,6 @@ import 'package:my_time/common/widgets/custom_list_tile.dart';
 import 'package:my_time/common/widgets/loading_error_widget.dart';
 import 'package:my_time/common/widgets/no_items_found_widget.dart';
 import 'package:my_time/common/widgets/responsive_center.dart';
-import 'package:my_time/global/globals.dart';
 import 'package:my_time/layers/presentation/3_projects_per_group_list_screen/projects_per_group_screen_controller.dart';
 import 'package:my_time/layers/presentation/3_projects_per_group_list_screen/projects_per_group_screen_loading_state.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -92,9 +91,8 @@ class ProjectsPerGroupListScreen extends HookConsumerWidget {
                         AppLocalizations.of(context)!.noProjectsFoundBtnLabel,
                   )
                 : SingleChildScrollView(
-                    controller: scrollController,
                     child: ListView.builder(
-                      controller: scrollController,
+                      //controller: scrollController,
                       padding: const EdgeInsets.only(top: 10),
                       physics: const NeverScrollableScrollPhysics(),
                       shrinkWrap: true,

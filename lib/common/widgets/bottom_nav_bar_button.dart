@@ -32,9 +32,10 @@ class NavBarSubmitButton extends StatelessWidget {
             onPressed: onBtnTap,
             child: isLoading
                 ? const SizedBox(
-                    height: kBottomNavigationBarHeight / 2,
-                    width: kBottomNavigationBarHeight / 2,
-                    child: CircularProgressIndicator())
+                    height: 20.0,
+                    width: 20.0,
+                    child: CircularProgressIndicator(),
+                  )
                 : Text(
                     btnText,
                     textAlign: TextAlign.center,

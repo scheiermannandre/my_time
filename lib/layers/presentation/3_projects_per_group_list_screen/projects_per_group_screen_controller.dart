@@ -1,4 +1,4 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
+// ignore_for_file: public_member_api_docs, sort_constructors_first, unused_result
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -79,35 +79,39 @@ class ProjectsPerGroupScreenController
       controller.removeStatusListener(listener);
       controller.addStatusListener(listener);
       deletePressed = await openBottomSheet(
-          context: context,
-          bottomSheetController: controller,
-          title: AppLocalizations.of(context)!.deleteGroupTitle(dto.group.name),
-          message: AppLocalizations.of(context)!.deleteGroupMessage,
-          confirmBtnText:
-              AppLocalizations.of(context)!.deleteGroupConfirmBtnLabel,
-          cancelBtnText:
-              AppLocalizations.of(context)!.deleteGroupCancelBtnLabel,
-          onCanceled: () {
-            Navigator.of(context).pop(false);
-          },
-          onConfirmed: () {
-            Navigator.of(context).pop(true);
-          }).whenComplete(() {});
+        context: context,
+        bottomSheetController: controller,
+        title: AppLocalizations.of(context)!.deleteGroupTitle(dto.group.name),
+        message: AppLocalizations.of(context)!.deleteGroupMessage,
+        confirmBtnText:
+            AppLocalizations.of(context)!.deleteGroupConfirmBtnLabel,
+        cancelBtnText: AppLocalizations.of(context)!.deleteGroupCancelBtnLabel,
+        onCanceled: () {
+          Navigator.of(context).pop(false);
+        },
+        onConfirmed: () async {
+          final result = await ref
+              .read(projectsPerGroupScreenServiceProvider)
+              .deleteGroup(dto);
+          return result;
+        },
+        whenCompleted: (result, mounted) async {
+          if (result) {
+            ref.invalidate(homePageDataProvider);
+          }
+          if (result && !mounted) {
+            ref.invalidate(groupWithProjectsDTOProvider(dto.group.id));
+          }
+        },
+      );
     }
   }
 
   Future<void> _delete(BuildContext context, GroupWithProjectsDTO dto,
       bool? deletePressed) async {
     if (deletePressed ?? false) {
-      state = const AsyncLoading();
-      final result = await ref
-          .read(projectsPerGroupScreenServiceProvider)
-          .deleteGroup(dto);
-      if (result) {
-        await ref.refresh(homePageDataProvider.future);
-        if (mounted) {
-          pop(context);
-        }
+      if (mounted) {
+        pop(context);
       }
     }
   }

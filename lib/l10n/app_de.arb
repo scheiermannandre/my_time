@@ -80,7 +80,9 @@
     "invalidTotalTimeMessage": "Gesamtzeit muss positiv sein!",
     "noEntryFoundTitle": "Eintrag nicht gefunden",
     "noEntryFoundDescription": "Bitte aktualisiere die Seite",
-    "noEntryFoundBtnLabel": "Aktualisieren"
-
-    
+    "noEntryFoundBtnLabel": "Aktualisieren",
+    "deleteEntryTitle": "Eintrag löschen?",
+    "deleteEntryMessage": "Der EIntrag kann nach dem löschen nicht wiederhergesterllt werden!",
+    "deleteEntryConfirmBtnLabel": "Bestätigen",
+    "deleteEntryCancelBtnLabel": "Abbrechen"
 }
