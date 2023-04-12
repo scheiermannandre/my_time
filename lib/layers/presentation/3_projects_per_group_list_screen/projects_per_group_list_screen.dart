@@ -34,94 +34,87 @@ class ProjectsPerGroupListScreen extends HookConsumerWidget {
           .removeListener(() => controller.changeElevation(scrollController));
     }, [scrollController]);
 
-    return RefreshIndicator(
-      color: Theme.of(context).colorScheme.primary,
-      onRefresh: () async {
-        await AsyncValue.guard(() => ref
-            .refresh(groupWithProjectsDTOProvider(groupId).future)
-            .timeout(const Duration(seconds: 20)));
-        return;
-      },
-      child: Scaffold(
-        appBar: CustomAppBar(
-          title: data.isLoading || data.hasError ? "" : data.value!.group.name,
-          controller: scrollController,
-          actions: [
-            IconButton(
-              onPressed: () => !data.hasError && !state.isLoading
-                  ? controller.showDeleteBottomSheet(
-                      context,
-                      sheetController,
-                      data.value!,
-                    )
-                  : null,
-              icon: const Icon(Icons.delete),
-            ),
-            IconButton(
-              onPressed: () => !data.hasError && !state.isLoading
-                  ? controller.pushNamedAddProject(
-                      context,
-                      data.value!,
-                    )
-                  : null,
-              icon: const Icon(Icons.add),
-            ),
-          ],
-        ),
-        body: ScrollConfiguration(
-          behavior: ScrollConfiguration.of(context).copyWith(
-            dragDevices: {
-              PointerDeviceKind.touch,
-              PointerDeviceKind.mouse,
-            },
-          ),
-          child: data.when(
-            data: (dto) => dto.projects.isEmpty
-                ? NoItemsFoundWidget(
-                    onBtnTap: () => !state.isLoading
-                        ? controller.pushNamedAddProject(
-                            context,
-                            dto,
-                          )
-                        : null,
-                    title: AppLocalizations.of(context)!.noProjectsFoundTitle,
-                    description: AppLocalizations.of(context)!
-                        .noProjectsFoundDescription,
-                    btnLabel:
-                        AppLocalizations.of(context)!.noProjectsFoundBtnLabel,
+    return Scaffold(
+      appBar: CustomAppBar(
+        title: data.isLoading || data.hasError ? "" : data.value!.group.name,
+        controller: scrollController,
+        actions: [
+          IconButton(
+            onPressed: () => !data.hasError && !state.isLoading
+                ? controller.showDeleteBottomSheet(
+                    context,
+                    sheetController,
+                    data.value!,
                   )
-                : SingleChildScrollView(
-                    child: ListView.builder(
-                      //controller: scrollController,
-                      padding: const EdgeInsets.only(top: 10),
-                      physics: const NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: dto.projects.length,
-                      itemBuilder: (context, index) {
-                        return ResponsiveAlign(
-                          alignment: Alignment.topCenter,
-                          padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
-                          child: CustomListTile(
-                            title: dto.projects[index].name,
-                            onTap: () => controller.pushNamedProject(
-                                context, dto.projects, index),
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-            error: (ex, st) => LoadingErrorWidget(
-              onRefresh: () =>
-                  state.value!.refreshIndicatorKey.currentState?.show(),
-            ),
-            loading: () => ResponsiveAlign(
-              alignment: Alignment.topCenter,
-              padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
-              child: SingleChildScrollView(
-                  controller: scrollController,
-                  child: const ProjectsPerGroupListScreenLoadingState()),
-            ),
+                : null,
+            icon: const Icon(Icons.delete),
           ),
+          IconButton(
+            onPressed: () => !data.hasError && !state.isLoading
+                ? controller.pushNamedAddProject(
+                    context,
+                    data.value!,
+                  )
+                : null,
+            icon: const Icon(Icons.add),
+          ),
+        ],
+      ),
+      body: data.when(
+        data: (dto) => dto.projects.isEmpty
+            ? NoItemsFoundWidget(
+                onBtnTap: () => !state.isLoading
+                    ? controller.pushNamedAddProject(
+                        context,
+                        dto,
+                      )
+                    : null,
+                title: AppLocalizations.of(context)!.noProjectsFoundTitle,
+                description:
+                    AppLocalizations.of(context)!.noProjectsFoundDescription,
+                btnLabel:
+                    AppLocalizations.of(context)!.noProjectsFoundBtnLabel,
+              )
+            : RefreshIndicator(
+                color: Theme.of(context).colorScheme.primary,
+                onRefresh: () async {
+                  await AsyncValue.guard(() => ref
+                      .refresh(groupWithProjectsDTOProvider(groupId).future)
+                      .timeout(const Duration(seconds: 20)));
+                  return;
+                },
+                child: SingleChildScrollView(
+                                        //controller: scrollController,
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  child: ListView.builder(
+                    padding: const EdgeInsets.only(top: 10),
+                    physics: const NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    itemCount: dto.projects.length,
+                    itemBuilder: (context, index) {
+                      return ResponsiveAlign(
+                        alignment: Alignment.topCenter,
+                        padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
+                        child: CustomListTile(
+                          title: dto.projects[index].name,
+                          onTap: () => controller.pushNamedProject(
+                              context, dto.projects, index),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              ),
+        error: (ex, st) => LoadingErrorWidget(
+          onRefresh: () =>
+              state.value!.refreshIndicatorKey.currentState?.show(),
+        ),
+        loading: () => ResponsiveAlign(
+          alignment: Alignment.topCenter,
+          padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
+          child: SingleChildScrollView(
+              controller: scrollController,
+              child: const ProjectsPerGroupListScreenLoadingState()),
         ),
       ),
     );

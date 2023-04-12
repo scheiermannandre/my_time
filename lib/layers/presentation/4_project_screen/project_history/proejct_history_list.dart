@@ -36,30 +36,37 @@ class ProjectHistory extends HookConsumerWidget {
                   AppLocalizations.of(context)!.noHistoryFoundDescription,
               btnLabel: AppLocalizations.of(context)!.noHistoryFoundBtnLabel,
             )
-          : SingleChildScrollView(
-              child: ListView.builder(
-                itemCount: data.length,
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemBuilder: (context, index) {
-                  final languageCode =
-                      Localizations.localeOf(context).languageCode;
-                  return LabeledBlock(
-                    languageCode: languageCode,
-                    onClicked: (entry) =>
-                        projectScreenController.pushNamedTimeEntryForm(
-                      context,
-                      project,
-                      true,
-                      entry,
-                    ),
-                    timeEntries: data[index],
-                    label: data[index]
-                        .first
-                        .startTime
-                        .toMonthAndYearString(languageCode),
-                  );
-                },
+          : RefreshIndicator(
+              onRefresh: () async {
+                await ref
+                    .refresh(projectTimeEntriesProvider(project.id).future);
+              },
+              child: SingleChildScrollView(
+                physics: const AlwaysScrollableScrollPhysics(),
+                child: ListView.builder(
+                  itemCount: data.length,
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemBuilder: (context, index) {
+                    final languageCode =
+                        Localizations.localeOf(context).languageCode;
+                    return LabeledBlock(
+                      languageCode: languageCode,
+                      onClicked: (entry) =>
+                          projectScreenController.pushNamedTimeEntryForm(
+                        context,
+                        project,
+                        true,
+                        entry,
+                      ),
+                      timeEntries: data[index],
+                      label: data[index]
+                          .first
+                          .startTime
+                          .toMonthAndYearString(languageCode),
+                    );
+                  },
+                ),
               ),
             ),
       error: (error, stackTrace) => LoadingErrorWidget(
