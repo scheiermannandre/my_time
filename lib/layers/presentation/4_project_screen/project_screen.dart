@@ -26,6 +26,8 @@ class ProjectScreen extends HookConsumerWidget {
     final sheetController = useAnimationController(
       duration: const Duration(milliseconds: 350),
     );
+    final scrollController = useScrollController();
+
     ref.listen<AsyncValue>(
       projectProvider(projectId),
       (_, state) => state.showAlertDialogOnError(context),
@@ -37,6 +39,7 @@ class ProjectScreen extends HookConsumerWidget {
             : "";
     return Scaffold(
       appBar: CustomAppBar(
+        controller: scrollController,
         title: projectTitle,
         actions: [
           project.hasValue
@@ -126,6 +129,7 @@ class ProjectScreen extends HookConsumerWidget {
                       ),
                     ),
                     ProjectHistory(
+                      scrollController: scrollController,
                       project: project.value!,
                     )
                   ],

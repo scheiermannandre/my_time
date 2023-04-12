@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_time/common/extensions/date_time_extension.dart';
 import 'package:my_time/common/widgets/loading_error_widget.dart';
@@ -11,8 +12,12 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ProjectHistory extends HookConsumerWidget {
   final ProjectDTO project;
-
-  const ProjectHistory({super.key, required this.project});
+  final ScrollController scrollController;
+  const ProjectHistory({
+    super.key,
+    required this.project,
+    required this.scrollController,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -21,6 +26,7 @@ class ProjectHistory extends HookConsumerWidget {
     final projectScreenState = ref.watch(projectScreenControllerProvider);
 
     final timeEntriesList = ref.watch(projectTimeEntriesProvider(project.id));
+   
     return timeEntriesList.when(
       data: (data) => data!.isEmpty
           ? NoItemsFoundWidget(
@@ -42,6 +48,7 @@ class ProjectHistory extends HookConsumerWidget {
                     .refresh(projectTimeEntriesProvider(project.id).future);
               },
               child: SingleChildScrollView(
+                controller: scrollController,
                 physics: const AlwaysScrollableScrollPhysics(),
                 child: ListView.builder(
                   itemCount: data.length,

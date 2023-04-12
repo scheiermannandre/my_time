@@ -1,4 +1,3 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -27,12 +26,6 @@ class ProjectsPerGroupListScreen extends HookConsumerWidget {
     final AnimationController sheetController = useAnimationController(
       duration: const Duration(milliseconds: 350),
     );
-    useEffect(() {
-      scrollController
-          .addListener(() => controller.changeElevation(scrollController));
-      return () => scrollController
-          .removeListener(() => controller.changeElevation(scrollController));
-    }, [scrollController]);
 
     return Scaffold(
       appBar: CustomAppBar(
@@ -72,8 +65,7 @@ class ProjectsPerGroupListScreen extends HookConsumerWidget {
                 title: AppLocalizations.of(context)!.noProjectsFoundTitle,
                 description:
                     AppLocalizations.of(context)!.noProjectsFoundDescription,
-                btnLabel:
-                    AppLocalizations.of(context)!.noProjectsFoundBtnLabel,
+                btnLabel: AppLocalizations.of(context)!.noProjectsFoundBtnLabel,
               )
             : RefreshIndicator(
                 color: Theme.of(context).colorScheme.primary,
@@ -84,7 +76,7 @@ class ProjectsPerGroupListScreen extends HookConsumerWidget {
                   return;
                 },
                 child: SingleChildScrollView(
-                                        //controller: scrollController,
+                  controller: scrollController,
                   physics: const AlwaysScrollableScrollPhysics(),
                   child: ListView.builder(
                     padding: const EdgeInsets.only(top: 10),

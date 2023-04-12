@@ -1,7 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first, unused_result
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-
 import 'package:my_time/common/dialogs/modal_bottom_sheet.dart';
 import 'package:my_time/layers/application/projects_per_group_screen_service.dart';
 import 'package:my_time/layers/interface/dto/group_with_projects_dto.dart';
@@ -14,20 +13,9 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 part 'projects_per_group_screen_controller.g.dart';
 
 class ProjectsPerGroupScreenState {
-  ProjectsPerGroupScreenState({
-    this.showElevation = false,
-  });
+  ProjectsPerGroupScreenState();
   final GlobalKey<RefreshIndicatorState> refreshIndicatorKey =
       GlobalKey<RefreshIndicatorState>();
-  final bool showElevation;
-
-  ProjectsPerGroupScreenState copyWith({
-    bool? showElevation,
-  }) {
-    return ProjectsPerGroupScreenState(
-      showElevation: showElevation ?? this.showElevation,
-    );
-  }
 }
 
 @riverpod
@@ -113,14 +101,6 @@ class ProjectsPerGroupScreenController
       if (mounted) {
         pop(context);
       }
-    }
-  }
-
-  void changeElevation(ScrollController controller) {
-    if (controller.offset > 0) {
-      state = AsyncData(state.value!.copyWith(showElevation: true));
-    } else {
-      state = AsyncData(state.value!.copyWith(showElevation: false));
     }
   }
 }
