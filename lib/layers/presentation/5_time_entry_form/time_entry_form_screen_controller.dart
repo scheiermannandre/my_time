@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:my_time/common/dialogs/modal_bottom_sheet.dart';
+import 'package:my_time/common/extensions/async_value_extensions.dart';
 import 'package:my_time/layers/presentation/5_time_entry_form/time_entry_form_screen_state.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:my_time/layers/data/time_entries_repository.dart';
@@ -54,12 +55,18 @@ class TimeEntryFormScreenController extends _$TimeEntryFormScreenController {
       final data = state.value!.getEntry();
       state =
           AsyncData(state.value!.copyWith(value: const AsyncValue.loading()));
-      final result =
-          await ref.read(timeEntriesRepositoryProvider).saveTimeEntry(data);
-      if (result) {
-        await ref.refresh(projectTimeEntriesProvider(data.projectId).future);
+      final result = await AsyncValue.guard(
+          () => ref.read(timeEntriesRepositoryProvider).saveTimeEntry(data));
+
+      if (result.hasValue && result.value!) {
+        ref.invalidate(projectTimeEntriesProvider(data.projectId));
         if (mounted) {
           context.pop();
+        }
+      } else {
+        state = AsyncData(state.value!.copyWith(value: const AsyncData(null)));
+        if (mounted) {
+          result.showAlertDialogOnError(context);
         }
       }
     }
