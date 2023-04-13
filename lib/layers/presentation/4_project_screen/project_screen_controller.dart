@@ -123,9 +123,15 @@ class ProjectScreenController extends _$ProjectScreenController {
           if (result && !mounted) {
             ref.invalidate(projectProvider(project.id));
           }
+          deleteTimer(project);
         },
       );
     }
+  }
+
+  Future<bool> deleteTimer(ProjectDTO project) async {
+    ref.read(projectsScreenServiceProvider).deleteTimer(project.id);
+    return true;
   }
 
   Future<void> markAsFavourite(ProjectDTO project) async {

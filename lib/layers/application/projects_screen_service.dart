@@ -36,7 +36,18 @@ class ProjectsScreenService {
     if (!await ref.read(timeEntriesRepositoryProvider).saveTimeEntry(entry)) {
       return null;
     }
+    timers.remove(projectId);
     return entry;
+  }
+
+  void deleteTimer(String projectId) {
+    if (!timers.containsKey(projectId)) {
+      return;
+    }
+    if (timers[projectId]!.data.state != TimerState.off) {
+      timers[projectId]!.stopTimer();
+    }
+    timers.remove(projectId);
   }
 
   void pauseResumeTimer(String projectId) {

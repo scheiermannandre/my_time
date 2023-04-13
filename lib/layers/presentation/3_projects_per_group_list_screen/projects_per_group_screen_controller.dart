@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:my_time/common/dialogs/modal_bottom_sheet.dart';
 import 'package:my_time/layers/application/projects_per_group_screen_service.dart';
+import 'package:my_time/layers/application/projects_screen_service.dart';
 import 'package:my_time/layers/interface/dto/group_with_projects_dto.dart';
 import 'package:my_time/layers/interface/dto/project_dto.dart';
 import 'package:my_time/layers/presentation/0_home_screen/groups_list_screen_controller.dart';
@@ -90,9 +91,17 @@ class ProjectsPerGroupScreenController
           if (result && !mounted) {
             ref.invalidate(groupWithProjectsDTOProvider(dto.group.id));
           }
+          deleteAllTimers(dto.projects);
         },
       );
     }
+  }
+
+  Future<bool> deleteAllTimers(List<ProjectDTO> projects) async {
+    for (var element in projects) {
+      ref.read(projectsScreenServiceProvider).deleteTimer(element.id);
+    }
+    return true;
   }
 
   Future<void> _delete(BuildContext context, GroupWithProjectsDTO dto,

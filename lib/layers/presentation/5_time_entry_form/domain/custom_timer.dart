@@ -23,7 +23,8 @@ class CustomTimer {
 
   TimerData stopTimer() {
     watch.stop();
-    final result = TimerData.stop(startTime: data.startTime, duration: watch.elapsed);
+    final result =
+        TimerData.stop(startTime: data.startTime, duration: watch.elapsed);
     data = TimerData.defaultFactory();
     watch.reset();
     return result;

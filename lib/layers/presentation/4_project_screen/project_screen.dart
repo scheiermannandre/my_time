@@ -77,7 +77,12 @@ class ProjectScreen extends HookConsumerWidget {
         ],
       ),
       bottomNavigationBar: NavBar(
-        onTap: (index) => {controller.onItemTapped(pageController, index)},
+        onTap: (index) {
+          if (scrollController.hasClients) {
+            scrollController.jumpTo(0);
+          }
+          controller.onItemTapped(pageController, index);
+        },
         startIndex: 0,
         backgroundColor: Theme.of(context).colorScheme.background,
         selectedBackgroundColor: Theme.of(context).colorScheme.primary,
