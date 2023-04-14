@@ -6,6 +6,7 @@ import 'package:my_time/layers/interface/dto/group_dto.dart';
 import 'package:my_time/layers/interface/dto/project.dart';
 import 'package:my_time/layers/interface/dto/time_entry.dart';
 import 'package:realm/realm.dart';
+import 'package:my_time/exceptions/app_exception.dart' as app_exception;
 
 class ListGroupsRepository implements GroupsRepository {
   final Realm realm;
@@ -32,13 +33,21 @@ class ListGroupsRepository implements GroupsRepository {
 
   @override
   Future<GroupDTO?> fetchGroup(String groupId) async {
-    final group = realm.all<Group>().query("id == '$groupId'").first;
+    final groups = realm.all<Group>().query("id == '$groupId'");
+    if (groups.isEmpty) {
+      throw const app_exception.AppException.groupNotFound();
+    }
+    final group = groups.first;
     return GroupDTO.factory(id: group.id, name: group.name);
   }
 
   @override
   Future<bool> deleteGroup(String groupId) async {
-    final group = realm.all<Group>().query("id == '$groupId'").first;
+    final groups = realm.all<Group>().query("id == '$groupId'");
+    if (groups.isEmpty) {
+      throw const app_exception.AppException.groupNotFound();
+    }
+    final group = groups.first;
     await realm.writeAsync(() {
       realm.deleteMany<Project>(group.projects);
       realm.delete<Group>(group);

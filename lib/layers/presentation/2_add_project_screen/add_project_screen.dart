@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_time/common/extensions/async_value_extensions.dart';
+import 'package:my_time/common/extensions/build_context_extension.dart';
 import 'package:my_time/common/widgets/bottom_nav_bar_button.dart';
 import 'package:my_time/common/widgets/loading_error_widget.dart';
 import 'package:my_time/common/widgets/responsive_center.dart';
@@ -10,7 +11,6 @@ import 'package:my_time/layers/interface/dto/group_dto.dart';
 import 'package:my_time/layers/presentation/2_add_project_screen/add_project_screen_loading_state.dart';
 import 'package:my_time/layers/presentation/2_add_project_screen/add_project_screen_controller.dart';
 import 'package:my_time/layers/presentation/2_add_project_screen/group_and_project_fields.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AddProjectScreen extends HookConsumerWidget {
   const AddProjectScreen({Key? key, this.groupId}) : super(key: key);
@@ -47,7 +47,7 @@ class AddProjectScreen extends HookConsumerWidget {
           onPressed: () => controller.pop(context),
         ),
         title: Text(
-          AppLocalizations.of(context)!.addProjectScreenTitle,
+          context.loc.addProjectScreenTitle,
         ),
         elevation: 0,
         backgroundColor: Theme.of(context).colorScheme.primary,
@@ -56,7 +56,7 @@ class AddProjectScreen extends HookConsumerWidget {
         color: Theme.of(context).colorScheme.background,
         child: NavBarSubmitButton(
           isLoading: state!.isLoading,
-          btnText: AppLocalizations.of(context)!.addProjectScreenBtnLabel,
+          btnText: context.loc.addProjectScreenBtnLabel,
           onBtnTap: state.isLoading
               ? null
               : () => controller.onBtnTap(context, projectNameController.text),
@@ -91,8 +91,8 @@ class AddProjectScreen extends HookConsumerWidget {
                   groups: groups,
                   expansionTile: state.expansionTile,
                   selectedGroup: state.selectedGroupName,
-                  defaultSelectedGroup: AppLocalizations.of(context)!
-                      .addProjectScreenGroupFieldDropDownDefaultLabel,
+                  defaultSelectedGroup: context
+                      .loc.addProjectScreenGroupFieldDropDownDefaultLabel,
                   isExpandable: state.isExpandable,
                   onListTileTap: (groups, index) =>
                       controller.onGroupDropDownListTileTap(groups, index),

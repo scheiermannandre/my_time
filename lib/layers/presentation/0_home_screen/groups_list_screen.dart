@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_time/common/common.dart';
+import 'package:my_time/common/extensions/build_context_extension.dart';
 import 'package:my_time/common/widgets/no_items_found_widget.dart';
 import 'package:my_time/global/globals.dart';
 import 'home_screen_exports.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class GroupsListScreen extends HookConsumerWidget {
   const GroupsListScreen({super.key});
@@ -49,7 +49,7 @@ class GroupsListScreen extends HookConsumerWidget {
         child: CustomScrollView(
           slivers: [
             ScreenSliverAppBar(
-              title: AppLocalizations.of(context)!.groups,
+              title: context.loc.groups,
               // leadingIconButton: IconButton(
               //   icon: AnimatedIcon(
               //     icon: AnimatedIcons.menu_close,
@@ -79,12 +79,12 @@ class GroupsListScreen extends HookConsumerWidget {
                           children: [
                             RoundedLabeldButton(
                                 icon: Icons.category,
-                                text: AppLocalizations.of(context)!.addGroup,
+                                text: context.loc.addGroup,
                                 onPressed: () =>
                                     controller.pushNamedAddGroup(context)),
                             RoundedLabeldButton(
                               icon: Icons.work,
-                              text: AppLocalizations.of(context)!.addProject,
+                              text: context.loc.addProject,
                               onPressed: () =>
                                   controller.pushNamedAddProject(context),
                             ),
@@ -111,8 +111,7 @@ class GroupsListScreen extends HookConsumerWidget {
                                     .read(groupsListScreenControllerProvider)
                                     .value!
                                     .expansionTile,
-                                title: Text(
-                                    AppLocalizations.of(context)!.favourites),
+                                title: Text(context.loc.favourites),
                                 children: <Widget>[
                                   ListView.separated(
                                       padding: EdgeInsets.zero,
@@ -149,12 +148,9 @@ class GroupsListScreen extends HookConsumerWidget {
                                       context,
                                     )
                                   : null,
-                              title: AppLocalizations.of(context)!
-                                  .noGroupsFoundTitle,
-                              description: AppLocalizations.of(context)!
-                                  .noGroupsFoundDescription,
-                              btnLabel: AppLocalizations.of(context)!
-                                  .noGroupsFoundBtnLabel,
+                              title: context.loc.noGroupsFoundTitle,
+                              description: context.loc.noGroupsFoundDescription,
+                              btnLabel: context.loc.noGroupsFoundBtnLabel,
                             )
                           : ListView.builder(
                               padding: EdgeInsets.zero,

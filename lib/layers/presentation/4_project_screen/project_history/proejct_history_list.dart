@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:my_time/common/extensions/build_context_extension.dart';
 import 'package:my_time/common/extensions/date_time_extension.dart';
 import 'package:my_time/common/widgets/loading_error_widget.dart';
 import 'package:my_time/common/widgets/no_items_found_widget.dart';
@@ -26,7 +27,7 @@ class ProjectHistory extends HookConsumerWidget {
     final projectScreenState = ref.watch(projectScreenControllerProvider);
 
     final timeEntriesList = ref.watch(projectTimeEntriesProvider(project.id));
-   
+
     return timeEntriesList.when(
       data: (data) => data!.isEmpty
           ? NoItemsFoundWidget(
@@ -37,10 +38,9 @@ class ProjectHistory extends HookConsumerWidget {
                       false,
                     )
                   : null,
-              title: AppLocalizations.of(context)!.noHistoryFoundTitle,
-              description:
-                  AppLocalizations.of(context)!.noHistoryFoundDescription,
-              btnLabel: AppLocalizations.of(context)!.noHistoryFoundBtnLabel,
+              title: context.loc.noHistoryFoundTitle,
+              description: context.loc.noHistoryFoundDescription,
+              btnLabel: context.loc.noHistoryFoundBtnLabel,
             )
           : RefreshIndicator(
               onRefresh: () async {

@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_time/common/extensions/async_value_extensions.dart';
+import 'package:my_time/common/extensions/build_context_extension.dart';
 import 'package:my_time/common/widgets/responsive_center.dart';
 import 'package:my_time/common/widgets/bottom_nav_bar_button.dart';
 import 'package:my_time/layers/presentation/1_add_group_screen/add_group_screen_controller.dart';
 import 'package:my_time/layers/presentation/1_add_group_screen/group_name_field.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AddGroupScreen extends HookConsumerWidget {
   const AddGroupScreen({
@@ -32,7 +32,7 @@ class AddGroupScreen extends HookConsumerWidget {
           onPressed: () => controller.pop(context),
         ),
         title: Text(
-          AppLocalizations.of(context)!.addGroupScreenTitle,
+          context.loc.addGroupScreenTitle,
         ),
         elevation: 0,
         backgroundColor: Theme.of(context).colorScheme.primary,
@@ -41,7 +41,7 @@ class AddGroupScreen extends HookConsumerWidget {
         color: Theme.of(context).colorScheme.background,
         child: NavBarSubmitButton(
             isLoading: state.isLoading,
-            btnText: AppLocalizations.of(context)!.addGroupScreenBtnLabel,
+            btnText: context.loc.addGroupScreenBtnLabel,
             onBtnTap: state.isLoading
                 ? null
                 : () => controller.onBtnTap(context, groupNameController.text)),

@@ -1,4 +1,12 @@
 {
+    "@ErrorMessages": {},
+
+    "errorPopUpHeader": "Error",
+    "entryNotFoundException": "The Entry you are looking for could not be found!",
+    "timeRangesOverlapException": "Given Timerange is overlapping with an existing Timerange!",
+    "projectNotFoundException": "The Project you are looking for could not be found!",
+    "groupNotFoundException": "The Group you are looking for could not be found!",
+
     "@HomePage": {},
 
     "groups": "Groups",

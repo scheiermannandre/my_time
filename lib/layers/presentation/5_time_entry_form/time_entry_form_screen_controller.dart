@@ -4,12 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:my_time/common/dialogs/modal_bottom_sheet.dart';
 import 'package:my_time/common/extensions/async_value_extensions.dart';
+import 'package:my_time/common/extensions/build_context_extension.dart';
 import 'package:my_time/layers/presentation/5_time_entry_form/time_entry_form_screen_state.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:my_time/layers/data/time_entries_repository.dart';
 import 'package:my_time/layers/domain/time_entry.dart';
 import 'package:my_time/layers/presentation/4_project_screen/project_screen_controller.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 part 'time_entry_form_screen_controller.g.dart';
 
@@ -99,11 +99,10 @@ class TimeEntryFormScreenController extends _$TimeEntryFormScreenController {
       deletePressed = await openBottomSheet(
         context: context,
         bottomSheetController: controller,
-        title: AppLocalizations.of(context)!.deleteEntryTitle,
-        message: AppLocalizations.of(context)!.deleteEntryMessage,
-        confirmBtnText:
-            AppLocalizations.of(context)!.deleteEntryConfirmBtnLabel,
-        cancelBtnText: AppLocalizations.of(context)!.deleteEntryCancelBtnLabel,
+        title: context.loc.deleteEntryTitle,
+        message: context.loc.deleteEntryMessage,
+        confirmBtnText: context.loc.deleteEntryConfirmBtnLabel,
+        cancelBtnText: context.loc.deleteEntryCancelBtnLabel,
         onCanceled: () {
           Navigator.of(context).pop(false);
         },

@@ -7,7 +7,7 @@ part of 'time_entry_form_screen_controller.dart';
 // **************************************************************************
 
 String _$timeEntryFormScreenControllerHash() =>
-    r'61bf5ab98dd35589c2037b6276a7258189263177';
+    r'0aa7b2a4a97fc7d3cd1b86fadea3081e5850aaa0';
 
 /// Copied from Dart SDK
 class _SystemHash {

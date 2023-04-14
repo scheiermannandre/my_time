@@ -3,6 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_time/common/common.dart';
 import 'package:my_time/common/extensions/async_value_extensions.dart';
+import 'package:my_time/common/extensions/build_context_extension.dart';
 import 'package:my_time/common/widgets/appbar/custom_app_bar.dart';
 import 'package:my_time/common/widgets/nav_bar/nav_bar_item.dart';
 import 'package:my_time/layers/presentation/4_project_screen/project_history/proejct_history_list.dart';
@@ -93,11 +94,11 @@ class ProjectScreen extends HookConsumerWidget {
         items: [
           CustomNavBarItem(
             iconData: Icons.timer_sharp,
-            label: AppLocalizations.of(context)!.timerTabLabel,
+            label: context.loc.timerTabLabel,
           ),
           CustomNavBarItem(
             iconData: Icons.history,
-            label: AppLocalizations.of(context)!.historyTabLabel,
+            label: context.loc.historyTabLabel,
           ),
         ],
       ),

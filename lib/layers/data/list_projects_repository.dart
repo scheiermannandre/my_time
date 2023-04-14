@@ -6,6 +6,7 @@ import 'package:my_time/layers/interface/dto/project.dart';
 import 'package:my_time/layers/interface/dto/project_dto.dart';
 import 'package:my_time/layers/interface/dto/time_entry.dart';
 import 'package:realm/realm.dart';
+import 'package:my_time/exceptions/app_exception.dart' as app_exception;
 
 class ListProjectsRepository implements ProjectsRepository {
   final Realm realm;
@@ -41,9 +42,12 @@ class ListProjectsRepository implements ProjectsRepository {
 
   @override
   Future<List<ProjectDTO>> fetchProjectsByGroupId(String groupId) async {
-    final group = realm.all<Group>().query("id == '$groupId'").first;
+    final groups = realm.all<Group>().query("id == '$groupId'");
+    if (groups.isEmpty) {
+      throw const app_exception.AppException.groupNotFound();
+    }
     final List<ProjectDTO> projects = [];
-    for (var project in group.projects) {
+    for (var project in groups.first.projects) {
       projects.add(ProjectDTO.factory(
         id: project.id,
         groupId: project.groupId,
@@ -56,7 +60,11 @@ class ListProjectsRepository implements ProjectsRepository {
 
   @override
   Future<bool> deleteProject(ProjectDTO project) async {
-    final projectDB = realm.all<Project>().query("id == '${project.id}'").first;
+    final projects = realm.all<Project>().query("id == '${project.id}'");
+    if (projects.isEmpty) {
+      throw const app_exception.AppException.projectNotFound();
+    }
+    final projectDB = projects.first;
     await realm.writeAsync(() {
       realm.deleteMany<TimeEntry>(projectDB.timeEntries);
       realm.delete<Project>(projectDB);
@@ -66,7 +74,11 @@ class ListProjectsRepository implements ProjectsRepository {
 
   @override
   Future<void> updateIsFavouriteState(ProjectDTO project) async {
-    var projectDB = realm.all<Project>().query("id == '${project.id}'").first;
+    var projects = realm.all<Project>().query("id == '${project.id}'");
+    if (projects.isEmpty) {
+      throw const app_exception.AppException.projectNotFound();
+    }
+    final projectDB = projects.first;
     await realm.writeAsync(() {
       projectDB.isMarkedAsFavourite = project.isMarkedAsFavourite;
     });
@@ -79,7 +91,11 @@ class ListProjectsRepository implements ProjectsRepository {
 
   @override
   Future<ProjectDTO?> fetchProject(String projectId) async {
-    final project = realm.all<Project>().query("id == '$projectId'").first;
+    final projects = realm.all<Project>().query("id == '$projectId'");
+    if (projects.isEmpty) {
+      throw const app_exception.AppException.projectNotFound();
+    }
+    final project = projects.first;
     return ProjectDTO.factory(
       id: project.id,
       groupId: project.groupId,

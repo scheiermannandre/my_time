@@ -53,13 +53,8 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       restorationScopeId: 'app',
       onGenerateTitle: (BuildContext context) => 'My Time-Tracker',
-      supportedLocales: L10n.all,
-      localizationsDelegates: const [
-        AppLocalizations.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-      ],
+      supportedLocales: AppLocalizations.supportedLocales,
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
       theme: ThemeData(
         primarySwatch: Colors.blue,
         indicatorColor: Colors.red, // GlobalProperties.primaryColor,

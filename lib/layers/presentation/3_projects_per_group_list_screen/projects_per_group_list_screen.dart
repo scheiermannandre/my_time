@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:my_time/common/extensions/async_value_extensions.dart';
+import 'package:my_time/common/extensions/build_context_extension.dart';
 import 'package:my_time/common/widgets/appbar/custom_app_bar.dart';
 import 'package:my_time/common/widgets/custom_list_tile.dart';
 import 'package:my_time/common/widgets/loading_error_widget.dart';
@@ -8,7 +10,6 @@ import 'package:my_time/common/widgets/no_items_found_widget.dart';
 import 'package:my_time/common/widgets/responsive_center.dart';
 import 'package:my_time/layers/presentation/3_projects_per_group_list_screen/projects_per_group_screen_controller.dart';
 import 'package:my_time/layers/presentation/3_projects_per_group_list_screen/projects_per_group_screen_loading_state.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ProjectsPerGroupListScreen extends HookConsumerWidget {
   const ProjectsPerGroupListScreen({
@@ -27,6 +28,11 @@ class ProjectsPerGroupListScreen extends HookConsumerWidget {
       duration: const Duration(milliseconds: 350),
     );
 
+    ref.listen<AsyncValue>(
+      groupWithProjectsDTOProvider(groupId),
+      (_, state) => state.showAlertDialogOnError(context),
+      onError: (error, stackTrace) {},
+    );
     return Scaffold(
       appBar: CustomAppBar(
         title: data.isLoading || data.hasError ? "" : data.value!.group.name,
@@ -62,10 +68,9 @@ class ProjectsPerGroupListScreen extends HookConsumerWidget {
                         dto,
                       )
                     : null,
-                title: AppLocalizations.of(context)!.noProjectsFoundTitle,
-                description:
-                    AppLocalizations.of(context)!.noProjectsFoundDescription,
-                btnLabel: AppLocalizations.of(context)!.noProjectsFoundBtnLabel,
+                title: context.loc.noProjectsFoundTitle,
+                description: context.loc.noProjectsFoundDescription,
+                btnLabel: context.loc.noProjectsFoundBtnLabel,
               )
             : RefreshIndicator(
                 color: Theme.of(context).colorScheme.primary,

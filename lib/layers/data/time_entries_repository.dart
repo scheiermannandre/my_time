@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:my_time/common/extensions/date_time_extension.dart';
 import 'package:my_time/common/extensions/iterable_extension.dart';
 import 'package:my_time/common/extensions/duration_extension.dart';
+import 'package:my_time/exceptions/app_exception.dart' as app_exception;
 import 'package:my_time/layers/domain/time_entry.dart';
 import 'package:my_time/layers/interface/dto/group.dart';
 import 'package:my_time/layers/interface/dto/project.dart';
@@ -48,8 +49,7 @@ class TimeEntriesRepository {
 
   Future<bool> addTimeEntry(Project project, TimeEntryDTO entry) async {
     if (_checkSameDateEntries(entry, project.timeEntries)) {
-      throw Exception(
-          "Given Timerange is overlapping with an existing Timerange!");
+      throw const app_exception.AppException.timeRangesOverlap();
     }
     await realm.writeAsync(() {
       final newEntryDB = TimeEntry(
@@ -80,8 +80,11 @@ class TimeEntriesRepository {
   }
 
   Future<bool> saveTimeEntry(TimeEntryDTO entry) async {
-    final project =
-        realm.all<Project>().query("id == '${entry.projectId}'").first;
+    final projects = realm.all<Project>().query("id == '${entry.projectId}'");
+    if (projects.isEmpty) {
+      throw const app_exception.AppException.projectNotFound();
+    }
+    final project = projects.first;
     final entries = project.timeEntries.toList();
     final entryDB = entries.firstWhereOrNull(
       (element) => element.id == entry.id,
@@ -93,9 +96,12 @@ class TimeEntriesRepository {
   }
 
   Future<bool> deleteEntry(TimeEntryDTO entry) async {
-    final entryDB = realm.all<TimeEntry>().query("id == '${entry.id}'").first;
+    final entries = realm.all<TimeEntry>().query("id == '${entry.id}'");
+    if (entries.isEmpty) {
+      throw const app_exception.AppException.entryNotFound();
+    }
     await realm.writeAsync(() {
-      realm.delete<TimeEntry>(entryDB);
+      realm.delete<TimeEntry>(entries.first);
     });
     return true;
   }
@@ -125,7 +131,7 @@ class TimeEntriesRepository {
   Future<TimeEntryDTO> getEntryById(String id) async {
     var entries = realm.all<TimeEntry>().query("id == '$id'");
     if (entries.isEmpty) {
-      throw Exception("No Entry with given ID found!");
+      throw const app_exception.AppException.entryNotFound();
     }
     return _convertEntryFromDB(entries.first);
   }

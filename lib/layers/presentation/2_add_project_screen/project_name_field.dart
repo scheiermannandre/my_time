@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:my_time/common/extensions/build_context_extension.dart';
 import 'package:my_time/global/globals.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ProjectNameField extends StatelessWidget {
   final TextEditingController projectNameController;
@@ -13,7 +13,7 @@ class ProjectNameField extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Text(
-          AppLocalizations.of(context)!.addProjectScreenNameFieldLabel,
+          context.loc.addProjectScreenNameFieldLabel,
           style: Theme.of(context).textTheme.titleLarge,
         ),
         TextField(

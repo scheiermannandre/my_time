@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:my_time/common/extensions/build_context_extension.dart';
 import 'package:my_time/common/widgets/custom_expansion_tile.dart';
 import 'package:my_time/common/widgets/responsive_center.dart';
 import 'package:my_time/layers/interface/dto/group_dto.dart';
 import 'package:my_time/global/globals.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class GroupSelectionField extends StatelessWidget {
   final String? selectedGroup;
@@ -29,7 +29,7 @@ class GroupSelectionField extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(bottom: 12),
           child: Text(
-            AppLocalizations.of(context)!.addProjectScreenGroupFieldLabel,
+            context.loc.addProjectScreenGroupFieldLabel,
             style: Theme.of(context).textTheme.titleLarge,
           ),
         ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_time/common/extensions/build_context_extension.dart';
 import 'package:my_time/common/widgets/bottom_nav_bar_button.dart';
 import 'package:my_time/common/widgets/responsive_center.dart';
 import 'package:my_time/constants/breakpoints.dart';
@@ -6,7 +7,6 @@ import 'package:my_time/layers/presentation/5_time_entry_form/labeled_date_and_t
 import 'package:my_time/layers/presentation/5_time_entry_form/labeled_description_form_field.dart';
 import 'package:my_time/layers/presentation/5_time_entry_form/time_entry_form_screen_state.dart';
 import 'package:my_time/layers/presentation/5_time_entry_form/time_pick_field.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class TimeEntryFormWidget extends StatelessWidget {
   final Function() onBtnTap;
@@ -35,7 +35,7 @@ class TimeEntryFormWidget extends StatelessWidget {
                     LabeledDateFormField(
                       validateDate: (date) => state!.validateDate(date),
                       dateController: state!.startDateController,
-                      label: AppLocalizations.of(context)!.datePickFieldLabel,
+                      label: context.loc.datePickFieldLabel,
                     ),
                     const Padding(padding: EdgeInsets.only(bottom: 16)),
                     ResponsiveAlign(
@@ -48,8 +48,7 @@ class TimeEntryFormWidget extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                AppLocalizations.of(context)!
-                                    .startTimePickFieldLabel,
+                                context.loc.startTimePickFieldLabel,
                                 style: Theme.of(context).textTheme.titleMedium,
                               ),
                               const Padding(
@@ -66,8 +65,7 @@ class TimeEntryFormWidget extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                AppLocalizations.of(context)!
-                                    .endTimePickFieldLabel,
+                                context.loc.endTimePickFieldLabel,
                                 style: Theme.of(context).textTheme.titleMedium,
                               ),
                               const Padding(
@@ -84,8 +82,7 @@ class TimeEntryFormWidget extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                AppLocalizations.of(context)!
-                                    .totalTimePickFieldLabel,
+                                context.loc.totalTimePickFieldLabel,
                                 style: Theme.of(context).textTheme.titleMedium,
                               ),
                               const Padding(
@@ -106,14 +103,12 @@ class TimeEntryFormWidget extends StatelessWidget {
                     ),
                     const Padding(padding: EdgeInsets.only(bottom: 16)),
                     LabeledDescriptionFormField(
-                        label:
-                            AppLocalizations.of(context)!.descriptionFieldLabel,
+                        label: context.loc.descriptionFieldLabel,
                         controller: state!.descriptionController),
                     Expanded(
                       child: NavBarSubmitButton(
                         isLoading: state!.isLoading,
-                        btnText:
-                            AppLocalizations.of(context)!.saveEntryBtnLabel,
+                        btnText: context.loc.saveEntryBtnLabel,
                         onBtnTap: onLocalBtnTap,
                         align: Alignment.bottomCenter,
                         padding: const EdgeInsets.all(0),

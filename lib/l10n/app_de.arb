@@ -1,4 +1,12 @@
 {
+    "@ErrorMessages": {},
+
+    "errorPopUpHeader": "Fehler",
+    "entryNotFoundException": "Der Eintrag konnte nicht gefunden werden!",
+    "timeRangesOverlapException": "Die angegebene Zeitspanne überlappt mit einer Zeitspanne eines existieren Eintrages!",
+    "projectNotFoundException": "Das Projekt konnte nicht gefunden werden!",
+    "groupNotFoundException": "Die Gruppe konnte nicht gefunden werden!",
+
     "@HomePage": {},
 
     "groups": "Gruppen",

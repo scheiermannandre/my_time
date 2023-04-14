@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:my_time/common/dialogs/modal_bottom_sheet.dart';
+import 'package:my_time/common/extensions/build_context_extension.dart';
 import 'package:my_time/layers/application/projects_per_group_screen_service.dart';
 import 'package:my_time/layers/application/projects_screen_service.dart';
 import 'package:my_time/layers/interface/dto/group_with_projects_dto.dart';
@@ -70,11 +71,10 @@ class ProjectsPerGroupScreenController
       deletePressed = await openBottomSheet(
         context: context,
         bottomSheetController: controller,
-        title: AppLocalizations.of(context)!.deleteGroupTitle(dto.group.name),
-        message: AppLocalizations.of(context)!.deleteGroupMessage,
-        confirmBtnText:
-            AppLocalizations.of(context)!.deleteGroupConfirmBtnLabel,
-        cancelBtnText: AppLocalizations.of(context)!.deleteGroupCancelBtnLabel,
+        title: context.loc.deleteGroupTitle(dto.group.name),
+        message: context.loc.deleteGroupMessage,
+        confirmBtnText: context.loc.deleteGroupConfirmBtnLabel,
+        cancelBtnText: context.loc.deleteGroupCancelBtnLabel,
         onCanceled: () {
           Navigator.of(context).pop(false);
         },

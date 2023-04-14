@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_time/common/extensions/build_context_extension.dart';
 import 'package:my_time/common/widgets/responsive_center.dart';
 import 'package:my_time/constants/breakpoints.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -23,7 +24,7 @@ class LoadingErrorWidget extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 5),
             child: Text(
-              AppLocalizations.of(context)!.loadingErrorWidgetTitle,
+              context.loc.loadingErrorWidgetTitle,
               style: Theme.of(context).textTheme.titleLarge,
               //const TextStyle(fontSize: 24, fontWeight: FontWeight.w500),
             ),
@@ -31,7 +32,7 @@ class LoadingErrorWidget extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 5),
             child: Text(
-                AppLocalizations.of(context)!.loadingErrorWidgetDescription,
+               context.loc.loadingErrorWidgetDescription,
                 style: Theme.of(context).textTheme.bodyLarge
                 //const TextStyle(fontSize: 16),
                 ),
@@ -47,7 +48,7 @@ class LoadingErrorWidget extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      AppLocalizations.of(context)!.loadingErrorWidgetBtnLabel,
+                     context.loc.loadingErrorWidgetBtnLabel,
                       style: Theme.of(context).textTheme.titleLarge,
                     ),
                     const Icon(

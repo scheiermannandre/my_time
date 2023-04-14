@@ -5,8 +5,8 @@ import 'dart:async';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
+import 'package:my_time/common/extensions/build_context_extension.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import 'package:my_time/common/dialogs/modal_bottom_sheet.dart';
@@ -99,12 +99,10 @@ class ProjectScreenController extends _$ProjectScreenController {
       deletePressed = await openBottomSheet(
         context: context,
         bottomSheetController: controller,
-        title: AppLocalizations.of(context)!.deleteProjectTitle(project.name),
-        message: AppLocalizations.of(context)!.deleteProjectMessage,
-        confirmBtnText:
-            AppLocalizations.of(context)!.deleteProjectConfirmBtnLabel,
-        cancelBtnText:
-            AppLocalizations.of(context)!.deleteProjectCancelBtnLabel,
+        title: context.loc.deleteProjectTitle(project.name),
+        message: context.loc.deleteProjectMessage,
+        confirmBtnText: context.loc.deleteProjectConfirmBtnLabel,
+        cancelBtnText: context.loc.deleteProjectCancelBtnLabel,
         onCanceled: () {
           Navigator.of(context).pop(false);
         },

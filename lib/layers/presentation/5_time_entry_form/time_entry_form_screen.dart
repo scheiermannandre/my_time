@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_time/common/extensions/async_value_extensions.dart';
+import 'package:my_time/common/extensions/build_context_extension.dart';
 import 'package:my_time/common/widgets/appbar/custom_app_bar.dart';
 import 'package:my_time/common/widgets/loading_error_widget.dart';
 import 'package:my_time/common/widgets/no_items_found_widget.dart';
@@ -9,7 +10,6 @@ import 'package:my_time/layers/domain/time_entry.dart';
 import 'package:my_time/layers/presentation/5_time_entry_form/time_entry_form_screen_controller.dart';
 import 'package:my_time/layers/presentation/5_time_entry_form/time_entry_form_screen_loading_state.dart';
 import 'package:my_time/layers/presentation/5_time_entry_form/time_entry_form_widget.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class TimeEntryFormScreen extends HookConsumerWidget {
   final String? timeEntryId;
@@ -28,8 +28,7 @@ class TimeEntryFormScreen extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final languageCode = Localizations.localeOf(context).languageCode;
-    final invalidTotalTimeMessage =
-        AppLocalizations.of(context)!.invalidTotalTimeMessage;
+    final invalidTotalTimeMessage = context.loc.invalidTotalTimeMessage;
     final provider = timeEntryFormScreenControllerProvider(
         projectId, timeEntryId, isEdit, invalidTotalTimeMessage, languageCode);
 
@@ -81,15 +80,12 @@ class TimeEntryFormScreen extends HookConsumerWidget {
               child: entry.when(
                   data: (entry) => entry == null
                       ? NoItemsFoundWidget(
-                          btnLabel: AppLocalizations.of(context)!
-                              .noEntryFoundBtnLabel,
+                          btnLabel: context.loc.noEntryFoundBtnLabel,
                           onBtnTap: () => state
                               .value!.refreshIndicatorKey.currentState
                               ?.show(),
-                          title:
-                              AppLocalizations.of(context)!.noEntryFoundTitle,
-                          description: AppLocalizations.of(context)!
-                              .noEntryFoundDescription,
+                          title: context.loc.noEntryFoundTitle,
+                          description: context.loc.noEntryFoundDescription,
                           icon: Icons.refresh,
                         )
                       : TimeEntryFormWidget(
