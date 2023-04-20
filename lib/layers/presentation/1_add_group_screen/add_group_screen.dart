@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_time/common/extensions/async_value_extensions.dart';
 import 'package:my_time/common/extensions/build_context_extension.dart';
@@ -7,14 +8,35 @@ import 'package:my_time/common/widgets/responsive_center.dart';
 import 'package:my_time/common/widgets/bottom_nav_bar_button.dart';
 import 'package:my_time/layers/presentation/1_add_group_screen/add_group_screen_controller.dart';
 import 'package:my_time/layers/presentation/1_add_group_screen/group_name_field.dart';
+import 'package:my_time/main.dart';
 
-class AddGroupScreen extends HookConsumerWidget {
-  const AddGroupScreen({
-    Key? key,
-  }) : super(key: key);
+class AddGroupScreen extends StatefulHookConsumerWidget {
+  const AddGroupScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<ConsumerStatefulWidget> createState() => _AddGroupScreenState();
+}
+
+class _AddGroupScreenState extends ConsumerState<AddGroupScreen> {
+  BannerAd? _bannerAd;
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final localAdState = adState2;
+    localAdState.initialization.then((status) {
+      setState(() {
+        _bannerAd = BannerAd(
+          adUnitId: adState.bannerAdUnitId,
+          size: AdSize.banner,
+          request: const AdRequest(),
+          listener: adState.adListener,
+        )..load();
+      });
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final groupNameController = useTextEditingController(text: '');
     final controller = ref.watch(addGroupScreenControllerProvider.notifier);
     final state = ref.watch(addGroupScreenControllerProvider);
@@ -54,11 +76,28 @@ class AddGroupScreen extends HookConsumerWidget {
             color: Colors.white,
             borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
           ),
-          child: ResponsiveAlign(
-            padding: const EdgeInsets.fromLTRB(16, 30, 16, 5),
-            child: GroupNameField(
-              groupNameController: groupNameController,
-            ),
+          child: Column(
+            children: [
+              Expanded(
+                child: ResponsiveAlign(
+                  padding: const EdgeInsets.fromLTRB(16, 30, 16, 5),
+                  child: GroupNameField(
+                    groupNameController: groupNameController,
+                  ),
+                ),
+              ),
+              if (_bannerAd == null)
+                const SizedBox(
+                  height: 50,
+                )
+              else
+                SizedBox(
+                  height: 50,
+                  child: AdWidget(
+                    ad: _bannerAd!,
+                  ),
+                ),
+            ],
           ),
         ),
       ),

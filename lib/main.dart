@@ -1,17 +1,23 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:my_time/ad_support/ad_state.dart';
 import 'package:my_time/global/globals.dart';
-import 'package:my_time/l10n/l10n.dart';
 import 'package:my_time/router/app_route.dart';
 // ignore:depend_on_referenced_packages
 import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+late AdState adState;
+late AdState adState2;
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // final initFuture
+  final initFuture = MobileAds.instance.initialize();
+  adState = AdState(initFuture);
+  adState2 = AdState(initFuture);
+
   // turn off the # in the URLs on the web
   usePathUrlStrategy();
   // * Register error handlers. For more info, see:

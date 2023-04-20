@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_time/common/extensions/async_value_extensions.dart';
 import 'package:my_time/common/extensions/build_context_extension.dart';
@@ -11,12 +12,39 @@ import 'package:my_time/layers/interface/dto/group_dto.dart';
 import 'package:my_time/layers/presentation/2_add_project_screen/add_project_screen_loading_state.dart';
 import 'package:my_time/layers/presentation/2_add_project_screen/add_project_screen_controller.dart';
 import 'package:my_time/layers/presentation/2_add_project_screen/group_and_project_fields.dart';
+import 'package:my_time/main.dart';
 
-class AddProjectScreen extends HookConsumerWidget {
-  const AddProjectScreen({Key? key, this.groupId}) : super(key: key);
+class AddProjectScreen extends StatefulHookConsumerWidget {
   final String? groupId;
+  const AddProjectScreen({Key? key, this.groupId}) : super(key: key);
+
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      _AddProjectScreenState();
+}
+
+class _AddProjectScreenState extends ConsumerState<AddProjectScreen> {
+  BannerAd? _bannerAd;
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final localAdState = adState;
+    localAdState.initialization.then((status) {
+      setState(() {
+        _bannerAd = BannerAd(
+          adUnitId: adState.bannerAdUnitId,
+          size: AdSize.banner,
+          request: const AdRequest(),
+          listener: adState.adListener,
+        )..load();
+      });
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    String? groupId = widget.groupId;
+
     final projectNameController = useTextEditingController(text: '');
     final controller =
         ref.watch(addProjectScreenControllerProvider(groupId ?? "").notifier);
@@ -86,29 +114,46 @@ class AddProjectScreen extends HookConsumerWidget {
                 color: Colors.white,
                 borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
               ),
-              child: groupsListValue.when(
-                data: (groups) => GroupAndProjectFields(
-                  groups: groups,
-                  expansionTile: state.expansionTile,
-                  selectedGroup: state.selectedGroupName,
-                  defaultSelectedGroup: context
-                      .loc.addProjectScreenGroupFieldDropDownDefaultLabel,
-                  isExpandable: state.isExpandable,
-                  onListTileTap: (groups, index) =>
-                      controller.onGroupDropDownListTileTap(groups, index),
-                  controller: projectNameController,
-                ),
-                error: (ex, st) => LoadingErrorWidget(
-                  onRefresh: () =>
-                      state.refreshIndicatorKey.currentState?.show(),
-                ),
-                loading: () => const ResponsiveAlign(
-                  alignment: Alignment.topCenter,
-                  padding: EdgeInsets.fromLTRB(10, 0, 10, 10),
-                  child: SingleChildScrollView(
-                    child: AddGroupScreenLoadingState(),
+              child: Column(
+                children: [
+                  Expanded(
+                    child: groupsListValue.when(
+                      data: (groups) => GroupAndProjectFields(
+                        groups: groups,
+                        expansionTile: state.expansionTile,
+                        selectedGroup: state.selectedGroupName,
+                        defaultSelectedGroup: context
+                            .loc.addProjectScreenGroupFieldDropDownDefaultLabel,
+                        isExpandable: state.isExpandable,
+                        onListTileTap: (groups, index) => controller
+                            .onGroupDropDownListTileTap(groups, index),
+                        controller: projectNameController,
+                      ),
+                      error: (ex, st) => LoadingErrorWidget(
+                        onRefresh: () =>
+                            state.refreshIndicatorKey.currentState?.show(),
+                      ),
+                      loading: () => const ResponsiveAlign(
+                        alignment: Alignment.topCenter,
+                        padding: EdgeInsets.fromLTRB(10, 0, 10, 10),
+                        child: SingleChildScrollView(
+                          child: AddGroupScreenLoadingState(),
+                        ),
+                      ),
+                    ),
                   ),
-                ),
+                  if (_bannerAd == null)
+                    const SizedBox(
+                      height: 50,
+                    )
+                  else
+                    SizedBox(
+                      height: 50,
+                      child: AdWidget(
+                        ad: _bannerAd!,
+                      ),
+                    ),
+                ],
               ),
             ),
           ),
