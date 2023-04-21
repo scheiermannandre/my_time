@@ -3,15 +3,45 @@ import 'dart:io';
 
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
+enum ScreenAdUnit {
+  home,
+  addGroup,
+  addProject,
+  projectsPerGroup,
+  project,
+}
+
 class AdState {
   final Future<InitializationStatus> initialization;
-
-  String get bannerAdUnitId => Platform.isAndroid
-      ? 'ca-app-pub-3940256099942544/6300978111'
-      : 'ca-app-pub-3940256099942544/2934735716';
   AdState(
     this.initialization,
   );
+
+  String bannerAdUnitId(ScreenAdUnit screenAdUnit) {
+    switch(screenAdUnit){
+      case ScreenAdUnit.home:
+        return Platform.isAndroid
+          ? 'ca-app-pub-3940256099942544/6300978111'
+          : 'ca-app-pub-3940256099942544/2934735716';
+      case ScreenAdUnit.addGroup:
+        return Platform.isAndroid
+          ? 'ca-app-pub-3940256099942544/6300978111'
+          : 'ca-app-pub-3940256099942544/2934735716';
+      case ScreenAdUnit.addProject:
+        return Platform.isAndroid
+          ? 'ca-app-pub-3940256099942544/6300978111'
+          : 'ca-app-pub-3940256099942544/2934735716';
+      case ScreenAdUnit.projectsPerGroup:
+        return Platform.isAndroid
+          ? 'ca-app-pub-3940256099942544/6300978111'
+          : 'ca-app-pub-3940256099942544/2934735716';
+      case ScreenAdUnit.project:
+        return Platform.isAndroid
+          ? 'ca-app-pub-3940256099942544/6300978111'
+          : 'ca-app-pub-3940256099942544/2934735716';
+    }
+  }
+ 
 
   BannerAdListener get adListener => _adListener;
 

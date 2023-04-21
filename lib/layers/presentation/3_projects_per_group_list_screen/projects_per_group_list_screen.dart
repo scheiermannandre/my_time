@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:my_time/ad_support/ad_state.dart';
 import 'package:my_time/common/extensions/async_value_extensions.dart';
 import 'package:my_time/common/extensions/build_context_extension.dart';
 import 'package:my_time/common/widgets/appbar/custom_app_bar.dart';
@@ -22,7 +23,8 @@ class ProjectsPerGroupListScreen extends HookConsumerWidget {
   });
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    BannerAd? bannerAd = ref.watch(bannerAdProvider(3));
+    BannerAd? bannerAd =
+        ref.watch(bannerAdProvider(ScreenAdUnit.projectsPerGroup));
 
     final controller =
         ref.watch(projectsPerGroupScreenControllerProvider.notifier);

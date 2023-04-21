@@ -6,10 +6,14 @@ import 'package:my_time/router/app_route.dart';
 // ignore:depend_on_referenced_packages
 import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
+import 'package:flutter/services.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitDown,
+    DeviceOrientation.portraitUp,
+  ]);
   // turn off the # in the URLs on the web
   usePathUrlStrategy();
   // * Register error handlers. For more info, see:
@@ -47,6 +51,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Set portrait orientation
     return MaterialApp.router(
       routerConfig: goRouter,
       debugShowCheckedModeBanner: false,
