@@ -5,37 +5,15 @@ import 'package:my_time/common/common.dart';
 import 'package:my_time/common/extensions/build_context_extension.dart';
 import 'package:my_time/common/widgets/no_items_found_widget.dart';
 import 'package:my_time/global/globals.dart';
-import 'package:my_time/main.dart';
+import 'package:my_time/providers/banner_ad_provider.dart';
 import 'home_screen_exports.dart';
 
-class GroupsListScreen extends StatefulHookConsumerWidget {
+class GroupsListScreen extends HookConsumerWidget {
   const GroupsListScreen({super.key});
-
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() =>
-      _GroupsListScreenState();
-}
-
-class _GroupsListScreenState extends ConsumerState<GroupsListScreen> {
-  BannerAd? _bannerAd;
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    final localAdState = adState;
-    localAdState.initialization.then((status) {
-      setState(() {
-        _bannerAd = BannerAd(
-          adUnitId: adState.bannerAdUnitId,
-          size: AdSize.banner,
-          request: const AdRequest(),
-          listener: adState.adListener,
-        )..load();
-      });
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    BannerAd? bannerAd = ref.watch(bannerAdProvider(0));
     final controller = ref.watch(groupsListScreenControllerProvider.notifier);
     final state = ref.watch(groupsListScreenControllerProvider);
     final data = ref.watch(homePageDataProvider);
@@ -218,7 +196,7 @@ class _GroupsListScreenState extends ConsumerState<GroupsListScreen> {
                 ],
               ),
             ),
-            if (_bannerAd == null)
+            if (bannerAd == null)
               const SizedBox(
                 height: 50,
               )
@@ -226,7 +204,7 @@ class _GroupsListScreenState extends ConsumerState<GroupsListScreen> {
               SizedBox(
                 height: 50,
                 child: AdWidget(
-                  ad: _bannerAd!,
+                  ad: bannerAd,
                 ),
               ),
           ],

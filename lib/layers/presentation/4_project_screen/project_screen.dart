@@ -13,37 +13,15 @@ import 'package:my_time/layers/presentation/4_project_screen/project_screen_load
 import 'package:my_time/layers/presentation/4_project_screen/project_timer/timer_widget.dart';
 import 'package:my_time/global/globals.dart';
 import 'package:my_time/common/widgets/nav_bar/nav_bar.dart';
-import 'package:my_time/main.dart';
+import 'package:my_time/providers/banner_ad_provider.dart';
 
-class ProjectScreen extends StatefulHookConsumerWidget {
+class ProjectScreen extends HookConsumerWidget {
   final String projectId;
   const ProjectScreen({super.key, required this.projectId});
-
+  
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _ProjectScreenState();
-}
-
-class _ProjectScreenState extends ConsumerState<ProjectScreen> {
-  BannerAd? _bannerAd;
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    final localAdState = adState;
-    localAdState.initialization.then((status) {
-      setState(() {
-        _bannerAd = BannerAd(
-          adUnitId: adState.bannerAdUnitId,
-          size: AdSize.banner,
-          request: const AdRequest(),
-          listener: adState.adListener,
-        )..load();
-      });
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    String projectId = widget.projectId;
+  Widget build(BuildContext context, WidgetRef ref) {
+    BannerAd? bannerAd = ref.watch(bannerAdProvider(4));
 
     final controller = ref.watch(projectScreenControllerProvider.notifier);
     final state = ref.watch(projectScreenControllerProvider);
@@ -180,7 +158,7 @@ class _ProjectScreenState extends ConsumerState<ProjectScreen> {
                 loading: () => const ProjectScreenLoadingState(),
               ),
             ),
-            if (_bannerAd == null)
+            if (bannerAd == null)
               const SizedBox(
                 height: 50,
               )
@@ -188,7 +166,7 @@ class _ProjectScreenState extends ConsumerState<ProjectScreen> {
               SizedBox(
                 height: 50,
                 child: AdWidget(
-                  ad: _bannerAd!,
+                  ad: bannerAd,
                 ),
               ),
           ],

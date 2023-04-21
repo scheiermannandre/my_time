@@ -8,35 +8,14 @@ import 'package:my_time/common/widgets/responsive_center.dart';
 import 'package:my_time/common/widgets/bottom_nav_bar_button.dart';
 import 'package:my_time/layers/presentation/1_add_group_screen/add_group_screen_controller.dart';
 import 'package:my_time/layers/presentation/1_add_group_screen/group_name_field.dart';
-import 'package:my_time/main.dart';
+import 'package:my_time/providers/banner_ad_provider.dart';
 
-class AddGroupScreen extends StatefulHookConsumerWidget {
+class AddGroupScreen extends HookConsumerWidget {
   const AddGroupScreen({super.key});
-
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _AddGroupScreenState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    BannerAd? bannerAd = ref.watch(bannerAdProvider(1));
 
-class _AddGroupScreenState extends ConsumerState<AddGroupScreen> {
-  BannerAd? _bannerAd;
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    final localAdState = adState2;
-    localAdState.initialization.then((status) {
-      setState(() {
-        _bannerAd = BannerAd(
-          adUnitId: adState.bannerAdUnitId,
-          size: AdSize.banner,
-          request: const AdRequest(),
-          listener: adState.adListener,
-        )..load();
-      });
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
     final groupNameController = useTextEditingController(text: '');
     final controller = ref.watch(addGroupScreenControllerProvider.notifier);
     final state = ref.watch(addGroupScreenControllerProvider);
@@ -86,7 +65,7 @@ class _AddGroupScreenState extends ConsumerState<AddGroupScreen> {
                   ),
                 ),
               ),
-              if (_bannerAd == null)
+              if (bannerAd == null)
                 const SizedBox(
                   height: 50,
                 )
@@ -94,7 +73,7 @@ class _AddGroupScreenState extends ConsumerState<AddGroupScreen> {
                 SizedBox(
                   height: 50,
                   child: AdWidget(
-                    ad: _bannerAd!,
+                    ad: bannerAd,
                   ),
                 ),
             ],

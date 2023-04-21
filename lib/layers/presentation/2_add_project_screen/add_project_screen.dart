@@ -12,38 +12,14 @@ import 'package:my_time/layers/interface/dto/group_dto.dart';
 import 'package:my_time/layers/presentation/2_add_project_screen/add_project_screen_loading_state.dart';
 import 'package:my_time/layers/presentation/2_add_project_screen/add_project_screen_controller.dart';
 import 'package:my_time/layers/presentation/2_add_project_screen/group_and_project_fields.dart';
-import 'package:my_time/main.dart';
+import 'package:my_time/providers/banner_ad_provider.dart';
 
-class AddProjectScreen extends StatefulHookConsumerWidget {
+class AddProjectScreen extends HookConsumerWidget {
   final String? groupId;
   const AddProjectScreen({Key? key, this.groupId}) : super(key: key);
-
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() =>
-      _AddProjectScreenState();
-}
-
-class _AddProjectScreenState extends ConsumerState<AddProjectScreen> {
-  BannerAd? _bannerAd;
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    final localAdState = adState;
-    localAdState.initialization.then((status) {
-      setState(() {
-        _bannerAd = BannerAd(
-          adUnitId: adState.bannerAdUnitId,
-          size: AdSize.banner,
-          request: const AdRequest(),
-          listener: adState.adListener,
-        )..load();
-      });
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    String? groupId = widget.groupId;
+  Widget build(BuildContext context, WidgetRef ref) {
+    BannerAd? bannerAd = ref.watch(bannerAdProvider(2));
 
     final projectNameController = useTextEditingController(text: '');
     final controller =
@@ -142,7 +118,7 @@ class _AddProjectScreenState extends ConsumerState<AddProjectScreen> {
                       ),
                     ),
                   ),
-                  if (_bannerAd == null)
+                  if (bannerAd == null)
                     const SizedBox(
                       height: 50,
                     )
@@ -150,7 +126,7 @@ class _AddProjectScreenState extends ConsumerState<AddProjectScreen> {
                     SizedBox(
                       height: 50,
                       child: AdWidget(
-                        ad: _bannerAd!,
+                        ad: bannerAd,
                       ),
                     ),
                 ],

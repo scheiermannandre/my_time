@@ -11,9 +11,9 @@ import 'package:my_time/common/widgets/no_items_found_widget.dart';
 import 'package:my_time/common/widgets/responsive_center.dart';
 import 'package:my_time/layers/presentation/3_projects_per_group_list_screen/projects_per_group_screen_controller.dart';
 import 'package:my_time/layers/presentation/3_projects_per_group_list_screen/projects_per_group_screen_loading_state.dart';
-import 'package:my_time/main.dart';
+import 'package:my_time/providers/banner_ad_provider.dart';
 
-class ProjectsPerGroupListScreen extends StatefulHookConsumerWidget {
+class ProjectsPerGroupListScreen extends HookConsumerWidget {
   final String groupId;
 
   const ProjectsPerGroupListScreen({
@@ -21,32 +21,8 @@ class ProjectsPerGroupListScreen extends StatefulHookConsumerWidget {
     required this.groupId,
   });
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() =>
-      _ProjectsPerGroupListScreenState();
-}
-
-class _ProjectsPerGroupListScreenState
-    extends ConsumerState<ProjectsPerGroupListScreen> {
-  BannerAd? _bannerAd;
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    final localAdState = adState;
-    localAdState.initialization.then((status) {
-      setState(() {
-        _bannerAd = BannerAd(
-          adUnitId: adState.bannerAdUnitId,
-          size: AdSize.banner,
-          request: const AdRequest(),
-          listener: adState.adListener,
-        )..load();
-      });
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    String groupId = widget.groupId;
+  Widget build(BuildContext context, WidgetRef ref) {
+    BannerAd? bannerAd = ref.watch(bannerAdProvider(3));
 
     final controller =
         ref.watch(projectsPerGroupScreenControllerProvider.notifier);
@@ -148,7 +124,7 @@ class _ProjectsPerGroupListScreenState
               ),
             ),
           ),
-          if (_bannerAd == null)
+          if (bannerAd == null)
             const SizedBox(
               height: 50,
             )
@@ -156,7 +132,7 @@ class _ProjectsPerGroupListScreenState
             SizedBox(
               height: 50,
               child: AdWidget(
-                ad: _bannerAd!,
+                ad: bannerAd,
               ),
             ),
         ],
