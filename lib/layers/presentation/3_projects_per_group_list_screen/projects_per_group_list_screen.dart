@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:my_time/ad_support/ad_state.dart';
 import 'package:my_time/common/extensions/async_value_extensions.dart';
 import 'package:my_time/common/extensions/build_context_extension.dart';
 import 'package:my_time/common/widgets/appbar/custom_app_bar.dart';
@@ -12,7 +10,6 @@ import 'package:my_time/common/widgets/no_items_found_widget.dart';
 import 'package:my_time/common/widgets/responsive_center.dart';
 import 'package:my_time/layers/presentation/3_projects_per_group_list_screen/projects_per_group_screen_controller.dart';
 import 'package:my_time/layers/presentation/3_projects_per_group_list_screen/projects_per_group_screen_loading_state.dart';
-import 'package:my_time/providers/banner_ad_provider.dart';
 
 class ProjectsPerGroupListScreen extends HookConsumerWidget {
   final String groupId;
@@ -23,9 +20,6 @@ class ProjectsPerGroupListScreen extends HookConsumerWidget {
   });
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    BannerAd? bannerAd =
-        ref.watch(bannerAdProvider(ScreenAdUnit.projectsPerGroup));
-
     final controller =
         ref.watch(projectsPerGroupScreenControllerProvider.notifier);
     final state = ref.watch(projectsPerGroupScreenControllerProvider);
@@ -66,78 +60,60 @@ class ProjectsPerGroupListScreen extends HookConsumerWidget {
           ),
         ],
       ),
-      body: Column(
-        children: [
-          Expanded(
-            child: data.when(
-              data: (dto) => dto.projects.isEmpty
-                  ? NoItemsFoundWidget(
-                      onBtnTap: () => !state.isLoading
-                          ? controller.pushNamedAddProject(
-                              context,
-                              dto,
-                            )
-                          : null,
-                      title: context.loc.noProjectsFoundTitle,
-                      description: context.loc.noProjectsFoundDescription,
-                      btnLabel: context.loc.noProjectsFoundBtnLabel,
-                    )
-                  : RefreshIndicator(
-                      color: Theme.of(context).colorScheme.primary,
-                      onRefresh: () async {
-                        await AsyncValue.guard(() => ref
-                            .refresh(
-                                groupWithProjectsDTOProvider(groupId).future)
-                            .timeout(const Duration(seconds: 20)));
-                        return;
-                      },
-                      child: SingleChildScrollView(
-                        controller: scrollController,
-                        physics: const AlwaysScrollableScrollPhysics(),
-                        child: ListView.builder(
-                          padding: const EdgeInsets.only(top: 10),
-                          physics: const NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          itemCount: dto.projects.length,
-                          itemBuilder: (context, index) {
-                            return ResponsiveAlign(
-                              alignment: Alignment.topCenter,
-                              padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
-                              child: CustomListTile(
-                                title: dto.projects[index].name,
-                                onTap: () => controller.pushNamedProject(
-                                    context, dto.projects, index),
-                              ),
-                            );
-                          },
-                        ),
-                      ),
-                    ),
-              error: (ex, st) => LoadingErrorWidget(
-                onRefresh: () =>
-                    state.value!.refreshIndicatorKey.currentState?.show(),
-              ),
-              loading: () => ResponsiveAlign(
-                alignment: Alignment.topCenter,
-                padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
+      body: data.when(
+        data: (dto) => dto.projects.isEmpty
+            ? NoItemsFoundWidget(
+                onBtnTap: () => !state.isLoading
+                    ? controller.pushNamedAddProject(
+                        context,
+                        dto,
+                      )
+                    : null,
+                title: context.loc.noProjectsFoundTitle,
+                description: context.loc.noProjectsFoundDescription,
+                btnLabel: context.loc.noProjectsFoundBtnLabel,
+              )
+            : RefreshIndicator(
+                color: Theme.of(context).colorScheme.primary,
+                onRefresh: () async {
+                  await AsyncValue.guard(() => ref
+                      .refresh(groupWithProjectsDTOProvider(groupId).future)
+                      .timeout(const Duration(seconds: 20)));
+                  return;
+                },
                 child: SingleChildScrollView(
-                    controller: scrollController,
-                    child: const ProjectsPerGroupListScreenLoadingState()),
+                  controller: scrollController,
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  child: ListView.builder(
+                    padding: const EdgeInsets.only(top: 10),
+                    physics: const NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    itemCount: dto.projects.length,
+                    itemBuilder: (context, index) {
+                      return ResponsiveAlign(
+                        alignment: Alignment.topCenter,
+                        padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
+                        child: CustomListTile(
+                          title: dto.projects[index].name,
+                          onTap: () => controller.pushNamedProject(
+                              context, dto.projects, index),
+                        ),
+                      );
+                    },
+                  ),
+                ),
               ),
-            ),
-          ),
-          if (bannerAd == null)
-            const SizedBox(
-              height: 50,
-            )
-          else
-            SizedBox(
-              height: 50,
-              child: AdWidget(
-                ad: bannerAd,
-              ),
-            ),
-        ],
+        error: (ex, st) => LoadingErrorWidget(
+          onRefresh: () =>
+              state.value!.refreshIndicatorKey.currentState?.show(),
+        ),
+        loading: () => ResponsiveAlign(
+          alignment: Alignment.topCenter,
+          padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
+          child: SingleChildScrollView(
+              controller: scrollController,
+              child: const ProjectsPerGroupListScreenLoadingState()),
+        ),
       ),
     );
   }

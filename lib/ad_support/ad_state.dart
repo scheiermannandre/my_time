@@ -18,30 +18,32 @@ class AdState {
   );
 
   String bannerAdUnitId(ScreenAdUnit screenAdUnit) {
-    switch(screenAdUnit){
+    switch (screenAdUnit) {
       case ScreenAdUnit.home:
         return Platform.isAndroid
-          ? 'ca-app-pub-3940256099942544/6300978111'
-          : 'ca-app-pub-3940256099942544/2934735716';
+            ? 'ca-app-pub-3940256099942544/6300978111'
+            : 'ca-app-pub-3940256099942544/6300978111';
       case ScreenAdUnit.addGroup:
         return Platform.isAndroid
-          ? 'ca-app-pub-3940256099942544/6300978111'
-          : 'ca-app-pub-3940256099942544/2934735716';
+            ? 'ca-app-pub-3940256099942544/6300978111'
+            : 'ca-app-pub-3940256099942544/6300978111';
+
       case ScreenAdUnit.addProject:
         return Platform.isAndroid
-          ? 'ca-app-pub-3940256099942544/6300978111'
-          : 'ca-app-pub-3940256099942544/2934735716';
+            ? 'ca-app-pub-3940256099942544/6300978111'
+            : 'ca-app-pub-3940256099942544/6300978111';
+
       case ScreenAdUnit.projectsPerGroup:
         return Platform.isAndroid
-          ? 'ca-app-pub-3940256099942544/6300978111'
-          : 'ca-app-pub-3940256099942544/2934735716';
+            ? 'ca-app-pub-3940256099942544/6300978111'
+            : 'ca-app-pub-3940256099942544/6300978111';
+
       case ScreenAdUnit.project:
         return Platform.isAndroid
-          ? 'ca-app-pub-3940256099942544/6300978111'
-          : 'ca-app-pub-3940256099942544/2934735716';
+            ? 'ca-app-pub-3940256099942544/6300978111'
+            : 'ca-app-pub-3940256099942544/6300978111';
     }
   }
- 
 
   BannerAdListener get adListener => _adListener;
 

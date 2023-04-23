@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:my_time/ad_support/ad_state.dart';
 import 'package:my_time/common/common.dart';
 import 'package:my_time/common/extensions/async_value_extensions.dart';
 import 'package:my_time/common/extensions/build_context_extension.dart';
@@ -14,7 +12,6 @@ import 'package:my_time/layers/presentation/4_project_screen/project_screen_load
 import 'package:my_time/layers/presentation/4_project_screen/project_timer/timer_widget.dart';
 import 'package:my_time/global/globals.dart';
 import 'package:my_time/common/widgets/nav_bar/nav_bar.dart';
-import 'package:my_time/providers/banner_ad_provider.dart';
 
 class ProjectScreen extends HookConsumerWidget {
   final String projectId;
@@ -22,8 +19,6 @@ class ProjectScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    BannerAd? bannerAd = ref.watch(bannerAdProvider(ScreenAdUnit.project));
-
     final controller = ref.watch(projectScreenControllerProvider.notifier);
     final state = ref.watch(projectScreenControllerProvider);
     final project = ref.watch(projectProvider(projectId));
@@ -124,53 +119,35 @@ class ProjectScreen extends HookConsumerWidget {
               .timeout(const Duration(seconds: 5)));
           return;
         },
-        child: Column(
-          children: [
-            Expanded(
-              child: project.when(
-                data: (dto) => dto != null
-                    ? PageView(
-                        physics: const NeverScrollableScrollPhysics(),
-                        controller: pageController,
-                        onPageChanged: (index) {},
-                        children: <Widget>[
-                          ResponsiveAlign(
-                            padding: const EdgeInsets.all(10),
-                            alignment: Alignment.center,
-                            child: TimerWidget(
-                              project: project.value!,
-                            ),
-                          ),
-                          ProjectHistory(
-                            scrollController: scrollController,
-                            project: project.value!,
-                          )
-                        ],
-                      )
-                    : LoadingErrorWidget(
-                        onRefresh: () => state
-                            .value!.refreshIndicatorKey.currentState
-                            ?.show(),
+        child: project.when(
+          data: (dto) => dto != null
+              ? PageView(
+                  physics: const NeverScrollableScrollPhysics(),
+                  controller: pageController,
+                  onPageChanged: (index) {},
+                  children: <Widget>[
+                    ResponsiveAlign(
+                      padding: const EdgeInsets.all(10),
+                      alignment: Alignment.center,
+                      child: TimerWidget(
+                        project: project.value!,
                       ),
-                error: (ex, st) => LoadingErrorWidget(
+                    ),
+                    ProjectHistory(
+                      scrollController: scrollController,
+                      project: project.value!,
+                    )
+                  ],
+                )
+              : LoadingErrorWidget(
                   onRefresh: () =>
                       state.value!.refreshIndicatorKey.currentState?.show(),
                 ),
-                loading: () => const ProjectScreenLoadingState(),
-              ),
-            ),
-            if (bannerAd == null)
-              const SizedBox(
-                height: 50,
-              )
-            else
-              SizedBox(
-                height: 50,
-                child: AdWidget(
-                  ad: bannerAd,
-                ),
-              ),
-          ],
+          error: (ex, st) => LoadingErrorWidget(
+            onRefresh: () =>
+                state.value!.refreshIndicatorKey.currentState?.show(),
+          ),
+          loading: () => const ProjectScreenLoadingState(),
         ),
       ),
     );

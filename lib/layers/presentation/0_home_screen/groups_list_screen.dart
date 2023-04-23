@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:my_time/ad_support/ad_state.dart';
 import 'package:my_time/common/common.dart';
 import 'package:my_time/common/extensions/build_context_extension.dart';
 import 'package:my_time/common/widgets/no_items_found_widget.dart';
 import 'package:my_time/global/globals.dart';
-import 'package:my_time/providers/banner_ad_provider.dart';
 import 'home_screen_exports.dart';
 
 class GroupsListScreen extends HookConsumerWidget {
@@ -14,7 +11,6 @@ class GroupsListScreen extends HookConsumerWidget {
   @override
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    BannerAd? bannerAd = ref.watch(bannerAdProvider(ScreenAdUnit.home));
     final controller = ref.watch(groupsListScreenControllerProvider.notifier);
     final state = ref.watch(groupsListScreenControllerProvider);
     final data = ref.watch(homePageDataProvider);
@@ -51,163 +47,134 @@ class GroupsListScreen extends HookConsumerWidget {
               .timeout(const Duration(seconds: 20)));
           return;
         },
-        child: Column(
-          children: [
-            Expanded(
-              child: CustomScrollView(
-                slivers: [
-                  ScreenSliverAppBar(
-                    title: context.loc.groups,
-                    // leadingIconButton: IconButton(
-                    //   icon: AnimatedIcon(
-                    //     icon: AnimatedIcons.menu_close,
-                    //     progress: hamburgerAnimController,
-                    //     color: GlobalProperties.textAndIconColor,
-                    //   ),
-                    //   onPressed: () =>
-                    //    controller.onHamburgerTab(
-                    //        context, bottomSheetAnimController),
-                    // ),
-                  ),
-                  SliverToBoxAdapter(
-                    child: ResponsiveAlign(
-                      padding: padding,
-                      child: data.when(
-                        error: (error, stackTrace) => LoadingErrorWidget(
-                            onRefresh: () => state
-                                .value!.refreshIndicatorKey.currentState
-                                ?.show()),
-                        loading: () => const GroupsListLoadingState(),
-                        data: (dto) => Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+        child: CustomScrollView(
+          slivers: [
+            ScreenSliverAppBar(
+              title: context.loc.groups,
+              // leadingIconButton: IconButton(
+              //   icon: AnimatedIcon(
+              //     icon: AnimatedIcons.menu_close,
+              //     progress: hamburgerAnimController,
+              //     color: GlobalProperties.textAndIconColor,
+              //   ),
+              //   onPressed: () =>
+              //    controller.onHamburgerTab(
+              //        context, bottomSheetAnimController),
+              // ),
+            ),
+            SliverToBoxAdapter(
+              child: ResponsiveAlign(
+                padding: padding,
+                child: data.when(
+                  error: (error, stackTrace) => LoadingErrorWidget(
+                      onRefresh: () => state
+                          .value!.refreshIndicatorKey.currentState
+                          ?.show()),
+                  loading: () => const GroupsListLoadingState(),
+                  data: (dto) => Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 10),
+                        child: ScrollableRoundendButtonRow(
                           children: [
-                            Padding(
-                              padding: const EdgeInsets.only(bottom: 10),
-                              child: ScrollableRoundendButtonRow(
-                                children: [
-                                  RoundedLabeldButton(
-                                      icon: Icons.category,
-                                      text: context.loc.addGroup,
-                                      onPressed: () => controller
-                                          .pushNamedAddGroup(context)),
-                                  RoundedLabeldButton(
-                                    icon: Icons.work,
-                                    text: context.loc.addProject,
-                                    onPressed: () =>
-                                        controller.pushNamedAddProject(context),
-                                  ),
-                                ],
-                              ),
+                            RoundedLabeldButton(
+                                icon: Icons.category,
+                                text: context.loc.addGroup,
+                                onPressed: () =>
+                                    controller.pushNamedAddGroup(context)),
+                            RoundedLabeldButton(
+                              icon: Icons.work,
+                              text: context.loc.addProject,
+                              onPressed: () =>
+                                  controller.pushNamedAddProject(context),
                             ),
-                            dto.projects.isNotEmpty
-                                ? Padding(
-                                    padding: const EdgeInsets.only(
-                                        top: 5, bottom: 5),
-                                    child: CustomExpansionTile(
-                                      contentPadding: const EdgeInsets.fromLTRB(
-                                          12, 12, 12, 12),
-                                      decoration: BoxDecoration(
-                                        border: Border.all(
-                                          color: GlobalProperties.shadowColor,
-                                          strokeAlign:
-                                              BorderSide.strokeAlignOutside,
-                                        ),
-                                        borderRadius: const BorderRadius.all(
-                                          Radius.circular(5),
-                                        ),
-                                      ),
-                                      onExpansionChanged: (value) {},
-                                      key: ref
-                                          .read(
-                                              groupsListScreenControllerProvider)
-                                          .value!
-                                          .expansionTile,
-                                      title: Text(context.loc.favourites),
-                                      children: <Widget>[
-                                        ListView.separated(
-                                            padding: EdgeInsets.zero,
-                                            physics:
-                                                const NeverScrollableScrollPhysics(),
-                                            shrinkWrap: true,
-                                            itemBuilder: (context, index) {
-                                              return ListTile(
-                                                title: Text(
-                                                    dto.projects[index].name),
-                                                onTap: () =>
-                                                    controller.onProjectTileTap(
-                                                        context,
-                                                        dto.projects,
-                                                        index),
-                                                contentPadding:
-                                                    const EdgeInsets.only(
-                                                        left: 12.0,
-                                                        right: 12.0),
-                                              );
-                                            },
-                                            separatorBuilder: (context, index) {
-                                              return Divider(
-                                                color: GlobalProperties
-                                                    .shadowColor,
-                                                height: 0,
-                                                indent: 0,
-                                                thickness: 1,
-                                              );
-                                            },
-                                            itemCount: dto.projects.length),
-                                      ],
-                                    ),
-                                  )
-                                : const SizedBox.shrink(),
-                            dto.groups.isEmpty
-                                ? NoItemsFoundWidget(
-                                    onBtnTap: () => !state.isLoading
-                                        ? controller.pushNamedAddGroup(
-                                            context,
-                                          )
-                                        : null,
-                                    title: context.loc.noGroupsFoundTitle,
-                                    description:
-                                        context.loc.noGroupsFoundDescription,
-                                    btnLabel: context.loc.noGroupsFoundBtnLabel,
-                                  )
-                                : ListView.builder(
-                                    padding: EdgeInsets.zero,
-                                    physics:
-                                        const NeverScrollableScrollPhysics(),
-                                    shrinkWrap: true,
-                                    itemCount: dto.groups.length,
-                                    itemBuilder: (context, index) {
-                                      return Padding(
-                                        padding: const EdgeInsets.only(
-                                            top: 5, bottom: 5),
-                                        child: CustomListTile(
-                                          onTap: () =>
-                                              controller.pushNamedGroups(
-                                                  context, dto, index),
-                                          title: dto.groups[index].name,
-                                        ),
-                                      );
-                                    },
-                                  ),
                           ],
                         ),
                       ),
-                    ),
+                      dto.projects.isNotEmpty
+                          ? Padding(
+                              padding: const EdgeInsets.only(top: 5, bottom: 5),
+                              child: CustomExpansionTile(
+                                contentPadding:
+                                    const EdgeInsets.fromLTRB(12, 12, 12, 12),
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: GlobalProperties.shadowColor,
+                                    strokeAlign: BorderSide.strokeAlignOutside,
+                                  ),
+                                  borderRadius: const BorderRadius.all(
+                                    Radius.circular(5),
+                                  ),
+                                ),
+                                onExpansionChanged: (value) {},
+                                key: ref
+                                    .read(groupsListScreenControllerProvider)
+                                    .value!
+                                    .expansionTile,
+                                title: Text(context.loc.favourites),
+                                children: <Widget>[
+                                  ListView.separated(
+                                      padding: EdgeInsets.zero,
+                                      physics:
+                                          const NeverScrollableScrollPhysics(),
+                                      shrinkWrap: true,
+                                      itemBuilder: (context, index) {
+                                        return ListTile(
+                                          title: Text(dto.projects[index].name),
+                                          onTap: () =>
+                                              controller.onProjectTileTap(
+                                                  context, dto.projects, index),
+                                          contentPadding: const EdgeInsets.only(
+                                              left: 12.0, right: 12.0),
+                                        );
+                                      },
+                                      separatorBuilder: (context, index) {
+                                        return Divider(
+                                          color: GlobalProperties.shadowColor,
+                                          height: 0,
+                                          indent: 0,
+                                          thickness: 1,
+                                        );
+                                      },
+                                      itemCount: dto.projects.length),
+                                ],
+                              ),
+                            )
+                          : const SizedBox.shrink(),
+                      dto.groups.isEmpty
+                          ? NoItemsFoundWidget(
+                              onBtnTap: () => !state.isLoading
+                                  ? controller.pushNamedAddGroup(
+                                      context,
+                                    )
+                                  : null,
+                              title: context.loc.noGroupsFoundTitle,
+                              description: context.loc.noGroupsFoundDescription,
+                              btnLabel: context.loc.noGroupsFoundBtnLabel,
+                            )
+                          : ListView.builder(
+                              padding: EdgeInsets.zero,
+                              physics: const NeverScrollableScrollPhysics(),
+                              shrinkWrap: true,
+                              itemCount: dto.groups.length,
+                              itemBuilder: (context, index) {
+                                return Padding(
+                                  padding:
+                                      const EdgeInsets.only(top: 5, bottom: 5),
+                                  child: CustomListTile(
+                                    onTap: () => controller.pushNamedGroups(
+                                        context, dto, index),
+                                    title: dto.groups[index].name,
+                                  ),
+                                );
+                              },
+                            ),
+                    ],
                   ),
-                ],
-              ),
-            ),
-            if (bannerAd == null)
-              const SizedBox(
-                height: 50,
-              )
-            else
-              SizedBox(
-                height: 50,
-                child: AdWidget(
-                  ad: bannerAd,
                 ),
               ),
+            ),
           ],
         ),
       ),
