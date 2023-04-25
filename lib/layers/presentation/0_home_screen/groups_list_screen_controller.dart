@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:my_time/common/dialogs/bottom_sheet_dialog.dart';
+import 'package:my_time/common/dialogs/policy_dialog.dart';
 import 'package:my_time/common/widgets/custom_expansion_tile.dart';
 import 'package:my_time/layers/application/home_page_service.dart';
 import 'package:my_time/layers/domain/home_page_dto.dart';
@@ -51,28 +52,62 @@ class GroupsListScreenController extends _$GroupsListScreenController {
         AsyncData(state.value!.copyWith(isPlaying: !state.value!.isPlaying));
   }
 
-  // void onHamburgerTab(BuildContext context, AnimationController controller) {
-  //   animateHamburger();
-  //   showBottomSheetWithWidgets(
-  //     context: context,
-  //     bottomSheetController: controller,
-  //     widgets: [
-  //       ListTile(
-  //         trailing: const Icon(
-  //           Icons.settings,
-  //         ),
-  //         title: const Text(
-  //           "Settings",
-  //           style: TextStyle(color: Colors.black),
-  //         ),
-  //         onTap: () {
-  //           GoRouter.of(context).go("/settings");
-  //         },
-  //       ),
-  //     ],
-  //     whenComplete: () => animateHamburger(),
-  //   );
-  // }
+  void onHamburgerTab(BuildContext context, AnimationController controller) {
+    animateHamburger();
+    showBottomSheetWithWidgets(
+      context: context,
+      bottomSheetController: controller,
+      widgets: [
+        ListTile(
+          trailing: const Icon(
+            Icons.privacy_tip,
+          ),
+          title: const Text(
+            "Privacy Policy",
+            style: TextStyle(color: Colors.black),
+          ),
+          onTap: () async {
+            await showDialog(
+              context: context,
+              builder: (context) => PolicyDialog(
+                mdFileName: "privacy_policy.md",
+              ),
+            );
+          },
+        ),
+        ListTile(
+          trailing: const Icon(
+            Icons.info,
+          ),
+          title: const Text(
+            "Terms and Conditions",
+            style: TextStyle(color: Colors.black),
+          ),
+          onTap: () async {
+            await showDialog(
+              context: context,
+              builder: (context) => PolicyDialog(
+                mdFileName: "terms_and_conditions.md",
+              ),
+            );
+          },
+        ),
+        ListTile(
+          trailing: const Icon(
+            Icons.info,
+          ),
+          title: const Text(
+            "Third-Party Software",
+            style: TextStyle(color: Colors.black),
+          ),
+          onTap: () {
+            showAboutDialog(context: context);
+          },
+        ),
+      ],
+      whenComplete: () => animateHamburger(),
+    );
+  }
 
   void pushNamedAddGroup(BuildContext context) =>
       context.pushNamed(AppRoute.addGroup);
@@ -94,8 +129,7 @@ class GroupsListScreenController extends _$GroupsListScreenController {
   }
 }
 
-final homePageDataProvider =
-    StreamProvider.autoDispose<HomePageDTO>((ref) {
+final homePageDataProvider = StreamProvider.autoDispose<HomePageDTO>((ref) {
   final homePageService = ref.watch(homePageServiceProvider);
   return homePageService.watchData();
 });

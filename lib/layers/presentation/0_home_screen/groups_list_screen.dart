@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_time/common/common.dart';
 import 'package:my_time/common/dialogs/policy_dialog.dart';
@@ -19,22 +20,22 @@ class GroupsListScreen extends HookConsumerWidget {
     const duration = Duration(milliseconds: 600);
     const padding = EdgeInsets.fromLTRB(10, 10, 10, 10);
 
-    // final bottomSheetAnimController = useAnimationController(
-    //   duration: duration,
-    // );
-    // final hamburgerAnimController = useAnimationController(
-    //   duration: duration,
-    // );
+    final bottomSheetAnimController = useAnimationController(
+      duration: duration,
+    );
+    final hamburgerAnimController = useAnimationController(
+      duration: duration,
+    );
 
-    // ref.listen<GroupsListState>(
-    //     groupsListScreenControllerProvider.select((state) => state.value!),
-    //     (previous, next) {
-    //   if (next.isPlaying) {
-    //     hamburgerAnimController.forward();
-    //   } else {
-    //     hamburgerAnimController.reverse();
-    //   }
-    // });
+    ref.listen<GroupsListState>(
+        groupsListScreenControllerProvider.select((state) => state.value!),
+        (previous, next) {
+      if (next.isPlaying) {
+        hamburgerAnimController.forward();
+      } else {
+        hamburgerAnimController.reverse();
+      }
+    });
 
     return Scaffold(
       body: RefreshIndicator(
@@ -52,29 +53,29 @@ class GroupsListScreen extends HookConsumerWidget {
           slivers: [
             ScreenSliverAppBar(
               title: context.loc.groups,
-              leadingIconButton: IconButton(
-                icon: const Icon(
-                  Icons.info_outline,
-                ),
-                onPressed: () {
-                  showDialog(
-                    context: context,
-                    builder: (context) => PolicyDialog(
-                      mdFileName: "privacy-policy.md",
-                    ),
-                  );
-                },
-              ),
               // leadingIconButton: IconButton(
-              //   icon: AnimatedIcon(
-              //     icon: AnimatedIcons.menu_close,
-              //     progress: hamburgerAnimController,
-              //     color: GlobalProperties.textAndIconColor,
+              //   icon: const Icon(
+              //     Icons.info_outline,
               //   ),
-              //   onPressed: () =>
-              //    controller.onHamburgerTab(
-              //        context, bottomSheetAnimController),
+              //   onPressed: () {
+              //     showDialog(
+              //       context: context,
+              //       builder: (context) => PolicyDialog(
+              //         mdFileName: "privacy-policy.md",
+              //       ),
+              //     );
+              //   },
               // ),
+              leadingIconButton: IconButton(
+                icon: AnimatedIcon(
+                  icon: AnimatedIcons.menu_close,
+                  progress: hamburgerAnimController,
+                  color: GlobalProperties.textAndIconColor,
+                ),
+                onPressed: () =>
+                 controller.onHamburgerTab(
+                     context, bottomSheetAnimController),
+              ),
             ),
             SliverToBoxAdapter(
               child: ResponsiveAlign(
