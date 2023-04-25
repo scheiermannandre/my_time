@@ -92,6 +92,9 @@
     "deleteEntryTitle": "Delete Entry?",
     "deleteEntryMessage": "The Entry can't be restored once it's deleted!",
     "deleteEntryConfirmBtnLabel": "Confirm",
-    "deleteEntryCancelBtnLabel": "Cancel"
+    "deleteEntryCancelBtnLabel": "Cancel",
 
+    "@PolicyDialog": {},
+
+    "closePolicyDialog": "Close"
 }
