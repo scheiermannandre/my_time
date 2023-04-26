@@ -70,7 +70,7 @@ class ProjectScreenController extends _$ProjectScreenController {
       BuildContext context, ProjectDTO project, bool isEdit,
       [TimeEntryDTO? entry]) {
     String tid = entry?.id ?? "";
-    return context.pushNamed(
+    context.pushNamed(
       AppRoute.timeEntryForm,
       params: {
         'pid': project.id,

@@ -101,7 +101,11 @@ class GroupsListScreenController extends _$GroupsListScreenController {
             style: TextStyle(color: Colors.black),
           ),
           onTap: () {
-            showAboutDialog(context: context);
+            showAboutDialog(
+              context: context,
+              applicationName: "My Time",
+              applicationVersion: "1.0.0",
+            );
           },
         ),
       ],
@@ -116,8 +120,7 @@ class GroupsListScreenController extends _$GroupsListScreenController {
       context.pushNamed(AppRoute.addProject);
 
   void pushNamedGroups(BuildContext context, HomePageDTO dto, int index) {
-    return context
-        .pushNamed(AppRoute.group, params: {'gid': dto.groups[index].id});
+    context.pushNamed(AppRoute.group, params: {'gid': dto.groups[index].id});
   }
 
   void onProjectTileTap(

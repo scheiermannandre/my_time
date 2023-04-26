@@ -35,13 +35,13 @@ class ProjectsPerGroupScreenController
   }
 
   void pushNamedAddProject(BuildContext context, GroupWithProjectsDTO dto) {
-    return context
+    context
         .pushNamed(AppRoute.addProject, queryParams: {'gid': dto.group.id});
   }
 
   void pushNamedProject(
       BuildContext context, List<ProjectDTO> projects, int index) {
-    return context
+    context
         .pushNamed(AppRoute.project, params: {'pid': projects[index].id});
   }
 
