@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:my_time/common/dialogs/bottom_sheet_dialog.dart';
 import 'package:my_time/common/dialogs/policy_dialog.dart';
+import 'package:my_time/common/extensions/build_context_extension.dart';
 import 'package:my_time/common/widgets/custom_expansion_tile.dart';
 import 'package:my_time/layers/application/home_page_service.dart';
 import 'package:my_time/layers/domain/home_page_dto.dart';
@@ -59,12 +60,9 @@ class GroupsListScreenController extends _$GroupsListScreenController {
       bottomSheetController: controller,
       widgets: [
         ListTile(
-          trailing: const Icon(
-            Icons.privacy_tip,
-          ),
-          title: const Text(
-            "Privacy Policy",
-            style: TextStyle(color: Colors.black),
+          title: Text(
+            context.loc.privacy,
+            style: const TextStyle(color: Colors.black),
           ),
           onTap: () async {
             await showDialog(
@@ -76,29 +74,23 @@ class GroupsListScreenController extends _$GroupsListScreenController {
           },
         ),
         ListTile(
-          trailing: const Icon(
-            Icons.info,
-          ),
-          title: const Text(
-            "Terms and Conditions",
-            style: TextStyle(color: Colors.black),
+          title: Text(
+            context.loc.terms,
+            style: const TextStyle(color: Colors.black),
           ),
           onTap: () async {
             await showDialog(
               context: context,
               builder: (context) => PolicyDialog(
-                mdFileName: "terms_and_conditions.md",
+                mdFileName: "terms_of_use.md",
               ),
             );
           },
         ),
         ListTile(
-          trailing: const Icon(
-            Icons.info,
-          ),
-          title: const Text(
-            "Third-Party Software",
-            style: TextStyle(color: Colors.black),
+          title: Text(
+            context.loc.thirdParty,
+            style: const TextStyle(color: Colors.black),
           ),
           onTap: () {
             showAboutDialog(

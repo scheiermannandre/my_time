@@ -31,4 +31,4 @@ These terms and conditions are effective as of 2023-04-25
 
 **Contact Us**
 
-If you have any questions or suggestions about my Terms and Conditions, do not hesitate to contact me at scheiermann.andre@gmail.com.
+If you have any questions or suggestions about my Terms and Conditions, do not hesitate to contact me at dev.scheiermann@gmail.com.

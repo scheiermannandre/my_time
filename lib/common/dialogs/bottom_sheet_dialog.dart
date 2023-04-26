@@ -22,15 +22,19 @@ Future<dynamic> showBottomSheetWithWidgets({
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Container(
-                height: 5,
-                width: 40,
-                decoration: BoxDecoration(
-                    color: GlobalProperties.dragIndicatorColor,
-                    border: Border.all(
+              Padding(
+                padding: const EdgeInsets.only(bottom: 8),
+                child: Container(
+                  height: 5,
+                  width: 40,
+                  decoration: BoxDecoration(
                       color: GlobalProperties.dragIndicatorColor,
-                    ),
-                    borderRadius: const BorderRadius.all(Radius.circular(20))),
+                      border: Border.all(
+                        color: GlobalProperties.dragIndicatorColor,
+                      ),
+                      borderRadius:
+                          const BorderRadius.all(Radius.circular(20))),
+                ),
               ),
               ...widgets,
             ],

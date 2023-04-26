@@ -94,6 +94,12 @@
     "deleteEntryConfirmBtnLabel": "Confirm",
     "deleteEntryCancelBtnLabel": "Cancel",
 
+    "@HomeHamburgerModalBottomSheet": {},
+
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Use",
+    "thirdParty": "Third-Party Software",
+
     "@PolicyDialog": {},
 
     "closePolicyDialog": "Close"
