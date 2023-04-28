@@ -61,6 +61,7 @@ dev_dependencies:
   freezed: ^2.3.2
   flutter_native_splash: ^2.2.19
   flutter_launcher_icons: ^0.13.0
+  rename: ^2.1.1
 
 flutter_icons:
   image_path: "assets/splash_image.png"
