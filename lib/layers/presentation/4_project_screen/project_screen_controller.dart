@@ -6,6 +6,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:my_time/layers/application/timer_service.dart';
+import 'package:my_time/layers/data/time_entries_repository.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:my_time/common/dialogs/modal_bottom_sheet.dart';
 import 'package:my_time/common/extensions/build_context_extension.dart';
@@ -130,6 +131,9 @@ class ProjectScreenController extends _$ProjectScreenController {
       breakTime: _calculateBreakTimer(newTimerData),
       description: "",
     );
+    if (!await ref.read(timeEntriesRepositoryProvider).saveTimeEntry(entry)) {
+      return null;
+    }
 
     await ref.refresh(projectTimeEntriesProvider(project.id).future);
     if (mounted) {
