@@ -17,10 +17,7 @@ class ProjectsPerGroupScreenService {
 
   Future<GroupDTO> fetchGroup(String groupId) async {
     GroupDTO? group = await groupsRepository.fetchGroup(groupId);
-    if (group == null) {
-      throw Exception("Group was null");
-    }
-    return group;
+    return group!;
   }
 
   Future<List<ProjectDTO>> fetchProjectsByGroupId(String groupId) async {

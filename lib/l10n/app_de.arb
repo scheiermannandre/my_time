@@ -6,6 +6,8 @@
     "timeRangesOverlapException": "Die angegebene Zeitspanne überlappt mit einer Zeitspanne eines existieren Eintrages!",
     "projectNotFoundException": "Das Projekt konnte nicht gefunden werden!",
     "groupNotFoundException": "Die Gruppe konnte nicht gefunden werden!",
+    "multipleTimerStartsException": "Es können nicht mehrere Projekt-Timer gleichzeitig gestartet werden. Multi-Tasking ist nicht gut für dich!",
+    "timerDataNotFoundException": "TimerData not found! Please contact me and send me a screenshot: dev.scheiermann@gmail.com",
 
     "@HomePage": {},
 

@@ -10,6 +10,8 @@ class AppException with _$AppException {
   const factory AppException.timeRangesOverlap() = TimeRangesOverlap;
   const factory AppException.projectNotFound() = ProjectNotFound;
   const factory AppException.groupNotFound() = GroupNotFound;
+  const factory AppException.multipleTimerStarts() = MultipleTimerStarts;
+  const factory AppException.timerDataNotFound() = TimerDataNotFound;
 
   const factory AppException.unexpected(String status) = Unexpected;
 }
@@ -42,6 +44,14 @@ extension AppExceptioDetails on AppException {
       groupNotFound: () => AppExceptionData(
         code: '004',
         message: loc.groupNotFoundException,
+      ),
+      multipleTimerStarts: () => AppExceptionData(
+        code: '005',
+        message: loc.multipleTimerStartsException,
+      ),
+      timerDataNotFound: () => AppExceptionData(
+        code: '006',
+        message: loc.timerDataNotFoundException,
       ),
       unexpected: (status) => AppExceptionData(
         code: '500',

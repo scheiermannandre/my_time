@@ -22,6 +22,8 @@ mixin _$AppException {
     required TResult Function() timeRangesOverlap,
     required TResult Function() projectNotFound,
     required TResult Function() groupNotFound,
+    required TResult Function() multipleTimerStarts,
+    required TResult Function() timerDataNotFound,
     required TResult Function(String status) unexpected,
   }) =>
       throw _privateConstructorUsedError;
@@ -31,6 +33,8 @@ mixin _$AppException {
     TResult? Function()? timeRangesOverlap,
     TResult? Function()? projectNotFound,
     TResult? Function()? groupNotFound,
+    TResult? Function()? multipleTimerStarts,
+    TResult? Function()? timerDataNotFound,
     TResult? Function(String status)? unexpected,
   }) =>
       throw _privateConstructorUsedError;
@@ -40,6 +44,8 @@ mixin _$AppException {
     TResult Function()? timeRangesOverlap,
     TResult Function()? projectNotFound,
     TResult Function()? groupNotFound,
+    TResult Function()? multipleTimerStarts,
+    TResult Function()? timerDataNotFound,
     TResult Function(String status)? unexpected,
     required TResult orElse(),
   }) =>
@@ -50,6 +56,8 @@ mixin _$AppException {
     required TResult Function(TimeRangesOverlap value) timeRangesOverlap,
     required TResult Function(ProjectNotFound value) projectNotFound,
     required TResult Function(GroupNotFound value) groupNotFound,
+    required TResult Function(MultipleTimerStarts value) multipleTimerStarts,
+    required TResult Function(TimerDataNotFound value) timerDataNotFound,
     required TResult Function(Unexpected value) unexpected,
   }) =>
       throw _privateConstructorUsedError;
@@ -59,6 +67,8 @@ mixin _$AppException {
     TResult? Function(TimeRangesOverlap value)? timeRangesOverlap,
     TResult? Function(ProjectNotFound value)? projectNotFound,
     TResult? Function(GroupNotFound value)? groupNotFound,
+    TResult? Function(MultipleTimerStarts value)? multipleTimerStarts,
+    TResult? Function(TimerDataNotFound value)? timerDataNotFound,
     TResult? Function(Unexpected value)? unexpected,
   }) =>
       throw _privateConstructorUsedError;
@@ -68,6 +78,8 @@ mixin _$AppException {
     TResult Function(TimeRangesOverlap value)? timeRangesOverlap,
     TResult Function(ProjectNotFound value)? projectNotFound,
     TResult Function(GroupNotFound value)? groupNotFound,
+    TResult Function(MultipleTimerStarts value)? multipleTimerStarts,
+    TResult Function(TimerDataNotFound value)? timerDataNotFound,
     TResult Function(Unexpected value)? unexpected,
     required TResult orElse(),
   }) =>
@@ -134,6 +146,8 @@ class _$EntryNotFound implements EntryNotFound {
     required TResult Function() timeRangesOverlap,
     required TResult Function() projectNotFound,
     required TResult Function() groupNotFound,
+    required TResult Function() multipleTimerStarts,
+    required TResult Function() timerDataNotFound,
     required TResult Function(String status) unexpected,
   }) {
     return entryNotFound();
@@ -146,6 +160,8 @@ class _$EntryNotFound implements EntryNotFound {
     TResult? Function()? timeRangesOverlap,
     TResult? Function()? projectNotFound,
     TResult? Function()? groupNotFound,
+    TResult? Function()? multipleTimerStarts,
+    TResult? Function()? timerDataNotFound,
     TResult? Function(String status)? unexpected,
   }) {
     return entryNotFound?.call();
@@ -158,6 +174,8 @@ class _$EntryNotFound implements EntryNotFound {
     TResult Function()? timeRangesOverlap,
     TResult Function()? projectNotFound,
     TResult Function()? groupNotFound,
+    TResult Function()? multipleTimerStarts,
+    TResult Function()? timerDataNotFound,
     TResult Function(String status)? unexpected,
     required TResult orElse(),
   }) {
@@ -174,6 +192,8 @@ class _$EntryNotFound implements EntryNotFound {
     required TResult Function(TimeRangesOverlap value) timeRangesOverlap,
     required TResult Function(ProjectNotFound value) projectNotFound,
     required TResult Function(GroupNotFound value) groupNotFound,
+    required TResult Function(MultipleTimerStarts value) multipleTimerStarts,
+    required TResult Function(TimerDataNotFound value) timerDataNotFound,
     required TResult Function(Unexpected value) unexpected,
   }) {
     return entryNotFound(this);
@@ -186,6 +206,8 @@ class _$EntryNotFound implements EntryNotFound {
     TResult? Function(TimeRangesOverlap value)? timeRangesOverlap,
     TResult? Function(ProjectNotFound value)? projectNotFound,
     TResult? Function(GroupNotFound value)? groupNotFound,
+    TResult? Function(MultipleTimerStarts value)? multipleTimerStarts,
+    TResult? Function(TimerDataNotFound value)? timerDataNotFound,
     TResult? Function(Unexpected value)? unexpected,
   }) {
     return entryNotFound?.call(this);
@@ -198,6 +220,8 @@ class _$EntryNotFound implements EntryNotFound {
     TResult Function(TimeRangesOverlap value)? timeRangesOverlap,
     TResult Function(ProjectNotFound value)? projectNotFound,
     TResult Function(GroupNotFound value)? groupNotFound,
+    TResult Function(MultipleTimerStarts value)? multipleTimerStarts,
+    TResult Function(TimerDataNotFound value)? timerDataNotFound,
     TResult Function(Unexpected value)? unexpected,
     required TResult orElse(),
   }) {
@@ -254,6 +278,8 @@ class _$TimeRangesOverlap implements TimeRangesOverlap {
     required TResult Function() timeRangesOverlap,
     required TResult Function() projectNotFound,
     required TResult Function() groupNotFound,
+    required TResult Function() multipleTimerStarts,
+    required TResult Function() timerDataNotFound,
     required TResult Function(String status) unexpected,
   }) {
     return timeRangesOverlap();
@@ -266,6 +292,8 @@ class _$TimeRangesOverlap implements TimeRangesOverlap {
     TResult? Function()? timeRangesOverlap,
     TResult? Function()? projectNotFound,
     TResult? Function()? groupNotFound,
+    TResult? Function()? multipleTimerStarts,
+    TResult? Function()? timerDataNotFound,
     TResult? Function(String status)? unexpected,
   }) {
     return timeRangesOverlap?.call();
@@ -278,6 +306,8 @@ class _$TimeRangesOverlap implements TimeRangesOverlap {
     TResult Function()? timeRangesOverlap,
     TResult Function()? projectNotFound,
     TResult Function()? groupNotFound,
+    TResult Function()? multipleTimerStarts,
+    TResult Function()? timerDataNotFound,
     TResult Function(String status)? unexpected,
     required TResult orElse(),
   }) {
@@ -294,6 +324,8 @@ class _$TimeRangesOverlap implements TimeRangesOverlap {
     required TResult Function(TimeRangesOverlap value) timeRangesOverlap,
     required TResult Function(ProjectNotFound value) projectNotFound,
     required TResult Function(GroupNotFound value) groupNotFound,
+    required TResult Function(MultipleTimerStarts value) multipleTimerStarts,
+    required TResult Function(TimerDataNotFound value) timerDataNotFound,
     required TResult Function(Unexpected value) unexpected,
   }) {
     return timeRangesOverlap(this);
@@ -306,6 +338,8 @@ class _$TimeRangesOverlap implements TimeRangesOverlap {
     TResult? Function(TimeRangesOverlap value)? timeRangesOverlap,
     TResult? Function(ProjectNotFound value)? projectNotFound,
     TResult? Function(GroupNotFound value)? groupNotFound,
+    TResult? Function(MultipleTimerStarts value)? multipleTimerStarts,
+    TResult? Function(TimerDataNotFound value)? timerDataNotFound,
     TResult? Function(Unexpected value)? unexpected,
   }) {
     return timeRangesOverlap?.call(this);
@@ -318,6 +352,8 @@ class _$TimeRangesOverlap implements TimeRangesOverlap {
     TResult Function(TimeRangesOverlap value)? timeRangesOverlap,
     TResult Function(ProjectNotFound value)? projectNotFound,
     TResult Function(GroupNotFound value)? groupNotFound,
+    TResult Function(MultipleTimerStarts value)? multipleTimerStarts,
+    TResult Function(TimerDataNotFound value)? timerDataNotFound,
     TResult Function(Unexpected value)? unexpected,
     required TResult orElse(),
   }) {
@@ -374,6 +410,8 @@ class _$ProjectNotFound implements ProjectNotFound {
     required TResult Function() timeRangesOverlap,
     required TResult Function() projectNotFound,
     required TResult Function() groupNotFound,
+    required TResult Function() multipleTimerStarts,
+    required TResult Function() timerDataNotFound,
     required TResult Function(String status) unexpected,
   }) {
     return projectNotFound();
@@ -386,6 +424,8 @@ class _$ProjectNotFound implements ProjectNotFound {
     TResult? Function()? timeRangesOverlap,
     TResult? Function()? projectNotFound,
     TResult? Function()? groupNotFound,
+    TResult? Function()? multipleTimerStarts,
+    TResult? Function()? timerDataNotFound,
     TResult? Function(String status)? unexpected,
   }) {
     return projectNotFound?.call();
@@ -398,6 +438,8 @@ class _$ProjectNotFound implements ProjectNotFound {
     TResult Function()? timeRangesOverlap,
     TResult Function()? projectNotFound,
     TResult Function()? groupNotFound,
+    TResult Function()? multipleTimerStarts,
+    TResult Function()? timerDataNotFound,
     TResult Function(String status)? unexpected,
     required TResult orElse(),
   }) {
@@ -414,6 +456,8 @@ class _$ProjectNotFound implements ProjectNotFound {
     required TResult Function(TimeRangesOverlap value) timeRangesOverlap,
     required TResult Function(ProjectNotFound value) projectNotFound,
     required TResult Function(GroupNotFound value) groupNotFound,
+    required TResult Function(MultipleTimerStarts value) multipleTimerStarts,
+    required TResult Function(TimerDataNotFound value) timerDataNotFound,
     required TResult Function(Unexpected value) unexpected,
   }) {
     return projectNotFound(this);
@@ -426,6 +470,8 @@ class _$ProjectNotFound implements ProjectNotFound {
     TResult? Function(TimeRangesOverlap value)? timeRangesOverlap,
     TResult? Function(ProjectNotFound value)? projectNotFound,
     TResult? Function(GroupNotFound value)? groupNotFound,
+    TResult? Function(MultipleTimerStarts value)? multipleTimerStarts,
+    TResult? Function(TimerDataNotFound value)? timerDataNotFound,
     TResult? Function(Unexpected value)? unexpected,
   }) {
     return projectNotFound?.call(this);
@@ -438,6 +484,8 @@ class _$ProjectNotFound implements ProjectNotFound {
     TResult Function(TimeRangesOverlap value)? timeRangesOverlap,
     TResult Function(ProjectNotFound value)? projectNotFound,
     TResult Function(GroupNotFound value)? groupNotFound,
+    TResult Function(MultipleTimerStarts value)? multipleTimerStarts,
+    TResult Function(TimerDataNotFound value)? timerDataNotFound,
     TResult Function(Unexpected value)? unexpected,
     required TResult orElse(),
   }) {
@@ -494,6 +542,8 @@ class _$GroupNotFound implements GroupNotFound {
     required TResult Function() timeRangesOverlap,
     required TResult Function() projectNotFound,
     required TResult Function() groupNotFound,
+    required TResult Function() multipleTimerStarts,
+    required TResult Function() timerDataNotFound,
     required TResult Function(String status) unexpected,
   }) {
     return groupNotFound();
@@ -506,6 +556,8 @@ class _$GroupNotFound implements GroupNotFound {
     TResult? Function()? timeRangesOverlap,
     TResult? Function()? projectNotFound,
     TResult? Function()? groupNotFound,
+    TResult? Function()? multipleTimerStarts,
+    TResult? Function()? timerDataNotFound,
     TResult? Function(String status)? unexpected,
   }) {
     return groupNotFound?.call();
@@ -518,6 +570,8 @@ class _$GroupNotFound implements GroupNotFound {
     TResult Function()? timeRangesOverlap,
     TResult Function()? projectNotFound,
     TResult Function()? groupNotFound,
+    TResult Function()? multipleTimerStarts,
+    TResult Function()? timerDataNotFound,
     TResult Function(String status)? unexpected,
     required TResult orElse(),
   }) {
@@ -534,6 +588,8 @@ class _$GroupNotFound implements GroupNotFound {
     required TResult Function(TimeRangesOverlap value) timeRangesOverlap,
     required TResult Function(ProjectNotFound value) projectNotFound,
     required TResult Function(GroupNotFound value) groupNotFound,
+    required TResult Function(MultipleTimerStarts value) multipleTimerStarts,
+    required TResult Function(TimerDataNotFound value) timerDataNotFound,
     required TResult Function(Unexpected value) unexpected,
   }) {
     return groupNotFound(this);
@@ -546,6 +602,8 @@ class _$GroupNotFound implements GroupNotFound {
     TResult? Function(TimeRangesOverlap value)? timeRangesOverlap,
     TResult? Function(ProjectNotFound value)? projectNotFound,
     TResult? Function(GroupNotFound value)? groupNotFound,
+    TResult? Function(MultipleTimerStarts value)? multipleTimerStarts,
+    TResult? Function(TimerDataNotFound value)? timerDataNotFound,
     TResult? Function(Unexpected value)? unexpected,
   }) {
     return groupNotFound?.call(this);
@@ -558,6 +616,8 @@ class _$GroupNotFound implements GroupNotFound {
     TResult Function(TimeRangesOverlap value)? timeRangesOverlap,
     TResult Function(ProjectNotFound value)? projectNotFound,
     TResult Function(GroupNotFound value)? groupNotFound,
+    TResult Function(MultipleTimerStarts value)? multipleTimerStarts,
+    TResult Function(TimerDataNotFound value)? timerDataNotFound,
     TResult Function(Unexpected value)? unexpected,
     required TResult orElse(),
   }) {
@@ -570,6 +630,270 @@ class _$GroupNotFound implements GroupNotFound {
 
 abstract class GroupNotFound implements AppException {
   const factory GroupNotFound() = _$GroupNotFound;
+}
+
+/// @nodoc
+abstract class _$$MultipleTimerStartsCopyWith<$Res> {
+  factory _$$MultipleTimerStartsCopyWith(_$MultipleTimerStarts value,
+          $Res Function(_$MultipleTimerStarts) then) =
+      __$$MultipleTimerStartsCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$MultipleTimerStartsCopyWithImpl<$Res>
+    extends _$AppExceptionCopyWithImpl<$Res, _$MultipleTimerStarts>
+    implements _$$MultipleTimerStartsCopyWith<$Res> {
+  __$$MultipleTimerStartsCopyWithImpl(
+      _$MultipleTimerStarts _value, $Res Function(_$MultipleTimerStarts) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$MultipleTimerStarts implements MultipleTimerStarts {
+  const _$MultipleTimerStarts();
+
+  @override
+  String toString() {
+    return 'AppException.multipleTimerStarts()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$MultipleTimerStarts);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() entryNotFound,
+    required TResult Function() timeRangesOverlap,
+    required TResult Function() projectNotFound,
+    required TResult Function() groupNotFound,
+    required TResult Function() multipleTimerStarts,
+    required TResult Function() timerDataNotFound,
+    required TResult Function(String status) unexpected,
+  }) {
+    return multipleTimerStarts();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? entryNotFound,
+    TResult? Function()? timeRangesOverlap,
+    TResult? Function()? projectNotFound,
+    TResult? Function()? groupNotFound,
+    TResult? Function()? multipleTimerStarts,
+    TResult? Function()? timerDataNotFound,
+    TResult? Function(String status)? unexpected,
+  }) {
+    return multipleTimerStarts?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? entryNotFound,
+    TResult Function()? timeRangesOverlap,
+    TResult Function()? projectNotFound,
+    TResult Function()? groupNotFound,
+    TResult Function()? multipleTimerStarts,
+    TResult Function()? timerDataNotFound,
+    TResult Function(String status)? unexpected,
+    required TResult orElse(),
+  }) {
+    if (multipleTimerStarts != null) {
+      return multipleTimerStarts();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(EntryNotFound value) entryNotFound,
+    required TResult Function(TimeRangesOverlap value) timeRangesOverlap,
+    required TResult Function(ProjectNotFound value) projectNotFound,
+    required TResult Function(GroupNotFound value) groupNotFound,
+    required TResult Function(MultipleTimerStarts value) multipleTimerStarts,
+    required TResult Function(TimerDataNotFound value) timerDataNotFound,
+    required TResult Function(Unexpected value) unexpected,
+  }) {
+    return multipleTimerStarts(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(EntryNotFound value)? entryNotFound,
+    TResult? Function(TimeRangesOverlap value)? timeRangesOverlap,
+    TResult? Function(ProjectNotFound value)? projectNotFound,
+    TResult? Function(GroupNotFound value)? groupNotFound,
+    TResult? Function(MultipleTimerStarts value)? multipleTimerStarts,
+    TResult? Function(TimerDataNotFound value)? timerDataNotFound,
+    TResult? Function(Unexpected value)? unexpected,
+  }) {
+    return multipleTimerStarts?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(EntryNotFound value)? entryNotFound,
+    TResult Function(TimeRangesOverlap value)? timeRangesOverlap,
+    TResult Function(ProjectNotFound value)? projectNotFound,
+    TResult Function(GroupNotFound value)? groupNotFound,
+    TResult Function(MultipleTimerStarts value)? multipleTimerStarts,
+    TResult Function(TimerDataNotFound value)? timerDataNotFound,
+    TResult Function(Unexpected value)? unexpected,
+    required TResult orElse(),
+  }) {
+    if (multipleTimerStarts != null) {
+      return multipleTimerStarts(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class MultipleTimerStarts implements AppException {
+  const factory MultipleTimerStarts() = _$MultipleTimerStarts;
+}
+
+/// @nodoc
+abstract class _$$TimerDataNotFoundCopyWith<$Res> {
+  factory _$$TimerDataNotFoundCopyWith(
+          _$TimerDataNotFound value, $Res Function(_$TimerDataNotFound) then) =
+      __$$TimerDataNotFoundCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$TimerDataNotFoundCopyWithImpl<$Res>
+    extends _$AppExceptionCopyWithImpl<$Res, _$TimerDataNotFound>
+    implements _$$TimerDataNotFoundCopyWith<$Res> {
+  __$$TimerDataNotFoundCopyWithImpl(
+      _$TimerDataNotFound _value, $Res Function(_$TimerDataNotFound) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$TimerDataNotFound implements TimerDataNotFound {
+  const _$TimerDataNotFound();
+
+  @override
+  String toString() {
+    return 'AppException.timerDataNotFound()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$TimerDataNotFound);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() entryNotFound,
+    required TResult Function() timeRangesOverlap,
+    required TResult Function() projectNotFound,
+    required TResult Function() groupNotFound,
+    required TResult Function() multipleTimerStarts,
+    required TResult Function() timerDataNotFound,
+    required TResult Function(String status) unexpected,
+  }) {
+    return timerDataNotFound();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? entryNotFound,
+    TResult? Function()? timeRangesOverlap,
+    TResult? Function()? projectNotFound,
+    TResult? Function()? groupNotFound,
+    TResult? Function()? multipleTimerStarts,
+    TResult? Function()? timerDataNotFound,
+    TResult? Function(String status)? unexpected,
+  }) {
+    return timerDataNotFound?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? entryNotFound,
+    TResult Function()? timeRangesOverlap,
+    TResult Function()? projectNotFound,
+    TResult Function()? groupNotFound,
+    TResult Function()? multipleTimerStarts,
+    TResult Function()? timerDataNotFound,
+    TResult Function(String status)? unexpected,
+    required TResult orElse(),
+  }) {
+    if (timerDataNotFound != null) {
+      return timerDataNotFound();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(EntryNotFound value) entryNotFound,
+    required TResult Function(TimeRangesOverlap value) timeRangesOverlap,
+    required TResult Function(ProjectNotFound value) projectNotFound,
+    required TResult Function(GroupNotFound value) groupNotFound,
+    required TResult Function(MultipleTimerStarts value) multipleTimerStarts,
+    required TResult Function(TimerDataNotFound value) timerDataNotFound,
+    required TResult Function(Unexpected value) unexpected,
+  }) {
+    return timerDataNotFound(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(EntryNotFound value)? entryNotFound,
+    TResult? Function(TimeRangesOverlap value)? timeRangesOverlap,
+    TResult? Function(ProjectNotFound value)? projectNotFound,
+    TResult? Function(GroupNotFound value)? groupNotFound,
+    TResult? Function(MultipleTimerStarts value)? multipleTimerStarts,
+    TResult? Function(TimerDataNotFound value)? timerDataNotFound,
+    TResult? Function(Unexpected value)? unexpected,
+  }) {
+    return timerDataNotFound?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(EntryNotFound value)? entryNotFound,
+    TResult Function(TimeRangesOverlap value)? timeRangesOverlap,
+    TResult Function(ProjectNotFound value)? projectNotFound,
+    TResult Function(GroupNotFound value)? groupNotFound,
+    TResult Function(MultipleTimerStarts value)? multipleTimerStarts,
+    TResult Function(TimerDataNotFound value)? timerDataNotFound,
+    TResult Function(Unexpected value)? unexpected,
+    required TResult orElse(),
+  }) {
+    if (timerDataNotFound != null) {
+      return timerDataNotFound(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class TimerDataNotFound implements AppException {
+  const factory TimerDataNotFound() = _$TimerDataNotFound;
 }
 
 /// @nodoc
@@ -640,6 +964,8 @@ class _$Unexpected implements Unexpected {
     required TResult Function() timeRangesOverlap,
     required TResult Function() projectNotFound,
     required TResult Function() groupNotFound,
+    required TResult Function() multipleTimerStarts,
+    required TResult Function() timerDataNotFound,
     required TResult Function(String status) unexpected,
   }) {
     return unexpected(status);
@@ -652,6 +978,8 @@ class _$Unexpected implements Unexpected {
     TResult? Function()? timeRangesOverlap,
     TResult? Function()? projectNotFound,
     TResult? Function()? groupNotFound,
+    TResult? Function()? multipleTimerStarts,
+    TResult? Function()? timerDataNotFound,
     TResult? Function(String status)? unexpected,
   }) {
     return unexpected?.call(status);
@@ -664,6 +992,8 @@ class _$Unexpected implements Unexpected {
     TResult Function()? timeRangesOverlap,
     TResult Function()? projectNotFound,
     TResult Function()? groupNotFound,
+    TResult Function()? multipleTimerStarts,
+    TResult Function()? timerDataNotFound,
     TResult Function(String status)? unexpected,
     required TResult orElse(),
   }) {
@@ -680,6 +1010,8 @@ class _$Unexpected implements Unexpected {
     required TResult Function(TimeRangesOverlap value) timeRangesOverlap,
     required TResult Function(ProjectNotFound value) projectNotFound,
     required TResult Function(GroupNotFound value) groupNotFound,
+    required TResult Function(MultipleTimerStarts value) multipleTimerStarts,
+    required TResult Function(TimerDataNotFound value) timerDataNotFound,
     required TResult Function(Unexpected value) unexpected,
   }) {
     return unexpected(this);
@@ -692,6 +1024,8 @@ class _$Unexpected implements Unexpected {
     TResult? Function(TimeRangesOverlap value)? timeRangesOverlap,
     TResult? Function(ProjectNotFound value)? projectNotFound,
     TResult? Function(GroupNotFound value)? groupNotFound,
+    TResult? Function(MultipleTimerStarts value)? multipleTimerStarts,
+    TResult? Function(TimerDataNotFound value)? timerDataNotFound,
     TResult? Function(Unexpected value)? unexpected,
   }) {
     return unexpected?.call(this);
@@ -704,6 +1038,8 @@ class _$Unexpected implements Unexpected {
     TResult Function(TimeRangesOverlap value)? timeRangesOverlap,
     TResult Function(ProjectNotFound value)? projectNotFound,
     TResult Function(GroupNotFound value)? groupNotFound,
+    TResult Function(MultipleTimerStarts value)? multipleTimerStarts,
+    TResult Function(TimerDataNotFound value)? timerDataNotFound,
     TResult Function(Unexpected value)? unexpected,
     required TResult orElse(),
   }) {

@@ -5,6 +5,7 @@ import 'package:my_time/layers/interface/dto/timer_data_dto.dart';
 import 'package:my_time/layers/presentation/5_time_entry_form/domain/custom_timer.dart';
 import 'package:realm/realm.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:my_time/exceptions/app_exception.dart' as app_exception;
 
 class TimerDataRepository {
   final Realm realm;
@@ -23,8 +24,7 @@ class TimerDataRepository {
   Future<TimerDataDto> saveTimerData(TimerDataDto timerData) async {
     final timerDataList = realm.all<TimerData>();
     if (timerDataList.isNotEmpty) {
-      throw Exception(
-          "Can't run multiple project timers at once! Multi-Tasking is bad for you!");
+      throw const app_exception.AppException.multipleTimerStarts();
     }
     TimerData dbTimerData = TimerData(
       timerData.id,
@@ -67,7 +67,7 @@ class TimerDataRepository {
     final timerDataList =
         realm.all<TimerData>().query("projectId == '${timerData.projectId}'");
     if (timerDataList.isEmpty) {
-      throw Exception("TimerData not found!");
+      throw const app_exception.AppException.timerDataNotFound();
     }
     final timerDataDb = timerDataList.first;
     await realm.writeAsync(() {
