@@ -117,7 +117,6 @@ class ProjectScreenController extends _$ProjectScreenController {
 
   void stopTimer(BuildContext context, ProjectDTO project) async {
     ref.read(timerServiceProvider).stopTimer();
-
     TimerDataDto newTimerData = await ref
         .read(timerDataRepositoryProvider)
         .deleteTimerData(state.value!.timerData!, DateTime.now().toUtc());
@@ -131,13 +130,17 @@ class ProjectScreenController extends _$ProjectScreenController {
       breakTime: _calculateBreakTimer(newTimerData),
       description: "",
     );
-    if (!await ref.read(timeEntriesRepositoryProvider).saveTimeEntry(entry)) {
-      return null;
-    }
-
+    state = await AsyncValue.guard(() async {
+      await ref.read(timeEntriesRepositoryProvider).saveTimeEntry(entry);
+      return state.value!.copyWith();
+    });
     await ref.refresh(projectTimeEntriesProvider(project.id).future);
-    if (mounted) {
-      pushNamedTimeEntryForm(context, project, true, entry);
+
+    if (!state.hasError) {
+      if (mounted) {
+        pushNamedTimeEntryForm(context, project, true, entry);
+        state = AsyncValue.data(state.value!.copyWith(duration: Duration.zero));
+      }
     }
   }
 

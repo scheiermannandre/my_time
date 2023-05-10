@@ -55,6 +55,7 @@ class TimerDataRepository {
           timerDataDB.breakEndTimes.length) {
         timerDataDB.breakEndTimes.add(endTime);
       }
+      timerDataDB.timerState = TimerState.off.toString();
       newTimerData = mapTimerData(timerDataDB);
       realm.delete<TimerData>(timerDataDB);
     });
