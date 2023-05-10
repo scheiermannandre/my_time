@@ -10,7 +10,6 @@ import 'package:my_time/layers/interface/dto/project_dto.dart';
 import 'package:my_time/layers/presentation/0_home_screen/groups_list_screen_controller.dart';
 import 'package:my_time/router/app_route.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 part 'projects_per_group_screen_controller.g.dart';
 
@@ -99,7 +98,7 @@ class ProjectsPerGroupScreenController
 
   Future<bool> deleteAllTimers(List<ProjectDTO> projects) async {
     for (var element in projects) {
-      ref.read(projectsScreenServiceProvider).deleteTimer(element.id);
+      //ref.read(projectsScreenServiceProvider).deleteTimer(element.id);
     }
     return true;
   }
