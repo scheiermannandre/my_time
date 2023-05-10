@@ -9,6 +9,7 @@ import 'package:my_time/layers/interface/dto/project_dto.dart';
 import 'package:my_time/layers/presentation/4_project_screen/project_history/labeled_block.dart';
 import 'package:my_time/layers/presentation/4_project_screen/project_history/project_history_list_loading_state.dart';
 import 'package:my_time/layers/presentation/4_project_screen/project_screen_controller.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ProjectHistory extends HookConsumerWidget {
   final ProjectDTO project;
@@ -22,9 +23,8 @@ class ProjectHistory extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final projectScreenController =
-        ref.watch(projectScreenControllerProvider(project.id).notifier);
-    final projectScreenState =
-        ref.watch(projectScreenControllerProvider(project.id));
+        ref.watch(projectScreenControllerProvider.notifier);
+    final projectScreenState = ref.watch(projectScreenControllerProvider);
 
     final timeEntriesList = ref.watch(projectTimeEntriesProvider(project.id));
 

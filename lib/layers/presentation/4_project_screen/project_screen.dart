@@ -19,24 +19,20 @@ class ProjectScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final controller =
-        ref.watch(projectScreenControllerProvider(projectId).notifier);
-    final state = ref.watch(projectScreenControllerProvider(projectId));
+    final controller = ref.watch(projectScreenControllerProvider.notifier);
+    final state = ref.watch(projectScreenControllerProvider);
     final project = ref.watch(projectProvider(projectId));
     final pageController = usePageController(initialPage: 0);
     final sheetController = useAnimationController(
       duration: const Duration(milliseconds: 350),
     );
     final scrollController = useScrollController();
-    final key =
-        state.value?.refreshIndicatorKey ?? GlobalKey<RefreshIndicatorState>();
 
     ref.listen<AsyncValue>(
       projectProvider(projectId),
       (_, state) => state.showAlertDialogOnError(context),
       onError: (error, stackTrace) {},
     );
-
     String projectTitle =
         project.hasValue && !project.hasError && !project.isLoading
             ? project.value!.name
@@ -80,37 +76,37 @@ class ProjectScreen extends HookConsumerWidget {
           ),
         ],
       ),
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.only(bottom: 16),
-        child: NavBar(
-          onTap: (index) {
-            if (scrollController.hasClients) {
-              scrollController.jumpTo(0);
-            }
-            controller.onItemTapped(pageController, index);
-          },
-          startIndex: 0,
-          backgroundColor: Theme.of(context).colorScheme.background,
-          selectedBackgroundColor: Theme.of(context).colorScheme.primary,
-          unSelectedBackgroundColor: Theme.of(context).colorScheme.background,
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          iconColor: GlobalProperties.textAndIconColor,
-          style: const TextStyle(color: GlobalProperties.textAndIconColor),
-          items: [
-            CustomNavBarItem(
-              iconData: Icons.timer_sharp,
-              label: context.loc.timerTabLabel,
-            ),
-            CustomNavBarItem(
-              iconData: Icons.history,
-              label: context.loc.historyTabLabel,
-            ),
-          ],
-        ),
+      bottomNavigationBar: NavBar(
+        onTap: (index) {
+          if (scrollController.hasClients) {
+            scrollController.jumpTo(0);
+          }
+          controller.onItemTapped(pageController, index);
+        },
+        startIndex: 0,
+        backgroundColor: Theme.of(context).colorScheme.background,
+        selectedBackgroundColor: Theme.of(context).colorScheme.primary,
+        unSelectedBackgroundColor: Theme.of(context).colorScheme.background,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        iconColor: GlobalProperties.textAndIconColor,
+        style: const TextStyle(color: GlobalProperties.textAndIconColor),
+        items: [
+          CustomNavBarItem(
+            iconData: Icons.timer_sharp,
+            label: context.loc.timerTabLabel,
+          ),
+          CustomNavBarItem(
+            iconData: Icons.history,
+            label: context.loc.historyTabLabel,
+          ),
+        ],
       ),
       body: RefreshIndicator(
         color: Theme.of(context).colorScheme.primary,
-        key: key,
+        key: ref
+            .read(projectScreenControllerProvider)
+            .value!
+            .refreshIndicatorKey,
         onRefresh: () async {
           await AsyncValue.guard(() => ref
               .refresh(projectProvider(projectId).future)
