@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -66,9 +68,11 @@ class MyApp extends StatelessWidget {
           primary: GlobalProperties.primaryColor,
           secondary: GlobalProperties.secondaryColor,
           background: GlobalProperties.backgroundColor,
+                  //primarySwatch: Colors.green,
+
         ),
         scaffoldBackgroundColor: GlobalProperties.backgroundColor,
-
+        dialogBackgroundColor: GlobalProperties.backgroundColor,
         // ---Icon--- //
         listTileTheme: const ListTileThemeData(
           iconColor: GlobalProperties.textAndIconColor,
@@ -179,7 +183,7 @@ class MyApp extends StatelessWidget {
                 if (states.contains(MaterialState.disabled)) {
                   return Colors.black.withOpacity(.25); // Disabled color
                 }
-                return GlobalProperties.primaryColor; // Regular color
+                return GlobalProperties.secondaryColor; // Regular color
               },
             ),
           ),

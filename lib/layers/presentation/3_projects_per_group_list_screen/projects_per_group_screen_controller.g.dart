@@ -7,7 +7,7 @@ part of 'projects_per_group_screen_controller.dart';
 // **************************************************************************
 
 String _$projectsPerGroupScreenControllerHash() =>
-    r'f130b9728cec28dd2ce844774a13c65e8ef29dbf';
+    r'cb994dfb647479b3e26f57a6f65e512e0d448a05';
 
 /// See also [ProjectsPerGroupScreenController].
 @ProviderFor(ProjectsPerGroupScreenController)
