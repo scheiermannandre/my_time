@@ -6,7 +6,7 @@ import 'package:my_time/constants/breakpoints.dart';
 import 'package:my_time/layers/presentation/5_time_entry_form/domain/custom_timer.dart';
 
 class StaggeredButtons extends StatefulWidget {
-  final Future<bool> Function() onStart;
+  final Function onStart;
   final Function onFinish;
   final Function onPause;
   final AnimationController controller;
@@ -15,6 +15,7 @@ class StaggeredButtons extends StatefulWidget {
   final String btnResumeLabel;
   final String btnStartLabel;
   final String btnFinishLabel;
+
   const StaggeredButtons(
       {super.key,
       required this.onStart,
@@ -40,7 +41,6 @@ class _StaggeredButtonsState extends State<StaggeredButtons>
   late String btnPauseStr;
   late String btnResumeStr;
   late String btnPauseResumeText;
-  int Function(int) returnsAFunction() => (int x) => x + 1;
 
   @override
   void initState() {
@@ -149,11 +149,9 @@ class _StaggeredButtonsState extends State<StaggeredButtons>
     );
   }
 
-  void onStartPressed() async {
-    final result = await widget.onStart();
-    if (result) {
-      widget.controller.forward();
-    }
+  void onStartPressed() {
+    widget.onStart();
+    widget.controller.forward();
   }
 
   void onPauseResumePressed() {

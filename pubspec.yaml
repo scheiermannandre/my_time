@@ -44,7 +44,6 @@ dependencies:
   intl: ^0.17.0
   freezed_annotation: ^2.2.0
   flutter_markdown: ^0.6.14
-  uuid: ^3.0.7
   
   
 

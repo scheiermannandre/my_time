@@ -16,12 +16,12 @@ class NavBarSubmitButton extends StatelessWidget {
       required this.btnText,
       required this.isLoading,
       this.align = Alignment.center,
-      this.padding = const EdgeInsets.fromLTRB(16, 0, 16, 24)});
+      this.padding = const EdgeInsets.fromLTRB(16, 0, 16, 0)});
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 75,
+      height: kBottomNavigationBarHeight,
       child: ResponsiveAlign(
         alignment: align,
         maxContentWidth: Breakpoint.desktop,
