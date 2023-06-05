@@ -65,18 +65,48 @@ dev_dependencies:
   rename: ^2.1.1
 
 flutter_icons:
-  image_path: "assets/splash_image.png"
+  #image_path works for iOS
+  image_path: "assets/app_icon.png"
+  #adaptive_icon_foreground works for android
   adaptive_icon_foreground: "assets/ic_launcher_foreground.png"
   adaptive_icon_background: "#ffffff"
   android: true
   ios: true
   remove_alpha_ios: true
+  
 
 flutter_native_splash:
   color: "#fadeb4"
   image: assets/splash_image.png
   android: true
   ios: true
+  android_12:
+    # The image parameter sets the splash screen icon image.  If this parameter is not specified,
+    # the app's launcher icon will be used instead.
+    # Please note that the splash screen will be clipped to a circle on the center of the screen.
+    # App icon with an icon background: This should be 960×960 pixels, and fit within a circle
+    # 640 pixels in diameter.
+    # App icon without an icon background: This should be 1152×1152 pixels, and fit within a circle
+    # 768 pixels in diameter.
+    image: "assets/play_store_512.png"
+
+    # Splash screen background color.
+    color: "#fadeb4"
+
+    # App icon background color.
+    #icon_background_color: "#ffffff"
+
+    # The branding property allows you to specify an image used as branding in the splash screen.
+    #branding: assets/dart.png
+
+    # The image_dark, color_dark, icon_background_color_dark, and branding_dark set values that
+    # apply when the device is in dark mode. If they are not specified, the app will use the
+    # parameters from above.
+    #image_dark: assets/android12splash-invert.png
+    #color_dark: "#042a49"
+    #icon_background_color_dark: "#eeeeee"
+
+    
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
