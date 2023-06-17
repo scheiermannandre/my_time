@@ -39,7 +39,7 @@ final goRouter = GoRouter(
       path: '/group/:gid',
       name: AppRoute.group,
       pageBuilder: (context, state) {
-        final groupId = state.params['gid']!;
+        final groupId = state.pathParameters['gid']!;
         return MaterialPage(
           key: state.pageKey,
           fullscreenDialog: false,
@@ -62,7 +62,7 @@ final goRouter = GoRouter(
       path: '/newproject',
       name: AppRoute.addProject,
       pageBuilder: (context, state) {
-        final groupId = state.queryParams['gid'];
+        final groupId = state.queryParameters['gid'];
         return MaterialPage(
           key: state.pageKey,
           fullscreenDialog: false,
@@ -76,7 +76,7 @@ final goRouter = GoRouter(
       path: '/project/:pid',
       name: AppRoute.project,
       pageBuilder: (context, state) {
-        final productId = state.params['pid']!;
+        final productId = state.pathParameters['pid']!;
         return MaterialPage(
           key: state.pageKey,
           fullscreenDialog: false,
@@ -88,10 +88,10 @@ final goRouter = GoRouter(
           path: 'timeentryform',
           name: AppRoute.timeEntryForm,
           pageBuilder: (context, state) {
-            final projectID = state.params['pid'] ?? "";
-            final isEdit = state.queryParams['isEdit'] ?? "false";
-            final tid = state.queryParams['tid'] ?? "";
-            final String projectName = state.queryParams['pname'] ?? "";
+            final projectID = state.pathParameters['pid'] ?? "";
+            final isEdit = state.queryParameters['isEdit'] ?? "false";
+            final tid = state.queryParameters['tid'] ?? "";
+            final String projectName = state.queryParameters['pname'] ?? "";
             return MaterialPage(
               key: state.pageKey,
               fullscreenDialog: false,

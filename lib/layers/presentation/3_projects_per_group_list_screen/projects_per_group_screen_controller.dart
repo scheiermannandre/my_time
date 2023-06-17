@@ -4,7 +4,6 @@ import 'package:go_router/go_router.dart';
 import 'package:my_time/common/dialogs/modal_bottom_sheet.dart';
 import 'package:my_time/common/extensions/build_context_extension.dart';
 import 'package:my_time/layers/application/projects_per_group_screen_service.dart';
-import 'package:my_time/layers/application/projects_screen_service.dart';
 import 'package:my_time/layers/interface/dto/group_with_projects_dto.dart';
 import 'package:my_time/layers/interface/dto/project_dto.dart';
 import 'package:my_time/layers/presentation/0_home_screen/groups_list_screen_controller.dart';
@@ -35,13 +34,13 @@ class ProjectsPerGroupScreenController
 
   void pushNamedAddProject(BuildContext context, GroupWithProjectsDTO dto) {
     context
-        .pushNamed(AppRoute.addProject, queryParams: {'gid': dto.group.id});
+        .pushNamed(AppRoute.addProject, queryParameters: {'gid': dto.group.id});
   }
 
   void pushNamedProject(
       BuildContext context, List<ProjectDTO> projects, int index) {
-    context
-        .pushNamed(AppRoute.project, params: {'pid': projects[index].id});
+    context.pushNamed(AppRoute.project,
+        pathParameters: {'pid': projects[index].id});
   }
 
   void pop(BuildContext context) {
