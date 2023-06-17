@@ -7,9 +7,10 @@ import 'package:my_time/router/app_route.dart';
 class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
   final String title;
   final ScrollController? controller;
+  final TabBar? bottom;
   final List<Widget>? actions;
-  CustomAppBar({super.key, required this.title, this.controller, this.actions})
-      : preferredSize = const Size.fromHeight(kToolbarHeight * 1);
+  CustomAppBar({super.key, required this.title, this.controller, this.actions, this.bottom})
+      : preferredSize = Size.fromHeight(bottom == null ? kToolbarHeight : kToolbarHeight * 2);
 
   @override
   late Size preferredSize;
@@ -75,7 +76,9 @@ class _CustomAppBarState extends State<CustomAppBar> {
             : null,
       ),
       child: SafeArea(
-        child: Column(children: [
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
           ResponsiveAlign(
             maxContentWidth: double.infinity,
             child: Container(
@@ -83,32 +86,37 @@ class _CustomAppBarState extends State<CustomAppBar> {
               padding: const EdgeInsets.fromLTRB(4, 10, 10, 4),
               height: kToolbarHeight,
               child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    IconButton(
-                      onPressed: () => pop(),
-                      icon: const Icon(Icons.arrow_back),
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  IconButton(
+                    onPressed: () => pop(),
+                    icon: const Icon(Icons.arrow_back),
+                  ),
+                  gapW8,
+                  Expanded(
+                    child: Text(
+                      widget.title,
+                      style: Theme.of(context).textTheme.titleLarge,
                     ),
-                    gapW8,
-                    Expanded(
-                      child: Text(
-                        widget.title,
-                        style: Theme.of(context).textTheme.titleLarge,
-                      ),
-                    ),
-                    gapW8,
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: widget.actions != null
-                          ? List<Widget>.generate(widget.actions!.length,
-                              (index) => _itemBuilder(context, index)).toList()
-                          : [],
-                    ),
-                  ]),
+                  ),
+                  gapW8,
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: widget.actions != null
+                        ? List<Widget>.generate(widget.actions!.length,
+                                (index) => _itemBuilder(context, index))
+                            .toList()
+                        : [],
+                  ),
+                ],
+              ),
             ),
-          )
+          ),
+           widget.bottom != null
+                      ? widget.bottom!
+                      : const SizedBox.shrink(),
         ]),
       ),
     );

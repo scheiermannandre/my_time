@@ -20,7 +20,6 @@ import 'package:my_time/layers/presentation/0_home_screen/groups_list_screen_con
 import 'package:my_time/layers/presentation/3_projects_per_group_list_screen/projects_per_group_screen_controller.dart';
 import 'package:my_time/layers/presentation/5_time_entry_form/domain/custom_timer.dart';
 import 'package:my_time/router/app_route.dart';
-
 part 'project_screen_controller.g.dart';
 
 class ProjectScreenState {

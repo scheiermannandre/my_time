@@ -111,6 +111,14 @@ class ProjectsPerGroupScreenController
       }
     }
   }
+
+  void onItemTapped(PageController controller, int index) {
+    controller.animateToPage(
+      index,
+      duration: const Duration(milliseconds: 500),
+      curve: Curves.easeOut,
+    );
+  }
 }
 
 final groupWithProjectsDTOProvider = StreamProvider.autoDispose

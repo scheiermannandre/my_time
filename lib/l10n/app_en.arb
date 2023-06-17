@@ -55,6 +55,8 @@
     "deleteGroupMessage": "All Projects and Entries for the whole Group will be lost!",
     "deleteGroupConfirmBtnLabel": "Confirm",
     "deleteGroupCancelBtnLabel": "Cancel",
+    "projectsTabLabel": "Projects",
+    "analyticsTabLabel": "Analytics",
 
     "@ProjectsScreen": {},
 

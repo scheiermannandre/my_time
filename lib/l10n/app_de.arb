@@ -55,7 +55,9 @@
     "deleteGroupMessage": "Alle Projekte und deren Einträge werden unwiderruflich gelöscht!",
     "deleteGroupConfirmBtnLabel": "Bestätigen",
     "deleteGroupCancelBtnLabel": "Abbrechen",
-
+    "projectsTabLabel": "Projekte",
+    "analyticsTabLabel": "Analysen",
+    
     "@ProjectsScreen": {},
 
     "timerTabLabel": "Timer",
