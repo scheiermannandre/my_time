@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+/// 
+/// Shell for the WeekPage
 class WeekPage extends StatelessWidget {
   const WeekPage({super.key});
 

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+///
+/// This is the custom TabItem widget
+/// It draws a rounded rectangle as indicator for the selected tab.
 class RRectTabIndicator extends Decoration {
   final BoxPainter _painter;
 

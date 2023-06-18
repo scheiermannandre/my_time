@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+///
+/// Shell for the YearPage
 class YearPage extends StatelessWidget {
   const YearPage({super.key});
 

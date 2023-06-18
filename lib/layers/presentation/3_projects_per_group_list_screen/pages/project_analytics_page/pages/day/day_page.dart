@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+///
+/// Shell for the DayPage
 class DayPage extends StatelessWidget {
   const DayPage({super.key});
 

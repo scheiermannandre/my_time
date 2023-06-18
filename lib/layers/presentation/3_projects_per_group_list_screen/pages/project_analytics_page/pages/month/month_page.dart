@@ -1,6 +1,8 @@
 
 import 'package:flutter/material.dart';
 
+///
+/// Shell for the MonthPage
 class MonthPage extends StatelessWidget {
   const MonthPage({super.key});
 

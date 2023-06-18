@@ -8,6 +8,11 @@ import 'package:my_time/layers/presentation/3_projects_per_group_list_screen/pag
 import 'package:my_time/layers/presentation/3_projects_per_group_list_screen/pages/project_analytics_page/pages/week/weeks_tab_page.dart';
 import 'package:my_time/layers/presentation/3_projects_per_group_list_screen/pages/project_analytics_page/pages/year/years_tab_page.dart';
 
+///
+/// This is the page that shows the analytics of a group.
+/// Display a shell - The Screen with a TabBar and TabBarView
+/// The TabBarView contains the pages for the different time periods
+/// Inside of the TimePeriodPages there is a nested TabBar
 class ProjectsAnalyticsPage extends HookConsumerWidget {
   const ProjectsAnalyticsPage({super.key});
   @override
@@ -22,6 +27,7 @@ class ProjectsAnalyticsPage extends HookConsumerWidget {
             child: NestedScrollView(
               floatHeaderSlivers: true,
               headerSliverBuilder: (context, innerBoxIsScrolled) => [
+                // Makes the nested appbar flow with the outer appbar, when scrolling down
                 SliverOverlapAbsorber(
                   handle:
                       NestedScrollView.sliverOverlapAbsorberHandleFor(context),
