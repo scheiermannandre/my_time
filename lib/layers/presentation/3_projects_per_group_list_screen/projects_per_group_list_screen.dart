@@ -123,7 +123,7 @@ class ProjectsPerGroupListScreen extends HookConsumerWidget {
                       controller: controller,
                       projects: dto.projects,
                     ),
-                    const GroupAnalyticsPage()
+                     GroupAnalyticsPage()
                   ],
                 )),
         error: (ex, st) => LoadingErrorWidget(

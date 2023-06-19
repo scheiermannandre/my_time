@@ -5,11 +5,10 @@ import 'package:my_time/layers/presentation/3_projects_per_group_list_screen/pag
 
 /// Shows analytics per weeks
 /// Has a TabBar with the weeks the user has logged time for
-/// Rght now it is hardcoded and just a shell, later a controller 
+/// Rght now it is hardcoded and just a shell, later a controller
 /// and riverpod will be used to get the data from the backend and manage state
 class WeeksTabPage extends StatefulWidget {
   const WeeksTabPage({super.key});
-
   @override
   State<WeeksTabPage> createState() => _WeeksTabPageState();
 }

@@ -14,7 +14,9 @@ import 'package:my_time/layers/presentation/3_projects_per_group_list_screen/pag
 /// The TabBarView contains the pages for the different time periods
 /// Inside of the TimePeriodPages there is a nested TabBar
 class GroupAnalyticsPage extends HookConsumerWidget {
-  const GroupAnalyticsPage({super.key});
+  GroupAnalyticsPage({super.key});
+  final ScrollController scrollController = ScrollController();
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     TabController controller = useTabController(initialLength: 4);
@@ -25,6 +27,7 @@ class GroupAnalyticsPage extends HookConsumerWidget {
           child: Container(
             color: GlobalProperties.backgroundColor,
             child: NestedScrollView(
+              controller: scrollController,
               floatHeaderSlivers: true,
               headerSliverBuilder: (context, innerBoxIsScrolled) => [
                 // Makes the nested appbar flow with the outer appbar, when scrolling down
@@ -51,6 +54,14 @@ class GroupAnalyticsPage extends HookConsumerWidget {
                       physics: const NeverScrollableScrollPhysics(),
                       indicator: RRectTabIndicator(color: Colors.white),
                       controller: controller,
+                      onTap: (value) {
+                        // scrollController.jumpTo(
+                        //   0,
+                        // );
+                        scrollController.animateTo(0,
+                            duration: const Duration(milliseconds: 300),
+                            curve: Curves.easeInOut);
+                      },
                       tabs: const [
                         Tab(
                           text: "Day",

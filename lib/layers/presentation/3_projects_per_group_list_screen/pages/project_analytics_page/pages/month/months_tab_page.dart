@@ -5,11 +5,10 @@ import 'package:my_time/layers/presentation/3_projects_per_group_list_screen/pag
 
 /// Shows analytics per months
 /// Has a TabBar with the months the user has logged time for
-/// Rght now it is hardcoded and just a shell, later a controller 
+/// Rght now it is hardcoded and just a shell, later a controller
 /// and riverpod will be used to get the data from the backend and manage state
 class MonthsTabPage extends StatefulWidget {
   const MonthsTabPage({super.key});
-
   @override
   State<MonthsTabPage> createState() => _MonthsTabPageState();
 }
@@ -28,7 +27,7 @@ class _MonthsTabPageState extends State<MonthsTabPage>
     (month: 'September', year: '2023'),
     (month: 'Oktober', year: '2023'),
   ];
-  
+
   @override
   Widget build(BuildContext context) {
     return TabPage(
@@ -36,7 +35,7 @@ class _MonthsTabPageState extends State<MonthsTabPage>
       itemCount: months.length,
       tabItemBuilder: (context, index) {
         return TabItem(children: [
-           Text(months[index].month, style: const TextStyle(fontSize: 16)),
+          Text(months[index].month, style: const TextStyle(fontSize: 16)),
           Text(months[index].year, style: const TextStyle(fontSize: 10)),
         ]);
       },
