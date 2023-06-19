@@ -7,7 +7,7 @@ part of 'project_screen_controller.dart';
 // **************************************************************************
 
 String _$projectScreenControllerHash() =>
-    r'9c0f96586b1a6d5d7650a753585c57c827c1b518';
+    r'91551ad97e5a59c563b8d13e551ee4300b7c44e5';
 
 /// Copied from Dart SDK
 class _SystemHash {

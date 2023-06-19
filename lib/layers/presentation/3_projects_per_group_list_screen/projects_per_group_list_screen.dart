@@ -9,7 +9,7 @@ import 'package:my_time/common/widgets/nav_bar/nav_bar_item.dart';
 import 'package:my_time/common/widgets/no_items_found_widget.dart';
 import 'package:my_time/common/widgets/responsive_center.dart';
 import 'package:my_time/global/globals.dart';
-import 'package:my_time/layers/presentation/3_projects_per_group_list_screen/pages/project_analytics_page/project_analytics_page.dart';
+import 'package:my_time/layers/presentation/3_projects_per_group_list_screen/pages/project_analytics_page/group_analytics_page.dart';
 import 'package:my_time/layers/presentation/3_projects_per_group_list_screen/pages/project_list_page/project_list_page.dart';
 import 'package:my_time/layers/presentation/3_projects_per_group_list_screen/projects_per_group_screen_controller.dart';
 import 'package:my_time/layers/presentation/3_projects_per_group_list_screen/projects_per_group_screen_loading_state.dart';
@@ -123,7 +123,7 @@ class ProjectsPerGroupListScreen extends HookConsumerWidget {
                       controller: controller,
                       projects: dto.projects,
                     ),
-                    const ProjectsAnalyticsPage()
+                    const GroupAnalyticsPage()
                   ],
                 )),
         error: (ex, st) => LoadingErrorWidget(

@@ -13,8 +13,8 @@ import 'package:my_time/layers/presentation/3_projects_per_group_list_screen/pag
 /// Display a shell - The Screen with a TabBar and TabBarView
 /// The TabBarView contains the pages for the different time periods
 /// Inside of the TimePeriodPages there is a nested TabBar
-class ProjectsAnalyticsPage extends HookConsumerWidget {
-  const ProjectsAnalyticsPage({super.key});
+class GroupAnalyticsPage extends HookConsumerWidget {
+  const GroupAnalyticsPage({super.key});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     TabController controller = useTabController(initialLength: 4);

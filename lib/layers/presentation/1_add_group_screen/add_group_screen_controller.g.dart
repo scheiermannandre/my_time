@@ -7,7 +7,7 @@ part of 'add_group_screen_controller.dart';
 // **************************************************************************
 
 String _$addGroupScreenControllerHash() =>
-    r'5f76e3ac5a99bf4257fe590627784a66edbec81e';
+    r'c66070209b5b7a2f365a14e961ccaadd461bdf16';
 
 /// See also [AddGroupScreenController].
 @ProviderFor(AddGroupScreenController)

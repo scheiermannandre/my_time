@@ -1,27 +1,26 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'groups_list_screen_controller.dart';
+part of 'group_analytics_page_controller.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$groupsListScreenControllerHash() =>
-    r'1d913f2829f18a4b3be5178e90188962e14b7b03';
+String _$groupAnalyticsPageControllerHash() =>
+    r'f4ff24691995ef4025f291d5ae409c0facb88424';
 
-/// See also [GroupsListScreenController].
-@ProviderFor(GroupsListScreenController)
-final groupsListScreenControllerProvider = AutoDisposeAsyncNotifierProvider<
-    GroupsListScreenController, GroupsListState>.internal(
-  GroupsListScreenController.new,
-  name: r'groupsListScreenControllerProvider',
+/// See also [GroupAnalyticsPageController].
+@ProviderFor(GroupAnalyticsPageController)
+final groupAnalyticsPageControllerProvider = AutoDisposeAsyncNotifierProvider<
+    GroupAnalyticsPageController, void>.internal(
+  GroupAnalyticsPageController.new,
+  name: r'groupAnalyticsPageControllerProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$groupsListScreenControllerHash,
+      : _$groupAnalyticsPageControllerHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$GroupsListScreenController
-    = AutoDisposeAsyncNotifier<GroupsListState>;
+typedef _$GroupAnalyticsPageController = AutoDisposeAsyncNotifier<void>;
 // ignore_for_file: unnecessary_raw_strings, subtype_of_sealed_class, invalid_use_of_internal_member, do_not_use_environment, prefer_const_constructors, public_member_api_docs, avoid_private_typedef_functions

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_time/common/widgets/tab_bar/tab_item.dart';
-import 'package:my_time/common/widgets/tab_bar/tab_page.dart';
+import 'package:my_time/layers/interface/presentation/tab_page/tab_page.dart';
 import 'package:my_time/layers/presentation/3_projects_per_group_list_screen/pages/project_analytics_page/pages/month/month_page.dart';
 
 /// Shows analytics per months
@@ -32,6 +32,7 @@ class _MonthsTabPageState extends State<MonthsTabPage>
   @override
   Widget build(BuildContext context) {
     return TabPage(
+      stateKey: 'months',
       itemCount: months.length,
       tabItemBuilder: (context, index) {
         return TabItem(children: [

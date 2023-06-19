@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_time/common/widgets/tab_bar/tab_item.dart';
-import 'package:my_time/common/widgets/tab_bar/tab_page.dart';
+import 'package:my_time/layers/interface/presentation/tab_page/tab_page.dart';
 import 'package:my_time/layers/presentation/3_projects_per_group_list_screen/pages/project_analytics_page/pages/week/week_page.dart';
 
 /// Shows analytics per weeks
@@ -33,6 +33,7 @@ class _WeeksTabPageState extends State<WeeksTabPage>
   @override
   Widget build(BuildContext context) {
     return TabPage(
+      stateKey: 'weeks',
       itemCount: weeks.length,
       tabItemBuilder: (context, index) {
         return TabItem(children: [
