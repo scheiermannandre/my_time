@@ -5,8 +5,11 @@ found on : https://medium.com/@taosif7/setup-git-hooks-for-your-flutter-project-
 1. Add Git Hooks Dependency -> run `dart pub add git_hooks`
 2. Add DartAnalyzer Dependency -> run `dart pub add dart_pre_commit`
 3. Activate git hooks on your pc -> run `dart pub global activate git_hooks`
-4. Setup git hook files in your repository -> run `git_hooks create tools/git_hooks.dart`
-5. Paste the following code in your `git_hooks.dart` file. 
+4. Add Env Var for git_hooks.exe 
+-> on mac: open your `.zshrc` file, it should be in home. Press `cmd + Shift + "."` inside the finder and the invisible files should be visible.
+Then open the file and add `export PATH="$PATH":"$HOME/.pub-cache/bin"`. Save and close the file. Restart the terminal
+5. Setup git hook files in your repository -> run `git_hooks create tools/git_hooks.dart`
+6. Paste the following code in your `git_hooks.dart` file. 
 This will configure your repository for automatically running `dart_analyze`, `dartfmt` and it’ll also check whether your commit message follows conventional commit format (that’s optional, you can remove it).
 
 ```
@@ -56,4 +59,4 @@ Future<bool> _conventionalCommitMsg() async {
 
 ```
 
-6. commit your code as usual `git commit -m "chore: add conventional message"` file. 
+7. commit your code as usual `git commit -m "chore: add conventional message"` file. 
