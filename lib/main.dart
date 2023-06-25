@@ -108,7 +108,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
         appBarTheme: AppBarTheme(
-          backgroundColor: GlobalProperties.backgroundColor,
+          backgroundColor: GlobalProperties.primaryColor,
           foregroundColor: GlobalProperties.textAndIconColor,
           iconTheme: const IconThemeData(
             color: GlobalProperties.textAndIconColor,

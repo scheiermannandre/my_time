@@ -173,10 +173,10 @@ class ProjectScreenController extends _$ProjectScreenController {
     String tid = entry?.id ?? "";
     context.pushNamed(
       AppRoute.timeEntryForm,
-      params: {
+      pathParameters: {
         'pid': project.id,
       },
-      queryParams: {
+      queryParameters: {
         'tid': tid,
         'pname': project.name,
         'isEdit': isEdit.toString(),
