@@ -5,7 +5,6 @@ import 'package:my_time/common/extensions/async_value_extensions.dart';
 import 'package:my_time/common/extensions/build_context_extension.dart';
 import 'package:my_time/common/widgets/appbar/custom_app_bar.dart';
 import 'package:my_time/common/widgets/loading_error_widget.dart';
-import 'package:my_time/common/widgets/no_items_found_widget.dart';
 import 'package:my_time/layers/domain/time_entry.dart';
 import 'package:my_time/layers/presentation/5_time_entry_form/time_entry_form_screen_controller.dart';
 import 'package:my_time/layers/presentation/5_time_entry_form/time_entry_form_screen_loading_state.dart';
@@ -43,7 +42,6 @@ class TimeEntryFormScreen extends HookConsumerWidget {
         (_, state) => state.showAlertDialogOnError(context),
       );
     }
-    print(entry);
     final AnimationController sheetController = useAnimationController(
       duration: const Duration(milliseconds: 350),
     );
@@ -78,20 +76,10 @@ class TimeEntryFormScreen extends HookConsumerWidget {
                 return;
               },
               child: entry.when(
-                  data: (entry) => entry == null
-                      ? NoItemsFoundWidget(
-                          btnLabel: context.loc.noEntryFoundBtnLabel,
-                          onBtnTap: () => state
-                              .value!.refreshIndicatorKey.currentState
-                              ?.show(),
-                          title: context.loc.noEntryFoundTitle,
-                          description: context.loc.noEntryFoundDescription,
-                          icon: Icons.refresh,
-                        )
-                      : TimeEntryFormWidget(
-                          state: state.value!,
-                          onBtnTap: () => controller.saveEntry(context),
-                        ),
+                  data: (entry) => TimeEntryFormWidget(
+                        state: state.value!,
+                        onBtnTap: () => controller.saveEntry(context),
+                      ),
                   error: (error, stackTrace) => LoadingErrorWidget(
                       onRefresh: () => state
                           .value!.refreshIndicatorKey.currentState

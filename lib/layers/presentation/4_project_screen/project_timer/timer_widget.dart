@@ -3,7 +3,6 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_time/common/extensions/async_value_extensions.dart';
 import 'package:my_time/common/extensions/build_context_extension.dart';
-import 'package:my_time/common/widgets/loading_error_widget.dart';
 import 'package:my_time/constants/app_sizes.dart';
 import 'package:my_time/layers/interface/dto/project_dto.dart';
 import 'package:my_time/layers/presentation/4_project_screen/project_screen_controller.dart';
@@ -60,33 +59,5 @@ class TimerWidget extends HookConsumerWidget {
         ),
       ],
     );
-    // return timerData.when(
-    //   data: (data) => Column(
-    //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-    //     children: [
-    //       TimeDisplay(duration: projectScreenState.value!.duration),
-    //       SizedBox(
-    //         height: gapH52.height!,
-    //         child: StaggeredButtons(
-    //           btnStartLabel: context.loc.btnStartLabel,
-    //           btnFinishLabel: context.loc.btnFinishLabel,
-    //           btnPauseLabel: context.loc.btnPauseLabel,
-    //           btnResumeLabel: context.loc.btnResumeLabel,
-    //           controller: animationController,
-    //           timerState: timerData.value!.state,
-    //           onStart: () => projectScreenController.startTimer(project),
-    //           onFinish: () =>
-    //               projectScreenController.stopTimer(context, project),
-    //           onPause: () => projectScreenController.pauseResumeTimer(project),
-    //         ),
-    //       ),
-    //     ],
-    //   ),
-    //   error: (error, stackTrace) => LoadingErrorWidget(
-    //     onRefresh: () =>
-    //         projectScreenState.value!.refreshIndicatorKey.currentState!.show(),
-    //   ),
-    //   loading: () => const ProjectScreenLoadingState(),
-    // );
   }
 }

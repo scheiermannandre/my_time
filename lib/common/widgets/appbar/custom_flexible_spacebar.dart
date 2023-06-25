@@ -65,10 +65,10 @@ class CustomFlexibleSpaceBar extends StatefulWidget {
   final EdgeInsetsTween? titlePaddingTween;
 
   @override
-  _CustomFlexibleSpaceBarState createState() => _CustomFlexibleSpaceBarState();
+  CustomFlexibleSpaceBarState createState() => CustomFlexibleSpaceBarState();
 }
 
-class _CustomFlexibleSpaceBarState extends State<CustomFlexibleSpaceBar> {
+class CustomFlexibleSpaceBarState extends State<CustomFlexibleSpaceBar> {
   bool? _getEffectiveCenterTitle(ThemeData theme) {
     if (widget.centerTitle != null) {
       return widget.centerTitle;

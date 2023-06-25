@@ -68,11 +68,11 @@ class LabeldTimeFieldsLoadingsState extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ResponsiveAlign(
+    return const ResponsiveAlign(
       maxContentWidth: Breakpoint.tablet,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: const [
+        children: [
           TextAndContainer(
             width: 100,
           ),

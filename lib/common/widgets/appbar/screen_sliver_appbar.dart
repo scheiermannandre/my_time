@@ -4,9 +4,9 @@ import 'package:my_time/common/widgets/appbar/custom_flexible_spacebar.dart';
 import 'package:my_time/common/widgets/responsive_center.dart';
 
 class ScreenSliverAppBar extends StatefulWidget {
-  late IconButton? leadingIconButton;
-  late String title;
-  ScreenSliverAppBar({
+  final IconButton? leadingIconButton;
+  final String title;
+  const ScreenSliverAppBar({
     Key? key,
     this.leadingIconButton,
     this.title = "",

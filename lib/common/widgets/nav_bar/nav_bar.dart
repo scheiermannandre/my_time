@@ -14,9 +14,9 @@ class NavBar extends StatefulWidget {
   final Color iconColor;
   final TextStyle style;
   final EdgeInsets padding;
-  late MainAxisAlignment mainAxisAlignment;
+  final MainAxisAlignment mainAxisAlignment;
 
-  NavBar(
+  const NavBar(
       {super.key,
       this.onTap,
       required this.items,
@@ -84,7 +84,7 @@ class _NavBarState extends State<NavBar> {
 
   @override
   Widget build(BuildContext context) {
-    widget.mainAxisAlignment = MainAxisAlignment.spaceBetween;
+    const alignment = MainAxisAlignment.spaceBetween;
     return Container(
       height: kBottomNavigationBarHeight,
       color: widget.backgroundColor,
@@ -92,7 +92,7 @@ class _NavBarState extends State<NavBar> {
         maxContentWidth: Breakpoint.desktop,
         padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
         child: Row(
-          mainAxisAlignment: widget.mainAxisAlignment,
+          mainAxisAlignment: alignment,
           children: List<Widget>.generate(
                   widget.items.length, (index) => _itemBuilder(context, index))
               .toList(),

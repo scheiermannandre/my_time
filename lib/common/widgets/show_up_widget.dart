@@ -9,10 +9,10 @@ class ShowUpWidget extends StatefulWidget {
   const ShowUpWidget({super.key, required this.child, this.delay = 0});
 
   @override
-  _ShowUpWidgetState createState() => _ShowUpWidgetState();
+  ShowUpWidgetState createState() => ShowUpWidgetState();
 }
 
-class _ShowUpWidgetState extends State<ShowUpWidget>
+class ShowUpWidgetState extends State<ShowUpWidget>
     with TickerProviderStateMixin {
   late AnimationController _animController;
   late Animation<Offset> _animOffset;
@@ -29,13 +29,9 @@ class _ShowUpWidgetState extends State<ShowUpWidget>
         Tween<Offset>(begin: const Offset(-0.1, 0.0), end: Offset.zero)
             .animate(curve);
 
-    if (widget.delay == null) {
+    Timer(Duration(milliseconds: widget.delay), () {
       _animController.forward();
-    } else {
-      Timer(Duration(milliseconds: widget.delay), () {
-        _animController.forward();
-      });
-    }
+    });
   }
 
   @override

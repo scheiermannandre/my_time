@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_time/common/extensions/build_context_extension.dart';
 import 'package:my_time/common/extensions/date_time_extension.dart';
@@ -44,8 +43,7 @@ class ProjectHistory extends HookConsumerWidget {
             )
           : RefreshIndicator(
               onRefresh: () async {
-                await ref
-                    .refresh(projectTimeEntriesProvider(project.id).future);
+                ref.invalidate(projectTimeEntriesProvider(project.id));
               },
               child: SingleChildScrollView(
                 controller: scrollController,

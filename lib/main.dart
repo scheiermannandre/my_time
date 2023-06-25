@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -68,8 +66,7 @@ class MyApp extends StatelessWidget {
           primary: GlobalProperties.primaryColor,
           secondary: GlobalProperties.secondaryColor,
           background: GlobalProperties.backgroundColor,
-                  //primarySwatch: Colors.green,
-
+          //primarySwatch: Colors.green,
         ),
         scaffoldBackgroundColor: GlobalProperties.backgroundColor,
         dialogBackgroundColor: GlobalProperties.backgroundColor,
