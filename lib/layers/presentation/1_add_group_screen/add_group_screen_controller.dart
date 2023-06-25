@@ -51,7 +51,8 @@ class AddGroupScreenController extends _$AddGroupScreenController {
   }
 
   void goToGroupPage(BuildContext context, GroupDTO group) {
-    context.pushReplacementNamed(AppRoute.group, params: {'gid': group.id});
+    context.pushReplacementNamed(AppRoute.group,
+        pathParameters: {'gid': group.id});
   }
 
   void pop(BuildContext context) {

@@ -112,12 +112,13 @@ class GroupsListScreenController extends _$GroupsListScreenController {
       context.pushNamed(AppRoute.addProject);
 
   void pushNamedGroups(BuildContext context, HomePageDTO dto, int index) {
-    context.pushNamed(AppRoute.group, params: {'gid': dto.groups[index].id});
+    context.pushNamed(AppRoute.group,
+        pathParameters: {'gid': dto.groups[index].id});
   }
 
   void onProjectTileTap(
       BuildContext context, List<ProjectDTO> projects, int index) {
-    context.pushNamed(AppRoute.project, params: {
+    context.pushNamed(AppRoute.project, pathParameters: {
       'pid': projects[index].id,
     });
     state.value!.expansionTile.currentState!.collapse();

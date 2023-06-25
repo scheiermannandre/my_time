@@ -73,7 +73,7 @@ class AddProjectScreenController extends _$AddProjectScreenController {
   }
 
   void goToProject(BuildContext context, ProjectDTO project) {
-    context.pushReplacementNamed(AppRoute.project, params: {
+    context.pushReplacementNamed(AppRoute.project, pathParameters: {
       'pid': project.id,
     });
   }
