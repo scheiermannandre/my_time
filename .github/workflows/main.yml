@@ -1,4 +1,4 @@
-name: Android Release
+name: Test Pipeline
 
 on:
   push:
@@ -17,8 +17,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
         
-
-
       - name: Install Flutter
         uses: subosito/flutter-action@v2
         with:
@@ -30,7 +28,7 @@ jobs:
       - name: Run unit tests
         run: flutter test --coverage
 
-        
+
       # - name: Setup Java
       #   uses: actions/setup-java@v3
       #   with:
