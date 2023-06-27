@@ -60,6 +60,7 @@ class MyApp extends StatelessWidget {
       supportedLocales: AppLocalizations.supportedLocales,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       theme: ThemeData(
+        useMaterial3: true,
         primarySwatch: Colors.blue,
         indicatorColor: Colors.red, // GlobalProperties.primaryColor,
         colorScheme: const ColorScheme.light().copyWith(
