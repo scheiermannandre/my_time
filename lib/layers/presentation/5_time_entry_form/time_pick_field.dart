@@ -48,7 +48,7 @@ class TimePickField extends StatelessWidget {
               hourMinuteColor: MaterialStateColor.resolveWith((states) =>
                   states.contains(MaterialState.selected)
                       ? GlobalProperties.primaryColor
-                      : Colors.white),
+                      : Colors.transparent),
               hourMinuteTextColor:
                   MaterialStateColor.resolveWith((states) => Colors.black),
               dialHandColor: GlobalProperties.backgroundColor,
