@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_time/common/common.dart';
-import 'package:my_time/common/dialogs/policy_dialog.dart';
 import 'package:my_time/common/extensions/build_context_extension.dart';
 import 'package:my_time/common/widgets/no_items_found_widget.dart';
 import 'package:my_time/global/globals.dart';
@@ -53,28 +52,14 @@ class GroupsListScreen extends HookConsumerWidget {
           slivers: [
             ScreenSliverAppBar(
               title: context.loc.groups,
-              // leadingIconButton: IconButton(
-              //   icon: const Icon(
-              //     Icons.info_outline,
-              //   ),
-              //   onPressed: () {
-              //     showDialog(
-              //       context: context,
-              //       builder: (context) => PolicyDialog(
-              //         mdFileName: "privacy-policy.md",
-              //       ),
-              //     );
-              //   },
-              // ),
               leadingIconButton: IconButton(
                 icon: AnimatedIcon(
                   icon: AnimatedIcons.menu_close,
                   progress: hamburgerAnimController,
                   color: GlobalProperties.textAndIconColor,
                 ),
-                onPressed: () =>
-                 controller.onHamburgerTab(
-                     context, bottomSheetAnimController),
+                onPressed: () => controller.onHamburgerTab(
+                    context, bottomSheetAnimController),
               ),
             ),
             SliverToBoxAdapter(

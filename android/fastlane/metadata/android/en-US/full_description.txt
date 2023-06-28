@@ -1,0 +1,7 @@
+This app allows you to track your time when working. 
+
+It supports creating multiple Groups, so that you can track times for "work", "hobby", "sport" or anything else. 
+If you have different hobbies, sport activities, or projects at work then the MyTime App also allows you to have multiple "Projects" inside of a Group. This makes it possible to work on different projects and track your times individually for each project.
+Each Project offers you two options to track your time: Firstly it has a built in timer, that you can start when you start your activity and stop when you finished your activity. All that's left in that case is adding a description and you are good to go. Secondly, you can track times manually, in case you missed to start the timer.
+
+Additionally, you get an overview of all your tracked times inside a project in a grouped-by-month list.

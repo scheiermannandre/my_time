@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:my_time/global/globals.dart';
 
 const Duration _kExpand = Duration(milliseconds: 200);
 

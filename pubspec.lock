@@ -192,7 +192,7 @@ packages:
       sha256: "4a07be6cb69c84d677a6c3096fcf960cc3285a8330b4603e0d463d15d9bd934c"
       url: "https://pub.dev"
     source: hosted
-    version: "1.17.1"
+    version: "1.17.0"
   convert:
     dependency: transitive
     description:
@@ -232,7 +232,7 @@ packages:
       sha256: "9170d9db2daf774aa2251a3bc98e4ba903c7702ab07aa438bc83bd3c9a0de57f"
       url: "https://pub.dev"
     source: hosted
-    version: "0.4.0"
+    version: "0.3.3"
   dart_style:
     dependency: transitive
     description:
@@ -248,15 +248,7 @@ packages:
       sha256: a9d76e72985d7087eb7c5e7903224ae52b337131518d127c554b9405936752b8
       url: "https://pub.dev"
     source: hosted
-    version: "5.2.1+1"
-  extended_nested_scroll_view:
-    dependency: "direct main"
-    description:
-      name: extended_nested_scroll_view
-      sha256: adb98e3a92c16245789699f9ddd3cbaa47f14f744b5bbd8d7fef54b7e86089a2
-      url: "https://pub.dev"
-    source: hosted
-    version: "6.1.0"
+    version: "5.1.1"
   fake_async:
     dependency: transitive
     description:
@@ -314,10 +306,10 @@ packages:
     dependency: "direct dev"
     description:
       name: flutter_lints
-      sha256: aeb0b80a8b3709709c9cc496cdc027c5b3216796bc0af0ce1007eaf24464fd4c
+      sha256: "2118df84ef0c3ca93f96123a616ae8540879991b8b57af2f81b76a7ada49b2a4"
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.1"
+    version: "2.0.2"
   flutter_localizations:
     dependency: "direct main"
     description: flutter
@@ -381,6 +373,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.2.0"
+  git_hooks:
+    dependency: "direct dev"
+    description:
+      name: git_hooks
+      sha256: "2d3d6fc1a7bf3430988f0a62ca376b6e26a3ebe187c4935bd6c8b346ba954e60"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.1"
   glob:
     dependency: transitive
     description:
@@ -393,10 +393,10 @@ packages:
     dependency: "direct main"
     description:
       name: go_router
-      sha256: da08429b5c1026cc78bd60c60bfff34f0b273b29feddeab00d3f5b56fb6f35ed
+      sha256: "4d141302e68dcdec0949ac798b5a8cf307eb6f79c70830ef1a2aec9b31827c28"
       url: "https://pub.dev"
     source: hosted
-    version: "8.0.5"
+    version: "6.5.8"
   graphs:
     dependency: transitive
     description:
@@ -425,10 +425,10 @@ packages:
     dependency: transitive
     description:
       name: http
-      sha256: "5895291c13fa8a3bd82e76d5627f69e0d85ca6a30dcac95c4ea19a5d555879c2"
+      sha256: "6aa2946395183537c8b880962d935877325d6a09a2867c3970c05c0fed6ac482"
       url: "https://pub.dev"
     source: hosted
-    version: "0.13.6"
+    version: "0.13.5"
   http_multi_server:
     dependency: transitive
     description:
@@ -625,26 +625,26 @@ packages:
     dependency: "direct main"
     description:
       name: realm
-      sha256: "690393387790e4214d6490f36774e8dd124d07d9282abf0c516a9d9650543e2f"
+      sha256: e9c63a5a982dd4357ba7f13a4dac7cdcf4eb6ec837f2f043a51ba414f4973337
       url: "https://pub.dev"
     source: hosted
-    version: "1.2.0"
+    version: "1.0.3"
   realm_common:
     dependency: transitive
     description:
       name: realm_common
-      sha256: f69b58e96789d62c1f361165ef051444d43217eeaf4791f79e898efcd9adc120
+      sha256: e31f72feddb77e7dcfb9a8a0d19c25c79d71ecf6d873de8801b9d58cc29b5a5e
       url: "https://pub.dev"
     source: hosted
-    version: "1.2.0"
+    version: "1.0.3"
   realm_generator:
     dependency: transitive
     description:
       name: realm_generator
-      sha256: "6301e0cfefd5b57b0f979f3c4e4545e060bc8bf6170d84971a5bfb6621e057f8"
+      sha256: "9af5252323e19ba4cd63e984b5aad20a3f809d79a6fee7779ef959456b2bb78e"
       url: "https://pub.dev"
     source: hosted
-    version: "1.2.0"
+    version: "1.0.3"
   rename:
     dependency: "direct dev"
     description:
@@ -913,6 +913,7 @@ packages:
       sha256: "75769501ea3489fca56601ff33454fe45507ea3bfb014161abc3b43ae25989d5"
       url: "https://pub.dev"
     source: hosted
+    version: "3.1.2"
     version: "3.1.2"
 sdks:
   dart: ">=3.0.5 <4.0.0"

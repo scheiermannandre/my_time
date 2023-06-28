@@ -56,19 +56,18 @@ class LabeledBlockLoadingState extends StatelessWidget {
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 itemCount: 2,
-                itemBuilder: (context, index) => ResponsiveAlign(
-                  padding: const EdgeInsets.fromLTRB(16, 12, 16, 12),
+                itemBuilder: (context, index) => const ResponsiveAlign(
+                  padding: EdgeInsets.fromLTRB(16, 12, 16, 12),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text(""),
-                          const Padding(
-                              padding: EdgeInsets.fromLTRB(0, 8, 0, 0)),
+                          Text(""),
+                          Padding(padding: EdgeInsets.fromLTRB(0, 8, 0, 0)),
                           Row(
-                            children: const [
+                            children: [
                               Text(
                                 "",
                               ),
@@ -82,7 +81,7 @@ class LabeledBlockLoadingState extends StatelessWidget {
                           )
                         ],
                       ),
-                      const Text(
+                      Text(
                         "",
                       ),
                     ],

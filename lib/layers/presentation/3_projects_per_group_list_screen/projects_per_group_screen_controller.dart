@@ -89,17 +89,9 @@ class ProjectsPerGroupScreenController
           if (result && !mounted) {
             ref.invalidate(groupWithProjectsDTOProvider(dto.group.id));
           }
-          deleteAllTimers(dto.projects);
         },
       );
     }
-  }
-
-  Future<bool> deleteAllTimers(List<ProjectDTO> projects) async {
-    for (var element in projects) {
-      //ref.read(projectsScreenServiceProvider).deleteTimer(element.id);
-    }
-    return true;
   }
 
   Future<void> _delete(BuildContext context, GroupWithProjectsDTO dto,

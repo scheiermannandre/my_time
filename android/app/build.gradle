@@ -69,10 +69,20 @@ android {
            storePassword keystoreProperties['storePassword']
        }
    }
+//    buildTypes {
+//        release {
+//            signingConfig signingConfigs.release
+//        }
+//    }
    buildTypes {
-       release {
-           signingConfig signingConfigs.release
-       }
+        debug {
+            signingConfig signingConfigs.debug
+        }
+        release {
+            minifyEnabled true
+            shrinkResources true
+            signingConfig signingConfigs.release
+        }
    }
 
 }
