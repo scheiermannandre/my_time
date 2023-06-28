@@ -127,7 +127,7 @@ class MyApp extends StatelessWidget {
             ),
           ).titleLarge,
         ),
-        tabBarTheme: TabBarTheme(
+        tabBarTheme: const TabBarTheme(
           labelColor: GlobalProperties.textAndIconColor,
           unselectedLabelColor: GlobalProperties.textAndIconColor,
           indicator: BoxDecoration(

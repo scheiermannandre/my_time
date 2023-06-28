@@ -192,7 +192,15 @@ packages:
       sha256: "4a07be6cb69c84d677a6c3096fcf960cc3285a8330b4603e0d463d15d9bd934c"
       url: "https://pub.dev"
     source: hosted
-    version: "1.17.0"
+    version: "1.17.1"
+  console:
+    dependency: transitive
+    description:
+      name: console
+      sha256: e04e7824384c5b39389acdd6dc7d33f3efe6b232f6f16d7626f194f6a01ad69a
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.1.0"
   convert:
     dependency: transitive
     description:
@@ -232,7 +240,15 @@ packages:
       sha256: "9170d9db2daf774aa2251a3bc98e4ba903c7702ab07aa438bc83bd3c9a0de57f"
       url: "https://pub.dev"
     source: hosted
-    version: "0.3.3"
+    version: "0.4.0"
+  dart_pre_commit:
+    dependency: "direct dev"
+    description:
+      name: dart_pre_commit
+      sha256: ebccb649085a4c901cbaf870968a6e44c3519075838bda3c9ac346c4708f2dcb
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.2.0+1"
   dart_style:
     dependency: transitive
     description:
@@ -248,7 +264,7 @@ packages:
       sha256: a9d76e72985d7087eb7c5e7903224ae52b337131518d127c554b9405936752b8
       url: "https://pub.dev"
     source: hosted
-    version: "5.1.1"
+    version: "5.2.1+1"
   fake_async:
     dependency: transitive
     description:
@@ -393,10 +409,10 @@ packages:
     dependency: "direct main"
     description:
       name: go_router
-      sha256: "4d141302e68dcdec0949ac798b5a8cf307eb6f79c70830ef1a2aec9b31827c28"
+      sha256: "1531542666c2d052c44bbf6e2b48011bf3771da0404b94c60eabec1228a62906"
       url: "https://pub.dev"
     source: hosted
-    version: "6.5.8"
+    version: "9.0.0"
   graphs:
     dependency: transitive
     description:
@@ -425,10 +441,10 @@ packages:
     dependency: transitive
     description:
       name: http
-      sha256: "6aa2946395183537c8b880962d935877325d6a09a2867c3970c05c0fed6ac482"
+      sha256: "759d1a329847dd0f39226c688d3e06a6b8679668e350e2891a6474f8b4bb8525"
       url: "https://pub.dev"
     source: hosted
-    version: "0.13.5"
+    version: "1.1.0"
   http_multi_server:
     dependency: transitive
     description:
@@ -625,26 +641,26 @@ packages:
     dependency: "direct main"
     description:
       name: realm
-      sha256: e9c63a5a982dd4357ba7f13a4dac7cdcf4eb6ec837f2f043a51ba414f4973337
+      sha256: "818bd06d65cf736dab3e41111a9f641d129083a6056788544ea6a94697fbac2e"
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.3"
+    version: "1.3.0"
   realm_common:
     dependency: transitive
     description:
       name: realm_common
-      sha256: e31f72feddb77e7dcfb9a8a0d19c25c79d71ecf6d873de8801b9d58cc29b5a5e
+      sha256: b7fefe203362d9afc21094fdc1d97c9ada95c25f80fc5c352a0dd3f3cbf34625
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.3"
+    version: "1.3.0"
   realm_generator:
     dependency: transitive
     description:
       name: realm_generator
-      sha256: "9af5252323e19ba4cd63e984b5aad20a3f809d79a6fee7779ef959456b2bb78e"
+      sha256: "22a3b16b3f1830af221d7b07c847e85a44873a82d8b90f67bdd81cc4a2b64f2a"
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.3"
+    version: "1.3.0"
   rename:
     dependency: "direct dev"
     description:
@@ -742,10 +758,10 @@ packages:
     dependency: "direct main"
     description:
       name: snappy_list_view
-      sha256: "99e042fae15c991e16cab82eb6a72d4a5c72c2aba347f02190b719a543b744bf"
+      sha256: b91d18109b20bde8e25c048dd8d702b3f8bae4107b87caabdc76ded19dbee9ce
       url: "https://pub.dev"
     source: hosted
-    version: "0.0.9"
+    version: "0.1.0"
   source_gen:
     dependency: transitive
     description:
@@ -778,14 +794,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.7.2+1"
-  sticky_headers:
-    dependency: "direct main"
-    description:
-      name: sticky_headers
-      sha256: "9b3dd2cb0fd6a7038170af3261f855660cbb241cb56c501452cb8deed7023ede"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.3.0+2"
   stream_channel:
     dependency: transitive
     description:
@@ -874,14 +882,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.4"
-  visibility_detector:
-    dependency: transitive
-    description:
-      name: visibility_detector
-      sha256: "15c54a459ec2c17b4705450483f3d5a2858e733aee893dcee9d75fd04814940d"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.3.3"
   watcher:
     dependency: transitive
     description:
@@ -914,7 +914,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.1.2"
-    version: "3.1.2"
 sdks:
   dart: ">=3.0.5 <4.0.0"
-  flutter: ">=3.10.0"
+  flutter: ">=3.10.2"

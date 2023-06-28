@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:my_time/global/globals.dart';
 import 'package:my_time/layers/interface/presentation/tab_page/tab_page_controller.dart';
 import 'package:snappy_list_view/snappy_list_view.dart';
 
@@ -35,6 +36,7 @@ class _TabPageState extends ConsumerState<TabPage>
     final state = ref.watch(tabPageControllerProvider(widget.stateKey));
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: GlobalProperties.backgroundColor,
         elevation: 0,
         automaticallyImplyLeading: false,
         flexibleSpace: Column(
