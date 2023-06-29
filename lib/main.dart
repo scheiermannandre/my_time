@@ -205,6 +205,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:my_time/common/extensions/canvas_extensions.dart';
 import 'package:my_time/global/globals.dart';
 
 void main() => runApp(const MyApp());
@@ -239,136 +240,109 @@ class MyApp extends StatelessWidget {
         ),
         body: const Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [BarFullyDrawn(), DailyBalanceChart()],
-        ),
-      ),
-    );
-  }
-}
-
-class DailyBalanceChart extends StatelessWidget {
-  const DailyBalanceChart({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    const width = 350.0;
-    const height = 350 / 3;
-    return Center(
-      child: Container(
-        width: width,
-        height: height,
-        decoration: BoxDecoration(
-          border: Border(
-            bottom: BorderSide(width: 1.5, color: Colors.grey[500]!),
-            left: BorderSide(width: 1.5, color: Colors.grey[500]!),
-          ),
-        ),
-        padding:
-            const EdgeInsets.symmetric(horizontal: 0, vertical: height * 0.2),
-        child: ClipRRect(
-          borderRadius: const BorderRadius.only(
-            topLeft: Radius.zero,
-            bottomLeft: Radius.zero,
-            topRight: Radius.circular(10),
-            bottomRight: Radius.circular(10),
-          ),
-          child: Container(
-            color: GlobalProperties.primaryColor,
-            child: CustomPaint(
-              painter: BarPainter(value: .8),
-              child: Container(
-                alignment: Alignment.centerRight,
-                padding: const EdgeInsets.symmetric(horizontal: width * 0.05),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Text("Actual",
-                        style: TextStyle(fontSize: 20, color: Colors.white)),
-                    Text("07:00",
-                        style:
-                            TextStyle(fontSize: 20, color: Colors.grey[600])),
-                  ],
-                ),
+          children: [
+            Padding(
+              padding: EdgeInsets.all(0),
+              child: BarFullyDrawn(
+                barHeight: 50,
+                barPadding: 10,
               ),
             ),
-          ),
+          ],
         ),
       ),
     );
-  }
-}
-
-class BarPainter extends CustomPainter {
-  final double value;
-
-  BarPainter({required this.value});
-  @override
-  void paint(Canvas canvas, Size size) {
-    _drawBar(canvas, size, const Color(0xFF256B6F),
-        value: value, isBelow: false);
-  }
-
-  void _drawBar(Canvas canvas, Size size, Color color,
-      {required double value, bool isBelow = true}) {
-    assert(value >= 0 && value <= 1);
-    final verticalRadiusRight =
-        value == 1 ? const Radius.circular(10) : const Radius.circular(0);
-    const verticalRadiusLeft = Radius.circular(0);
-
-    final paint = Paint()
-      ..color = color
-      ..style = PaintingStyle.fill;
-
-    final rect = RRect.fromLTRBAndCorners(
-      0,
-      0,
-      size.width * value,
-      size.height,
-      topLeft: verticalRadiusLeft,
-      bottomRight: verticalRadiusRight,
-      topRight: verticalRadiusRight,
-      bottomLeft: verticalRadiusLeft,
-    );
-    canvas.drawRRect(rect, paint);
-  }
-
-  @override
-  bool shouldRepaint(CustomPainter oldDelegate) {
-    return false;
   }
 }
 
 class BarFullyDrawn extends StatelessWidget {
-  const BarFullyDrawn({super.key});
-
+  const BarFullyDrawn({
+    super.key,
+    required this.barHeight,
+    required this.barPadding,
+    this.width,
+  });
+  final double barHeight;
+  final double barPadding;
+  final double? width;
   @override
   Widget build(BuildContext context) {
-    const width = 350.0;
-    const height = 350 / 3;
     return Center(
-      child: Container(
-        width: width,
-        height: height,
-        color: Colors.yellow,
-        child: Container(
-          color: Colors.transparent,
-          padding: const EdgeInsets.symmetric(vertical: height * 0.2),
-          child: ClipRRect(
-            borderRadius: const BorderRadius.only(
-              topLeft: Radius.zero,
-              bottomLeft: Radius.zero,
-              topRight: Radius.circular(10),
-              bottomRight: Radius.circular(10),
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          final double availableWidth =
+              width != null && width! < constraints.maxWidth
+                  ? width!
+                  : constraints.maxWidth;
+
+          final barContainerHeight = barHeight + barPadding * 2;
+          final diagramFrame = DiagrammFrameConfiguration(
+            originLabel: '00:00',
+            endLabel: '08:00',
+            parentWidth: availableWidth,
+            barContainerHeight: barContainerHeight,
+          );
+
+          final BarItem item = BarItem(
+              desiredValue: 1, value: .8, label: 'Actual', valueLabel: '07:00');
+          return Container(
+            width: availableWidth,
+            height: diagramFrame.height,
+            alignment: Alignment.center,
+            color: Colors.transparent,
+            child: Stack(
+              children: [
+                Container(
+                  width: diagramFrame.width,
+                  height: diagramFrame.height,
+                  color: Colors.transparent,
+                  child: CustomPaint(
+                    painter: DiagramFramePainter(configuration: diagramFrame),
+                  ),
+                ),
+                Container(
+                  width: diagramFrame.width,
+                  height: barContainerHeight,
+                  color: Colors.transparent,
+                  padding: EdgeInsets.symmetric(vertical: barPadding),
+                  child: ClipRRect(
+                    borderRadius: const BorderRadius.only(
+                      topLeft: Radius.zero,
+                      bottomLeft: Radius.zero,
+                      topRight: Radius.circular(10),
+                      bottomRight: Radius.circular(10),
+                    ),
+                    child: CustomPaint(
+                      painter: BarFullyDrawnPainter(item: item),
+                    ),
+                  ),
+                ),
+              ],
             ),
-            child: CustomPaint(painter: BarFullyDrawnPainter()),
-          ),
-        ),
+          );
+        },
       ),
     );
   }
 }
 
+class BarItem {
+  final String label;
+  final double desiredValue;
+  final double value;
+  final String valueLabel;
+
+  BarItem(
+      {required this.desiredValue,
+      required this.value,
+      required this.label,
+      required this.valueLabel});
+}
+
 class BarFullyDrawnPainter extends CustomPainter {
+  final BarItem item;
+
+  BarFullyDrawnPainter({required this.item});
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
@@ -379,21 +353,23 @@ class BarFullyDrawnPainter extends CustomPainter {
     final x = size.width;
     final points = [
       const Offset(0, 0),
-      Offset(0, y),
-      Offset(x, y),
+      Offset(0 + 20, y),
+      Offset(x - 20, y),
     ];
     canvas.drawPoints(PointMode.polygon, points, paint);
-    _drawBar(canvas, size, Colors.blue, value: 1);
-    _drawBar(canvas, size, Colors.red, value: .98, isBelow: false);
-    _drawText(canvas, size, 'Actual', Alignment.centerLeft);
-    _drawText(canvas, size, '07:00', Alignment.centerRight);
+    _drawBar(canvas, size, GlobalProperties.primaryColor,
+        value: item.desiredValue);
+    _drawBar(canvas, size, const Color(0xFF256B6F),
+        value: item.value, isBelow: false);
+    _drawText(canvas, size, item.label, Alignment.centerLeft);
+    _drawText(canvas, size, item.valueLabel, Alignment.centerRight);
   }
 
   void _drawText(
       Canvas canvas, Size size, String barDescription, Alignment alignment) {
     const textStyle = TextStyle(
       color: Colors.black,
-      fontSize: 30,
+      fontSize: 20,
     );
     final textSpan = TextSpan(
       text: barDescription,
@@ -442,5 +418,90 @@ class BarFullyDrawnPainter extends CustomPainter {
   @override
   bool shouldRepaint(CustomPainter oldDelegate) {
     return false;
+  }
+}
+
+class DiagramFramePainter extends CustomPainter {
+  final DiagrammFrameConfiguration configuration;
+
+  DiagramFramePainter({
+    required this.configuration,
+  });
+  @override
+  void paint(Canvas canvas, Size size) {
+    canvas.drawDiagram(configuration.axisPoints);
+    for (var element in configuration.xAxisValues) {
+      canvas.drawXAxisValue(element.painter, element.offset);
+    }
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) {
+    return false;
+  }
+}
+
+class DiagrammFrameConfiguration {
+  static const _labelRowPaddingFactor = 0.15;
+
+  late final double width;
+  late final double height;
+
+  late final double yAxisPadding;
+
+  final List<({TextPainter painter, Offset offset})> xAxisValues = [];
+  late final List<Offset> axisPoints;
+  DiagrammFrameConfiguration({
+    required String originLabel,
+    required String endLabel,
+    required double parentWidth,
+    required double barContainerHeight,
+  }) {
+    final originLabelPainter = _calulateTextSize(originLabel);
+    final endLabelPainter = _calulateTextSize(endLabel);
+
+    final labelRowHeight =
+        originLabelPainter.size.height * (1 + 2 * _labelRowPaddingFactor);
+
+    height = barContainerHeight + labelRowHeight;
+    yAxisPadding = height - labelRowHeight;
+    width = parentWidth -
+        originLabelPainter.size.width / 2 -
+        endLabelPainter.size.width / 2;
+
+    final originLabelOffset = Offset(-originLabelPainter.width / 2,
+        barContainerHeight + labelRowHeight * 0.15);
+
+    final endLabelOffset = Offset(width - originLabelPainter.width / 2,
+        barContainerHeight + labelRowHeight * 0.15);
+
+    xAxisValues.add((offset: originLabelOffset, painter: originLabelPainter));
+    xAxisValues.add((offset: endLabelOffset, painter: endLabelPainter));
+
+    axisPoints = [
+      const Offset(0, 0),
+      Offset(0, yAxisPadding),
+      Offset(width, yAxisPadding),
+    ];
+  }
+
+  TextPainter _calulateTextSize(String text) {
+    const textStyle = TextStyle(
+      color: Colors.black,
+      fontSize: 12,
+    );
+    final textSpan = TextSpan(
+      text: text, // '00:00',
+      style: textStyle,
+    );
+    final textPainter = TextPainter(
+      text: textSpan,
+      textDirection: TextDirection.ltr,
+    );
+    textPainter.layout(
+      minWidth: 0,
+      maxWidth: double.infinity,
+    );
+    return textPainter;
   }
 }
