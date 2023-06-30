@@ -14,4 +14,8 @@ extension TimeOfDayExtension on TimeOfDay {
   Duration toDuration() {
     return Duration(hours: hour, minutes: minute);
   }
+
+  int toMinutes() {
+    return hour * 60 + minute;
+  }
 }

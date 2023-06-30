@@ -202,10 +202,9 @@
 //   }
 // }
 
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:my_time/common/extensions/canvas_extensions.dart';
+import 'package:my_time/common/extensions/time_of_day_extension.dart';
 import 'package:my_time/global/globals.dart';
 
 void main() => runApp(const MyApp());
@@ -270,6 +269,11 @@ class BarFullyDrawn extends StatelessWidget {
     return Center(
       child: LayoutBuilder(
         builder: (context, constraints) {
+          int labelCount = 5;
+          List<double> slots = generateSlots(
+              const TimeOfDay(hour: 9, minute: 0).toMinutes().toDouble(),
+              labelCount);
+          List<String> labels = slots.map(formatTime).toList();
           final double availableWidth =
               width != null && width! < constraints.maxWidth
                   ? width!
@@ -277,50 +281,105 @@ class BarFullyDrawn extends StatelessWidget {
 
           final barContainerHeight = barHeight + barPadding * 2;
           final diagramFrame = DiagrammFrameConfiguration(
-            originLabel: '00:00',
-            endLabel: '08:00',
+            labels: labels,
+            labelCount: labelCount,
             parentWidth: availableWidth,
             barContainerHeight: barContainerHeight,
           );
 
           final BarItem item = BarItem(
-              desiredValue: 1, value: .8, label: 'Actual', valueLabel: '07:00');
+              desiredValue: 1, value: .5, label: 'Actual', valueLabel: '07:00');
           return Container(
             width: availableWidth,
-            height: diagramFrame.height,
-            alignment: Alignment.center,
+            height: diagramFrame.fullDiagramHeight,
             color: Colors.transparent,
             child: Stack(
               children: [
                 Container(
-                  width: diagramFrame.width,
-                  height: diagramFrame.height,
+                  width: diagramFrame.innerDiagramWidth,
+                  height: diagramFrame.fullDiagramHeight,
                   color: Colors.transparent,
                   child: CustomPaint(
                     painter: DiagramFramePainter(configuration: diagramFrame),
                   ),
                 ),
-                Container(
-                  width: diagramFrame.width,
-                  height: barContainerHeight,
-                  color: Colors.transparent,
-                  padding: EdgeInsets.symmetric(vertical: barPadding),
-                  child: ClipRRect(
-                    borderRadius: const BorderRadius.only(
-                      topLeft: Radius.zero,
-                      bottomLeft: Radius.zero,
-                      topRight: Radius.circular(10),
-                      bottomRight: Radius.circular(10),
-                    ),
-                    child: CustomPaint(
-                      painter: BarFullyDrawnPainter(item: item),
-                    ),
-                  ),
-                ),
+                HorizontalBalanceBar(
+                    diagramFrame: diagramFrame,
+                    barPadding: barPadding,
+                    barContainerHeight: barContainerHeight,
+                    item: item),
               ],
             ),
           );
         },
+      ),
+    );
+  }
+
+  List<double> generateSlots(double timeOfDay, int count) {
+    List<double> timeList = [];
+
+    // Handle count = 1 separately
+    if (count == 1) {
+      timeList.add(timeOfDay);
+      return timeList;
+    }
+    // Calculate the interval between each time slot
+    double interval = timeOfDay / (count - 1);
+
+    // Generate the time slots
+    for (int i = 0; i < count; i++) {
+      double slotTime = interval * i;
+      timeList.add(slotTime);
+    }
+
+    return timeList;
+  }
+
+  String formatTime(double time) {
+    int hour = time ~/ 60;
+    int minute = time.toInt() % 60;
+    return '${hour.toString().padLeft(2, '0')}:${minute.toString().padLeft(2, '0')}';
+  }
+}
+
+class HorizontalBalanceBar extends StatelessWidget {
+  const HorizontalBalanceBar({
+    super.key,
+    required this.diagramFrame,
+    required this.barPadding,
+    required this.barContainerHeight,
+    required this.item,
+  });
+
+  final DiagrammFrameConfiguration diagramFrame;
+  final double barPadding;
+  final double barContainerHeight;
+  final BarItem item;
+
+  @override
+  Widget build(BuildContext context) {
+    return Positioned(
+      left: diagramFrame.axisPoints.first.dx,
+      top: 0,
+      right: diagramFrame.endLabelCenterWidth,
+      bottom: barPadding * 2,
+      child: Container(
+        width: diagramFrame.innerDiagramWidth,
+        height: barContainerHeight,
+        color: Colors.transparent,
+        padding: EdgeInsets.symmetric(vertical: barPadding),
+        child: ClipRRect(
+          borderRadius: const BorderRadius.only(
+            topLeft: Radius.zero,
+            bottomLeft: Radius.zero,
+            topRight: Radius.circular(10),
+            bottomRight: Radius.circular(10),
+          ),
+          child: CustomPaint(
+            painter: BarFullyDrawnPainter(item: item),
+          ),
+        ),
       ),
     );
   }
@@ -345,18 +404,6 @@ class BarFullyDrawnPainter extends CustomPainter {
   BarFullyDrawnPainter({required this.item});
   @override
   void paint(Canvas canvas, Size size) {
-    final paint = Paint()
-      ..color = Colors.black
-      ..strokeWidth = 1;
-
-    final y = size.height;
-    final x = size.width;
-    final points = [
-      const Offset(0, 0),
-      Offset(0 + 20, y),
-      Offset(x - 20, y),
-    ];
-    canvas.drawPoints(PointMode.polygon, points, paint);
     _drawBar(canvas, size, GlobalProperties.primaryColor,
         value: item.desiredValue);
     _drawBar(canvas, size, const Color(0xFF256B6F),
@@ -430,6 +477,7 @@ class DiagramFramePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     canvas.drawDiagram(configuration.axisPoints);
+    canvas.drawVerticalHelperLines(configuration.verticalHelperLines);
     for (var element in configuration.xAxisValues) {
       canvas.drawXAxisValue(element.painter, element.offset);
     }
@@ -444,54 +492,131 @@ class DiagramFramePainter extends CustomPainter {
 class DiagrammFrameConfiguration {
   static const _labelRowPaddingFactor = 0.15;
 
-  late final double width;
-  late final double height;
-
-  late final double yAxisPadding;
-
+  late final double innerDiagramWidth;
+  late final double fullDiagramWidth;
+  late final double fullDiagramHeight;
+  late final double innerDiagramHeight;
+  final double barContainerHeight;
+  late final double endLabelCenterWidth;
   final List<({TextPainter painter, Offset offset})> xAxisValues = [];
   late final List<Offset> axisPoints;
-  DiagrammFrameConfiguration({
-    required String originLabel,
-    required String endLabel,
-    required double parentWidth,
-    required double barContainerHeight,
-  }) {
-    final originLabelPainter = _calulateTextSize(originLabel);
-    final endLabelPainter = _calulateTextSize(endLabel);
+  final List<({Offset top, Offset bottom})> verticalHelperLines = [];
+  DiagrammFrameConfiguration(
+      {required double parentWidth,
+      required List<String> labels,
+      required int labelCount,
+      required this.barContainerHeight,
+      bool drawVerticalHelperLines = true}) {
+    fullDiagramWidth = parentWidth;
 
-    final labelRowHeight =
-        originLabelPainter.size.height * (1 + 2 * _labelRowPaddingFactor);
+    ({double textWidth, double textCenterWidth, double textHeight}) end =
+        _getTextMetaData(labels.last);
+    endLabelCenterWidth = end.textCenterWidth;
 
-    height = barContainerHeight + labelRowHeight;
-    yAxisPadding = height - labelRowHeight;
-    width = parentWidth -
-        originLabelPainter.size.width / 2 -
-        endLabelPainter.size.width / 2;
+    ({double textWidth, double textCenterWidth, double textHeight}) origin = (
+      textWidth: 0,
+      textCenterWidth: 0,
+      textHeight: 0,
+    );
+    if (labelCount > 1) {
+      origin = _getTextMetaData(labels.first);
+    }
 
-    final originLabelOffset = Offset(-originLabelPainter.width / 2,
-        barContainerHeight + labelRowHeight * 0.15);
+    double labelFieldHeight = _calculateDiagramHeights(end.textHeight);
+    _calculateDiagramWidths(parentWidth, origin.textCenterWidth);
+    _configureXAxis(labels, parentWidth, end.textWidth, origin.textWidth,
+        labelCount, labelFieldHeight, drawVerticalHelperLines);
+    _configureDiagramFrame(origin.textCenterWidth);
+  }
 
-    final endLabelOffset = Offset(width - originLabelPainter.width / 2,
-        barContainerHeight + labelRowHeight * 0.15);
+  ({double textWidth, double textCenterWidth, double textHeight})
+      _getTextMetaData(String text) {
+    TextPainter textPainter = _getTextPainter(text);
+    double textWidth = textPainter.width;
+    double textCenterWidth = textWidth / 2;
+    double textHeight = textPainter.height;
+    return (
+      textWidth: textWidth,
+      textCenterWidth: textCenterWidth,
+      textHeight: textHeight
+    );
+  }
 
-    xAxisValues.add((offset: originLabelOffset, painter: originLabelPainter));
-    xAxisValues.add((offset: endLabelOffset, painter: endLabelPainter));
+  void _configureXAxis(
+      List<String> labels,
+      double parentWidth,
+      double endWidth,
+      double originWidth,
+      int labelCount,
+      double labelFieldHeight,
+      bool drawVerticalHelperLines) {
+    for (int i = 0; i < labels.length; i++) {
+      String element = labels[i];
+      // Calculate the interval between each x-Value
+      double interval =
+          (parentWidth - endWidth / 2 - originWidth / 2) / (labelCount - 1);
+      // Generate the x-Value
+      double x = interval * i + originWidth / 2;
 
+      _configureXAxisLabels(element, labelFieldHeight, x);
+      _configureVerticalHelperLines(drawVerticalHelperLines, x);
+    }
+  }
+
+  void _calculateDiagramWidths(
+      double parentWidth, double originLabelCenterWidth) {
+    innerDiagramWidth =
+        parentWidth - originLabelCenterWidth - endLabelCenterWidth;
+  }
+
+  void _configureDiagramFrame(double originLabelCenterWidth) {
     axisPoints = [
-      const Offset(0, 0),
-      Offset(0, yAxisPadding),
-      Offset(width, yAxisPadding),
+      Offset(originLabelCenterWidth, 0),
+      Offset(originLabelCenterWidth, innerDiagramHeight),
+      Offset(xAxisValues.last.offset.dx + xAxisValues.last.painter.width / 2,
+          innerDiagramHeight),
     ];
   }
 
-  TextPainter _calulateTextSize(String text) {
+  double _calculateDiagramHeights(double textHeight) {
+    double labelFieldHeight = textHeight * (1 + 2 * _labelRowPaddingFactor);
+    fullDiagramHeight = barContainerHeight + labelFieldHeight;
+    innerDiagramHeight = fullDiagramHeight - labelFieldHeight;
+
+    return labelFieldHeight;
+  }
+
+  void _configureXAxisLabels(
+      String element, double labelFieldHeight, double x) {
+    TextPainter textPainter = _getTextPainter(element);
+    double y = barContainerHeight + labelFieldHeight * 0.15;
+    double xOffset = textPainter.width / 2;
+    Offset offset = Offset(x - xOffset, y);
+
+    xAxisValues.add(
+      (
+        offset: offset,
+        painter: textPainter,
+      ),
+    );
+  }
+
+  void _configureVerticalHelperLines(bool drawVerticalHelperLines, double x) {
+    if (drawVerticalHelperLines) {
+      verticalHelperLines.add((
+        top: Offset(x, 0),
+        bottom: Offset(x, innerDiagramHeight),
+      ));
+    }
+  }
+
+  TextPainter _getTextPainter(String text) {
     const textStyle = TextStyle(
       color: Colors.black,
       fontSize: 12,
     );
     final textSpan = TextSpan(
-      text: text, // '00:00',
+      text: text,
       style: textStyle,
     );
     final textPainter = TextPainter(
