@@ -16,7 +16,8 @@ extension CanvasExtension on Canvas {
       ..strokeWidth = 1;
 
     for (var line in lines) {
-      drawLine(line.top, line.bottom, paint);
+      drawLine(Offset(line.top.dx, line.top.dy),
+          Offset(line.bottom.dx, line.bottom.dy), paint);
     }
   }
 
