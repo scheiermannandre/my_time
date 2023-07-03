@@ -69,7 +69,10 @@ class _HorizontalBalanceBarState extends State<HorizontalBalanceBar>
           ),
           child: CustomPaint(
             painter: BalanceBarPainter(
-                item: widget.item, animationValue: animation.value),
+              animationValue: animation.value,
+              configuration: BalanceBarPainterConfiguration(
+                  item: widget.item, style: widget.style),
+            ),
           ),
         ),
       ),

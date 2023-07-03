@@ -1,7 +1,6 @@
 import 'dart:ui';
 
 class BalanceBarChartConfiguration {
-  final List<String> labels;
   final int labelCount;
   final double barHeight;
   final double barPadding;
@@ -13,7 +12,6 @@ class BalanceBarChartConfiguration {
     required this.barHeight,
     required this.barPadding,
     this.width,
-    required this.labels,
     required this.labelCount,
     required this.style,
   });
@@ -21,8 +19,18 @@ class BalanceBarChartConfiguration {
 
 class BalanceBarChartStyle {
   final HorizontalBalanceBarStyle barStyle;
+  final Color desiredBalanceColor;
+  final Color undesiredBalanceColor;
+  final Color axisLabelColor;
+  final Color frameColor;
 
-  BalanceBarChartStyle({required this.barStyle});
+  BalanceBarChartStyle({
+    required this.barStyle,
+    required this.desiredBalanceColor,
+    required this.undesiredBalanceColor,
+    required this.axisLabelColor,
+    required this.frameColor,
+  });
 }
 
 class HorizontalBalanceBarStyle {

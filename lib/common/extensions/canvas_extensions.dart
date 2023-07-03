@@ -3,16 +3,17 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 
 extension CanvasExtension on Canvas {
-  void drawDiagram(List<Offset> points) {
+  void drawDiagram(List<Offset> points, Color color) {
     final paint = Paint()
-      ..color = Colors.black
+      ..color = color
       ..strokeWidth = 1;
     drawPoints(PointMode.polygon, points, paint);
   }
 
-  void drawVerticalHelperLines(List<({Offset top, Offset bottom})> lines) {
+  void drawVerticalHelperLines(
+      List<({Offset top, Offset bottom})> lines, Color color) {
     final paint = Paint()
-      ..color = Colors.black
+      ..color = color
       ..strokeWidth = 1;
 
     for (var line in lines) {

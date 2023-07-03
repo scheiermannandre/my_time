@@ -10,8 +10,9 @@ class DiagramFramePainter extends CustomPainter {
   });
   @override
   void paint(Canvas canvas, Size size) {
-    canvas.drawDiagram(configuration.axisPoints);
-    canvas.drawVerticalHelperLines(configuration.verticalHelperLines);
+    canvas.drawDiagram(configuration.axisPoints, configuration.frameColor);
+    canvas.drawVerticalHelperLines(
+        configuration.verticalHelperLines, configuration.frameColor);
     for (var element in configuration.xAxisValues) {
       canvas.drawXAxisValue(element.painter, element.offset);
     }

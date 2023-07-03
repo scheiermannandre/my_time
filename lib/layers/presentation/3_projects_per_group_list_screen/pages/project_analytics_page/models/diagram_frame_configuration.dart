@@ -12,6 +12,9 @@ class DiagrammFrameConfiguration {
   final List<({TextPainter painter, Offset offset})> xAxisValues = [];
   late final List<Offset> axisPoints;
   final List<({Offset top, Offset bottom})> verticalHelperLines = [];
+
+  final Color axisLabelColor;
+  final Color frameColor;
   DiagrammFrameConfiguration(
       {required List<String> labels,
       required int labelCount,
@@ -19,7 +22,9 @@ class DiagrammFrameConfiguration {
       required double barPadding,
       required double? width,
       required double constraintsMaxWidth,
-      required bool drawVerticalHelperLines}) {
+      required bool drawVerticalHelperLines,
+      required this.axisLabelColor,
+      required this.frameColor}) {
     fullDiagramWidth = width != null && width < constraintsMaxWidth
         ? width
         : constraintsMaxWidth;
@@ -128,8 +133,8 @@ class DiagrammFrameConfiguration {
   }
 
   TextPainter _getTextPainter(String text) {
-    const textStyle = TextStyle(
-      color: Colors.black,
+    final textStyle = TextStyle(
+      color: axisLabelColor,
       fontSize: 12,
     );
     final textSpan = TextSpan(
