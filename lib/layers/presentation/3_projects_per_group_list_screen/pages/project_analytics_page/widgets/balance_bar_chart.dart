@@ -18,6 +18,7 @@ class BalanceBarChart extends StatelessWidget {
     required this.labelCount,
     required this.style,
     required this.padding,
+    this.showVerticalHelperLines = false,
   });
 
   final BalanceBarItem item;
@@ -25,7 +26,7 @@ class BalanceBarChart extends StatelessWidget {
   final double barHeight;
   final double barPadding;
   final double? width;
-  final bool showVerticalHelperLines = false;
+  final bool showVerticalHelperLines;
   final BalanceBarChartStyle style;
   final EdgeInsets padding;
 

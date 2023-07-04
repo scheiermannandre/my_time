@@ -15,7 +15,7 @@ class _DayPageState extends State<DayPage> {
   @override
   Widget build(BuildContext context) {
     TimeOfDay desiredTime = const TimeOfDay(hour: 8, minute: 0);
-    TimeOfDay actualTime = const TimeOfDay(hour: 10, minute: 0);
+    TimeOfDay actualTime = const TimeOfDay(hour: 9, minute: 0);
 
     return ListView.builder(
       key: UniqueKey(),
@@ -32,10 +32,12 @@ class _DayPageState extends State<DayPage> {
                 barHeight: 45,
                 barPadding: 10,
                 labelCount: 2,
+                showVerticalHelperLines: false,
                 style: BalanceBarChartStyle(
                   desiredBalanceColor: const Color(0xff8bc4b7),
                   undesiredBalanceColor: const Color(0xffc85552),
                   barStyle: HorizontalBalanceBarStyle(
+                    barTextColor: Colors.black,
                     desiredBarStateColor: const Color(0xfffadeb4),
                     actualUnderHourBarStateColor: const Color(0xff8bc4b7),
                     actualOverHourBarStateColor: const Color(0xffc85552),

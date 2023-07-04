@@ -37,7 +37,7 @@ class _HorizontalBalanceBarState extends State<HorizontalBalanceBar>
 
     controller = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 1000),
+      duration: const Duration(milliseconds: 600),
     );
 
     animation = _rotationTween.animate(controller)

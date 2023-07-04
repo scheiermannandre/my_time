@@ -37,10 +37,11 @@ class HorizontalBalanceBarStyle {
   final Color desiredBarStateColor;
   final Color actualUnderHourBarStateColor;
   final Color actualOverHourBarStateColor;
-
+  final Color barTextColor;
   HorizontalBalanceBarStyle({
     required this.desiredBarStateColor,
     required this.actualUnderHourBarStateColor,
     required this.actualOverHourBarStateColor,
+    required this.barTextColor,
   });
 }

@@ -9,6 +9,7 @@ class BalanceBarPainterConfiguration {
   late final double value;
   late final Color desiredValueColor;
   late final Color actualValueColor;
+  late final Color barTextColor;
   late final String barDescriptionLabel;
   // late final String valueLabel;
   late final TimeOfDay valueTime;
@@ -16,6 +17,7 @@ class BalanceBarPainterConfiguration {
   BalanceBarPainterConfiguration(
       {required BalanceBarItem item,
       required HorizontalBalanceBarStyle style}) {
+    barTextColor = style.barTextColor;
     barDescriptionLabel = item.barDescriptionLabel;
     valueTime = item.actualTime;
     //valueLabel = item.valueLabel;
@@ -72,8 +74,8 @@ class BalanceBarPainter extends CustomPainter {
 
   void _drawText(
       Canvas canvas, Size size, String barDescription, Alignment alignment) {
-    const textStyle = TextStyle(
-      color: Colors.black,
+    final textStyle = TextStyle(
+      color: configuration.barTextColor,
       fontSize: 20,
     );
     final textSpan = TextSpan(
