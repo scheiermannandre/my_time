@@ -22,34 +22,10 @@ jobs:
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '2.x.x'  # Replace with the desired Flutter version
+          channel: 'stable'
 
       - name: Get Flutter dependencies
         run: flutter pub get
 
       - name: Run Flutter Tests
         run: flutter test
-
-  build:
-    needs: test
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v2
-
-      - name: Set up Java
-        uses: actions/setup-java@v2
-        with:
-          java-version: '11'
-
-      - name: Set up Flutter
-        uses: subosito/flutter-action@v2
-        with:
-          flutter-version: '2.x.x'  # Replace with the desired Flutter version
-
-      - name: Get Flutter dependencies
-        run: flutter pub get
-
-      - name: Build Android APK
-        run: flutter build apk --release
