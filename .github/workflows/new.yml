@@ -1,4 +1,4 @@
-name: Test Android app
+name: Test and Build Android app
 
 on:
   push:
@@ -10,7 +10,7 @@ on:
 
 # 4
 jobs:
-  build:
+  Test:
     runs-on: macos-latest
 
     steps:
@@ -28,3 +28,18 @@ jobs:
         
       - name: Run unit tests
         run: flutter test --coverage
+
+  Build:
+    runs-on: macos-latest
+
+    steps:
+       - name: Setup Java
+         uses: actions/setup-java@v3
+         with:
+           distribution: 'zulu'
+           java-version: "12.x"
+           cache: 'gradle'     
+
+      # Runs a set of commands using the runners shell
+       - name: Start release build
+         run: flutter build appbundle
