@@ -1,31 +1,30 @@
-name: Test and Build Android App
+name: Test Android app
 
 on:
   push:
-    branches:
-      - main
+    branches: [ "main" ]
   pull_request:
+    branches: [ "main" ]
+  # 3
+  workflow_dispatch:
 
+# 4
 jobs:
-  test:
-    runs-on: ubuntu-latest
+  build:
+    runs-on: macos-latest
 
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v2
-
-      - name: Set up Java
-        uses: actions/setup-java@v2
-        with:
-          java-version: '11'
-
-      - name: Set up Flutter
+      - name: Checkout code
+        uses: actions/checkout@v3
+        
+      - name: Install Flutter
         uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
-
-      - name: Get Flutter dependencies
+          cache: true
+      
+      - name: Install dependencies
         run: flutter pub get
-
-      - name: Run Flutter Tests
-        run: flutter test
+        
+      - name: Run unit tests
+        run: flutter test --coverage
