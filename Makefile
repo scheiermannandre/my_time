@@ -4,8 +4,10 @@ test:
 	@echo "SUCCESSS: All tests passed!"
 
 deploy-android:
-	@echo "╠ Sending Android Build to Closed Testing..."
-	cd android/fastlane && bundle exec fastlane deploy
+    @echo "╠ Sending Android Build to Google Play Store.."
+    cd android && bundle install
+    cd android/fastlane && bundle exec fastlane deploy
+
 
 # deploy-ios:
 #     @echo "╠ Sending iOS Build to TestFlight..."
