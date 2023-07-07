@@ -37,22 +37,46 @@ default_platform(:android)
 #   end
 # end
 
-lane :beta do
-  # Adjust the `build_type` and `flavor` params as needed to build the right APK for your setup
-  gradle(
-    task: 'assemble',
-    build_type: 'Release'
-  )
+# lane :beta do
+#   # Adjust the `build_type` and `flavor` params as needed to build the right APK for your setup
+#   gradle(
+#     task: 'assemble',
+#     build_type: 'Release'
+#   )
 
-  # ...
-end
+#   # ...
+# end
 
-lane :playstore do
-  gradle(
-    task: 'assemble',
-    build_type: 'Release'
-  )
-  upload_to_play_store(
-    aab: "../build/app/outputs/bundle/release/app-release.aab"  )
-  # upload_to_play_store # Uploads the APK built in the gradle step above and releases it to all production users
+# lane :playstore do
+#   gradle(
+#     task: 'clean bundle',
+#     build_type: 'Release'
+#   )
+#   upload_to_play_store(
+#     aab: "../build/app/outputs/bundle/release/app-release.aab"  )
+#   # upload_to_play_store # Uploads the APK built in the gradle step above and releases it to all production users
+# end
+
+
+platform :android do
+  desc "Set Gradle Version and Build Number"
+  lane :set_full_version do 
+        version = flutter_version()
+
+        android_set_version_name(version_name: version['version_name'])
+
+        android_set_version_code(version_code: version['version_code'])
+    end
+
+  desc "Deploy a new version to the Google Play"
+  lane :deploy do
+    set_full_version()
+
+    gradle(task: "clean bundle")
+
+    upload_to_play_store(
+      aab: "../build/app/outputs/bundle/release/app-release.aab",
+      #track: "alpha"
+    )
+  end
 end
