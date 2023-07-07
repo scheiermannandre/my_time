@@ -44,9 +44,9 @@ jobs:
        
     - name: Build App Bundle and Deploy
       run: |
-        flutter build appbundle
-        cd android && fastlane playstore
-    
+        flutter build appbundle    
+
+        
     - name: Deploy
       run: |
         cd android && fastlane playstore
