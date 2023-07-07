@@ -37,10 +37,17 @@ jobs:
         ruby-version: 2.6
         rubygems: latest
 
-    - name: Build and Deploy
+    - name: Get Dependencies
       run: |
         flutter clean
         flutter pub get
+       
+    - name: Build App Bundle and Deploy
+      run: |
         flutter build appbundle
+        cd android && fastlane playstore
+    
+    - name: Deploy
+      run: |
         cd android && fastlane playstore
       # make deploy-android
