@@ -5,8 +5,8 @@ test:
 
 deploy-android:
 	@echo "╠ Sending Android Build to Google Play Store.."
-    cd android && bundle install
-    cd android/fastlane && bundle exec fastlane deploy
+	cd android && bundle install
+	cd android/fastlane && bundle exec fastlane deploy
 
 
 # deploy-ios:
