@@ -5,6 +5,7 @@ test:
 
 deploy-android:
 	@echo "╠ Sending Android Build to Google Play Store.."
+	flutter build appbundle
 	cd android && bundle install
 	cd android/fastlane && bundle exec fastlane deploy
 
