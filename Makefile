@@ -20,6 +20,5 @@ deploy-android:
 #     firebase deploy
 
 deploy: test deploy-android
-# deploy: test deploy-android deploy-ios deploy-web
 
 .PHONY: test deploy-android deploy-ios deploy-web

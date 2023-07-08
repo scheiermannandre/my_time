@@ -55,4 +55,6 @@ jobs:
 
     - name: Deploy
       run: |
-        cd android && bundle exec fastlane playstore
+        cd android 
+        bundle install
+        bundle exec fastlane playstore
