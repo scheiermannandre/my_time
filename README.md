@@ -1,4 +1,5 @@
 # MyTime
+Get it here: https://play.google.com/store/apps/details?id=com.andrescheiermann.mytime
 
 ## Introduction
 
