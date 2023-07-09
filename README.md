@@ -1,4 +1,6 @@
 # MyTime
+Project Management: https://frill-shallot-45b.notion.site/MyTime-89ca732955eb4347bd57fddc19dd5768?pvs=4
+
 Get it here: https://play.google.com/store/apps/details?id=com.andrescheiermann.mytime
 
 ## Introduction
