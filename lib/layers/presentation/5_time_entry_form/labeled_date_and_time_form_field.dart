@@ -64,7 +64,7 @@ class LabeledDateFormField extends StatelessWidget {
   Widget build(BuildContext context) {
     return ResponsiveAlign(
       maxContentWidth: Breakpoint.tablet,
-      alignment: Alignment.centerLeft,
+      alignment: Alignment.center,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,

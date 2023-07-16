@@ -12,7 +12,7 @@ class LabeledDescriptionFormField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ResponsiveAlign(
-      alignment: Alignment.centerLeft,
+      alignment: Alignment.center,
       maxContentWidth: Breakpoint.tablet,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
