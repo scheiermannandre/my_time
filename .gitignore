@@ -140,3 +140,11 @@ app.*.symbols
 !/dev/ci/**/Gemfile.lock
 !.vscode/settings.json
 
+# Android Studio will place build artifacts here
+/android/app/debug
+/android/app/profile
+/android/app/release
+
+myTime_play_store_credentials.json
+upload-keystore.jks
+
