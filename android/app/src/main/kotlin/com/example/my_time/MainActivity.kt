@@ -1,4 +1,4 @@
-package com.example.my_time
+package com.andrescheiermann.mytime
 
 import io.flutter.embedding.android.FlutterActivity
 
