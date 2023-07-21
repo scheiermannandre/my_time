@@ -6,9 +6,9 @@ import 'package:my_time/layers/presentation/3_projects_per_group_list_screen/pag
 import 'package:my_time/layers/presentation/3_projects_per_group_list_screen/pages/project_analytics_page/widgets/diagram_frame.dart';
 import 'package:my_time/layers/presentation/3_projects_per_group_list_screen/pages/project_analytics_page/widgets/horizontal_balance_bar.dart';
 
-class HorizontalBalanceBarConfiguration {}
-
 class BalanceBarChart extends StatelessWidget {
+  static Key balanceBarValueKey = const Key("balanceBarValueKey");
+
   const BalanceBarChart({
     super.key,
     required this.item,
@@ -58,6 +58,7 @@ class BalanceBarChart extends StatelessWidget {
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                 ),
                 Text(
+                  key: balanceBarValueKey,
                   balanceValueText,
                   style: TextStyle(
                       fontSize: 16,
@@ -137,7 +138,7 @@ class BalanceBarChart extends StatelessWidget {
     } else {
       char = '';
     }
-    return '$char${formatTime(time)} ';
+    return '$char${formatTime(time)}';
   }
 
   String formatTime(double time) {
