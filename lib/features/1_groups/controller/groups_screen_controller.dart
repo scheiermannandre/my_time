@@ -122,6 +122,6 @@ class GroupsScreenController extends _$GroupsScreenController {
 }
 
 final groupsDataProvider = StreamProvider.autoDispose<GroupsScreenModel>((ref) {
-  final groupsService = ref.watch(groupsScreenServiceProvider);
-  return groupsService.watchData();
+  final groupsService = ref.watch(deviceStorageGroupsRepositoryProvider);
+  return groupsService.streamGroups();
 });

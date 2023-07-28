@@ -1,8 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:my_time/exceptions/custom_app_exception.dart';
 import 'package:my_time/features/1_groups/1_groups.dart';
 import 'package:my_time/features/interface/interface.dart';
 
+import 'dart:async';
 import 'package:realm/realm.dart';
 
 class RealmDbGroupsRepository implements GroupsRepository {
@@ -11,30 +11,32 @@ class RealmDbGroupsRepository implements GroupsRepository {
   RealmDbGroupsRepository(this.realm);
 
   @override
-  Future<List<GroupModel>> fetchGroups() async {
-    final groupsFromDB = realm.all<GroupRealmModel>();
+  Stream<GroupsScreenModel> streamGroups() =>
+      realm.all<GroupRealmModel>().changes.map(_mapToGroupScreenModel);
+
+  GroupsScreenModel _mapToGroupScreenModel(
+      RealmResultsChanges<GroupRealmModel> event) {
     List<GroupModel> groups = [];
-    for (final group in groupsFromDB) {
+    List<ProjectModel> projects = [];
+
+    for (final group in event.results) {
+      projects.addAll(_mapFavouriteProjects(group));
       groups.add(GroupModel.factory(id: group.id, name: group.name));
     }
-    return await Future(() => groups);
+    final GroupsScreenModel groupScreenModel =
+        GroupsScreenModel(groups: groups, projects: projects);
+
+    return groupScreenModel;
   }
 
-  @override
-  Future<List<ProjectModel>> fetchFavouriteProjects() async {
-    final favouriteProjectsDB =
-        realm.all<ProjectRealmModel>().query("isMarkedAsFavourite == ${true}");
-    final List<ProjectModel> favouriteProjects = [];
-    for (var element in favouriteProjectsDB) {
-      favouriteProjects.add(
-        ProjectModel.factory(
-          id: element.id,
-          name: element.name,
-        ),
-      );
-    }
-    final result = await Future(() => favouriteProjects);
-    return result;
+  List<ProjectModel> _mapFavouriteProjects(GroupRealmModel group) {
+    final favouriteProjects =
+        group.projects.where((project) => project.isMarkedAsFavourite).map(
+      (project) {
+        return ProjectModel.factory(name: project.name, id: project.id);
+      },
+    ).toList();
+    return favouriteProjects;
   }
 
   @override
@@ -43,16 +45,6 @@ class RealmDbGroupsRepository implements GroupsRepository {
       realm.add(GroupRealmModel(group.id, name: group.name));
     });
     return Future(() => true);
-  }
-
-  @override
-  Future<GroupModel?> fetchGroup(String groupId) async {
-    final groups = realm.all<GroupRealmModel>().query("id == '$groupId'");
-    if (groups.isEmpty) {
-      throw const CustomAppException.groupNotFound();
-    }
-    final group = groups.first;
-    return GroupModel.factory(id: group.id, name: group.name);
   }
 }
 
