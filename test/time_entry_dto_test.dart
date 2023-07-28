@@ -1,13 +1,15 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:my_time/layers/domain/time_entry.dart';
+import 'package:my_time/features/4_time_entry_form/domain/time_entry.dart';
 
 void main() {
-  test('Case 1 - New Entry lies inbetween Existing Entry  -> Intersection -> invalid', () {
+  test(
+      'Case 1 - New Entry lies inbetween Existing Entry  -> Intersection -> invalid',
+      () {
     final existingEntryStart = DateTime(0, 0, 0, 8, 0);
     final existingEntryEnd = DateTime(0, 0, 0, 12, 0);
     final newEntryStart = DateTime(0, 0, 0, 9, 0);
     final newEntryEnd = DateTime(0, 0, 0, 10, 0);
-    final existingEntry = TimeEntryDTO(
+    final existingEntry = TimeEntryModel(
         projectId: "",
         startTime: existingEntryStart,
         endTime: existingEntryEnd,
@@ -15,7 +17,7 @@ void main() {
         breakTime: Duration.zero,
         description: "");
 
-    final newEntry = TimeEntryDTO(
+    final newEntry = TimeEntryModel(
         projectId: "",
         startTime: newEntryStart,
         endTime: newEntryEnd,
@@ -28,12 +30,14 @@ void main() {
     expect(intersect, true);
   });
 
-  test('Case 2 - New Entry Start lies inbetween Existing Entry -> Intersection -> invalid', () {
+  test(
+      'Case 2 - New Entry Start lies inbetween Existing Entry -> Intersection -> invalid',
+      () {
     final existingEntryStart = DateTime(0, 0, 0, 8, 0);
     final existingEntryEnd = DateTime(0, 0, 0, 12, 0);
     final newEntryStart = DateTime(0, 0, 0, 9, 0);
     final newEntryEnd = DateTime(0, 0, 0, 14, 0);
-    final existingEntry = TimeEntryDTO(
+    final existingEntry = TimeEntryModel(
         projectId: "",
         startTime: existingEntryStart,
         endTime: existingEntryEnd,
@@ -41,7 +45,7 @@ void main() {
         breakTime: Duration.zero,
         description: "");
 
-    final newEntry = TimeEntryDTO(
+    final newEntry = TimeEntryModel(
         projectId: "",
         startTime: newEntryStart,
         endTime: newEntryEnd,
@@ -54,12 +58,14 @@ void main() {
     expect(intersect, true);
   });
 
-  test('Case 3 - New Entry Start lies on Existing Entry End -> NO Intersection -> valid', () {
+  test(
+      'Case 3 - New Entry Start lies on Existing Entry End -> NO Intersection -> valid',
+      () {
     final existingEntryStart = DateTime(0, 0, 0, 8, 0);
     final existingEntryEnd = DateTime(0, 0, 0, 12, 0);
     final newEntryStart = DateTime(0, 0, 0, 12, 0);
     final newEntryEnd = DateTime(0, 0, 0, 14, 0);
-    final existingEntry = TimeEntryDTO(
+    final existingEntry = TimeEntryModel(
         projectId: "",
         startTime: existingEntryStart,
         endTime: existingEntryEnd,
@@ -67,7 +73,7 @@ void main() {
         breakTime: Duration.zero,
         description: "");
 
-    final newEntry = TimeEntryDTO(
+    final newEntry = TimeEntryModel(
         projectId: "",
         startTime: newEntryStart,
         endTime: newEntryEnd,
@@ -88,7 +94,7 @@ void main() {
     final existingEntryEnd = DateTime(0, 0, 0, 12, 0);
     final newEntryStart = DateTime(0, 0, 0, 6, 0);
     final newEntryEnd = DateTime(0, 0, 0, 9, 0);
-    final existingEntry = TimeEntryDTO(
+    final existingEntry = TimeEntryModel(
         projectId: "",
         startTime: existingEntryStart,
         endTime: existingEntryEnd,
@@ -96,7 +102,7 @@ void main() {
         breakTime: Duration.zero,
         description: "");
 
-    final newEntry = TimeEntryDTO(
+    final newEntry = TimeEntryModel(
         projectId: "",
         startTime: newEntryStart,
         endTime: newEntryEnd,
@@ -109,12 +115,14 @@ void main() {
     expect(intersect, true);
   });
 
-  test('Case 5 - New Entry End lies on Existing Entry Start -> NO Intersection -> valid', () {
+  test(
+      'Case 5 - New Entry End lies on Existing Entry Start -> NO Intersection -> valid',
+      () {
     final existingEntryStart = DateTime(0, 0, 0, 8, 0);
     final existingEntryEnd = DateTime(0, 0, 0, 12, 0);
     final newEntryStart = DateTime(0, 0, 0, 12, 0);
     final newEntryEnd = DateTime(0, 0, 0, 14, 0);
-    final existingEntry = TimeEntryDTO(
+    final existingEntry = TimeEntryModel(
         projectId: "",
         startTime: existingEntryStart,
         endTime: existingEntryEnd,
@@ -122,7 +130,7 @@ void main() {
         breakTime: Duration.zero,
         description: "");
 
-    final newEntry = TimeEntryDTO(
+    final newEntry = TimeEntryModel(
         projectId: "",
         startTime: newEntryStart,
         endTime: newEntryEnd,
@@ -143,7 +151,7 @@ void main() {
     final existingEntryEnd = DateTime(0, 0, 0, 12, 0);
     final newEntryStart = DateTime(0, 0, 0, 10, 0);
     final newEntryEnd = DateTime(0, 0, 0, 12, 0);
-    final existingEntry = TimeEntryDTO(
+    final existingEntry = TimeEntryModel(
         projectId: "",
         startTime: existingEntryStart,
         endTime: existingEntryEnd,
@@ -151,7 +159,7 @@ void main() {
         breakTime: Duration.zero,
         description: "");
 
-    final newEntry = TimeEntryDTO(
+    final newEntry = TimeEntryModel(
         projectId: "",
         startTime: newEntryStart,
         endTime: newEntryEnd,
@@ -171,7 +179,7 @@ void main() {
     final existingEntryEnd = DateTime(0, 0, 0, 12, 0);
     final newEntryStart = DateTime(0, 0, 0, 8, 0);
     final newEntryEnd = DateTime(0, 0, 0, 10, 0);
-    final existingEntry = TimeEntryDTO(
+    final existingEntry = TimeEntryModel(
         projectId: "",
         startTime: existingEntryStart,
         endTime: existingEntryEnd,
@@ -179,7 +187,7 @@ void main() {
         breakTime: Duration.zero,
         description: "");
 
-    final newEntry = TimeEntryDTO(
+    final newEntry = TimeEntryModel(
         projectId: "",
         startTime: newEntryStart,
         endTime: newEntryEnd,
@@ -199,7 +207,7 @@ void main() {
     final existingEntryEnd = DateTime(0, 0, 0, 12, 0);
     final newEntryStart = DateTime(0, 0, 0, 7, 0);
     final newEntryEnd = DateTime(0, 0, 0, 13, 0);
-    final existingEntry = TimeEntryDTO(
+    final existingEntry = TimeEntryModel(
         projectId: "",
         startTime: existingEntryStart,
         endTime: existingEntryEnd,
@@ -207,7 +215,7 @@ void main() {
         breakTime: Duration.zero,
         description: "");
 
-    final newEntry = TimeEntryDTO(
+    final newEntry = TimeEntryModel(
         projectId: "",
         startTime: newEntryStart,
         endTime: newEntryEnd,
@@ -220,14 +228,14 @@ void main() {
     expect(intersect, true);
   });
 
-   test('''Case 9 - 
+  test('''Case 9 - 
   New Entry is past Existing Entry
   -> NO Intersection -> valid''', () {
     final existingEntryStart = DateTime(0, 0, 0, 8, 0);
     final existingEntryEnd = DateTime(0, 0, 0, 12, 0);
     final newEntryStart = DateTime(0, 0, 0, 13, 0);
     final newEntryEnd = DateTime(0, 0, 0, 15, 0);
-    final existingEntry = TimeEntryDTO(
+    final existingEntry = TimeEntryModel(
         projectId: "",
         startTime: existingEntryStart,
         endTime: existingEntryEnd,
@@ -235,7 +243,7 @@ void main() {
         breakTime: Duration.zero,
         description: "");
 
-    final newEntry = TimeEntryDTO(
+    final newEntry = TimeEntryModel(
         projectId: "",
         startTime: newEntryStart,
         endTime: newEntryEnd,
@@ -255,7 +263,7 @@ void main() {
     final existingEntryEnd = DateTime(0, 0, 0, 12, 0);
     final newEntryStart = DateTime(0, 0, 0, 5, 0);
     final newEntryEnd = DateTime(0, 0, 0, 7, 0);
-    final existingEntry = TimeEntryDTO(
+    final existingEntry = TimeEntryModel(
         projectId: "",
         startTime: existingEntryStart,
         endTime: existingEntryEnd,
@@ -263,7 +271,7 @@ void main() {
         breakTime: Duration.zero,
         description: "");
 
-    final newEntry = TimeEntryDTO(
+    final newEntry = TimeEntryModel(
         projectId: "",
         startTime: newEntryStart,
         endTime: newEntryEnd,
@@ -283,7 +291,7 @@ void main() {
     final existingEntryEnd = DateTime(0, 0, 0, 12, 0);
     final newEntryStart = DateTime(0, 0, 0, 8, 0);
     final newEntryEnd = DateTime(0, 0, 0, 12, 0);
-    final existingEntry = TimeEntryDTO(
+    final existingEntry = TimeEntryModel(
         projectId: "",
         startTime: existingEntryStart,
         endTime: existingEntryEnd,
@@ -291,7 +299,7 @@ void main() {
         breakTime: Duration.zero,
         description: "");
 
-    final newEntry = TimeEntryDTO(
+    final newEntry = TimeEntryModel(
         projectId: "",
         startTime: newEntryStart,
         endTime: newEntryEnd,

@@ -10,6 +10,86 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/services.dart';
 
 void main() async {
+  // Realm realm = Realm(Configuration.local([
+  //   Group.schema,
+  //   GroupRealmModel.schema,
+  //   Project.schema,
+  //   ProjectRealmModel.schema,
+  //   TimeEntry.schema,
+  //   TimeEntryRealmModel.schema,
+  // ]));
+  // await realm.writeAsync(() {
+  //   try {
+  //     realm.deleteAll<Group>();
+  //     realm.deleteAll<GroupRealmModel>();
+  //     realm.deleteAll<Project>();
+  //     realm.deleteAll<ProjectRealmModel>();
+  //     realm.deleteAll<TimeEntry>();
+  //     realm.deleteAll<TimeEntryRealmModel>();
+  //   } catch (e) {
+  //     debugPrint(e.toString());
+  //   }
+  // });
+  // await realm.writeAsync(() {
+  //   try {
+  //     realm.add(Group("groupId", name: "group.name", projects: [
+  //       Project("projectId", "groupId", "name",
+  //           isMarkedAsFavourite: true,
+  //           timeEntries: [
+  //             TimeEntry(
+  //               "entryId",
+  //               "projectId",
+  //               "groupId",
+  //               DateTime.now(),
+  //               DateTime.now().add(
+  //                 const Duration(hours: 4),
+  //               ),
+  //               const Duration(hours: 4).toString(),
+  //               const Duration(hours: 1).toString(),
+  //               description: "description",
+  //             )
+  //           ])
+  //     ]));
+  //   } catch (e) {
+  //     debugPrint(e.toString());
+  //   }
+  // });
+  // final oldGroupsFromDB = realm.all<Group>();
+
+  // await realm.writeAsync(() {
+  //   for (var oldGroup in oldGroupsFromDB) {
+  //     var newGroup = GroupRealmModel(
+  //       oldGroup.id,
+  //       name: oldGroup.name,
+  //     );
+  //     for (var oldProjects in oldGroup.projects) {
+  //       var newProject = ProjectRealmModel(
+  //         oldProjects.id,
+  //         oldProjects.groupId,
+  //         oldProjects.name,
+  //         isMarkedAsFavourite: oldProjects.isMarkedAsFavourite,
+  //       );
+  //       for (var oldEntry in oldProjects.timeEntries) {
+  //         var newEntry = TimeEntryRealmModel(
+  //           oldEntry.id,
+  //           oldEntry.projectId,
+  //           oldEntry.groupId,
+  //           oldEntry.startTime,
+  //           oldEntry.endTime,
+  //           oldEntry.totalTimeStr,
+  //           oldEntry.breakTimeStr,
+  //           description: oldEntry.description,
+  //         );
+  //         newProject.timeEntries.add(newEntry);
+  //       }
+  //       newGroup.projects.add(newProject);
+  //     }
+  //     realm.add(newGroup);
+  //     realm.delete(oldGroup);
+  //   }
+  // });
+  // final groupsFromDB = realm.all<GroupRealmModel>();
+
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitDown,

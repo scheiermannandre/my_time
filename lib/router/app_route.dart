@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:my_time/layers/presentation/0_home_screen/groups_list_screen.dart';
-import 'package:my_time/layers/presentation/1_add_group_screen/add_group_screen.dart';
-import 'package:my_time/layers/presentation/2_add_project_screen/add_project_screen.dart';
-import 'package:my_time/layers/presentation/3_projects_per_group_list_screen/projects_per_group_list_screen.dart';
-import 'package:my_time/layers/presentation/4_project_screen/project_screen.dart';
-import 'package:my_time/layers/presentation/5_time_entry_form/time_entry_form_screen.dart';
+import 'package:my_time/common/screens/shell_screen.dart';
+import 'package:my_time/features/1_groups/views/add_group_screen.dart';
+import 'package:my_time/features/1_groups/views/groups_screen.dart';
+import 'package:my_time/features/2_projects/views/add_project_screen.dart';
+import 'package:my_time/features/2_projects/views/group_projects_shell_page.dart';
+import 'package:my_time/features/3_project_timer_page/view/project_shell_screen.dart';
+import 'package:my_time/features/3_project_timer_page/view/project_timer_shell_page.dart';
+import 'package:my_time/features/4_time_entry_form/view/time_entry_form_screen.dart';
+import 'package:my_time/features/5_project_history/view/proejct_history_shell_page.dart';
+import 'package:my_time/features/6_group_analytics/view/group_analytics_shell_page.dart';
 import 'package:my_time/router/not_found_screen.dart';
 
 enum _AppRoute {
@@ -33,8 +37,22 @@ final goRouter = GoRouter(
     GoRoute(
       path: '/',
       name: AppRoute.home,
-      builder: (context, state) => const GroupsListScreen(),
+      builder: (context, state) => const GroupsScreen(),
     ),
+
+    // GoRoute(
+    //   path: '/group/:gid',
+    //   name: AppRoute.group,
+    //   pageBuilder: (context, state) {
+    //     final groupId = state.pathParameters['gid']!;
+    //     return MaterialPage(
+    //       key: state.pageKey,
+    //       fullscreenDialog: false,
+    //       child: ProjectsPerGroupListScreen(groupId: groupId),
+    //     );
+    //   },
+    // ),
+
     GoRoute(
       path: '/group/:gid',
       name: AppRoute.group,
@@ -43,7 +61,18 @@ final goRouter = GoRouter(
         return MaterialPage(
           key: state.pageKey,
           fullscreenDialog: false,
-          child: ProjectsPerGroupListScreen(groupId: groupId),
+          child: ShellScreen(
+            children: [
+              GroupProjectsShellPage(
+                groupId: groupId,
+                context: context,
+              ),
+              GroupAnalyticsShellPage(
+                groupId: groupId,
+                context: context,
+              )
+            ],
+          ),
         );
       },
     ),
@@ -62,7 +91,7 @@ final goRouter = GoRouter(
       path: '/newproject',
       name: AppRoute.addProject,
       pageBuilder: (context, state) {
-        final groupId = state.queryParameters['gid'];
+        final groupId = state.uri.queryParameters['gid'];
         return MaterialPage(
           key: state.pageKey,
           fullscreenDialog: false,
@@ -76,11 +105,20 @@ final goRouter = GoRouter(
       path: '/project/:pid',
       name: AppRoute.project,
       pageBuilder: (context, state) {
-        final productId = state.pathParameters['pid']!;
+        final projectId = state.pathParameters['pid']!;
         return MaterialPage(
           key: state.pageKey,
           fullscreenDialog: false,
-          child: ProjectScreen(projectId: productId),
+          child: ProjectShellScreen(
+            projectId: projectId,
+            children: [
+              ProjectTimerShellPage(
+                projectId: projectId,
+                context: context,
+              ),
+              ProjectHistoryShellPage(projectId: projectId, context: context)
+            ],
+          ),
         );
       },
       routes: [
@@ -89,9 +127,9 @@ final goRouter = GoRouter(
           name: AppRoute.timeEntryForm,
           pageBuilder: (context, state) {
             final projectID = state.pathParameters['pid'] ?? "";
-            final isEdit = state.queryParameters['isEdit'] ?? "false";
-            final tid = state.queryParameters['tid'] ?? "";
-            final String projectName = state.queryParameters['pname'] ?? "";
+            final isEdit = state.uri.queryParameters['isEdit'] ?? "false";
+            final tid = state.uri.queryParameters['tid'] ?? "";
+            final String projectName = state.uri.queryParameters['pname'] ?? "";
             return MaterialPage(
               key: state.pageKey,
               fullscreenDialog: false,

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:my_time/layers/presentation/3_projects_per_group_list_screen/pages/project_analytics_page/models/balance_bar_chart_configuration.dart';
-import 'package:my_time/layers/presentation/3_projects_per_group_list_screen/pages/project_analytics_page/models/balance_bar_item.dart';
-import 'package:my_time/layers/presentation/3_projects_per_group_list_screen/pages/project_analytics_page/widgets/balance_bar_chart.dart';
+import 'package:my_time/features/6_group_analytics/models/balance_bar_chart_configuration.dart';
+import 'package:my_time/features/6_group_analytics/models/balance_bar_item.dart';
+import 'package:my_time/features/6_group_analytics/widgets/balance_bar_chart.dart';
 
 void main() {
   Widget createBalanceBar(TimeOfDay desired, TimeOfDay actual) {

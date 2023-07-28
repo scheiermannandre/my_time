@@ -8,9 +8,3 @@ initially and then changing the approach from one guide to this guide.
 # Solution
 1. change to manual signing, add your team, import the profiles and certificates you already created on https://developer.apple.com/account/resources/ 
 
-
-# Potentially Helpful Looking Resources to solve automatic signing problem
-1. https://www.youtube.com/watch?v=kcnO8K2tWvE
-
-
-https://blog.codemagic.io/how-to-code-sign-publish-ios-apps/
