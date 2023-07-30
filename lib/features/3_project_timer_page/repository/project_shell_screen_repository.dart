@@ -4,4 +4,5 @@ abstract class ProjectShellScreenRepository {
   Future<bool> deleteProject(String projectId);
   Future<void> updateIsFavouriteState(String projectId, bool isFavourite);
   Future<ProjectModel?> fetchProject(String projectId);
+  Stream<ProjectModel> streamProject(String projectId);
 }

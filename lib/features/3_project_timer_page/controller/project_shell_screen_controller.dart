@@ -108,7 +108,7 @@ class ProjectShellScreenController extends _$ProjectShellScreenController {
 }
 
 final projectProvider =
-    FutureProvider.autoDispose.family<ProjectModel?, String>((ref, projectId) {
+    StreamProvider.autoDispose.family<ProjectModel?, String>((ref, projectId) {
   final projectRepo = ref.read(projectsRepositoryProvider);
-  return projectRepo.fetchProject(projectId);
+  return projectRepo.streamProject(projectId);
 });

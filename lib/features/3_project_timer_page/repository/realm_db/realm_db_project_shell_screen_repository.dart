@@ -54,6 +54,18 @@ class RealmDbProjectShellScreenPageRepository
       isMarkedAsFavourite: project.isMarkedAsFavourite,
     );
   }
+
+  @override
+  Stream<ProjectModel> streamProject(String projectId) => realm
+      .all<ProjectRealmModel>()
+      .firstWhere((project) => project.id == projectId)
+      .changes
+      .map((projects) => ProjectModel.factory(
+            id: projects.object.id,
+            groupId: projects.object.groupId,
+            name: projects.object.name,
+            isMarkedAsFavourite: projects.object.isMarkedAsFavourite,
+          ));
 }
 
 final projectsRepositoryProvider =

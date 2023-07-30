@@ -168,3 +168,9 @@ final timerDataProvider = FutureProvider.autoDispose
   final timerDataRepo = ref.read(timerDataRepositoryProvider);
   return timerDataRepo.fetchTimerData(projectId);
 });
+
+final projectFutureProvider =
+    FutureProvider.autoDispose.family<ProjectModel?, String>((ref, projectId) {
+  final projectRepo = ref.read(projectsRepositoryProvider);
+  return projectRepo.fetchProject(projectId);
+});

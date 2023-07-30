@@ -30,7 +30,7 @@ class ProjectTimerShellPage extends ProjectShellPage {
         );
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final project = ref.watch(projectProvider(projectId));
+    final project = ref.watch(projectFutureProvider(projectId));
     final state = ref.watch(projectTimerShellPageControllerProvider(projectId));
 
     final projectScreenController =
