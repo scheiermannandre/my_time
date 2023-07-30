@@ -9,3 +9,4 @@ export 'package:my_time/features/5_project_history/view/project_history_shell_pa
 export 'package:my_time/features/5_project_history/widgets/labeled_block.dart';
 export 'package:my_time/features/5_project_history/widgets/time_entries_block.dart';
 export 'package:my_time/features/5_project_history/widgets/time_entry_card.dart';
+export 'package:my_time/features/5_project_history/service/project_history_service.dart';

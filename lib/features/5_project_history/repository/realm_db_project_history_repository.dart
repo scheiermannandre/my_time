@@ -25,39 +25,15 @@ class RealmDbProjectHistoryRepository implements ProjectHistoryRepository {
   }
 
   @override
-  Future<List<List<TimeEntryModel>>> getAllProjectEntriesGroupedByMonth(
-      String projectId) async {
-    List<List<TimeEntryModel>> groupedLists = [];
-    final project =
-        realm.all<ProjectRealmModel>().query("id == '$projectId'").first;
-    final entriesDB = project.timeEntries.toList();
-    List<TimeEntryModel> entries = [];
-    for (var element in entriesDB) {
-      entries.add(_convertEntryFromDB(element));
-    }
-    if (entries.isEmpty) {
-      return groupedLists;
-    }
-    if (groupedLists.isEmpty) {
-      groupedLists.add([]);
-    }
-
-    entries.sort(((a, b) => b.startTime.compareTo(a.startTime)));
-    DateTime currentYearAndMonth = entries.first.startTime.yearAndMonth();
-    int index = 0;
-    for (var entry in entries) {
-      DateTime entryYearAndMonth = entry.startTime.yearAndMonth();
-      if (entryYearAndMonth == currentYearAndMonth) {
-        groupedLists[index].add(entry);
-      } else {
-        index++;
-        groupedLists.add([]);
-        groupedLists[index].add(entry);
-      }
-      currentYearAndMonth = entryYearAndMonth;
-    }
-    return groupedLists;
-  }
+  Stream<List<TimeEntryModel>> streamProjectEntriesGroupedByMonth(
+          String projectId) =>
+      realm
+          .all<TimeEntryRealmModel>()
+          .query("projectId == '$projectId'")
+          .changes
+          .map((entries) => entries.results
+              .map((entry) => _convertEntryFromDB(entry))
+              .toList());
 
   TimeEntryModel _convertEntryFromDB(TimeEntryRealmModel entryDB) {
     return TimeEntryModel.factory(
@@ -75,5 +51,7 @@ final projectHistoryRepositoryProvider =
     Provider<RealmDbProjectHistoryRepository>((ref) {
   final config = Configuration.local(
       [ProjectRealmModel.schema, TimeEntryRealmModel.schema]);
-  return RealmDbProjectHistoryRepository(Realm(config));
+  final realm = Realm(config);
+  ref.onDispose(() => realm.close());
+  return RealmDbProjectHistoryRepository(realm);
 });

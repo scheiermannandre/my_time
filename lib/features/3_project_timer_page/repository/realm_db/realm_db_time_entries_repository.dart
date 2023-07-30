@@ -5,7 +5,6 @@ import 'package:my_time/features/interface/interface.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
-
 import 'package:realm/realm.dart';
 
 class RealmDbTimeEntriesRepository implements TimeEntriesRepository {
