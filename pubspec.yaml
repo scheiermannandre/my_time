@@ -65,6 +65,7 @@ dev_dependencies:
   flutter_native_splash: ^2.3.1
   flutter_launcher_icons: ^0.13.1
   rename: ^2.1.1
+  very_good_analysis: ^5.0.0+1
 
 flutter_icons:
   #image_path works for iOS

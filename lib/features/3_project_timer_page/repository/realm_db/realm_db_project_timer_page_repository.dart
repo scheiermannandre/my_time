@@ -106,5 +106,7 @@ class RealmDbProjectTimerPageRepository implements ProjectTimerPageRepository {
 final timerDataRepositoryProvider =
     Provider<RealmDbProjectTimerPageRepository>((ref) {
   final config = Configuration.local([TimerDataRealmModel.schema]);
-  return RealmDbProjectTimerPageRepository(Realm(config));
+  final Realm realm = Realm(config);
+  ref.onDispose(() => realm.close());
+  return RealmDbProjectTimerPageRepository(realm);
 });

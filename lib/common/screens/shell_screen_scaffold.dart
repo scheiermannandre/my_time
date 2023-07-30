@@ -45,7 +45,7 @@ class ShellScreenScaffold extends HookWidget {
   void _changeTab(PageController pageController, int index) {
     pageController.animateToPage(
       index,
-      duration: const Duration(milliseconds: 500),
+      duration: const Duration(milliseconds: 350),
       curve: Curves.easeOut,
     );
   }

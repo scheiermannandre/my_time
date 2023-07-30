@@ -56,7 +56,10 @@ class ProjectTimerShellPage extends ProjectShellPage {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              TimeDisplay(duration: projectScreenState.value!.duration),
+              TimeDisplay(
+                  duration: projectScreenState.value != null
+                      ? projectScreenState.value!.duration
+                      : Duration.zero),
               SizedBox(
                 height: gapH52.height!,
                 child: StaggeredButtons(
@@ -65,8 +68,10 @@ class ProjectTimerShellPage extends ProjectShellPage {
                   btnPauseLabel: context.loc.btnPauseLabel,
                   btnResumeLabel: context.loc.btnResumeLabel,
                   controller: animationController,
-                  timerState: projectScreenState.value!.timerData?.state ??
-                      TimerState.off,
+                  timerState: projectScreenState.value != null
+                      ? projectScreenState.value!.timerData?.state ??
+                          TimerState.off
+                      : TimerState.off,
                   onStart: () async {
                     return await projectScreenController.startTimer(data!.id);
                   },

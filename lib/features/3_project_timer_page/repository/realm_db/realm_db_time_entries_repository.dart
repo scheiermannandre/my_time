@@ -85,5 +85,7 @@ final timeEntriesRepositoryProvider =
     ProjectRealmModel.schema,
     TimeEntryRealmModel.schema
   ]);
-  return RealmDbTimeEntriesRepository(Realm(config));
+  final Realm realm = Realm(config);
+  ref.onDispose(() => realm.close());
+  return RealmDbTimeEntriesRepository(realm);
 });

@@ -122,8 +122,6 @@ class ProjectTimerShellPageController
       return state.value!.copyWith();
     });
 
-    //ref.invalidate(projectHistoryProvider(project.id));
-
     if (!state.hasError) {
       if (mounted) {
         pushNamedTimeEntryForm(context, project, true, entry);

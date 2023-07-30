@@ -10,7 +10,6 @@ export 'package:my_time/features/3_project_timer_page/view/project_screen_loadin
 export 'package:my_time/features/0_common/project_shell_page.dart';
 export 'package:my_time/features/3_project_timer_page/widgets/staggered_buttons.dart';
 export 'package:my_time/features/3_project_timer_page/widgets/time_display.dart';
-export 'package:my_time/features/3_project_timer_page/repository/timer_repository.dart';
 export 'package:my_time/features/3_project_timer_page/service/timer_service.dart';
 export 'package:my_time/features/3_project_timer_page/3_project_timer_page.dart';
 export 'package:my_time/features/3_project_timer_page/service/projects_screen_service.dart';
@@ -18,4 +17,4 @@ export 'package:my_time/features/3_project_timer_page/domain/time_entry.dart';
 export 'package:my_time/features/3_project_timer_page/repository/time_entries_repository.dart';
 export 'package:my_time/features/3_project_timer_page/repository/realm_db/realm_db_project_shell_screen_repository.dart';
 export 'package:my_time/features/3_project_timer_page/repository/realm_db/realm_db_time_entries_repository.dart';
-export 'package:my_time/features/3_project_timer_page/repository/realm_db/realm_db_timer_repository.dart';
+export 'package:my_time/features/3_project_timer_page/repository/realm_db/realm_db_project_timer_page_repository.dart';

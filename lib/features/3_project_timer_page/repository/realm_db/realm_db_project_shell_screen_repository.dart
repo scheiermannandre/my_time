@@ -63,5 +63,7 @@ final projectsRepositoryProvider =
     ProjectRealmModel.schema,
     TimeEntryRealmModel.schema
   ]);
-  return RealmDbProjectShellScreenPageRepository(Realm(config));
+  final Realm realm = Realm(config);
+  ref.onDispose(() => realm.close());
+  return RealmDbProjectShellScreenPageRepository(realm);
 });
