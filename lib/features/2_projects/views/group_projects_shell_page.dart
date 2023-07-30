@@ -18,7 +18,7 @@ class GroupProjectsShellPage extends ShellPage {
     final controller =
         ref.watch(groupProjectsShellPageControllerProvider.notifier);
     final state = ref.watch(groupProjectsShellPageControllerProvider);
-    final data = ref.watch(groupWithProjectsDTOProvider(groupId));
+    final data = ref.watch(groupProjectsProvider(groupId));
     final AnimationController sheetController = useAnimationController(
       duration: const Duration(milliseconds: 350),
     );
@@ -67,7 +67,7 @@ class GroupProjectsShellPage extends ShellPage {
                 color: Theme.of(context).colorScheme.primary,
                 onRefresh: () async {
                   await AsyncValue.guard(() => ref
-                      .refresh(groupWithProjectsDTOProvider(groupId).future)
+                      .refresh(groupProjectsProvider(groupId).future)
                       .timeout(const Duration(seconds: 20)));
                   return;
                 },

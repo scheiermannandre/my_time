@@ -51,13 +51,13 @@ class GroupProjectsShellPageController
   Future<void> showDeleteBottomSheet(
     BuildContext context,
     AnimationController controller,
-    GroupProjectsPageModel dto,
+    GroupProjectsPageModel model,
   ) async {
     {
       bool? deletePressed = false;
       listener(status) {
         if (status == AnimationStatus.dismissed) {
-          _delete(context, dto, deletePressed);
+          _delete(context, deletePressed);
         }
       }
 
@@ -66,7 +66,7 @@ class GroupProjectsShellPageController
       deletePressed = await openBottomSheet(
         context: context,
         bottomSheetController: controller,
-        title: context.loc.deleteGroupTitle(dto.group.name),
+        title: context.loc.deleteGroupTitle(model.group.name),
         message: context.loc.deleteGroupMessage,
         confirmBtnText: context.loc.deleteGroupConfirmBtnLabel,
         cancelBtnText: context.loc.deleteGroupCancelBtnLabel,
@@ -76,7 +76,7 @@ class GroupProjectsShellPageController
         onConfirmed: () async {
           final result = await ref
               .read(groupProjectsScreenServiceProvider)
-              .deleteGroup(dto);
+              .deleteGroup(model.group.id);
           return result;
         },
         whenCompleted: (result, mounted) async {
@@ -84,15 +84,14 @@ class GroupProjectsShellPageController
           //   ref.invalidate(groupsDataProvider);
           // }
           if (result && !mounted) {
-            ref.invalidate(groupWithProjectsDTOProvider(dto.group.id));
+            ref.invalidate(groupProjectsProvider(model.group.id));
           }
         },
       );
     }
   }
 
-  Future<void> _delete(BuildContext context, GroupProjectsPageModel dto,
-      bool? deletePressed) async {
+  Future<void> _delete(BuildContext context, bool? deletePressed) async {
     if (deletePressed ?? false) {
       if (mounted) {
         pop(context);
@@ -109,8 +108,8 @@ class GroupProjectsShellPageController
   }
 }
 
-final groupWithProjectsDTOProvider = StreamProvider.autoDispose
+final groupProjectsProvider = StreamProvider.autoDispose
     .family<GroupProjectsPageModel, String>((ref, groupId) {
   final service = ref.watch(groupProjectsScreenServiceProvider);
-  return service.watchData(groupId);
+  return service.streamGroupProjectsPageModel(groupId);
 });

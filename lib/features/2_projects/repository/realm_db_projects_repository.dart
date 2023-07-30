@@ -2,7 +2,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:my_time/exceptions/custom_app_exception.dart';
 import 'package:my_time/features/2_projects/2_projects.dart';
 import 'package:my_time/features/interface/interface.dart';
-import 'package:my_time/exceptions/custom_app_exception.dart' as app_exception;
 
 import 'dart:async';
 import 'package:realm/realm.dart';
@@ -27,34 +26,25 @@ class RealmDbProjectsRepository implements ProjectsRepository {
   }
 
   @override
-  Future<List<ProjectModel>> fetchProjectsByGroupId(String groupId) async {
-    final groups = realm.all<GroupRealmModel>().query("id == '$groupId'");
-    if (groups.isEmpty) {
-      throw const app_exception.CustomAppException.groupNotFound();
-    }
-    final List<ProjectModel> projects = [];
-    for (var project in groups.first.projects) {
-      projects.add(ProjectModel.factory(
-        id: project.id,
-        groupId: project.groupId,
-        name: project.name,
-      ));
-    }
-    return projects;
-  }
-
-  @override
-  Stream<List<ProjectModel>> watchProjectsByGroupId(String groupId) async* {
-    yield await fetchProjectsByGroupId(groupId);
-  }
+  Stream<List<ProjectModel>> streamProjectsByGroupId(String groupId) =>
+      realm.all<ProjectRealmModel>().query("groupId == '$groupId'").changes.map(
+            (event) => event.results
+                .map(
+                  (project) => ProjectModel.factory(
+                    id: project.id,
+                    groupId: project.groupId,
+                    name: project.name,
+                  ),
+                )
+                .toList(),
+          );
 
   @override
   Future<List<GroupModel>> fetchGroups() async {
     final groupsFromDB = realm.all<GroupRealmModel>();
-    List<GroupModel> groups = [];
-    for (final group in groupsFromDB) {
-      groups.add(GroupModel.factory(id: group.id, name: group.name));
-    }
+    List<GroupModel> groups = groupsFromDB
+        .map((group) => GroupModel.factory(id: group.id, name: group.name))
+        .toList();
     return await Future(() => groups);
   }
 
@@ -85,10 +75,15 @@ class RealmDbProjectsRepository implements ProjectsRepository {
 
 final deviceStorageProjectsRepositoryProvider =
     Provider<RealmDbProjectsRepository>((ref) {
-  final config = Configuration.local([
-    GroupRealmModel.schema,
-    ProjectRealmModel.schema,
-    TimeEntryRealmModel.schema
-  ]);
-  return RealmDbProjectsRepository(Realm(config));
+  final config = Configuration.local(
+    [
+      GroupRealmModel.schema,
+      ProjectRealmModel.schema,
+      TimeEntryRealmModel.schema,
+    ],
+  );
+
+  final Realm realm = Realm(config);
+  ref.onDispose(() => realm.close());
+  return RealmDbProjectsRepository(realm);
 });

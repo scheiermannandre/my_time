@@ -57,7 +57,7 @@ class AddProjectScreenController extends _$AddProjectScreenController {
 
   Future<void> _refreshData(ProjectModel project) async {
     //ref.invalidate(groupsDataProvider);
-    ref.invalidate(groupWithProjectsDTOProvider(project.groupId));
+    ref.invalidate(groupProjectsProvider(project.groupId));
   }
 
   Future<bool> _addProject(ProjectModel project) async {

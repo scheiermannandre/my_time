@@ -5,41 +5,34 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class ProjectsPerGroupScreenService {
   ProjectsPerGroupScreenService({
-    //required this.groupsRepository,
     required this.projectsRespository,
   });
 
-  //final RealmDbGroupsRepository groupsRepository;
   final ProjectsRepository projectsRespository;
 
-  Future<GroupModel> fetchGroup(String groupId) async {
-    GroupModel? group = await projectsRespository.fetchGroup(groupId);
-    return group!;
-  }
+  // Future<List<ProjectModel>> fetchProjectsByGroupId(String groupId) async {
+  //   return await projectsRespository.fetchProjectsByGroupId(groupId);
+  // }
 
-  Future<List<ProjectModel>> fetchProjectsByGroupId(String groupId) async {
-    return await projectsRespository.fetchProjectsByGroupId(groupId);
-  }
+  // Future<GroupProjectsPageModel> fetchGroupWithProjectsDTO(
+  //     String groupId) async {
+  //   final group = await projectsRespository.fetchGroup(groupId) as GroupModel;
+  //   final projects = await projectsRespository.fetchProjectsByGroupId(groupId);
+  //   return GroupProjectsPageModel(group: group, projects: projects);
+  // }
 
-  Future<GroupProjectsPageModel> fetchGroupWithProjectsDTO(
-      String groupId) async {
+  Stream<GroupProjectsPageModel> streamGroupProjectsPageModel(
+      String groupId) async* {
     final group = await projectsRespository.fetchGroup(groupId) as GroupModel;
-    final projects = await projectsRespository.fetchProjectsByGroupId(groupId);
-    return GroupProjectsPageModel(group: group, projects: projects);
+
+    yield* projectsRespository.streamProjectsByGroupId(groupId).map(
+          (projects) =>
+              GroupProjectsPageModel(group: group, projects: projects),
+        );
   }
 
-  Stream<GroupProjectsPageModel> watchData(String groupId) async* {
-    try {
-      yield* Stream.fromFuture(fetchGroupWithProjectsDTO(groupId));
-    } catch (ex) {
-      yield* Stream.error(ex);
-    }
-  }
-
-  Future<bool> deleteGroup(GroupProjectsPageModel dto) async {
-    bool deleteGroupResult =
-        await projectsRespository.deleteGroup(dto.group.id);
-    return deleteGroupResult;
+  Future<bool> deleteGroup(String groupId) async {
+    return await projectsRespository.deleteGroup(groupId);
   }
 }
 
