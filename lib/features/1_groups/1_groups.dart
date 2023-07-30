@@ -9,3 +9,4 @@ export 'package:my_time/features/1_groups/domain/groups_screen_model.dart';
 export 'package:my_time/features/1_groups/domain/group_model.dart';
 export 'package:my_time/features/1_groups/domain/project_model.dart';
 export 'package:my_time/features/1_groups/repository/realm_db_groups_repository.dart';
+export 'package:my_time/features/1_groups/service/groups_screen_service.dart';

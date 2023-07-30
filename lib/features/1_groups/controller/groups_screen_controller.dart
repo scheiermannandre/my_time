@@ -5,7 +5,6 @@ import 'package:my_time/router/app_route.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-
 part 'groups_screen_controller.g.dart';
 
 class GroupsScreenState {
@@ -121,7 +120,12 @@ class GroupsScreenController extends _$GroupsScreenController {
   }
 }
 
+// final groupsDataProvider = StreamProvider.autoDispose<GroupsScreenModel>((ref) {
+//   final groupsService = ref.watch(deviceStorageGroupsRepositoryProvider);
+//   return groupsService.streamGroupsScreenModel();
+// });
+
 final groupsDataProvider = StreamProvider.autoDispose<GroupsScreenModel>((ref) {
-  final groupsService = ref.watch(deviceStorageGroupsRepositoryProvider);
-  return groupsService.streamGroups();
+  final groupsService = ref.watch(groupsScreenServiceProvider);
+  return groupsService.streamGroupsScreenModel();
 });
