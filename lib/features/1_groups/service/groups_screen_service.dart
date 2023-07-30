@@ -11,17 +11,13 @@ class GroupsScreenService {
     final groupsStream = groupsRepository.streamGroups();
     final favouriteProjectsStream = groupsRepository.streamFavouriteProjects();
 
-    var groupScreenModelStream = CombineLatestStream([
+    final groupScreenModelStream = CombineLatestStream.combine2(
       groupsStream,
       favouriteProjectsStream,
-    ], mapToGroupScreenModel);
+      (groups, favouriteProjects) =>
+          GroupsScreenModel(groups: groups, projects: favouriteProjects),
+    );
     yield* groupScreenModelStream;
-  }
-
-  GroupsScreenModel mapToGroupScreenModel(List<List<Object>> values) {
-    final groups = values[0] as List<GroupModel>;
-    final projects = values[1] as List<ProjectModel>;
-    return GroupsScreenModel(groups: groups, projects: projects);
   }
 }
 
