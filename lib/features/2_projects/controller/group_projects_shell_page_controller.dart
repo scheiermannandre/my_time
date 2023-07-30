@@ -79,14 +79,6 @@ class GroupProjectsShellPageController
               .deleteGroup(model.group.id);
           return result;
         },
-        whenCompleted: (result, mounted) async {
-          // if (result) {
-          //   ref.invalidate(groupsDataProvider);
-          // }
-          if (result && !mounted) {
-            ref.invalidate(groupProjectsProvider(model.group.id));
-          }
-        },
       );
     }
   }

@@ -10,7 +10,7 @@ Future<dynamic> openBottomSheet({
   required String cancelBtnText,
   required Function onCanceled,
   required Future<bool> Function() onConfirmed,
-  required Future<void> Function(bool, bool) whenCompleted,
+  Future<void> Function(bool, bool)? whenCompleted,
 }) async {
   return await showModalBottomSheet(
     backgroundColor: GlobalProperties.backgroundColor,
@@ -38,7 +38,7 @@ class ModalBottomSheet extends StatefulWidget {
   final String cancelBtnText;
   final Function onCanceled;
   final Future<bool> Function() onConfirmed;
-  final Future<void> Function(bool, bool) whenCompleted;
+  final Future<void> Function(bool, bool)? whenCompleted;
 
   const ModalBottomSheet(
       {super.key,
@@ -105,7 +105,9 @@ class _ModalBottomSheetState extends State<ModalBottomSheet> {
                           });
                           final bool confirmed = await widget.onConfirmed();
                           if (confirmed) {
-                            await widget.whenCompleted(confirmed, mounted);
+                            if (widget.whenCompleted != null) {
+                              await widget.whenCompleted!(confirmed, mounted);
+                            }
                             if (mounted) {
                               Navigator.of(context).pop(true);
                             }

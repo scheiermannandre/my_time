@@ -77,15 +77,6 @@ class ProjectShellScreenController extends _$ProjectShellScreenController {
 
           return result;
         },
-        whenCompleted: (result, mounted) async {
-          if (result) {
-            //ref.invalidate(groupsDataProvider);
-            //ref.invalidate(groupWithProjectsDTOProvider(project.groupId));
-          }
-          if (result && !mounted) {
-            ref.invalidate(projectProvider(project.id));
-          }
-        },
       );
     }
   }
@@ -97,8 +88,6 @@ class ProjectShellScreenController extends _$ProjectShellScreenController {
     await ref
         .read(projectsRepositoryProvider)
         .updateIsFavouriteState(project.id, project.isMarkedAsFavourite);
-    ref.invalidate(projectProvider(project.id));
-    //ref.invalidate(groupsDataProvider);
   }
 
   Future<void> _delete(BuildContext context, bool? deletePressed) async {

@@ -53,7 +53,6 @@ class TimeEntryFormScreenController extends _$TimeEntryFormScreenController {
           () => ref.read(timeEntryFormRepositoryProvider).saveTimeEntry(data));
 
       if (result.hasValue && result.value!) {
-        //ref.invalidate(projectHistoryProvider(data.projectId));
         if (mounted) {
           context.pop();
         }
@@ -106,14 +105,6 @@ class TimeEntryFormScreenController extends _$TimeEntryFormScreenController {
           final result =
               await ref.read(timeEntryFormRepositoryProvider).deleteEntry(data);
           return result;
-        },
-        whenCompleted: (result, mounted) async {
-          if (result) {
-            //ref.invalidate(projectHistoryProvider(entry.projectId));
-          }
-          if (result && !mounted) {
-            ref.invalidate(projectTimeEntryProvider(entry.id));
-          }
         },
       );
     }

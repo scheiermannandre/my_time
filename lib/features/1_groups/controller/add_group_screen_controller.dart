@@ -40,7 +40,6 @@ class AddGroupScreenController extends _$AddGroupScreenController {
     }
     final group = GroupModel(name: groupName);
     if (await _addGroup(group)) {
-      ref.invalidate(groupsDataProvider);
       if (mounted) {
         goToGroupPage(context, group);
       }

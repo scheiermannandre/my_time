@@ -48,16 +48,10 @@ class AddProjectScreenController extends _$AddProjectScreenController {
     if (await _addProject(
       project,
     )) {
-      await _refreshData(project);
       if (mounted) {
         goToProject(context, project);
       }
     }
-  }
-
-  Future<void> _refreshData(ProjectModel project) async {
-    //ref.invalidate(groupsDataProvider);
-    ref.invalidate(groupProjectsProvider(project.groupId));
   }
 
   Future<bool> _addProject(ProjectModel project) async {
