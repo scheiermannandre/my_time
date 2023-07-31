@@ -4,63 +4,11 @@ import 'package:my_time/features/4_time_entry_form/4_time_entry_form.dart';
 import 'package:my_time/features/interface/interface.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 import 'package:realm/realm.dart';
 
 class RealmDbTimeEntryFormRepository implements TimeEntryFormRepository {
   final Realm realm;
   RealmDbTimeEntryFormRepository(this.realm);
-
-  Future<bool> _addTimeEntry(
-      ProjectRealmModel project, TimeEntryModel entry) async {
-    if (_checkSameDateEntries(entry, project.timeEntries)) {
-      throw const app_exception.CustomAppException.timeRangesOverlap();
-    }
-    await realm.writeAsync(() {
-      final newEntryDB = TimeEntryRealmModel(
-        entry.id,
-        entry.projectId,
-        "",
-        entry.startTime,
-        entry.endTime,
-        entry.totalTime.toString(),
-        entry.breakTime.toString(),
-        description: entry.description,
-      );
-      project.timeEntries.add(newEntryDB);
-    });
-    return true;
-  }
-
-  Future<bool> _updateTimeEntry(
-      TimeEntryRealmModel entry, TimeEntryModel updatedEntry) async {
-    await realm.writeAsync(() {
-      entry.startTime = updatedEntry.startTime;
-      entry.endTime = updatedEntry.endTime;
-      entry.totalTimeStr = updatedEntry.totalTime.toString();
-      entry.breakTimeStr = updatedEntry.breakTime.toString();
-      entry.description = updatedEntry.description;
-    });
-    return true;
-  }
-
-  @override
-  Future<bool> saveTimeEntry(TimeEntryModel entry) async {
-    final projects =
-        realm.all<ProjectRealmModel>().query("id == '${entry.projectId}'");
-    if (projects.isEmpty) {
-      throw const app_exception.CustomAppException.projectNotFound();
-    }
-    final project = projects.first;
-    final entries = project.timeEntries.toList();
-    final entryDB = entries.firstWhereOrNull(
-      (element) => element.id == entry.id,
-    );
-    if (entryDB == null) {
-      return await _addTimeEntry(project, entry);
-    }
-    return await _updateTimeEntry(entryDB, entry);
-  }
 
   @override
   Future<bool> deleteEntry(TimeEntryModel entry) async {
@@ -73,28 +21,6 @@ class RealmDbTimeEntryFormRepository implements TimeEntryFormRepository {
       realm.delete<TimeEntryRealmModel>(entries.first);
     });
     return true;
-  }
-
-  bool _checkSameDateEntries(
-      TimeEntryModel newEntry, List<TimeEntryRealmModel> currentEntries) {
-    final entriesSameDate = currentEntries.where((element) {
-      final elementDate = DateFormat('yyyy-MM-dd').format(element.startTime);
-      final entryDate = DateFormat('yyyy-MM-dd').format(newEntry.startTime);
-      if (elementDate == entryDate) {
-        return true;
-      }
-      return false;
-    });
-    bool dateRangesOverlap = false;
-
-    for (var element in entriesSameDate) {
-      final entryDB = _convertEntryFromDB(element);
-      dateRangesOverlap = newEntry.checkEntriesIntersect(entryDB);
-      if (dateRangesOverlap) {
-        break;
-      }
-    }
-    return dateRangesOverlap;
   }
 
   @override
@@ -115,6 +41,61 @@ class RealmDbTimeEntryFormRepository implements TimeEntryFormRepository {
         totalTime: DurationExtension.parseDuration(entryDB.totalTimeStr),
         breakTime: DurationExtension.parseDuration(entryDB.breakTimeStr),
         description: entryDB.description);
+  }
+
+  @override
+  Future<bool> addTimeEntry(TimeEntryModel entry) async {
+    final project = realm
+        .all<ProjectRealmModel>()
+        .query("id == '${entry.projectId}'")
+        .firstOrNull;
+    if (project == null) {
+      throw const app_exception.CustomAppException.projectNotFound();
+    }
+    realm.writeAsync(() {
+      final newEntryDB = TimeEntryRealmModel(
+        entry.id,
+        entry.projectId,
+        "",
+        entry.startTime,
+        entry.endTime,
+        entry.totalTime.toString(),
+        entry.breakTime.toString(),
+        description: entry.description,
+      );
+      project.timeEntries.add(newEntryDB);
+    });
+    return await Future.value(true);
+  }
+
+  @override
+  Future<bool> updateTimeEntry(TimeEntryModel entry) {
+    final entryDB = realm
+        .all<TimeEntryRealmModel>()
+        .query("id == '${entry.id}'")
+        .firstOrNull;
+    if (entryDB == null) {
+      throw const app_exception.CustomAppException.entryNotFound();
+    }
+    realm.writeAsync(() {
+      entryDB.startTime = entry.startTime;
+      entryDB.endTime = entry.endTime;
+      entryDB.totalTimeStr = entry.totalTime.toString();
+      entryDB.breakTimeStr = entry.breakTime.toString();
+      entryDB.description = entry.description;
+    });
+    return Future.value(true);
+  }
+
+  @override
+  Future<List<TimeEntryModel>> getTimeEntriesByProjectId(
+      String projectId) async {
+    final entries =
+        realm.all<TimeEntryRealmModel>().query("projectId == '$projectId'");
+
+    return await Future.value(
+      entries.map((entry) => _convertEntryFromDB(entry)).toList(),
+    );
   }
 }
 

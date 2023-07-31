@@ -42,16 +42,21 @@ class TimeEntryFormScreenController extends _$TimeEntryFormScreenController {
     );
   }
 
-  void saveEntry(BuildContext context) async {
+  void saveEntry(BuildContext context, bool isEdit) async {
     bool isFormValid = state.value!.formKey.currentState!.validate();
 
     if (isFormValid) {
       final data = state.value!.getEntry();
       state =
           AsyncData(state.value!.copyWith(value: const AsyncValue.loading()));
-      final result = await AsyncValue.guard(
-          () => ref.read(timeEntryFormRepositoryProvider).saveTimeEntry(data));
-
+      final AsyncValue<bool> result;
+      if (isEdit) {
+        result = await AsyncValue.guard(
+            () => ref.read(timeEntryFormServiceProvider).updateTimeEntry(data));
+      } else {
+        result = await AsyncValue.guard(
+            () => ref.read(timeEntryFormServiceProvider).addTimeEntry(data));
+      }
       if (result.hasValue && result.value!) {
         if (mounted) {
           context.pop();
@@ -103,7 +108,7 @@ class TimeEntryFormScreenController extends _$TimeEntryFormScreenController {
           final data = state.value!.getEntry();
 
           final result =
-              await ref.read(timeEntryFormRepositoryProvider).deleteEntry(data);
+              await ref.read(timeEntryFormServiceProvider).deleteEntry(data);
           return result;
         },
       );
@@ -113,6 +118,6 @@ class TimeEntryFormScreenController extends _$TimeEntryFormScreenController {
 
 final projectTimeEntryProvider =
     FutureProvider.autoDispose.family<TimeEntryModel, String>((ref, id) async {
-  final timeEntriesRepository = ref.watch(timeEntryFormRepositoryProvider);
+  final timeEntriesRepository = ref.watch(timeEntryFormServiceProvider);
   return await timeEntriesRepository.getEntryById(id);
 });

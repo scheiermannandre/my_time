@@ -9,3 +9,4 @@ export 'package:my_time/features/4_time_entry_form/view/time_entry_form_screen_l
 export 'package:my_time/features/4_time_entry_form/widgets/labeled_date_and_time_form_field.dart';
 export 'package:my_time/features/4_time_entry_form/widgets/labeled_description_form_field.dart';
 export 'package:my_time/features/4_time_entry_form/widgets/time_pick_field.dart';
+export 'package:my_time/features/4_time_entry_form/service/time_entry_form_service.dart';

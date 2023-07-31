@@ -59,7 +59,7 @@ class TimeEntryFormScreen extends HookConsumerWidget {
       body: !isEdit
           ? TimeEntryFormWidget(
               state: state.value,
-              onBtnTap: () => controller.saveEntry(context),
+              onBtnTap: () => controller.saveEntry(context, isEdit),
             )
           : RefreshIndicator(
               color: Theme.of(context).colorScheme.primary,
@@ -73,7 +73,7 @@ class TimeEntryFormScreen extends HookConsumerWidget {
               child: entry.when(
                   data: (entry) => TimeEntryFormWidget(
                         state: state.value!,
-                        onBtnTap: () => controller.saveEntry(context),
+                        onBtnTap: () => controller.saveEntry(context, isEdit),
                       ),
                   error: (error, stackTrace) => LoadingErrorWidget(
                       onRefresh: () => state
