@@ -6,12 +6,12 @@ import 'package:my_time/features/6_group_analytics/widgets/balance_bar_chart.dar
 
 void main() {
   Widget createBalanceBar(TimeOfDay desired, TimeOfDay actual) {
-    BalanceBarItem item = BalanceBarItem(
+    final item = BalanceBarItem(
       desiredTime: desired,
       actualTime: actual,
       barDescriptionLabel: 'Actual',
     );
-    BalanceBarChartStyle style = BalanceBarChartStyle(
+    final style = BalanceBarChartStyle(
       desiredBalanceColor: const Color(0xff8bc4b7),
       undesiredBalanceColor: const Color(0xffc85552),
       barStyle: HorizontalBalanceBarStyle(
@@ -32,30 +32,35 @@ void main() {
         barHeight: 45,
         barPadding: 10,
         labelCount: 2,
-        showVerticalHelperLines: false,
         style: style,
       ),
     );
   }
 
   Widget createNeutralBalancebarChart() {
-    return createBalanceBar(const TimeOfDay(hour: 8, minute: 0),
-        const TimeOfDay(hour: 8, minute: 0));
+    return createBalanceBar(
+      const TimeOfDay(hour: 8, minute: 0),
+      const TimeOfDay(hour: 8, minute: 0),
+    );
   }
 
   Widget createUnderHoursBalancebarChart() {
-    return createBalanceBar(const TimeOfDay(hour: 8, minute: 0),
-        const TimeOfDay(hour: 6, minute: 0));
+    return createBalanceBar(
+      const TimeOfDay(hour: 8, minute: 0),
+      const TimeOfDay(hour: 6, minute: 0),
+    );
   }
 
   Widget createOverHoursBalancebarChart() {
-    return createBalanceBar(const TimeOfDay(hour: 8, minute: 0),
-        const TimeOfDay(hour: 9, minute: 0));
+    return createBalanceBar(
+      const TimeOfDay(hour: 8, minute: 0),
+      const TimeOfDay(hour: 9, minute: 0),
+    );
   }
 
-  group("BalanceBar Texts", () {
+  group('BalanceBar Texts', () {
     testWidgets('Test Balance Bar - find Header text', (tester) async {
-      Widget barChart = createNeutralBalancebarChart();
+      final barChart = createNeutralBalancebarChart();
       await tester.pumpWidget(barChart);
       await tester.pumpAndSettle();
 
@@ -65,33 +70,33 @@ void main() {
 
     testWidgets('Test Neutral Balance Bar - BalanceBarValue text is 00:00',
         (tester) async {
-      Widget barChart = createNeutralBalancebarChart();
+      final barChart = createNeutralBalancebarChart();
       await tester.pumpWidget(barChart);
       await tester.pumpAndSettle();
 
-      Text text =
-          tester.firstWidget(find.byKey(BalanceBarChart.balanceBarValueKey));
-      expect(text.data, "00:00");
+      final text = tester
+          .firstWidget(find.byKey(BalanceBarChart.balanceBarValueKey)) as Text;
+      expect(text.data, '00:00');
     });
 
     testWidgets('Test under hours Balance Bar - BalanceBarValue text is -02:00',
         (tester) async {
-      Widget barChart = createUnderHoursBalancebarChart();
+      final barChart = createUnderHoursBalancebarChart();
       await tester.pumpWidget(barChart);
       await tester.pumpAndSettle();
-      Text text =
-          tester.firstWidget(find.byKey(BalanceBarChart.balanceBarValueKey));
-      expect(text.data, "-02:00");
+      final text = tester
+          .firstWidget(find.byKey(BalanceBarChart.balanceBarValueKey)) as Text;
+      expect(text.data, '-02:00');
     });
 
     testWidgets('Test over hours Balance Bar - BalanceBarValue text is +01:00',
         (tester) async {
-      Widget barChart = createOverHoursBalancebarChart();
+      final barChart = createOverHoursBalancebarChart();
       await tester.pumpWidget(barChart);
       await tester.pumpAndSettle();
-      Text text =
-          tester.firstWidget(find.byKey(BalanceBarChart.balanceBarValueKey));
-      expect(text.data, "+01:00");
+      final text = tester
+          .firstWidget(find.byKey(BalanceBarChart.balanceBarValueKey)) as Text;
+      expect(text.data, '+01:00');
     });
   });
 }

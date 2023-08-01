@@ -1,23 +1,29 @@
+import 'package:flutter/material.dart';
 import 'package:my_time/common/common.dart';
 import 'package:my_time/constants/constants.dart';
 import 'package:my_time/global/globals.dart';
 
-import 'package:flutter/material.dart';
-
+/// A labeled date form field.
 class LabeledDateFormField extends StatelessWidget {
+  /// Creates a LabeledDateFormField.
+  const LabeledDateFormField({
+    required this.dateController,
+    required this.label,
+    required this.validateDate,
+    super.key,
+  });
+
+  /// The controller for the date.
   final TextEditingController dateController;
 
+  /// The label of the date.
   final String label;
+
+  /// The validation of the date.
   final String? Function(DateTime date) validateDate;
 
-  const LabeledDateFormField(
-      {super.key,
-      required this.dateController,
-      required this.label,
-      required this.validateDate});
-
-  void _showDatePicker(BuildContext context) async {
-    DateTime? date = await showDatePicker(
+  Future<void> _showDatePicker(BuildContext context) async {
+    final date = await showDatePicker(
       builder: (context, child) {
         return Theme(
           data: ThemeData.light(useMaterial3: true).copyWith(
@@ -43,7 +49,8 @@ class LabeledDateFormField extends StatelessWidget {
             datePickerTheme: DatePickerThemeData(
               backgroundColor: GlobalProperties.backgroundColor,
               todayForegroundColor: MaterialStateColor.resolveWith(
-                  (states) => GlobalProperties.secondaryColor),
+                (states) => GlobalProperties.secondaryColor,
+              ),
             ),
           ),
           child: child!,
@@ -65,9 +72,7 @@ class LabeledDateFormField extends StatelessWidget {
   Widget build(BuildContext context) {
     return ResponsiveAlign(
       maxContentWidth: Breakpoint.tablet,
-      alignment: Alignment.center,
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
@@ -76,7 +81,6 @@ class LabeledDateFormField extends StatelessWidget {
           ),
           const Padding(padding: EdgeInsets.only(bottom: 12)),
           Row(
-            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Expanded(
                 child: TextFormField(
@@ -86,11 +90,13 @@ class LabeledDateFormField extends StatelessWidget {
                   decoration: InputDecoration(
                     enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide(
-                          color: Theme.of(context).colorScheme.primary),
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(
-                          color: Theme.of(context).colorScheme.primary),
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
                     ),
                   ),
                 ),

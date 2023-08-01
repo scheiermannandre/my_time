@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:my_time/global/globals.dart';
 
-Future<dynamic> showBottomSheetWithWidgets({
+/// Shows a bottom sheet with widgets.
+Future<void> showBottomSheetWithWidgets({
   required BuildContext context,
   required AnimationController bottomSheetController,
-  Function()? whenComplete,
   required List<Widget> widgets,
+  VoidCallback? whenComplete,
 }) async {
-  return await showModalBottomSheet(
+  return showModalBottomSheet<void>(
     backgroundColor: GlobalProperties.backgroundColor,
     transitionAnimationController: bottomSheetController,
     isScrollControlled: true,
     shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
+      borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+    ),
     context: context,
     builder: (context) => FractionallySizedBox(
       heightFactor: 0.9,
@@ -28,12 +30,12 @@ Future<dynamic> showBottomSheetWithWidgets({
                   height: 5,
                   width: 40,
                   decoration: BoxDecoration(
+                    color: GlobalProperties.dragIndicatorColor,
+                    border: Border.all(
                       color: GlobalProperties.dragIndicatorColor,
-                      border: Border.all(
-                        color: GlobalProperties.dragIndicatorColor,
-                      ),
-                      borderRadius:
-                          const BorderRadius.all(Radius.circular(20))),
+                    ),
+                    borderRadius: const BorderRadius.all(Radius.circular(20)),
+                  ),
                 ),
               ),
               ...widgets,

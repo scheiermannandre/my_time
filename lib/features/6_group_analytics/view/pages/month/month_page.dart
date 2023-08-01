@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-///
 /// Shell for the MonthPage
 class MonthPage extends StatefulWidget {
+  /// Creates a MonthPage.
   const MonthPage({super.key});
   @override
   State<MonthPage> createState() => _MonthPageState();

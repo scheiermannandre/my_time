@@ -1,25 +1,33 @@
+import 'package:flutter/material.dart';
 import 'package:my_time/common/common.dart';
 import 'package:my_time/constants/constants.dart';
 import 'package:my_time/global/globals.dart';
 
-import 'package:flutter/material.dart';
-
+/// A Widget that shows a time picker.
 class TimePickField extends StatelessWidget {
+  /// Creates a TimePickField.
+  const TimePickField({
+    required this.timeController,
+    required this.validateTime,
+    super.key,
+    this.maxContentWidth,
+    this.validateField,
+  });
+
+  /// The controller for the time.
   final TextEditingController timeController;
+
+  /// The validation of the time.
   final String? Function(TimeOfDay time) validateTime;
+
+  /// The validation of the field.
   final String? Function()? validateField;
 
+  /// The max content width.
   final double? maxContentWidth;
 
-  const TimePickField(
-      {super.key,
-      required this.timeController,
-      this.maxContentWidth,
-      required this.validateTime,
-      this.validateField});
-
-  void _showTimePicker(BuildContext context) async {
-    final TimeOfDay? time = await showTimePicker(
+  Future<void> _showTimePicker(BuildContext context) async {
+    final time = await showTimePicker(
       context: context,
       initialTime: const TimeOfDay(hour: 09, minute: 00),
       builder: (BuildContext context, Widget? child) {
@@ -46,10 +54,11 @@ class TimePickField extends StatelessWidget {
             ),
             timePickerTheme: TimePickerThemeData(
               backgroundColor: GlobalProperties.backgroundColor,
-              hourMinuteColor: MaterialStateColor.resolveWith((states) =>
-                  states.contains(MaterialState.selected)
-                      ? GlobalProperties.primaryColor
-                      : Colors.transparent),
+              hourMinuteColor: MaterialStateColor.resolveWith(
+                (states) => states.contains(MaterialState.selected)
+                    ? GlobalProperties.primaryColor
+                    : Colors.transparent,
+              ),
               hourMinuteTextColor:
                   MaterialStateColor.resolveWith((states) => Colors.black),
               dialHandColor: GlobalProperties.backgroundColor,
@@ -69,7 +78,7 @@ class TimePickField extends StatelessWidget {
     validateTime(time);
   }
 
-  String? validate() {
+  String? _validate() {
     if (validateField != null) {
       return validateField!();
     }
@@ -80,11 +89,10 @@ class TimePickField extends StatelessWidget {
   Widget build(BuildContext context) {
     return ResponsiveAlign(
       alignment: Alignment.centerLeft,
-      maxContentWidth: maxContentWidth != null
-          ? maxContentWidth as double
-          : Breakpoint.desktop,
+      maxContentWidth:
+          maxContentWidth != null ? maxContentWidth! : Breakpoint.desktop,
       child: TextFormField(
-        validator: (value) => validate(),
+        validator: (value) => _validate(),
         readOnly: true,
         onTap: () => _showTimePicker(context),
         controller: timeController,

@@ -1,45 +1,42 @@
-import 'package:my_time/features/2_projects/2_projects.dart';
-import 'package:my_time/features/interface/interface.dart';
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:my_time/exceptions/custom_app_exception.dart';
+import 'package:my_time/features/2_projects/2_projects.dart';
 
-class ProjectsPerGroupScreenService {
-  ProjectsPerGroupScreenService({
+/// Service for the ProjectsPerGroupScreen.
+class GroupProjectsScreenService {
+  /// Creates a [GroupProjectsScreenService].
+  GroupProjectsScreenService({
     required this.projectsRespository,
   });
 
+  /// The [ProjectsRepository] used to access the database.
   final ProjectsRepository projectsRespository;
 
-  // Future<List<ProjectModel>> fetchProjectsByGroupId(String groupId) async {
-  //   return await projectsRespository.fetchProjectsByGroupId(groupId);
-  // }
-
-  // Future<GroupProjectsPageModel> fetchGroupWithProjectsDTO(
-  //     String groupId) async {
-  //   final group = await projectsRespository.fetchGroup(groupId) as GroupModel;
-  //   final projects = await projectsRespository.fetchProjectsByGroupId(groupId);
-  //   return GroupProjectsPageModel(group: group, projects: projects);
-  // }
-
+  /// Streams a [GroupProjectsPageModel] for the given [groupId].
   Stream<GroupProjectsPageModel> streamGroupProjectsPageModel(
-      String groupId) async* {
-    final group = await projectsRespository.fetchGroup(groupId) as GroupModel;
-
-    yield* projectsRespository.streamProjectsByGroupId(groupId).map(
-          (projects) =>
-              GroupProjectsPageModel(group: group, projects: projects),
-        );
+    String groupId,
+  ) async* {
+    final group = await projectsRespository.fetchGroup(groupId);
+    if (group == null) {
+      // ignore: only_throw_errors
+      throw const CustomAppException.groupNotFound();
+    } else {
+      yield* projectsRespository.streamProjectsByGroupId(groupId).map(
+            (projects) =>
+                GroupProjectsPageModel(group: group, projects: projects),
+          );
+    }
   }
 
-  Future<bool> deleteGroup(String groupId) async {
-    return await projectsRespository.deleteGroup(groupId);
-  }
+  /// Deletes the Group with the given [groupId].
+  Future<bool> deleteGroup(String groupId) async =>
+      projectsRespository.deleteGroup(groupId);
 }
 
-final groupProjectsScreenServiceProvider =
-    Provider<ProjectsPerGroupScreenService>(
+/// Provides a [GroupProjectsScreenService].
+final groupProjectsScreenServiceProvider = Provider<GroupProjectsScreenService>(
   (ref) {
-    return ProjectsPerGroupScreenService(
+    return GroupProjectsScreenService(
       projectsRespository: ref.watch(deviceStorageProjectsRepositoryProvider),
     );
   },

@@ -1,17 +1,22 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 
+/// Widget that shows a child widget with a slide in animation.
 class ShowUpWidget extends StatefulWidget {
-  final Widget child;
-  final int delay;
+  /// Constructor for the [ShowUpWidget].
+  const ShowUpWidget({required this.child, super.key, this.delay = 0});
 
-  const ShowUpWidget({super.key, required this.child, this.delay = 0});
+  /// Child widget to show.
+  final Widget child;
+
+  /// Delay before showing the widget.
+  final int delay;
 
   @override
   ShowUpWidgetState createState() => ShowUpWidgetState();
 }
 
+/// The state of the [ShowUpWidget].
 class ShowUpWidgetState extends State<ShowUpWidget>
     with TickerProviderStateMixin {
   late AnimationController _animController;
@@ -22,12 +27,13 @@ class ShowUpWidgetState extends State<ShowUpWidget>
     super.initState();
 
     _animController = AnimationController(
-        vsync: this, duration: const Duration(milliseconds: 500));
+      vsync: this,
+      duration: const Duration(milliseconds: 500),
+    );
     final curve =
         CurvedAnimation(curve: Curves.decelerate, parent: _animController);
-    _animOffset =
-        Tween<Offset>(begin: const Offset(-0.1, 0.0), end: Offset.zero)
-            .animate(curve);
+    _animOffset = Tween<Offset>(begin: const Offset(-0.1, 0), end: Offset.zero)
+        .animate(curve);
 
     Timer(Duration(milliseconds: widget.delay), () {
       _animController.forward();

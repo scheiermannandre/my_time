@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:my_time/global/globals.dart';
 
+/// Custom list for displaying groups and projects.
 class CustomListTile extends StatefulWidget {
+  /// Creates a [CustomListTile].
+  const CustomListTile({required this.title, super.key, this.onTap});
+
+  /// Title of the list tile.
   final String title;
-  final Function? onTap;
-  const CustomListTile({super.key, required this.title, this.onTap});
+
+  /// Function to call when the list tile is tapped.
+  final void Function()? onTap;
 
   @override
   State<CustomListTile> createState() => _CustomListTileState();
@@ -18,8 +24,7 @@ class _CustomListTileState extends State<CustomListTile> {
         boxShadow: [
           BoxShadow(
             color: GlobalProperties.shadowColor,
-            blurRadius: 1.0, // soften the shadow
-            spreadRadius: 0.0, //extend the shadow
+            blurRadius: 1, // soften the shadow
           )
         ],
         color: Colors.white,
@@ -32,11 +37,7 @@ class _CustomListTileState extends State<CustomListTile> {
         ),
       ),
       child: InkWell(
-        onTap: () {
-          if (widget.onTap != null) {
-            widget.onTap!();
-          }
-        },
+        onTap: widget.onTap,
         child: Container(
           padding: const EdgeInsets.fromLTRB(12, 18, 12, 18),
           decoration: BoxDecoration(
@@ -51,7 +52,7 @@ class _CustomListTileState extends State<CustomListTile> {
             children: [
               Text(
                 widget.title,
-                style: Theme.of(context).textTheme.titleLarge,               
+                style: Theme.of(context).textTheme.titleLarge,
               ),
               const RotatedBox(
                 quarterTurns: 3,

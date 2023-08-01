@@ -1,27 +1,33 @@
-import 'package:my_time/features/3_project_timer_page/3_project_timer_page.dart';
-import 'package:my_time/common/common.dart';
-import 'package:my_time/router/app_route.dart';
-
 import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:my_time/common/common.dart';
+import 'package:my_time/features/3_project_timer_page/3_project_timer_page.dart';
+import 'package:my_time/router/app_route.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'project_shell_screen_controller.g.dart';
 
+/// State of the ProjectShellScreen.
 @riverpod
 class ProjectShellScreenController extends _$ProjectShellScreenController {
+  /// Needed to check if mounted.
   final initial = Object();
-  late var current = initial;
-  // An [Object] instance is equal to itself only.
+
+  /// Needed to check if mounted.
+  late Object current = initial;
+
+  /// Returns true if the screen is mounted.
   bool get mounted => current == initial;
   @override
-  void build(String projectId) async {
+  Future<void> build(String projectId) async {
     ref.onDispose(() {
       current = Object();
     });
   }
 
+  /// Handles the swtich between the pages.
   void onItemTapped(PageController controller, int index) {
     controller.animateToPage(
       index,
@@ -30,10 +36,14 @@ class ProjectShellScreenController extends _$ProjectShellScreenController {
     );
   }
 
-  void pushNamedTimeEntryForm(
-      BuildContext context, ProjectModel project, bool isEdit,
-      [TimeEntryModel? entry]) {
-    String tid = entry?.id ?? "";
+  /// Handles the tap on the add time entry button.
+  void pushNamedTimeEntryForm({
+    required BuildContext context,
+    required ProjectModel project,
+    required bool isEdit,
+    TimeEntryModel? entry,
+  }) {
+    final tid = entry?.id ?? '';
     context.pushNamed(
       AppRoute.timeEntryForm,
       pathParameters: {
@@ -47,18 +57,23 @@ class ProjectShellScreenController extends _$ProjectShellScreenController {
     );
   }
 
-  Future<void> showDeleteBottomSheet(BuildContext context, ProjectModel project,
-      AnimationController controller) async {
+  /// Handles the tap on the delete project button.
+  Future<void> showDeleteBottomSheet(
+    BuildContext context,
+    ProjectModel project,
+    AnimationController controller,
+  ) async {
     {
       bool? deletePressed = false;
-      listener(status) {
+      void listener(AnimationStatus status) {
         if (status == AnimationStatus.dismissed) {
           _delete(context, deletePressed);
         }
       }
 
-      controller.removeStatusListener(listener);
-      controller.addStatusListener(listener);
+      controller
+        ..removeStatusListener(listener)
+        ..addStatusListener(listener);
 
       deletePressed = await openBottomSheet(
         context: context,
@@ -81,13 +96,15 @@ class ProjectShellScreenController extends _$ProjectShellScreenController {
     }
   }
 
+  /// Handles the tap on the start button.
   Future<void> changeIsFavouriteState(ProjectModel project) async {
-    project = project.copyWith(
+    final newProjectState = project.copyWith(
       isMarkedAsFavourite: !project.isMarkedAsFavourite,
     );
-    await ref
-        .read(projectsRepositoryProvider)
-        .updateIsFavouriteState(project.id, project.isMarkedAsFavourite);
+    await ref.read(projectsRepositoryProvider).updateIsFavouriteState(
+          newProjectState.id,
+          isFavourite: newProjectState.isMarkedAsFavourite,
+        );
   }
 
   Future<void> _delete(BuildContext context, bool? deletePressed) async {
@@ -98,6 +115,7 @@ class ProjectShellScreenController extends _$ProjectShellScreenController {
     }
   }
 
+  /// Handles the tap on the back button.
   void pop(BuildContext context) {
     if (context.canPop()) {
       context.pop();
@@ -107,6 +125,7 @@ class ProjectShellScreenController extends _$ProjectShellScreenController {
   }
 }
 
+/// Streams the project from the database.
 final projectProvider =
     StreamProvider.autoDispose.family<ProjectModel?, String>((ref, projectId) {
   final projectRepo = ref.read(projectsRepositoryProvider);

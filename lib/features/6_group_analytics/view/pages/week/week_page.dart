@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-///
 /// Shell for the WeekPage
 class WeekPage extends StatefulWidget {
+  /// Creates a WeekPage.
   const WeekPage({super.key});
   @override
   State<WeekPage> createState() => _WeekPageState();

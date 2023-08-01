@@ -3,15 +3,9 @@ import 'package:my_time/features/3_project_timer_page/3_project_timer_page.dart'
 
 import 'package:uuid/uuid.dart' as uuid;
 
+/// Model for a project timer for the Project Timer feature.
 class ProjectTimerModel {
-  final String id;
-  final String projectId;
-  final DateTime startTime;
-  final DateTime endTime;
-  final List<DateTime> breakStartTimes;
-  final List<DateTime> breakEndTimes;
-  final TimerState state;
-
+  /// Creates a [ProjectTimerModel].
   ProjectTimerModel({
     required this.projectId,
     required this.startTime,
@@ -21,6 +15,7 @@ class ProjectTimerModel {
     required this.state,
   }) : id = const uuid.Uuid().v1();
 
+  /// Factory for a [ProjectTimerModel].
   ProjectTimerModel.factory({
     required this.id,
     required this.projectId,
@@ -31,6 +26,29 @@ class ProjectTimerModel {
     required String timerState,
   }) : state = timerState.toEnum(TimerState.values);
 
+  /// The id of the project timer.
+  final String id;
+
+  /// The id of the project.
+  final String projectId;
+
+  /// The start time of the project timer.
+  final DateTime startTime;
+
+  /// The end time of the project timer.
+  final DateTime endTime;
+
+  /// The start times of the breaks of the project timer.
+  final List<DateTime> breakStartTimes;
+
+  /// The end times of the breaks of the project timer.
+  final List<DateTime> breakEndTimes;
+
+  /// The state of the project timer.
+  final TimerState state;
+
+  /// Copy Method, so that the [ProjectTimerModel] can be updated and still be
+  /// immutable.
   ProjectTimerModel copyWith({
     String? id,
     String? projectId,

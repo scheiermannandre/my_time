@@ -1,33 +1,34 @@
+import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_time/common/common.dart';
 import 'package:my_time/features/0_common/project_shell_page.dart';
 import 'package:my_time/features/5_project_history/5_project_history.dart';
 
-import 'package:flutter/material.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
-
+/// The shell page for the project history.
 class ProjectHistoryShellPage extends ProjectShellPage {
-  final String projectId;
-
+  /// Creates a [ProjectHistoryShellPage].
   ProjectHistoryShellPage({
-    super.key,
     required this.projectId,
     required BuildContext context,
+    super.key,
   }) : super(
           iconData: Icons.timer_sharp,
           label: context.loc.timerTabLabel,
         );
 
+  /// Creates a [ProjectHistoryShellPage] with a factory constructor.
   const ProjectHistoryShellPage.factory({
-    super.key,
     required this.projectId,
-    required String label,
-    required IconData iconData,
+    required super.label,
+    required super.iconData,
     required ScrollController controller,
+    super.key,
   }) : super(
-          iconData: iconData,
-          label: label,
           scrollController: controller,
         );
+
+  /// The id of the project.
+  final String projectId;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -67,8 +68,13 @@ class ProjectHistoryShellPage extends ProjectShellPage {
                       return LabeledBlock(
                         languageCode: languageCode,
                         onClicked: (entry) => project.hasValue
-                            ? _onAdd(controller, context, project.value!, true,
-                                entry)
+                            ? _onAdd(
+                                controller,
+                                context,
+                                project.value!,
+                                true,
+                                entry,
+                              )
                             : null,
                         timeEntries: data[index],
                         label: data[index]
@@ -92,16 +98,17 @@ class ProjectHistoryShellPage extends ProjectShellPage {
   }
 
   void _onAdd(
-      ProjectHistoryShellPageController projectScreenController,
-      BuildContext context,
-      ProjectModel project,
-      bool isEdit,
-      TimeEntryModel? entry) {
+    ProjectHistoryShellPageController projectScreenController,
+    BuildContext context,
+    ProjectModel project,
+    bool isEdit,
+    TimeEntryModel? entry,
+  ) {
     return projectScreenController.pushNamedTimeEntryForm(
       context,
       project,
-      isEdit,
-      entry,
+      isEdit: isEdit,
+      entry: entry,
     );
   }
 

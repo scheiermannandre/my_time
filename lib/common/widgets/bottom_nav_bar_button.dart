@@ -2,21 +2,35 @@ import 'package:flutter/material.dart';
 import 'package:my_time/common/widgets/responsive_center.dart';
 import 'package:my_time/constants/breakpoints.dart';
 
+/// Button that is displayed instead of the bottom navigation bar.
 class NavBarSubmitButton extends StatelessWidget {
-  final double btnWidth = Breakpoint.mobile;
-  final VoidCallback? onBtnTap;
-  final String btnText;
-  final bool isLoading;
-  final Alignment align;
-  final EdgeInsets padding;
+  /// Creates a [NavBarSubmitButton].
+  const NavBarSubmitButton({
+    required this.onBtnTap,
+    required this.btnText,
+    required this.isLoading,
+    super.key,
+    this.align = Alignment.center,
+    this.padding = const EdgeInsets.fromLTRB(16, 0, 16, 24),
+  });
 
-  const NavBarSubmitButton(
-      {super.key,
-      required this.onBtnTap,
-      required this.btnText,
-      required this.isLoading,
-      this.align = Alignment.center,
-      this.padding = const EdgeInsets.fromLTRB(16, 0, 16, 24)});
+  /// Width of the button.
+  double get btnWidth => Breakpoint.mobile;
+
+  /// Callback that is called when the button is tapped.
+  final VoidCallback? onBtnTap;
+
+  /// Text of the button.
+  final String btnText;
+
+  /// Whether the button is loading.
+  final bool isLoading;
+
+  /// Alignment of the button.
+  final Alignment align;
+
+  /// Padding of the button.
+  final EdgeInsets padding;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +38,6 @@ class NavBarSubmitButton extends StatelessWidget {
       height: 75,
       child: ResponsiveAlign(
         alignment: align,
-        maxContentWidth: Breakpoint.desktop,
         padding: padding,
         child: SizedBox(
           width: btnWidth,
@@ -32,8 +45,8 @@ class NavBarSubmitButton extends StatelessWidget {
             onPressed: onBtnTap,
             child: isLoading
                 ? const SizedBox(
-                    height: 20.0,
-                    width: 20.0,
+                    height: 20,
+                    width: 20,
                     child: CircularProgressIndicator(),
                   )
                 : Text(

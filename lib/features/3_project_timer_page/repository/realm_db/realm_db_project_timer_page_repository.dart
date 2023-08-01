@@ -1,14 +1,18 @@
-import 'package:my_time/common/common.dart';
-import 'package:my_time/features/3_project_timer_page/3_project_timer_page.dart';
-import 'package:my_time/features/interface/interface.dart';
-import 'package:my_time/exceptions/custom_app_exception.dart' as app_exception;
+// ignore_for_file: only_throw_errors
 
+import 'package:my_time/common/common.dart';
+import 'package:my_time/exceptions/custom_app_exception.dart' as app_exception;
+import 'package:my_time/features/3_project_timer_page/3_project_timer_page.dart';
 import 'package:realm/realm.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+/// RealmDb implementation of the [ProjectTimerPageRepository].
 class RealmDbProjectTimerPageRepository implements ProjectTimerPageRepository {
-  final Realm realm;
+  /// Constructor for the [RealmDbProjectTimerPageRepository].
   RealmDbProjectTimerPageRepository(this.realm);
+
+  /// The realm instance.
+  final Realm realm;
 
   @override
   Future<ProjectTimerModel?> fetchTimerData(String projectId) async {
@@ -18,7 +22,7 @@ class RealmDbProjectTimerPageRepository implements ProjectTimerPageRepository {
       return null;
     }
     final timerData = timerDataList.first;
-    return mapTimerData(timerData);
+    return _mapTimerData(timerData);
   }
 
   @override
@@ -27,7 +31,7 @@ class RealmDbProjectTimerPageRepository implements ProjectTimerPageRepository {
     if (timerDataList.isNotEmpty) {
       throw const app_exception.CustomAppException.multipleTimerStarts();
     }
-    TimerDataRealmModel dbTimerData = TimerDataRealmModel(
+    final dbTimerData = TimerDataRealmModel(
       timerData.id,
       timerData.projectId,
       timerData.startTime,
@@ -40,12 +44,14 @@ class RealmDbProjectTimerPageRepository implements ProjectTimerPageRepository {
     await realm.writeAsync(() {
       realm.add(dbTimerData);
     });
-    return mapTimerData(dbTimerData);
+    return _mapTimerData(dbTimerData);
   }
 
   @override
   Future<ProjectTimerModel> deleteTimerData(
-      ProjectTimerModel timerData, DateTime endTime) async {
+    ProjectTimerModel timerData,
+    DateTime endTime,
+  ) async {
     final timerDataList = realm
         .all<TimerDataRealmModel>()
         .query("projectId == '${timerData.projectId}'");
@@ -59,7 +65,7 @@ class RealmDbProjectTimerPageRepository implements ProjectTimerPageRepository {
         timerDataDB.breakEndTimes.add(endTime);
       }
       timerDataDB.timerState = TimerState.off.toString();
-      newTimerData = mapTimerData(timerDataDB);
+      newTimerData = _mapTimerData(timerDataDB);
       realm.delete<TimerDataRealmModel>(timerDataDB);
     });
     return newTimerData!;
@@ -67,7 +73,9 @@ class RealmDbProjectTimerPageRepository implements ProjectTimerPageRepository {
 
   @override
   Future<ProjectTimerModel> updateTimerDataState(
-      ProjectTimerModel timerData, DateTime stateChangeTime) async {
+    ProjectTimerModel timerData,
+    DateTime stateChangeTime,
+  ) async {
     final timerDataList = realm
         .all<TimerDataRealmModel>()
         .query("projectId == '${timerData.projectId}'");
@@ -76,7 +84,7 @@ class RealmDbProjectTimerPageRepository implements ProjectTimerPageRepository {
     }
     final timerDataDb = timerDataList.first;
     await realm.writeAsync(() {
-      TimerState stateDb = timerDataDb.timerState.toEnum(TimerState.values);
+      final stateDb = timerDataDb.timerState.toEnum(TimerState.values);
       if (stateDb == TimerState.running) {
         timerDataDb.breakStartTimes.add(stateChangeTime);
       } else if (stateDb == TimerState.paused) {
@@ -85,28 +93,31 @@ class RealmDbProjectTimerPageRepository implements ProjectTimerPageRepository {
       timerDataDb.timerState = timerData.state.toString();
     });
 
-    return mapTimerData(timerDataDb);
+    return _mapTimerData(timerDataDb);
   }
 
-  ProjectTimerModel mapTimerData(TimerDataRealmModel dbTimerData) {
-    ProjectTimerModel timerDataDto = ProjectTimerModel.factory(
-        id: dbTimerData.id,
-        projectId: dbTimerData.projectId,
-        startTime: dbTimerData.startTime,
-        endTime: dbTimerData.endTime,
-        breakStartTimes: IterableExtensions.deepCopyDateTimeList(
-            dbTimerData.breakStartTimes),
-        breakEndTimes:
-            IterableExtensions.deepCopyDateTimeList(dbTimerData.breakEndTimes),
-        timerState: dbTimerData.timerState);
+  ProjectTimerModel _mapTimerData(TimerDataRealmModel dbTimerData) {
+    final timerDataDto = ProjectTimerModel.factory(
+      id: dbTimerData.id,
+      projectId: dbTimerData.projectId,
+      startTime: dbTimerData.startTime,
+      endTime: dbTimerData.endTime,
+      breakStartTimes: IterableExtensions.deepCopyDateTimeList(
+        dbTimerData.breakStartTimes,
+      ),
+      breakEndTimes:
+          IterableExtensions.deepCopyDateTimeList(dbTimerData.breakEndTimes),
+      timerState: dbTimerData.timerState,
+    );
     return timerDataDto;
   }
 }
 
+/// Provides the [RealmDbProjectTimerPageRepository].
 final timerDataRepositoryProvider =
     Provider<RealmDbProjectTimerPageRepository>((ref) {
   final config = Configuration.local([TimerDataRealmModel.schema]);
-  final Realm realm = Realm(config);
-  ref.onDispose(() => realm.close());
+  final realm = Realm(config);
+  ref.onDispose(realm.close);
   return RealmDbProjectTimerPageRepository(realm);
 });

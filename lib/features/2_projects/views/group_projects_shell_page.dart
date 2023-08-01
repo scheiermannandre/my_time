@@ -1,16 +1,22 @@
-import 'package:my_time/common/common.dart';
-import 'package:my_time/features/2_projects/2_projects.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:my_time/common/common.dart';
+import 'package:my_time/features/2_projects/2_projects.dart';
 
+/// Shell page for the group projects.
 class GroupProjectsShellPage extends ShellPage {
-  GroupProjectsShellPage(
-      {super.key, required this.groupId, required BuildContext context})
-      : super(
-            iconData: Icons.line_weight_sharp,
-            label: context.loc.projectsTabLabel);
+  /// Creates a [GroupProjectsShellPage].
+  GroupProjectsShellPage({
+    required this.groupId,
+    required BuildContext context,
+    super.key,
+  }) : super(
+          iconData: Icons.line_weight_sharp,
+          label: context.loc.projectsTabLabel,
+        );
+
+  /// The id of the group.
   final String groupId;
 
   @override
@@ -19,14 +25,14 @@ class GroupProjectsShellPage extends ShellPage {
         ref.watch(groupProjectsShellPageControllerProvider.notifier);
     final state = ref.watch(groupProjectsShellPageControllerProvider);
     final data = ref.watch(groupProjectsProvider(groupId));
-    final AnimationController sheetController = useAnimationController(
+    final sheetController = useAnimationController(
       duration: const Duration(milliseconds: 350),
     );
-    final ScrollController scrollController = useScrollController();
+    final scrollController = useScrollController();
 
     return Scaffold(
       appBar: CustomAppBar(
-        title: data.isLoading || data.hasError ? "" : data.value!.group.name,
+        title: data.isLoading || data.hasError ? '' : data.value!.group.name,
         controller: scrollController,
         actions: [
           IconButton(
@@ -66,9 +72,11 @@ class GroupProjectsShellPage extends ShellPage {
             : RefreshIndicator(
                 color: Theme.of(context).colorScheme.primary,
                 onRefresh: () async {
-                  await AsyncValue.guard(() => ref
-                      .refresh(groupProjectsProvider(groupId).future)
-                      .timeout(const Duration(seconds: 20)));
+                  await AsyncValue.guard(
+                    () => ref
+                        .refresh(groupProjectsProvider(groupId).future)
+                        .timeout(const Duration(seconds: 20)),
+                  );
                   return;
                 },
                 child: SingleChildScrollView(
@@ -86,7 +94,10 @@ class GroupProjectsShellPage extends ShellPage {
                         child: CustomListTile(
                           title: data.projects[index].name,
                           onTap: () => controller.pushNamedProject(
-                              context, data.projects, index),
+                            context,
+                            data.projects,
+                            index,
+                          ),
                         ),
                       );
                     },

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-///
 /// Shell for the YearPage
 class YearPage extends StatefulWidget {
+  /// Creates a YearPage.
   const YearPage({super.key});
 
   @override

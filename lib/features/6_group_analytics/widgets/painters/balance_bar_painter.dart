@@ -4,25 +4,19 @@ import 'package:my_time/common/extensions/time_of_day_extension.dart';
 import 'package:my_time/features/6_group_analytics/models/balance_bar_chart_configuration.dart';
 import 'package:my_time/features/6_group_analytics/models/balance_bar_item.dart';
 
+/// The painter for the BalanceBarChart.
 class BalanceBarPainterConfiguration {
-  late final double desiredValue;
-  late final double value;
-  late final Color desiredValueColor;
-  late final Color actualValueColor;
-  late final Color barTextColor;
-  late final String barDescriptionLabel;
-  // late final String valueLabel;
-  late final TimeOfDay valueTime;
-
-  BalanceBarPainterConfiguration(
-      {required BalanceBarItem item,
-      required HorizontalBalanceBarStyle style}) {
+  /// Creates a BalanceBarPainterConfiguration.
+  BalanceBarPainterConfiguration({
+    required BalanceBarItem item,
+    required HorizontalBalanceBarStyle style,
+  }) {
     barTextColor = style.barTextColor;
     barDescriptionLabel = item.barDescriptionLabel;
     valueTime = item.actualTime;
     //valueLabel = item.valueLabel;
-    double tmpActualValue = item.actualTime.toMinutes().toDouble();
-    double tmpDesiredValue = item.desiredTime.toMinutes().toDouble();
+    final tmpActualValue = item.actualTime.toMinutes().toDouble();
+    final tmpDesiredValue = item.desiredTime.toMinutes().toDouble();
 
     if (tmpActualValue < tmpDesiredValue) {
       desiredValueColor = style.desiredBarStateColor;
@@ -43,37 +37,84 @@ class BalanceBarPainterConfiguration {
     desiredValue = 1;
   }
 
-  String animatedValueLabel(double animationValue) {
-    double animatedValue = valueTime.toMinutes() * animationValue;
-    TimeOfDay animatedValueTime = animatedValue.toInt().minutesToTimeOfDay();
+  /// The value of the desired bar.
+  late final double desiredValue;
+
+  /// The value of the actual bar.
+  late final double value;
+
+  /// The color of the desired bar.
+  late final Color desiredValueColor;
+
+  /// The color of the actual bar.
+  late final Color actualValueColor;
+
+  /// The color of the text.
+  late final Color barTextColor;
+
+  /// The description of the bar.
+  late final String barDescriptionLabel;
+
+  /// The value of the actual bar.
+  late final TimeOfDay valueTime;
+
+  String _animatedValueLabel(double animationValue) {
+    final animatedValue = valueTime.toMinutes() * animationValue;
+    final animatedValueTime = animatedValue.toInt().minutesToTimeOfDay();
     return animatedValueTime.toFormattedString();
   }
 }
 
+/// The painter for the BalanceBarChart.
 class BalanceBarPainter extends CustomPainter {
-  final BalanceBarPainterConfiguration configuration;
-  final double animationValue;
-
+  /// Creates a BalanceBarPainter.
   BalanceBarPainter({
     required this.animationValue,
     required this.configuration,
   });
+
+  /// The configuration of the painter.
+  final BalanceBarPainterConfiguration configuration;
+
+  /// The animation value.
+  final double animationValue;
   @override
   void paint(Canvas canvas, Size size) {
     // draw desired bar
-    _drawBar(canvas, size, configuration.desiredValueColor,
-        value: configuration.desiredValue * animationValue);
+    _drawBar(
+      canvas,
+      size,
+      configuration.desiredValueColor,
+      value: configuration.desiredValue * animationValue,
+    );
     // draw actual bar
-    _drawBar(canvas, size, configuration.actualValueColor,
-        value: configuration.value * animationValue, isBelow: false);
+    _drawBar(
+      canvas,
+      size,
+      configuration.actualValueColor,
+      value: configuration.value * animationValue,
+      isBelow: false,
+    );
     _drawText(
-        canvas, size, configuration.barDescriptionLabel, Alignment.centerLeft);
-    _drawText(canvas, size, configuration.animatedValueLabel(animationValue),
-        Alignment.centerRight);
+      canvas,
+      size,
+      configuration.barDescriptionLabel,
+      Alignment.centerLeft,
+    );
+    _drawText(
+      canvas,
+      size,
+      configuration._animatedValueLabel(animationValue),
+      Alignment.centerRight,
+    );
   }
 
   void _drawText(
-      Canvas canvas, Size size, String barDescription, Alignment alignment) {
+    Canvas canvas,
+    Size size,
+    String barDescription,
+    Alignment alignment,
+  ) {
     final textStyle = TextStyle(
       color: configuration.barTextColor,
       fontSize: 20,
@@ -85,11 +126,9 @@ class BalanceBarPainter extends CustomPainter {
     final textPainter = TextPainter(
       text: textSpan,
       textDirection: TextDirection.ltr,
-    );
-    textPainter.layout(
-      minWidth: 0,
-      maxWidth: size.width,
-    );
+    )..layout(
+        maxWidth: size.width,
+      );
     final xCenter = alignment == Alignment.centerLeft
         ? 10.0
         : size.width - textPainter.width - 10.0;
@@ -98,13 +137,13 @@ class BalanceBarPainter extends CustomPainter {
     textPainter.paint(canvas, offset);
   }
 
-  void _drawBar(Canvas canvas, Size size, Color color,
-      {required double value, bool isBelow = true}) {
-    // assert(value >= 0 && value <= 1);
-    final verticalRadiusRight =
-        value == 1 ? const Radius.circular(0) : const Radius.circular(0);
-    const verticalRadiusLeft = Radius.circular(0);
-
+  void _drawBar(
+    Canvas canvas,
+    Size size,
+    Color color, {
+    required double value,
+    bool isBelow = true,
+  }) {
     final paint = Paint()
       ..color = color
       ..style = PaintingStyle.fill;
@@ -114,10 +153,6 @@ class BalanceBarPainter extends CustomPainter {
       0,
       size.width * value,
       size.height,
-      topLeft: verticalRadiusLeft,
-      bottomRight: verticalRadiusRight,
-      topRight: verticalRadiusRight,
-      bottomLeft: verticalRadiusLeft,
     );
     canvas.drawRRect(rect, paint);
   }

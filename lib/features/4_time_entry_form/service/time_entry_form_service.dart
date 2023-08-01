@@ -1,20 +1,31 @@
-import 'package:my_time/exceptions/custom_app_exception.dart';
-import 'package:my_time/features/4_time_entry_form/4_time_entry_form.dart';
+// ignore_for_file: only_throw_errors
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:my_time/exceptions/custom_app_exception.dart';
+import 'package:my_time/features/4_time_entry_form/4_time_entry_form.dart';
 
+/// Service for the time entry form feature.
 class TimeEntryFormService {
-  final TimeEntryFormRepository _timeEntryFormRepository;
+  /// Constructor for the [TimeEntryFormService].
   TimeEntryFormService(this._timeEntryFormRepository);
+
+  /// The [TimeEntryFormRepository] instance.
+  final TimeEntryFormRepository _timeEntryFormRepository;
+
+  /// Will get a TimeEntry from the database by id.
   Future<TimeEntryModel> getEntryById(String id) async =>
-      await _timeEntryFormRepository.getEntryById(id);
+      _timeEntryFormRepository.getEntryById(id);
 
+  /// Will delete a TimeEntry from the database.
   Future<bool> deleteEntry(TimeEntryModel entry) async =>
-      await _timeEntryFormRepository.deleteEntry(entry);
-  Future<bool> updateTimeEntry(TimeEntryModel entry) async =>
-      await _timeEntryFormRepository.updateTimeEntry(entry);
+      _timeEntryFormRepository.deleteEntry(entry);
 
+  /// Will update a TimeEntry in the database.
+  Future<bool> updateTimeEntry(TimeEntryModel entry) async =>
+      _timeEntryFormRepository.updateTimeEntry(entry);
+
+  /// Will add a new TimeEntry to the database.
   Future<bool> addTimeEntry(TimeEntryModel newEntry) async {
     final existingEntries = await _timeEntryFormRepository
         .getTimeEntriesByProjectId(newEntry.projectId);
@@ -22,11 +33,13 @@ class TimeEntryFormService {
       throw const CustomAppException.timeRangesOverlap();
     }
 
-    return await _timeEntryFormRepository.addTimeEntry(newEntry);
+    return _timeEntryFormRepository.addTimeEntry(newEntry);
   }
 
   bool _checkSameDateEntries(
-      TimeEntryModel newEntry, List<TimeEntryModel> currentEntries) {
+    TimeEntryModel newEntry,
+    List<TimeEntryModel> currentEntries,
+  ) {
     final entriesSameDate = currentEntries.where((element) {
       final elementDate = DateFormat('yyyy-MM-dd').format(element.startTime);
       final entryDate = DateFormat('yyyy-MM-dd').format(newEntry.startTime);
@@ -35,9 +48,9 @@ class TimeEntryFormService {
       }
       return false;
     });
-    bool dateRangesOverlap = false;
+    var dateRangesOverlap = false;
 
-    for (var element in entriesSameDate) {
+    for (final element in entriesSameDate) {
       dateRangesOverlap = newEntry.checkEntriesIntersect(element);
       if (dateRangesOverlap) {
         break;
@@ -47,6 +60,7 @@ class TimeEntryFormService {
   }
 }
 
+/// Provides a [TimeEntryFormService] instance.
 final timeEntryFormServiceProvider = Provider<TimeEntryFormService>((ref) {
   return TimeEntryFormService(ref.read(timeEntryFormRepositoryProvider));
 });

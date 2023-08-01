@@ -2,19 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:my_time/global/globals.dart';
 import 'package:shimmer/shimmer.dart';
 
+/// Loading state of the GroupProjectsShellPageListScreen.
 class GroupProjectsShellPageListScreenLoadingState extends StatelessWidget {
+  /// Creates a [GroupProjectsShellPageListScreenLoadingState].
   const GroupProjectsShellPageListScreenLoadingState({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisSize: MainAxisSize.max,
       children: <Widget>[
         Shimmer.fromColors(
           period: const Duration(seconds: 1),
-          direction: ShimmerDirection.ltr,
-          baseColor: Colors.grey[300] as Color,
+          baseColor: Colors.grey[300]!,
           highlightColor: Colors.grey[200]!,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -33,10 +33,10 @@ class GroupProjectsShellPageListScreenLoadingState extends StatelessWidget {
                     ),
                   ),
                   padding: const EdgeInsets.fromLTRB(0, 12, 200, 0),
-                  child: Container(
+                  child: const ColoredBox(
                     color: Colors.white,
-                    child: const Text(
-                      "",
+                    child: Text(
+                      '',
                     ),
                   ),
                 ),
@@ -59,12 +59,13 @@ class GroupProjectsShellPageListScreenLoadingState extends StatelessWidget {
                       ),
                     ),
                     padding: const EdgeInsets.fromLTRB(12, 12, 12, 12),
-                    child: Container(
-                        color: Colors.white,
-                        child: const Text(
-                          "",
-                          style: TextStyle(fontSize: 22),
-                        )),
+                    child: const ColoredBox(
+                      color: Colors.white,
+                      child: Text(
+                        '',
+                        style: TextStyle(fontSize: 22),
+                      ),
+                    ),
                   ),
                 ),
                 itemCount: 6,

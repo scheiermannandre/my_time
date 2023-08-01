@@ -12,7 +12,7 @@ Future<bool?> showAlertDialog({
   String defaultActionText = 'OK',
 }) async {
   if (kIsWeb || !Platform.isIOS) {
-    return await showDialog(
+    return showDialog(
       context: context,
       builder: (context) => AlertDialog(
         title: Text(title),
@@ -41,7 +41,7 @@ Future<bool?> showAlertDialog({
       ),
     );
   }
-  return await showCupertinoDialog(
+  return showCupertinoDialog(
     context: context,
     builder: (context) => CupertinoAlertDialog(
       title: Text(title),
@@ -77,9 +77,8 @@ Future<bool?> showExceptionAlertDialog({
   required String title,
   required dynamic exception,
 }) async =>
-    await showAlertDialog(
+    showAlertDialog(
       context: context,
       title: title,
       content: exception.toString(),
-      defaultActionText: 'OK',
     );

@@ -1,22 +1,26 @@
 import 'dart:convert';
 
+/// Extension for the [Iterable] class.
 extension IterableExtensions<T> on Iterable<T> {
+  ///Returns the first element that satisfies the given predicate else null.
   T? firstWhereOrNull(bool Function(T) func) {
     final sublist = where(func);
     return sublist.isEmpty ? null : sublist.first;
   }
 
+  /// Returns a deep copy of the list of DateTimes.
   static List<DateTime> deepCopyDateTimeList(List<DateTime> dateTimes) {
-    final encodedList = json.encode(dateTimes, toEncodable: dateTimeSerializer);
-    final List<dynamic> decodedListDynami = json.decode(encodedList);
-    final List<DateTime> decodedListDateTime = [];
-    for (String value in decodedListDynami) {
+    final encodedList =
+        json.encode(dateTimes, toEncodable: _dateTimeSerializer);
+    final decodedListDynami = json.decode(encodedList) as List<String>;
+    final decodedListDateTime = <DateTime>[];
+    for (final value in decodedListDynami) {
       decodedListDateTime.add(DateTime.parse(value));
     }
     return decodedListDateTime;
   }
 
-  static dynamic dateTimeSerializer(dynamic object) {
+  static dynamic _dateTimeSerializer(dynamic object) {
     if (object is DateTime) {
       return object.toIso8601String();
     }

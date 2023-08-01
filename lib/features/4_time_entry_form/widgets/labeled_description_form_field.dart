@@ -1,22 +1,28 @@
+import 'package:flutter/material.dart';
 import 'package:my_time/common/common.dart';
 import 'package:my_time/constants/constants.dart';
 import 'package:my_time/global/globals.dart';
 
-import 'package:flutter/material.dart';
-
+/// A [TextField] with a label.
 class LabeledDescriptionFormField extends StatelessWidget {
+  /// Creates a [LabeledDescriptionFormField].
+  const LabeledDescriptionFormField({
+    required this.controller,
+    required this.label,
+    super.key,
+  });
+
+  /// The controller for the text field.
   final TextEditingController controller;
+
+  /// The label of the text field.
   final String label;
-  const LabeledDescriptionFormField(
-      {super.key, required this.controller, required this.label});
 
   @override
   Widget build(BuildContext context) {
     return ResponsiveAlign(
-      alignment: Alignment.center,
       maxContentWidth: Breakpoint.tablet,
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(

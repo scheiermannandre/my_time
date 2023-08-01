@@ -1,15 +1,19 @@
-import 'package:my_time/common/common.dart';
-import 'package:my_time/exceptions/custom_app_exception.dart' as app_exception;
-import 'package:my_time/features/3_project_timer_page/3_project_timer_page.dart';
-import 'package:my_time/features/interface/interface.dart';
+// ignore_for_file: only_throw_errors
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:my_time/common/common.dart';
+import 'package:my_time/exceptions/custom_app_exception.dart' as app_exception;
+import 'package:my_time/features/3_project_timer_page/3_project_timer_page.dart';
 import 'package:realm/realm.dart';
 
+/// RealmDb implementation of the [TimeEntriesRepository].
 class RealmDbTimeEntriesRepository implements TimeEntriesRepository {
-  final Realm realm;
+  /// Constructor for the [RealmDbTimeEntriesRepository].
   RealmDbTimeEntriesRepository(this.realm);
+
+  /// The realm instance.
+  final Realm realm;
 
   @override
   Future<bool> saveTimeEntry(TimeEntryModel entry) async {
@@ -19,11 +23,13 @@ class RealmDbTimeEntriesRepository implements TimeEntriesRepository {
       throw const app_exception.CustomAppException.projectNotFound();
     }
     final project = projects.first;
-    return await _addTimeEntry(project, entry);
+    return _addTimeEntry(project, entry);
   }
 
   Future<bool> _addTimeEntry(
-      ProjectRealmModel project, TimeEntryModel entry) async {
+    ProjectRealmModel project,
+    TimeEntryModel entry,
+  ) async {
     if (_checkSameDateEntries(entry, project.timeEntries)) {
       throw const app_exception.CustomAppException.timeRangesOverlap();
     }
@@ -31,7 +37,7 @@ class RealmDbTimeEntriesRepository implements TimeEntriesRepository {
       final newEntryDB = TimeEntryRealmModel(
         entry.id,
         entry.projectId,
-        "",
+        '',
         entry.startTime,
         entry.endTime,
         entry.totalTime.toString(),
@@ -44,7 +50,9 @@ class RealmDbTimeEntriesRepository implements TimeEntriesRepository {
   }
 
   bool _checkSameDateEntries(
-      TimeEntryModel newEntry, List<TimeEntryRealmModel> currentEntries) {
+    TimeEntryModel newEntry,
+    List<TimeEntryRealmModel> currentEntries,
+  ) {
     final entriesSameDate = currentEntries.where((element) {
       final elementDate = DateFormat('yyyy-MM-dd').format(element.startTime);
       final entryDate = DateFormat('yyyy-MM-dd').format(newEntry.startTime);
@@ -53,9 +61,9 @@ class RealmDbTimeEntriesRepository implements TimeEntriesRepository {
       }
       return false;
     });
-    bool dateRangesOverlap = false;
+    var dateRangesOverlap = false;
 
-    for (var element in entriesSameDate) {
+    for (final element in entriesSameDate) {
       final entryDB = _convertEntryFromDB(element);
       dateRangesOverlap = newEntry.checkEntriesIntersect(entryDB);
       if (dateRangesOverlap) {
@@ -67,16 +75,18 @@ class RealmDbTimeEntriesRepository implements TimeEntriesRepository {
 
   TimeEntryModel _convertEntryFromDB(TimeEntryRealmModel entryDB) {
     return TimeEntryModel.factory(
-        id: entryDB.id,
-        projectId: entryDB.projectId,
-        startTime: entryDB.startTime.toLocal(),
-        endTime: entryDB.endTime.toLocal(),
-        totalTime: DurationExtension.parseDuration(entryDB.totalTimeStr),
-        breakTime: DurationExtension.parseDuration(entryDB.breakTimeStr),
-        description: entryDB.description);
+      id: entryDB.id,
+      projectId: entryDB.projectId,
+      startTime: entryDB.startTime.toLocal(),
+      endTime: entryDB.endTime.toLocal(),
+      totalTime: DurationExtension.parseDuration(entryDB.totalTimeStr),
+      breakTime: DurationExtension.parseDuration(entryDB.breakTimeStr),
+      description: entryDB.description,
+    );
   }
 }
 
+/// Provides the [RealmDbTimeEntriesRepository].
 final timeEntriesRepositoryProvider =
     Provider<RealmDbTimeEntriesRepository>((ref) {
   final config = Configuration.local([
@@ -84,7 +94,7 @@ final timeEntriesRepositoryProvider =
     ProjectRealmModel.schema,
     TimeEntryRealmModel.schema
   ]);
-  final Realm realm = Realm(config);
-  ref.onDispose(() => realm.close());
+  final realm = Realm(config);
+  ref.onDispose(realm.close);
   return RealmDbTimeEntriesRepository(realm);
 });

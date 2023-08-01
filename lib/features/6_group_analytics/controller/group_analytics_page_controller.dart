@@ -1,6 +1,7 @@
+// ignore_for_file: public_member_api_docs
+
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-// 2. declare a part file
 part 'group_analytics_page_controller.g.dart';
 
 @riverpod

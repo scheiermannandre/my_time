@@ -1,17 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:my_time/constants/breakpoints.dart';
 
+/// A widget that aligns its child and makes it responsive.
 class ResponsiveAlign extends StatelessWidget {
+  /// Constructor for the [ResponsiveAlign].
   const ResponsiveAlign({
+    required this.child,
     super.key,
     this.maxContentWidth = Breakpoint.desktop,
     this.padding = EdgeInsets.zero,
     this.alignment = Alignment.center,
-    required this.child,
   });
+
+  /// Maximum width of the content.
   final double maxContentWidth;
+
+  /// Padding of the content.
   final EdgeInsetsGeometry padding;
+
+  /// Alignment of the content.
   final Alignment alignment;
+
+  /// Child of the widget.
   final Widget child;
 
   @override
@@ -29,17 +39,27 @@ class ResponsiveAlign extends StatelessWidget {
   }
 }
 
+/// A widget that aligns its child and makes it responsive in a Sliver.
 class ResponsiveSliverAlign extends StatelessWidget {
+  /// Constructor for the [ResponsiveSliverAlign].
   const ResponsiveSliverAlign({
+    required this.child,
     super.key,
     this.maxContentWidth = Breakpoint.desktop,
     this.padding = EdgeInsets.zero,
     this.alignment = Alignment.center,
-    required this.child,
   });
+
+  /// Maximum width of the content.
   final double maxContentWidth;
+
+  /// Padding of the content.
   final EdgeInsetsGeometry padding;
+
+  /// Alignment of the content.
   final Alignment alignment;
+
+  /// Child of the widget.
   final Widget child;
   @override
   Widget build(BuildContext context) {

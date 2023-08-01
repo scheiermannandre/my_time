@@ -1,13 +1,13 @@
 //ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+// ignore:depend_on_referenced_packages
+import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_time/global/globals.dart';
 import 'package:my_time/router/app_route.dart';
-// ignore:depend_on_referenced_packages
-import 'package:flutter_web_plugins/url_strategy.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:flutter/services.dart';
 
 void main() async {
   // Realm realm = Realm(Configuration.local([
@@ -91,7 +91,7 @@ void main() async {
   // final groupsFromDB = realm.all<GroupRealmModel>();
 
   WidgetsFlutterBinding.ensureInitialized();
-  SystemChrome.setPreferredOrientations([
+  await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitDown,
     DeviceOrientation.portraitUp,
   ]);
@@ -160,8 +160,9 @@ class MyApp extends StatelessWidget {
         ),
         iconButtonTheme: const IconButtonThemeData(
           style: ButtonStyle(
-              iconColor:
-                  MaterialStatePropertyAll(GlobalProperties.textAndIconColor)),
+            iconColor:
+                MaterialStatePropertyAll(GlobalProperties.textAndIconColor),
+          ),
         ),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ButtonStyle(
@@ -171,7 +172,8 @@ class MyApp extends StatelessWidget {
               ),
             ),
             padding: MaterialStateProperty.all(
-                const EdgeInsets.fromLTRB(0, 12.5, 0, 12.5)),
+              const EdgeInsets.fromLTRB(0, 12.5, 0, 12.5),
+            ),
             backgroundColor: MaterialStateProperty.resolveWith<Color>(
               (states) {
                 if (states.contains(MaterialState.disabled)) {

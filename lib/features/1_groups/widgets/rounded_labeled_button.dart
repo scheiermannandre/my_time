@@ -1,14 +1,23 @@
 import 'package:flutter/material.dart';
 
+/// A rounded button with a label.
 class RoundedLabeldButton extends StatelessWidget {
+  /// Constructor for the [RoundedLabeldButton].
+  const RoundedLabeldButton({
+    required this.icon,
+    required this.text,
+    required this.onPressed,
+    super.key,
+  });
+
+  /// Icon of the button.
   final IconData icon;
+
+  /// Text of the button.
   final String text;
-  final Function onPressed;
-  const RoundedLabeldButton(
-      {super.key,
-      required this.icon,
-      required this.text,
-      required this.onPressed});
+
+  /// Callback for the button.
+  final VoidCallback onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -18,18 +27,16 @@ class RoundedLabeldButton extends StatelessWidget {
       alignment: Alignment.topCenter,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Container(
             height: 55,
             width: 55,
             decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.primary,
-                shape: BoxShape.circle),
+              color: Theme.of(context).colorScheme.primary,
+              shape: BoxShape.circle,
+            ),
             child: IconButton(
-              onPressed: () {
-                onPressed();
-              },
+              onPressed: onPressed,
               icon: Icon(icon),
             ),
           ),

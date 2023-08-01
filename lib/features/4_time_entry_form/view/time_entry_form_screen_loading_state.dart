@@ -1,101 +1,18 @@
-import 'package:my_time/common/common.dart';
-import 'package:my_time/constants/constants.dart';
-
 import 'package:flutter/material.dart';
+import 'package:my_time/common/common.dart';
+import 'package:my_time/features/4_time_entry_form/4_time_entry_form.dart';
 import 'package:shimmer/shimmer.dart';
 
-class LabeldDateFormFieldLoadingState extends StatelessWidget {
-  final double? height;
-  final double? textWidth;
-
-  const LabeldDateFormFieldLoadingState(
-      {super.key, this.height, this.textWidth});
-
-  @override
-  Widget build(BuildContext context) {
-    return ResponsiveAlign(
-      maxContentWidth: Breakpoint.tablet,
-      child: TextAndContainer(
-        height: height,
-        textWidth: textWidth,
-      ),
-    );
-  }
-}
-
-class TextAndContainer extends StatelessWidget {
-  final double? width;
-  final double? textWidth;
-  final double? height;
-  const TextAndContainer({super.key, this.width, this.height, this.textWidth});
-
-  @override
-  Widget build(BuildContext context) {
-    final finalHeight = height ?? gapH48.height;
-    final finalWidth = width ?? double.infinity;
-    final finalTextWidth = textWidth ?? 50;
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        ClipRRect(
-          borderRadius: const BorderRadius.all(Radius.circular(5)),
-          child: Container(
-            color: Colors.grey,
-            height: gapH24.height,
-            width: finalTextWidth,
-          ),
-        ),
-        const Padding(padding: EdgeInsets.only(bottom: 12)),
-        ResponsiveAlign(
-          maxContentWidth: finalWidth,
-          child: ClipRRect(
-            borderRadius: const BorderRadius.all(Radius.circular(5)),
-            child: Container(
-              color: Colors.grey,
-              height: finalHeight,
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class LabeldTimeFieldsLoadingsState extends StatelessWidget {
-  const LabeldTimeFieldsLoadingsState({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const ResponsiveAlign(
-      maxContentWidth: Breakpoint.tablet,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          TextAndContainer(
-            width: 100,
-          ),
-          TextAndContainer(
-            width: 100,
-          ),
-          TextAndContainer(
-            width: 100,
-          ),
-        ],
-      ),
-    );
-  }
-}
-
+/// The loading state of the TimeEntryFormScreen.
 class TimeEntryFormScreenLoadingState extends StatelessWidget {
+  /// Creates a TimeEntryFormScreenLoadingState.
   const TimeEntryFormScreenLoadingState({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Shimmer.fromColors(
       period: const Duration(seconds: 1),
-      direction: ShimmerDirection.ltr,
-      baseColor: Colors.grey[300] as Color,
+      baseColor: Colors.grey[300]!,
       highlightColor: Colors.grey[200]!,
       child: ResponsiveAlign(
         alignment: Alignment.topCenter,
@@ -105,24 +22,23 @@ class TimeEntryFormScreenLoadingState extends StatelessWidget {
             SliverFillRemaining(
               hasScrollBody: false,
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const LabeldDateFormFieldLoadingState(),
+                  const LabeledDateFormFieldLoadingState(),
                   const Padding(padding: EdgeInsets.only(bottom: 16)),
-                  const LabeldTimeFieldsLoadingsState(),
+                  const LabeledTimeFieldLoadingsState(),
                   const Padding(padding: EdgeInsets.only(bottom: 16)),
-                  const LabeldDateFormFieldLoadingState(
+                  const LabeledDateFormFieldLoadingState(
                     textWidth: 85,
                     height: 240,
                   ),
                   Expanded(
                     child: NavBarSubmitButton(
                       isLoading: false,
-                      btnText: "",
+                      btnText: '',
                       onBtnTap: () {},
                       align: Alignment.bottomCenter,
-                      padding: const EdgeInsets.all(0),
+                      padding: EdgeInsets.zero,
                     ),
                   ),
                 ],

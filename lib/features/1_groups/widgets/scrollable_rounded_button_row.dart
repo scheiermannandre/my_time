@@ -1,13 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:my_time/features/1_groups/1_groups.dart';
 
-class ScrollableRoundendButtonRow extends StatelessWidget {
+/// A Scrollable Row of [RoundedLabeldButton].
+class ScrollableRoundedButtonRow extends StatelessWidget {
+  /// Creates a [ScrollableRoundedButtonRow].
+  const ScrollableRoundedButtonRow({
+    required this.children,
+    super.key,
+    this.padding = const EdgeInsets.fromLTRB(2.5, 0, 2.5, 0),
+  });
+
+  /// Children of the row.
   final List<RoundedLabeldButton> children;
+
+  /// Padding of the row.
   final EdgeInsets padding;
-  const ScrollableRoundendButtonRow(
-      {super.key,
-      required this.children,
-      this.padding = const EdgeInsets.fromLTRB(2.5, 0, 2.5, 0)});
 
   Widget _itemBuilder(BuildContext context, int index) {
     return Padding(padding: padding, child: children[index]);
@@ -21,7 +28,9 @@ class ScrollableRoundendButtonRow extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: List<Widget>.generate(
-            children.length, (index) => _itemBuilder(context, index)).toList(),
+          children.length,
+          (index) => _itemBuilder(context, index),
+        ).toList(),
       ),
     );
   }

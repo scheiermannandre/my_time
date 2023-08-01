@@ -1,19 +1,22 @@
-import 'package:my_time/features/5_project_history/5_project_history.dart';
-import 'package:my_time/router/app_route.dart';
-
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:my_time/features/5_project_history/5_project_history.dart';
+import 'package:my_time/router/app_route.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'project_history_shell_page_controller.g.dart';
 
+/// State of the ProjectHistoryShellPage.
 class ProjectHistoryShellPageState {
+  /// Creates a [ProjectHistoryShellPageState].
   ProjectHistoryShellPageState()
       : refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
 
+  /// The key of the [RefreshIndicator].
   final GlobalKey<RefreshIndicatorState> refreshIndicatorKey;
 }
 
+/// Controller for the ProjectHistoryShellPage.
 @riverpod
 class ProjectHistoryShellPageController
     extends _$ProjectHistoryShellPageController {
@@ -22,10 +25,14 @@ class ProjectHistoryShellPageController
     return ProjectHistoryShellPageState();
   }
 
+  /// Handles the tap on a TimeEntryTile
   void pushNamedTimeEntryForm(
-      BuildContext context, ProjectModel project, bool isEdit,
-      [TimeEntryModel? entry]) {
-    String tid = entry?.id ?? "";
+    BuildContext context,
+    ProjectModel project, {
+    required bool isEdit,
+    TimeEntryModel? entry,
+  }) {
+    final tid = entry?.id ?? '';
     context.pushNamed(
       AppRoute.timeEntryForm,
       pathParameters: {
@@ -38,15 +45,9 @@ class ProjectHistoryShellPageController
       },
     );
   }
-
-  // Stream<List<List<TimeEntryModel>>?> watchAllEntriesGroupedByMonth(
-  //     String projectId) async* {
-  //   final timeEntriesRepository = ref.read(projectHistoryRepositoryProvider);
-  //   yield* Stream.fromFuture(
-  //       timeEntriesRepository.streamProjectEntriesGroupedByMonth(projectId));
-  // }
 }
 
+/// Provides the Project.
 final projectProvider =
     FutureProvider.autoDispose.family<ProjectModel?, String>((ref, projectId) {
   final projectRepo = ref.read(projectHistoryRepositoryProvider);

@@ -2,17 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:my_time/common/widgets/nav_bar/nav_bar_item.dart';
 import 'package:my_time/common/widgets/show_up_widget.dart';
 
+/// Tile that implements the NavBarItem and makes user interaction possible.
 class NavBarTile extends StatefulWidget {
-  final CustomNavBarItem item;
-  final TextStyle style;
-  final ValueChanged<int>? onTap;
-  final int index;
-  final bool isExtended;
-  final Color selectedBackgroundColor;
-  final Color unSelectedBackgroundColor;
-
+  /// Creates a [NavBarTile].
   const NavBarTile({
-    super.key,
     required this.item,
     required this.onTap,
     required this.index,
@@ -20,7 +13,29 @@ class NavBarTile extends StatefulWidget {
     required this.selectedBackgroundColor,
     required this.unSelectedBackgroundColor,
     required this.style,
+    super.key,
   });
+
+  /// Item of the tile.
+  final CustomNavBarItem item;
+
+  /// Style of the label.
+  final TextStyle style;
+
+  /// Callback that is called when the tile is tapped.
+  final ValueChanged<int>? onTap;
+
+  /// Index of the tile.
+  final int index;
+
+  /// Whether the tile is extended or not.
+  final bool isExtended;
+
+  /// Background color of the tile when it is selected.
+  final Color selectedBackgroundColor;
+
+  /// Background color of the tile when it is not selected.
+  final Color unSelectedBackgroundColor;
 
   @override
   State<NavBarTile> createState() => _NavBarTileState();
@@ -28,17 +43,17 @@ class NavBarTile extends StatefulWidget {
 
 class _NavBarTileState extends State<NavBarTile> {
   Size _textSize(Text text) {
-    final TextPainter textPainter = TextPainter(
-        text: TextSpan(text: text.data, style: text.style),
-        maxLines: 1,
-        textDirection: TextDirection.ltr)
-      ..layout(minWidth: 0, maxWidth: double.infinity);
+    final textPainter = TextPainter(
+      text: TextSpan(text: text.data, style: text.style),
+      maxLines: 1,
+      textDirection: TextDirection.ltr,
+    )..layout();
     return textPainter.size;
   }
 
   @override
   Widget build(BuildContext context) {
-    Text text = Text(
+    final text = Text(
       widget.item.label,
       style: widget.style,
       textAlign: TextAlign.start,

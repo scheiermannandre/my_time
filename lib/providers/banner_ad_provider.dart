@@ -18,11 +18,12 @@
 // //       listener: adState.adListener,
 // //     )..load();
 // //   });
-  
+
 // //   return ref.state;
 // // });
 
-// final bannerAdProvider = Provider.family<BannerAd?, ScreenAdUnit >((ref, adUnit) {
+// final bannerAdProvider = Provider.family<BannerAd?, ScreenAdUnit >
+//((ref, adUnit) {
 //   WidgetsFlutterBinding.ensureInitialized();
 //   ref.state = null;
 //   final adState = ref.read(adStateProvider);
@@ -34,6 +35,7 @@
 //       listener: adState.adListener,
 //     )..load();
 //   });
-  
+
 //   return ref.state;
-// });
+// })
+// ;

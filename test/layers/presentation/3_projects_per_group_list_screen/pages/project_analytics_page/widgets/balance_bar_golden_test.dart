@@ -8,12 +8,12 @@ import 'package:my_time/features/6_group_analytics/widgets/balance_bar_chart.dar
 
 void main() {
   Widget createBalanceBar(TimeOfDay desired, TimeOfDay actual) {
-    BalanceBarItem item = BalanceBarItem(
+    final item = BalanceBarItem(
       desiredTime: desired,
       actualTime: actual,
       barDescriptionLabel: 'Actual',
     );
-    BalanceBarChartStyle style = BalanceBarChartStyle(
+    final style = BalanceBarChartStyle(
       desiredBalanceColor: const Color(0xff8bc4b7),
       undesiredBalanceColor: const Color(0xffc85552),
       barStyle: HorizontalBalanceBarStyle(
@@ -34,30 +34,35 @@ void main() {
         barHeight: 45,
         barPadding: 10,
         labelCount: 2,
-        showVerticalHelperLines: false,
         style: style,
       ),
     );
   }
 
   Widget createNeutralBalancebarChart() {
-    return createBalanceBar(const TimeOfDay(hour: 8, minute: 0),
-        const TimeOfDay(hour: 8, minute: 0));
+    return createBalanceBar(
+      const TimeOfDay(hour: 8, minute: 0),
+      const TimeOfDay(hour: 8, minute: 0),
+    );
   }
 
   Widget createUnderHoursBalancebarChart() {
-    return createBalanceBar(const TimeOfDay(hour: 8, minute: 0),
-        const TimeOfDay(hour: 6, minute: 0));
+    return createBalanceBar(
+      const TimeOfDay(hour: 8, minute: 0),
+      const TimeOfDay(hour: 6, minute: 0),
+    );
   }
 
   Widget createOverHoursBalancebarChart() {
-    return createBalanceBar(const TimeOfDay(hour: 8, minute: 0),
-        const TimeOfDay(hour: 9, minute: 0));
+    return createBalanceBar(
+      const TimeOfDay(hour: 8, minute: 0),
+      const TimeOfDay(hour: 9, minute: 0),
+    );
   }
 
   group('BalanceBarStates', () {
     testWidgets('Test neutral balance bar', (WidgetTester tester) async {
-      Widget widget = createNeutralBalancebarChart();
+      final widget = createNeutralBalancebarChart();
       await tester.pumpWidget(widget);
       await tester.pumpAndSettle();
 
@@ -69,7 +74,7 @@ void main() {
     });
 
     testWidgets('Test under hours balance bar', (WidgetTester tester) async {
-      Widget widget = createUnderHoursBalancebarChart();
+      final widget = createUnderHoursBalancebarChart();
       await tester.pumpWidget(widget);
       await tester.pumpAndSettle();
 
@@ -81,7 +86,7 @@ void main() {
     });
 
     testWidgets('Test under hours balance bar', (WidgetTester tester) async {
-      Widget widget = createOverHoursBalancebarChart();
+      final widget = createOverHoursBalancebarChart();
       await tester.pumpWidget(widget);
       await tester.pumpAndSettle();
 

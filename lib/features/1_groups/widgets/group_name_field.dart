@@ -1,12 +1,14 @@
+import 'package:flutter/material.dart';
 import 'package:my_time/common/common.dart';
 import 'package:my_time/global/globals.dart';
 
-import 'package:flutter/material.dart';
-
+/// Shows a Labeled Textfield for the group name.
 class GroupNameField extends StatelessWidget {
-  final TextEditingController groupNameController;
+  /// Constructor for the [GroupNameField].
+  const GroupNameField({required this.groupNameController, super.key});
 
-  const GroupNameField({super.key, required this.groupNameController});
+  /// Controller for the group name textfield.
+  final TextEditingController groupNameController;
   @override
   Widget build(BuildContext context) {
     return Column(

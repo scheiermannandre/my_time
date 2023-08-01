@@ -1,12 +1,14 @@
+import 'package:flutter/material.dart';
 import 'package:my_time/common/common.dart';
 import 'package:my_time/global/globals.dart';
 
-import 'package:flutter/material.dart';
-
+/// Widget for the project name field.
 class ProjectNameField extends StatelessWidget {
-  final TextEditingController projectNameController;
+  /// Creates a [ProjectNameField].
+  const ProjectNameField({required this.projectNameController, super.key});
 
-  const ProjectNameField({super.key, required this.projectNameController});
+  /// The controller for the project name field.
+  final TextEditingController projectNameController;
 
   @override
   Widget build(BuildContext context) {

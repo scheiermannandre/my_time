@@ -1,21 +1,29 @@
-import 'package:my_time/common/common.dart';
-import 'package:my_time/features/3_project_timer_page/3_project_timer_page.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:my_time/common/common.dart';
+import 'package:my_time/features/3_project_timer_page/3_project_timer_page.dart';
 
+/// The shell screen for the project.
 class ProjectShellScreen extends HookConsumerWidget {
-  const ProjectShellScreen(
-      {super.key, required this.children, required this.projectId});
+  /// Creates a [ProjectShellScreen].
+  const ProjectShellScreen({
+    required this.children,
+    required this.projectId,
+    super.key,
+  });
+
+  /// The children of the shell screen.
   final List<ProjectShellPage> children;
+
+  /// The id of the project.
   final String projectId;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    List<ProjectShellPage> childrenWithScrollController = [];
+    final childrenWithScrollController = <ProjectShellPage>[];
     final scrollController = useScrollController();
 
-    for (var element in children) {
+    for (final element in children) {
       childrenWithScrollController.add(
         element.copyWith(controller: scrollController),
       );
@@ -32,24 +40,25 @@ class ProjectShellScreen extends HookConsumerWidget {
         controller: scrollController,
         title: project.hasValue && !project.hasError && !project.isLoading
             ? project.value!.name
-            : "",
+            : '',
         actions: [
-          project.hasValue
-              ? IconButton(
-                  onPressed: () => projectShellScreenController
-                      .changeIsFavouriteState(project.value!),
-                  icon: project.value!.isMarkedAsFavourite
-                      ? const Icon(
-                          Icons.star,
-                        )
-                      : const Icon(Icons.star_border),
-                )
-              : IconButton(
-                  icon: const Icon(
-                    Icons.star_border,
-                  ),
-                  onPressed: () {},
-                ),
+          if (project.hasValue)
+            IconButton(
+              onPressed: () => projectShellScreenController
+                  .changeIsFavouriteState(project.value!),
+              icon: project.value!.isMarkedAsFavourite
+                  ? const Icon(
+                      Icons.star,
+                    )
+                  : const Icon(Icons.star_border),
+            )
+          else
+            IconButton(
+              icon: const Icon(
+                Icons.star_border,
+              ),
+              onPressed: () {},
+            ),
           IconButton(
             onPressed: () => project.hasValue
                 ? projectShellScreenController.showDeleteBottomSheet(
@@ -63,7 +72,10 @@ class ProjectShellScreen extends HookConsumerWidget {
           IconButton(
             onPressed: () => project.hasValue
                 ? projectShellScreenController.pushNamedTimeEntryForm(
-                    context, project.value!, false)
+                    context: context,
+                    project: project.value!,
+                    isEdit: false,
+                  )
                 : null,
             icon: const Icon(Icons.add),
           ),

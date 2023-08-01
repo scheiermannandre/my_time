@@ -1,26 +1,33 @@
-import 'package:my_time/common/common.dart';
-import 'package:my_time/features/2_projects/2_projects.dart';
-import 'package:my_time/features/interface/interface.dart';
-import 'package:my_time/router/app_route.dart';
-
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:my_time/common/common.dart';
+import 'package:my_time/features/2_projects/2_projects.dart';
+import 'package:my_time/router/app_route.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'group_projects_shell_page_controller.g.dart';
 
+/// State of the GroupProjectsShellPage.
 class GroupProjectsShellPageState {
+  /// Creates a [GroupProjectsShellPageState].
   GroupProjectsShellPageState();
+
+  /// The key of the [RefreshIndicator].
   final GlobalKey<RefreshIndicatorState> refreshIndicatorKey =
       GlobalKey<RefreshIndicatorState>();
 }
 
+/// Controller for the GroupProjectsShellPage.
 @riverpod
 class GroupProjectsShellPageController
     extends _$GroupProjectsShellPageController {
+  /// Needed to check if mounted.
   final initial = Object();
-  late var current = initial;
-  // An [Object] instance is equal to itself only.
+
+  /// Needed to check if mounted.
+  late Object current = initial;
+
+  /// Returns true if the screen is mounted.
   bool get mounted => current == initial;
   @override
   FutureOr<GroupProjectsShellPageState> build() {
@@ -29,18 +36,25 @@ class GroupProjectsShellPageController
     return GroupProjectsShellPageState();
   }
 
+  /// Handles the tap on the add project button.
   void pushNamedAddProject(BuildContext context, GroupProjectsPageModel dto) {
     context
         .pushNamed(AppRoute.addProject, queryParameters: {'gid': dto.group.id});
   }
 
+  /// Handles the tap on the project list tile.
   void pushNamedProject(
-      BuildContext context, List<ProjectModel> projects, int index) {
-    context.pushNamed(AppRoute.project,
-        pathParameters: {'pid': projects[index].id});
+    BuildContext context,
+    List<ProjectModel> projects,
+    int index,
+  ) {
+    context.pushNamed(
+      AppRoute.project,
+      pathParameters: {'pid': projects[index].id},
+    );
   }
 
-  void pop(BuildContext context) {
+  void _pop(BuildContext context) {
     if (context.canPop()) {
       context.pop();
     } else {
@@ -48,6 +62,7 @@ class GroupProjectsShellPageController
     }
   }
 
+  /// Handles the tap on the delete group button.
   Future<void> showDeleteBottomSheet(
     BuildContext context,
     AnimationController controller,
@@ -55,14 +70,15 @@ class GroupProjectsShellPageController
   ) async {
     {
       bool? deletePressed = false;
-      listener(status) {
+      void listener(AnimationStatus status) {
         if (status == AnimationStatus.dismissed) {
           _delete(context, deletePressed);
         }
       }
 
-      controller.removeStatusListener(listener);
-      controller.addStatusListener(listener);
+      controller
+        ..removeStatusListener(listener)
+        ..addStatusListener(listener);
       deletePressed = await openBottomSheet(
         context: context,
         bottomSheetController: controller,
@@ -86,20 +102,13 @@ class GroupProjectsShellPageController
   Future<void> _delete(BuildContext context, bool? deletePressed) async {
     if (deletePressed ?? false) {
       if (mounted) {
-        pop(context);
+        _pop(context);
       }
     }
   }
-
-  void onItemTapped(PageController controller, int index) {
-    controller.animateToPage(
-      index,
-      duration: const Duration(milliseconds: 500),
-      curve: Curves.easeOut,
-    );
-  }
 }
 
+/// Streams the [GroupProjectsPageModel] from the GroupProjectsScreenService.
 final groupProjectsProvider = StreamProvider.autoDispose
     .family<GroupProjectsPageModel, String>((ref, groupId) {
   final service = ref.watch(groupProjectsScreenServiceProvider);

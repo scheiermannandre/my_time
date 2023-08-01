@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:my_time/common/widgets/tab_bar/tab_item.dart';
 import 'package:my_time/features/6_group_analytics/view/pages/month/month_page.dart';
-import 'package:my_time/features/interface/presentation/tab_page/tab_page.dart';
+import 'package:my_time/features/6_group_analytics/view/tab_page.dart';
 
 /// Shows analytics per months
 /// Has a TabBar with the months the user has logged time for
 /// Rght now it is hardcoded and just a shell, later a controller
 /// and riverpod will be used to get the data from the backend and manage state
 class MonthsTabPage extends StatefulWidget {
+  /// Creates a MonthsTabPage.
   const MonthsTabPage({super.key});
   @override
   State<MonthsTabPage> createState() => _MonthsTabPageState();
@@ -34,10 +35,12 @@ class _MonthsTabPageState extends State<MonthsTabPage>
       stateKey: 'months',
       itemCount: months.length,
       tabItemBuilder: (context, index) {
-        return TabItem(children: [
-          Text(months[index].month, style: const TextStyle(fontSize: 16)),
-          Text(months[index].year, style: const TextStyle(fontSize: 10)),
-        ]);
+        return TabItem(
+          children: [
+            Text(months[index].month, style: const TextStyle(fontSize: 16)),
+            Text(months[index].year, style: const TextStyle(fontSize: 10)),
+          ],
+        );
       },
       pageItemBuilder: (context, index) {
         return const MonthPage();

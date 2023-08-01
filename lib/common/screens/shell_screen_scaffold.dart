@@ -3,32 +3,42 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:my_time/common/common.dart';
 import 'package:my_time/global/globals.dart';
 
+/// A Scaffold that contains a [PageView] and a [NavBar], so that pages can be
+/// inserted and be switched by the user can using the NavrBar.
 class ShellScreenScaffold extends HookWidget {
-  const ShellScreenScaffold({super.key, required this.children, this.appbar});
-  final List<ShellPage> children;
-  final PreferredSizeWidget? appbar;
+  /// Creates a [ShellScreenScaffold].
+  const ShellScreenScaffold({
+    required List<ShellPage> children,
+    super.key,
+    PreferredSizeWidget? appbar,
+  })  : _appbar = appbar,
+        _children = children;
+
+  final List<ShellPage> _children;
+  final PreferredSizeWidget? _appbar;
+
   @override
   Widget build(BuildContext context) {
-    final pageController = usePageController(initialPage: 0);
+    final pageController = usePageController();
     return Scaffold(
-      appBar: appbar,
+      appBar: _appbar,
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.only(bottom: 16),
         child: NavBar(
           onTap: (index) {
             _changeTab(pageController, index);
           },
-          startIndex: 0,
           backgroundColor: Theme.of(context).colorScheme.background,
           selectedBackgroundColor: Theme.of(context).colorScheme.primary,
           unSelectedBackgroundColor: Theme.of(context).colorScheme.background,
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          iconColor: GlobalProperties.textAndIconColor,
           style: const TextStyle(color: GlobalProperties.textAndIconColor),
-          items: children
+          items: _children
               .map(
                 (page) => CustomNavBarItem(
-                    iconData: page.iconData, label: page.label),
+                  iconData: page.iconData,
+                  label: page.label,
+                ),
               )
               .toList(),
         ),
@@ -37,7 +47,7 @@ class ShellScreenScaffold extends HookWidget {
         physics: const NeverScrollableScrollPhysics(),
         controller: pageController,
         onPageChanged: (index) {},
-        children: children,
+        children: _children,
       ),
     );
   }

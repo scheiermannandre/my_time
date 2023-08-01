@@ -1,24 +1,34 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:my_time/features/6_group_analytics/models/balance_bar_chart_configuration.dart';
 import 'package:my_time/features/6_group_analytics/models/balance_bar_item.dart';
 import 'package:my_time/features/6_group_analytics/models/diagram_frame_configuration.dart';
 import 'package:my_time/features/6_group_analytics/widgets/painters/balance_bar_painter.dart';
 
+/// The Horizontal BalanceBar
 class HorizontalBalanceBar extends StatefulWidget {
+  /// Creates a Horizontal BalanceBar.
   const HorizontalBalanceBar({
-    Key? key,
     required this.style,
     required this.diagramFrame,
     required this.barPadding,
     required this.barContainerHeight,
     required this.item,
-  }) : super(key: key);
+    super.key,
+  });
 
+  /// The style of the HorizontalBalanceBar.
   final HorizontalBalanceBarStyle style;
+
+  /// The configuration of the DiagramFrame.
   final DiagrammFrameConfiguration diagramFrame;
+
+  /// The padding of the bar.
   final double barPadding;
+
+  /// The height of the bar container.
   final double barContainerHeight;
+
+  /// The item of the HorizontalBalanceBar.
   final BalanceBarItem item;
 
   @override
@@ -61,8 +71,6 @@ class _HorizontalBalanceBarState extends State<HorizontalBalanceBar>
         padding: EdgeInsets.symmetric(vertical: widget.barPadding),
         child: ClipRRect(
           borderRadius: const BorderRadius.only(
-            topLeft: Radius.zero,
-            bottomLeft: Radius.zero,
             topRight: Radius.circular(10),
             bottomRight: Radius.circular(10),
           ),
@@ -70,7 +78,9 @@ class _HorizontalBalanceBarState extends State<HorizontalBalanceBar>
             painter: BalanceBarPainter(
               animationValue: animation.value,
               configuration: BalanceBarPainterConfiguration(
-                  item: widget.item, style: widget.style),
+                item: widget.item,
+                style: widget.style,
+              ),
             ),
           ),
         ),

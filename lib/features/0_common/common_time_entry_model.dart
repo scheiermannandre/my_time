@@ -38,8 +38,8 @@ class CommonTimeEntryModel {
     Duration? breakTime,
     String? description,
   }) {
-    DateTime tmpStartTime = startTime ?? this.startTime;
-    DateTime tmpEndTime = endTime ?? this.endTime;
+    final tmpStartTime = startTime ?? this.startTime;
+    final tmpEndTime = endTime ?? this.endTime;
 
     return CommonTimeEntryModel.factory(
       id: id ?? this.id,
@@ -53,7 +53,7 @@ class CommonTimeEntryModel {
   }
 
   bool checkEntriesIntersect(CommonTimeEntryModel entry2) {
-    bool intersect = _compareEntriesIntersection(this, entry2);
+    var intersect = _compareEntriesIntersection(this, entry2);
     if (!intersect) {
       intersect = _compareEntriesIntersection(entry2, this);
     }
@@ -61,8 +61,10 @@ class CommonTimeEntryModel {
   }
 
   static bool _compareEntriesIntersection(
-      CommonTimeEntryModel entry1, CommonTimeEntryModel entry2) {
-    return (entry1.startTime.isBefore(entry2.endTime) &&
-        entry2.startTime.isBefore(entry1.endTime));
+    CommonTimeEntryModel entry1,
+    CommonTimeEntryModel entry2,
+  ) {
+    return entry1.startTime.isBefore(entry2.endTime) &&
+        entry2.startTime.isBefore(entry1.endTime);
   }
 }

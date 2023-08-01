@@ -1,7 +1,8 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'dart:ui' as ui;
+
+import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /// provider used to access the AppLocalizations object for the current locale
 final appLocalizationsProvider = Provider<AppLocalizations>((ref) {
@@ -12,8 +13,7 @@ final appLocalizationsProvider = Provider<AppLocalizations>((ref) {
     ref.state = lookupAppLocalizations(ui.PlatformDispatcher.instance.locale);
   });
   // 3. register the observer and dispose it when no longer needed
-  final binding = WidgetsBinding.instance;
-  binding.addObserver(observer);
+  final binding = WidgetsBinding.instance..addObserver(observer);
   ref.onDispose(() => binding.removeObserver(observer));
   // 4. return the state
   return ref.state;

@@ -1,30 +1,50 @@
+import 'package:flutter/material.dart';
 import 'package:my_time/common/common.dart';
 import 'package:my_time/constants/constants.dart';
 import 'package:my_time/features/3_project_timer_page/3_project_timer_page.dart';
 
-import 'package:flutter/material.dart';
-
+/// StaggeredButtons that are animated.
 class StaggeredButtons extends StatefulWidget {
+  /// Creates a [StaggeredButtons].
+  const StaggeredButtons({
+    required this.onStart,
+    required this.onFinish,
+    required this.onPause,
+    required this.controller,
+    required this.timerState,
+    required this.btnPauseLabel,
+    required this.btnResumeLabel,
+    required this.btnStartLabel,
+    required this.btnFinishLabel,
+    super.key,
+  });
+
+  /// Handles the tap on the start button.
   final Future<bool> Function() onStart;
-  final Function onFinish;
-  final Function onPause;
+
+  /// Handles the tap on the finish button.
+  final VoidCallback onFinish;
+
+  /// Handles the tap on the pause button.
+  final VoidCallback onPause;
+
+  /// The animation controller.
   final AnimationController controller;
+
+  /// The timer state.
   final TimerState timerState;
+
+  /// The label of the pause button.
   final String btnPauseLabel;
+
+  /// The label of the resume button.
   final String btnResumeLabel;
+
+  /// The label of the start button.
   final String btnStartLabel;
+
+  /// The label of the finish button.
   final String btnFinishLabel;
-  const StaggeredButtons(
-      {super.key,
-      required this.onStart,
-      required this.onFinish,
-      required this.onPause,
-      required this.controller,
-      required this.timerState,
-      required this.btnPauseLabel,
-      required this.btnResumeLabel,
-      required this.btnStartLabel,
-      required this.btnFinishLabel});
 
   @override
   State<StaggeredButtons> createState() => _StaggeredButtonsState();
@@ -77,21 +97,21 @@ class _StaggeredButtonsState extends State<StaggeredButtons>
       <TweenSequenceItem<Size>>[
         TweenSequenceItem<Size>(
           tween: Tween<Size>(
-                  begin: Size(Breakpoint.mobile, gapH52.height!),
-                  end: Size(gapW52.width!, gapH52.height!))
-              .chain(CurveTween(curve: Curves.ease)),
-          weight: 80.0,
+            begin: Size(Breakpoint.mobile, gapH52.height!),
+            end: Size(gapW52.width!, gapH52.height!),
+          ).chain(CurveTween(curve: Curves.ease)),
+          weight: 80,
         ),
         TweenSequenceItem<Size>(
           tween: ConstantTween<Size>(Size(gapW52.width!, gapH52.height!)),
-          weight: 20.0,
+          weight: 20,
         ),
         TweenSequenceItem<Size>(
           tween: Tween<Size>(
-                  begin: Size(gapW52.width!, gapH52.height!),
-                  end: const Size(0, 0))
-              .chain(CurveTween(curve: Curves.ease)),
-          weight: 40.0,
+            begin: Size(gapW52.width!, gapH52.height!),
+            end: Size.zero,
+          ).chain(CurveTween(curve: Curves.ease)),
+          weight: 40,
         ),
       ],
     ).animate(
@@ -108,22 +128,24 @@ class _StaggeredButtonsState extends State<StaggeredButtons>
       <TweenSequenceItem<Size>>[
         TweenSequenceItem<Size>(
           tween: Tween<Size>(
-                  begin: const Size(0, 0),
-                  end: Size(gapW52.width!, gapH52.height!))
-              .chain(CurveTween(curve: Curves.ease)),
-          weight: 40.0,
+            begin: Size.zero,
+            end: Size(gapW52.width!, gapH52.height!),
+          ).chain(CurveTween(curve: Curves.ease)),
+          weight: 40,
         ),
         TweenSequenceItem<Size>(
           tween: ConstantTween<Size>(Size(gapW52.width!, gapH52.height!)),
-          weight: 20.0,
+          weight: 20,
         ),
         TweenSequenceItem<Size>(
           tween: Tween<Size>(
-                  begin: const Size(52, 52),
-                  end: Size(
-                      (Breakpoint.mobile - gapW16.width!) / 2, gapH52.height!))
-              .chain(CurveTween(curve: Curves.ease)),
-          weight: 80.0,
+            begin: const Size(52, 52),
+            end: Size(
+              (Breakpoint.mobile - gapW16.width!) / 2,
+              gapH52.height!,
+            ),
+          ).chain(CurveTween(curve: Curves.ease)),
+          weight: 80,
         ),
       ],
     ).animate(
@@ -148,10 +170,10 @@ class _StaggeredButtonsState extends State<StaggeredButtons>
     );
   }
 
-  void onStartPressed() async {
+  Future<void> onStartPressed() async {
     final result = await widget.onStart();
     if (result) {
-      widget.controller.forward();
+      await widget.controller.forward();
     }
   }
 
@@ -174,7 +196,7 @@ class _StaggeredButtonsState extends State<StaggeredButtons>
   @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
-      builder: ((context, child) {
+      builder: (context, child) {
         return Stack(
           children: [
             Center(
@@ -216,7 +238,7 @@ class _StaggeredButtonsState extends State<StaggeredButtons>
             ),
           ],
         );
-      }),
+      },
       animation: widget.controller.view,
     );
   }

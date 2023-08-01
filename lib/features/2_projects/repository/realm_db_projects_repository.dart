@@ -1,15 +1,19 @@
+// ignore_for_file: only_throw_errors
+
+import 'dart:async';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:my_time/exceptions/custom_app_exception.dart';
 import 'package:my_time/features/2_projects/2_projects.dart';
-import 'package:my_time/features/interface/interface.dart';
-
-import 'dart:async';
 import 'package:realm/realm.dart';
 
+/// RealmDb implementation of the [ProjectsRepository].
 class RealmDbProjectsRepository implements ProjectsRepository {
-  final Realm realm;
-
+  /// Creates a [RealmDbProjectsRepository].
   RealmDbProjectsRepository(this.realm);
+
+  /// The realm instance used to access the database.
+  final Realm realm;
 
   @override
   Future<bool> addProject(ProjectModel project) async {
@@ -42,10 +46,10 @@ class RealmDbProjectsRepository implements ProjectsRepository {
   @override
   Future<List<GroupModel>> fetchGroups() async {
     final groupsFromDB = realm.all<GroupRealmModel>();
-    List<GroupModel> groups = groupsFromDB
+    final groups = groupsFromDB
         .map((group) => GroupModel.factory(id: group.id, name: group.name))
         .toList();
-    return await Future(() => groups);
+    return Future(() => groups);
   }
 
   @override
@@ -66,13 +70,15 @@ class RealmDbProjectsRepository implements ProjectsRepository {
     }
     final group = groups.first;
     await realm.writeAsync(() {
-      realm.deleteMany<ProjectRealmModel>(group.projects);
-      realm.delete<GroupRealmModel>(group);
+      realm
+        ..deleteMany<ProjectRealmModel>(group.projects)
+        ..delete<GroupRealmModel>(group);
     });
     return true;
   }
 }
 
+/// Provides a [RealmDbProjectsRepository].
 final deviceStorageProjectsRepositoryProvider =
     Provider<RealmDbProjectsRepository>((ref) {
   final config = Configuration.local(
@@ -83,7 +89,7 @@ final deviceStorageProjectsRepositoryProvider =
     ],
   );
 
-  final Realm realm = Realm(config);
-  ref.onDispose(() => realm.close());
+  final realm = Realm(config);
+  ref.onDispose(realm.close);
   return RealmDbProjectsRepository(realm);
 });

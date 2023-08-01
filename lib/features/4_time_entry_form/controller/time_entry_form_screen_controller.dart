@@ -1,28 +1,32 @@
-import 'package:my_time/common/common.dart';
-import 'package:my_time/features/4_time_entry_form/4_time_entry_form.dart';
-
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:my_time/common/common.dart';
+import 'package:my_time/features/4_time_entry_form/4_time_entry_form.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'time_entry_form_screen_controller.g.dart';
 
+/// State of the TimeEntryFormScreen.
 @riverpod
 class TimeEntryFormScreenController extends _$TimeEntryFormScreenController {
+  /// Needed for checking if the widget is still mounted.
   final initial = Object();
-  late var current = initial;
-  // An [Object] instance is equal to itself only.
+
+  /// Needed for checking if the widget is still mounted.
+  late Object current = initial;
+
+  /// Returns true if the widget is still mounted.
   bool get mounted => current == initial;
   @override
   FutureOr<TimeEntryFormScreenState> build(
-      String projectId,
-      String? timeEntryId,
-      bool isEdit,
-      String invalidMessage,
-      String languageCode) async {
+    String projectId,
+    String? timeEntryId,
+    bool isEdit,
+    String invalidMessage,
+    String languageCode,
+  ) async {
     ref.onDispose(() => current = Object());
-    TimeEntryModel timeEntry =
-        TimeEntryFormScreenState.generateDefaultEntry(projectId);
+    var timeEntry = TimeEntryFormScreenState.generateDefaultEntry(projectId);
     if (isEdit) {
       final entry =
           await ref.read(projectTimeEntryProvider(timeEntryId!).future);
@@ -42,8 +46,9 @@ class TimeEntryFormScreenController extends _$TimeEntryFormScreenController {
     );
   }
 
-  void saveEntry(BuildContext context, bool isEdit) async {
-    bool isFormValid = state.value!.formKey.currentState!.validate();
+  /// Handles the tap on the save button
+  Future<void> saveEntry(BuildContext context, {required bool isEdit}) async {
+    final isFormValid = state.value!.formKey.currentState!.validate();
 
     if (isFormValid) {
       final data = state.value!.getEntry();
@@ -52,10 +57,12 @@ class TimeEntryFormScreenController extends _$TimeEntryFormScreenController {
       final AsyncValue<bool> result;
       if (isEdit) {
         result = await AsyncValue.guard(
-            () => ref.read(timeEntryFormServiceProvider).updateTimeEntry(data));
+          () => ref.read(timeEntryFormServiceProvider).updateTimeEntry(data),
+        );
       } else {
         result = await AsyncValue.guard(
-            () => ref.read(timeEntryFormServiceProvider).addTimeEntry(data));
+          () => ref.read(timeEntryFormServiceProvider).addTimeEntry(data),
+        );
       }
       if (result.hasValue && result.value!) {
         if (mounted) {
@@ -64,14 +71,17 @@ class TimeEntryFormScreenController extends _$TimeEntryFormScreenController {
       } else {
         state = AsyncData(state.value!.copyWith(value: const AsyncData(null)));
         if (mounted) {
-          result.showAlertDialogOnError(context);
+          await result.showAlertDialogOnError(context);
         }
       }
     }
   }
 
-  void _deleteEntry(
-      BuildContext context, TimeEntryModel entry, bool? deletePressed) async {
+  Future<void> _deleteEntry(
+    BuildContext context,
+    TimeEntryModel entry,
+    bool? deletePressed,
+  ) async {
     if (deletePressed ?? false) {
       if (mounted) {
         context.pop();
@@ -79,6 +89,7 @@ class TimeEntryFormScreenController extends _$TimeEntryFormScreenController {
     }
   }
 
+  /// Handles the tap on the delete button
   Future<void> showDeleteBottomSheet(
     BuildContext context,
     AnimationController controller,
@@ -86,14 +97,15 @@ class TimeEntryFormScreenController extends _$TimeEntryFormScreenController {
   ) async {
     {
       bool? deletePressed = false;
-      listener(status) {
+      void listener(AnimationStatus status) {
         if (status == AnimationStatus.dismissed) {
           _deleteEntry(context, entry, deletePressed);
         }
       }
 
-      controller.removeStatusListener(listener);
-      controller.addStatusListener(listener);
+      controller
+        ..removeStatusListener(listener)
+        ..addStatusListener(listener);
       deletePressed = await openBottomSheet(
         context: context,
         bottomSheetController: controller,
@@ -116,8 +128,9 @@ class TimeEntryFormScreenController extends _$TimeEntryFormScreenController {
   }
 }
 
+/// Provides the Time Entry for the Form.
 final projectTimeEntryProvider =
     FutureProvider.autoDispose.family<TimeEntryModel, String>((ref, id) async {
   final timeEntriesRepository = ref.watch(timeEntryFormServiceProvider);
-  return await timeEntriesRepository.getEntryById(id);
+  return timeEntriesRepository.getEntryById(id);
 });

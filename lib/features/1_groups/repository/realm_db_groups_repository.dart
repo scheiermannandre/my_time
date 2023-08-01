@@ -1,14 +1,16 @@
-import 'package:my_time/features/1_groups/1_groups.dart';
-import 'package:my_time/features/interface/interface.dart';
-
 import 'dart:async';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:my_time/features/1_groups/1_groups.dart';
 import 'package:realm/realm.dart';
 
+/// RealmDb Repository Implementation for the Groups.
+/// Used for local storage on the device.
 class RealmDbGroupsRepository implements GroupsRepository {
-  final Realm realm;
-
+  /// Creates a [RealmDbGroupsRepository].
   RealmDbGroupsRepository(this.realm);
+
+  /// The [Realm] instance, which is the interface to the database.
+  final Realm realm;
 
   @override
   Future<bool> addGroup(GroupModel group) async {
@@ -31,7 +33,7 @@ class RealmDbGroupsRepository implements GroupsRepository {
   @override
   Stream<List<ProjectModel>> streamFavouriteProjects() => realm
       .all<ProjectRealmModel>()
-      .query("isMarkedAsFavourite == true")
+      .query('isMarkedAsFavourite == true')
       .changes
       .map(
         (event) => event.results
@@ -45,6 +47,7 @@ class RealmDbGroupsRepository implements GroupsRepository {
       );
 }
 
+/// Provider that delivers the [RealmDbGroupsRepository].
 final deviceStorageGroupsRepositoryProvider =
     Provider<RealmDbGroupsRepository>((ref) {
   final config = Configuration.local([
@@ -54,6 +57,6 @@ final deviceStorageGroupsRepositoryProvider =
     TimeEntryRealmModel.schema,
   ]);
   final realm = Realm(config);
-  ref.onDispose(() => realm.close());
+  ref.onDispose(realm.close);
   return RealmDbGroupsRepository(realm);
 });

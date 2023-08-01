@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:my_time/common/widgets/tab_bar/tab_item.dart';
 import 'package:my_time/features/6_group_analytics/view/pages/week/week_page.dart';
-import 'package:my_time/features/interface/presentation/tab_page/tab_page.dart';
+import 'package:my_time/features/6_group_analytics/view/tab_page.dart';
 
 /// Shows analytics per weeks
 /// Has a TabBar with the weeks the user has logged time for
 /// Rght now it is hardcoded and just a shell, later a controller
 /// and riverpod will be used to get the data from the backend and manage state
 class WeeksTabPage extends StatefulWidget {
+  /// Creates a WeeksTabPage.
   const WeeksTabPage({super.key});
   @override
   State<WeeksTabPage> createState() => _WeeksTabPageState();
@@ -35,10 +36,12 @@ class _WeeksTabPageState extends State<WeeksTabPage>
       stateKey: 'weeks',
       itemCount: weeks.length,
       tabItemBuilder: (context, index) {
-        return TabItem(children: [
-          Text(weeks[index].week, style: const TextStyle(fontSize: 16)),
-          Text(weeks[index].dateSpan, style: const TextStyle(fontSize: 10)),
-        ]);
+        return TabItem(
+          children: [
+            Text(weeks[index].week, style: const TextStyle(fontSize: 16)),
+            Text(weeks[index].dateSpan, style: const TextStyle(fontSize: 10)),
+          ],
+        );
       },
       pageItemBuilder: (context, index) {
         return const WeekPage();

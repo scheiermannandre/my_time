@@ -6,43 +6,61 @@ import 'package:my_time/features/6_group_analytics/models/diagram_frame_configur
 import 'package:my_time/features/6_group_analytics/widgets/diagram_frame.dart';
 import 'package:my_time/features/6_group_analytics/widgets/horizontal_balance_bar.dart';
 
+/// The BalanceBarChart.
 class BalanceBarChart extends StatelessWidget {
-  static Key balanceBarValueKey = const Key("balanceBarValueKey");
-
+  /// Creates a BalanceBarChart.
   const BalanceBarChart({
-    super.key,
     required this.item,
     required this.barHeight,
     required this.barPadding,
-    this.width,
     required this.labelCount,
     required this.style,
     required this.padding,
+    super.key,
+    this.width,
     this.showVerticalHelperLines = false,
   });
 
+  /// Key for the balance bar value.
+  static Key balanceBarValueKey = const Key('balanceBarValueKey');
+
+  /// The item of the BalanceBarChart.
   final BalanceBarItem item;
+
+  /// The count of the labels.
   final int labelCount;
+
+  /// The height of the bar.
   final double barHeight;
+
+  /// The padding of the bar.
   final double barPadding;
+
+  /// The width of the bar.
   final double? width;
+
+  /// Whether to show the vertical helper lines.
   final bool showVerticalHelperLines;
+
+  /// The style of the BalanceBarChart.
   final BalanceBarChartStyle style;
+
+  /// The padding of the BalanceBarChart.
   final EdgeInsets padding;
 
   @override
   Widget build(BuildContext context) {
-    double tmpActualValue = item.actualTime.toMinutes().toDouble();
-    double tmpDesiredValue = item.desiredTime.toMinutes().toDouble();
+    final tmpActualValue = item.actualTime.toMinutes().toDouble();
+    final tmpDesiredValue = item.desiredTime.toMinutes().toDouble();
 
-    double time =
+    final time =
         tmpDesiredValue > tmpActualValue ? tmpDesiredValue : tmpActualValue;
-    List<double> slots = generateSlots(time, labelCount);
-    List<String> labels = slots.map(formatTime).toList();
-    double balanceValue = tmpActualValue - tmpDesiredValue;
-    String balanceValueText = formatBalanceTime(balanceValue);
+    final slots = _generateSlots(time, labelCount);
+    final labels = slots.map(_formatTime).toList();
+    final balanceValue = tmpActualValue - tmpDesiredValue;
+    final balanceValueText = _formatBalanceTime(balanceValue);
 
-    Color balanceValueTextColor = balanceValue == 0
+    final balanceValueTextColor = balanceValue == 0
         ? style.desiredBalanceColor
         : style.undesiredBalanceColor;
     return Center(
@@ -54,16 +72,17 @@ class BalanceBarChart extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 const Text(
-                  "Balance",
+                  'Balance',
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                 ),
                 Text(
                   key: balanceBarValueKey,
                   balanceValueText,
                   style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      color: balanceValueTextColor),
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: balanceValueTextColor,
+                  ),
                 )
               ],
             ),
@@ -107,8 +126,8 @@ class BalanceBarChart extends StatelessWidget {
     );
   }
 
-  List<double> generateSlots(double timeOfDay, int count) {
-    List<double> timeList = [];
+  List<double> _generateSlots(double timeOfDay, int count) {
+    final timeList = <double>[];
 
     // Handle count = 1 separately
     if (count == 1) {
@@ -116,34 +135,35 @@ class BalanceBarChart extends StatelessWidget {
       return timeList;
     }
     // Calculate the interval between each time slot
-    double interval = timeOfDay / (count - 1);
+    final interval = timeOfDay / (count - 1);
 
     // Generate the time slots
-    for (int i = 0; i < count; i++) {
-      double slotTime = interval * i;
+    for (var i = 0; i < count; i++) {
+      final slotTime = interval * i;
       timeList.add(slotTime);
     }
 
     return timeList;
   }
 
-  String formatBalanceTime(double time) {
+  String _formatBalanceTime(double time) {
     String char;
 
     if (time > 0) {
       char = '+';
     } else if (time < 0) {
       char = '-';
-      time *= -1;
     } else {
       char = '';
     }
-    return '$char${formatTime(time)}';
+    return '$char${_formatTime(time)}';
   }
 
-  String formatTime(double time) {
-    int hour = time ~/ 60;
-    int minute = time.toInt() % 60;
-    return '${hour.toString().padLeft(2, '0')}:${minute.toString().padLeft(2, '0')}';
+  String _formatTime(double time) {
+    final hour = time ~/ 60;
+    final minute = time.toInt() % 60;
+    final hourString = hour.toString().padLeft(2, '0');
+    final minuteString = minute.toString().padLeft(2, '0');
+    return '$hourString:$minuteString';
   }
 }

@@ -3,9 +3,13 @@ import 'package:my_time/common/extensions/build_context_extension.dart';
 import 'package:my_time/common/widgets/responsive_center.dart';
 import 'package:my_time/constants/breakpoints.dart';
 
+/// Widget that is displayed when the loading of the data fails.
 class LoadingErrorWidget extends StatelessWidget {
+  /// Constructor for the [LoadingErrorWidget].
+  const LoadingErrorWidget({required this.onRefresh, super.key});
+
+  /// Callback that is called when the refresh button is tapped.
   final VoidCallback onRefresh;
-  const LoadingErrorWidget({super.key, required this.onRefresh});
 
   @override
   Widget build(BuildContext context) {
@@ -30,15 +34,16 @@ class LoadingErrorWidget extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 5),
-            child: Text(context.loc.loadingErrorWidgetDescription,
-                style: Theme.of(context).textTheme.bodyLarge
-                //const TextStyle(fontSize: 16),
-                ),
+            child: Text(
+              context.loc.loadingErrorWidgetDescription,
+              style: Theme.of(context).textTheme.bodyLarge,
+              //const TextStyle(fontSize: 16),
+            ),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 10),
             child: ElevatedButton(
-              onPressed: () => onRefresh(),
+              onPressed: onRefresh,
               //state.refreshIndicatorKey.currentState?.show(),
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),

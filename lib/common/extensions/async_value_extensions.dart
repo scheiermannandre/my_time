@@ -4,11 +4,13 @@ import 'package:my_time/common/dialogs/allert_dialog.dart';
 import 'package:my_time/common/extensions/build_context_extension.dart';
 import 'package:my_time/exceptions/custom_app_exception.dart';
 
-extension AsyncValueUI on AsyncValue {
+/// Extension for the [AsyncValue] class.
+extension AsyncValueUI<T> on AsyncValue<T> {
+  /// Shows an [AlertDialog] with the error message.
   Future<bool?> showAlertDialogOnError(BuildContext context) async {
     if (!isRefreshing && hasError) {
       final message = _errorMessage(error, context);
-      return await showExceptionAlertDialog(
+      return showExceptionAlertDialog(
         context: context,
         title: context.loc.errorPopUpHeader,
         exception: message,

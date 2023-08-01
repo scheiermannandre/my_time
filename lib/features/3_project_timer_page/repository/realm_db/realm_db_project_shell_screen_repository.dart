@@ -1,17 +1,21 @@
-import 'package:my_time/features/3_project_timer_page/3_project_timer_page.dart';
-import 'package:my_time/features/3_project_timer_page/repository/project_shell_screen_repository.dart';
-import 'package:my_time/features/interface/interface.dart';
-import 'package:my_time/exceptions/custom_app_exception.dart' as app_exception;
+// ignore_for_file: only_throw_errors
 
 import 'dart:async';
-import 'package:realm/realm.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:my_time/exceptions/custom_app_exception.dart' as app_exception;
+import 'package:my_time/features/3_project_timer_page/3_project_timer_page.dart';
+import 'package:my_time/features/3_project_timer_page/repository/project_shell_screen_repository.dart';
+import 'package:realm/realm.dart';
+
+/// RealmDb implementation of the [ProjectShellScreenRepository].
 class RealmDbProjectShellScreenPageRepository
     implements ProjectShellScreenRepository {
-  final Realm realm;
-
+  /// Constructor for the [RealmDbProjectShellScreenPageRepository].
   RealmDbProjectShellScreenPageRepository(this.realm);
+
+  /// The realm instance.
+  final Realm realm;
 
   @override
   Future<bool> deleteProject(String projectId) async {
@@ -21,16 +25,19 @@ class RealmDbProjectShellScreenPageRepository
     }
     final projectDB = projects.first;
     await realm.writeAsync(() {
-      realm.deleteMany<TimeEntryRealmModel>(projectDB.timeEntries);
-      realm.delete<ProjectRealmModel>(projectDB);
+      realm
+        ..deleteMany<TimeEntryRealmModel>(projectDB.timeEntries)
+        ..delete<ProjectRealmModel>(projectDB);
     });
     return true;
   }
 
   @override
   Future<void> updateIsFavouriteState(
-      String projectId, bool isFavourite) async {
-    var projects = realm.all<ProjectRealmModel>().query("id == '$projectId'");
+    String projectId, {
+    required bool isFavourite,
+  }) async {
+    final projects = realm.all<ProjectRealmModel>().query("id == '$projectId'");
     if (projects.isEmpty) {
       throw const app_exception.CustomAppException.projectNotFound();
     }
@@ -60,14 +67,17 @@ class RealmDbProjectShellScreenPageRepository
       .all<ProjectRealmModel>()
       .firstWhere((project) => project.id == projectId)
       .changes
-      .map((projects) => ProjectModel.factory(
-            id: projects.object.id,
-            groupId: projects.object.groupId,
-            name: projects.object.name,
-            isMarkedAsFavourite: projects.object.isMarkedAsFavourite,
-          ));
+      .map(
+        (projects) => ProjectModel.factory(
+          id: projects.object.id,
+          groupId: projects.object.groupId,
+          name: projects.object.name,
+          isMarkedAsFavourite: projects.object.isMarkedAsFavourite,
+        ),
+      );
 }
 
+/// Provides the [RealmDbProjectShellScreenPageRepository].
 final projectsRepositoryProvider =
     Provider<RealmDbProjectShellScreenPageRepository>((ref) {
   final config = Configuration.local([
@@ -75,7 +85,7 @@ final projectsRepositoryProvider =
     ProjectRealmModel.schema,
     TimeEntryRealmModel.schema
   ]);
-  final Realm realm = Realm(config);
-  ref.onDispose(() => realm.close());
+  final realm = Realm(config);
+  ref.onDispose(realm.close);
   return RealmDbProjectShellScreenPageRepository(realm);
 });

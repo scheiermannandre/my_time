@@ -1,19 +1,34 @@
 import 'package:flutter/material.dart';
 
+/// Standard button widget.
 class StandardButton extends StatelessWidget {
-  const StandardButton(
-      {super.key,
-      required this.text,
-      this.isLoading = false,
-      this.onPressed,
-      this.width,
-      this.height,
-      this.opacitiy = 1.0});
+  /// Constructor for the [StandardButton].
+  const StandardButton({
+    required this.text,
+    super.key,
+    this.isLoading = false,
+    this.onPressed,
+    this.width,
+    this.height,
+    this.opacitiy = 1.0,
+  });
+
+  /// Text to display on the button.
   final String text;
+
+  /// Whether the button is loading.
   final bool isLoading;
-  final Function? onPressed;
+
+  /// Function to call when the button is pressed.
+  final VoidCallback? onPressed;
+
+  /// Width of the button.
   final double? width;
+
+  /// Height of the button.
   final double? height;
+
+  /// Opacity of the button.
   final double opacitiy;
 
   @override
@@ -22,11 +37,7 @@ class StandardButton extends StatelessWidget {
       width: width,
       height: height,
       child: ElevatedButton(
-        onPressed: (() {
-          if (onPressed != null) {
-            onPressed!();
-          }
-        }),
+        onPressed: onPressed,
         child: isLoading
             ? const CircularProgressIndicator()
             : Opacity(

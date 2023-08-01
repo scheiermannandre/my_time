@@ -1,10 +1,11 @@
-import 'package:my_time/global/globals.dart';
-import 'package:my_time/features/1_groups/1_groups.dart';
-
 import 'package:flutter/material.dart';
+import 'package:my_time/features/1_groups/1_groups.dart';
+import 'package:my_time/global/globals.dart';
 import 'package:shimmer/shimmer.dart';
 
+/// The GroupsScreen in it's loading state.
 class GroupsScreenLoadingState extends StatelessWidget {
+  /// Creates a [GroupsScreenLoadingState].
   const GroupsScreenLoadingState({super.key});
 
   @override
@@ -12,26 +13,24 @@ class GroupsScreenLoadingState extends StatelessWidget {
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.max,
         children: <Widget>[
           Shimmer.fromColors(
             period: const Duration(seconds: 1),
-            direction: ShimmerDirection.ltr,
-            baseColor: Colors.grey[300] as Color,
+            baseColor: Colors.grey[300]!,
             highlightColor: Colors.grey[200]!,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                ScrollableRoundendButtonRow(
+                ScrollableRoundedButtonRow(
                   children: [
                     RoundedLabeldButton(
                       icon: Icons.category,
-                      text: "",
+                      text: '',
                       onPressed: () {},
                     ),
                     RoundedLabeldButton(
                       icon: Icons.work,
-                      text: "",
+                      text: '',
                       onPressed: () {},
                     ),
                   ],
@@ -54,12 +53,13 @@ class GroupsScreenLoadingState extends StatelessWidget {
                         ),
                       ),
                       padding: const EdgeInsets.fromLTRB(12, 12, 12, 12),
-                      child: Container(
-                          color: Colors.white,
-                          child: const Text(
-                            "",
-                            style: TextStyle(fontSize: 22),
-                          )),
+                      child: const ColoredBox(
+                        color: Colors.white,
+                        child: Text(
+                          '',
+                          style: TextStyle(fontSize: 22),
+                        ),
+                      ),
                     ),
                   ),
                   itemCount: 6,

@@ -6,7 +6,10 @@ import 'package:my_time/router/app_route.dart';
 
 /// Placeholder widget showing a message and CTA to go back to the home screen.
 class EmptyPlaceholderWidget extends StatelessWidget {
-  const EmptyPlaceholderWidget({super.key, required this.message});
+  /// Constructor for the [EmptyPlaceholderWidget].
+  const EmptyPlaceholderWidget({required this.message, super.key});
+
+  /// Message to display.
   final String message;
 
   @override
@@ -16,7 +19,6 @@ class EmptyPlaceholderWidget extends StatelessWidget {
       child: Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
               message,

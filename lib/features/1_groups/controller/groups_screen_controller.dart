@@ -1,32 +1,29 @@
+import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:my_time/common/common.dart';
 import 'package:my_time/features/1_groups/1_groups.dart';
 import 'package:my_time/router/app_route.dart';
-
-import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+
 part 'groups_screen_controller.g.dart';
 
+/// State of the GroupsScreen.
 class GroupsScreenState {
+  /// Creates a [GroupsScreenState].
   GroupsScreenState({this.isPlaying = false});
+
+  /// Returns true if the hamurger animation is ongoing.
   final bool isPlaying;
+
+  /// The key of the [CustomExpansionTile].
   final GlobalKey<CustomExpansionTileState> expansionTile = GlobalKey();
+
+  /// The key of the [RefreshIndicator].
   final GlobalKey<RefreshIndicatorState> refreshIndicatorKey =
       GlobalKey<RefreshIndicatorState>();
 
-  @override
-  String toString() => 'GroupsListState(isPlaying: $isPlaying)';
-
-  @override
-  bool operator ==(covariant GroupsScreenState other) {
-    if (identical(this, other)) return true;
-
-    return other.isPlaying == isPlaying;
-  }
-
-  @override
-  int get hashCode => isPlaying.hashCode;
-
+  /// Copy Method, so that the [GroupsScreenState] can be updated and still be
+  /// immutable.
   GroupsScreenState copyWith({
     bool? isPlaying,
   }) {
@@ -36,6 +33,7 @@ class GroupsScreenState {
   }
 }
 
+/// Controller for the GroupsScreen.
 @riverpod
 class GroupsScreenController extends _$GroupsScreenController {
   @override
@@ -43,13 +41,14 @@ class GroupsScreenController extends _$GroupsScreenController {
     return GroupsScreenState();
   }
 
-  void animateHamburger() {
+  void _animateHamburger() {
     state =
         AsyncData(state.value!.copyWith(isPlaying: !state.value!.isPlaying));
   }
 
+  /// Handles the tap on the hamburger icon.
   void onHamburgerTab(BuildContext context, AnimationController controller) {
-    animateHamburger();
+    _animateHamburger();
     showBottomSheetWithWidgets(
       context: context,
       bottomSheetController: controller,
@@ -60,10 +59,10 @@ class GroupsScreenController extends _$GroupsScreenController {
             style: const TextStyle(color: Colors.black),
           ),
           onTap: () async {
-            await showDialog(
+            await showDialog<void>(
               context: context,
               builder: (context) => PolicyDialog(
-                mdFileName: "privacy_policy.md",
+                mdFileName: 'privacy_policy.md',
               ),
             );
           },
@@ -74,10 +73,10 @@ class GroupsScreenController extends _$GroupsScreenController {
             style: const TextStyle(color: Colors.black),
           ),
           onTap: () async {
-            await showDialog(
+            await showDialog<void>(
               context: context,
               builder: (context) => PolicyDialog(
-                mdFileName: "terms_of_use.md",
+                mdFileName: 'terms_of_use.md',
               ),
             );
           },
@@ -90,41 +89,49 @@ class GroupsScreenController extends _$GroupsScreenController {
           onTap: () {
             showAboutDialog(
               context: context,
-              applicationName: "My Time",
-              applicationVersion: "1.0.0",
+              applicationName: 'My Time',
+              applicationVersion: '1.0.0',
             );
           },
         ),
       ],
-      whenComplete: () => animateHamburger(),
+      whenComplete: _animateHamburger,
     );
   }
 
+  /// Handles the tap on the add group button.
   void pushNamedAddGroup(BuildContext context) =>
       context.pushNamed(AppRoute.addGroup);
 
+  /// Handles the tap on the add project button.
   void pushNamedAddProject(BuildContext context) =>
       context.pushNamed(AppRoute.addProject);
 
-  void pushNamedGroups(BuildContext context, GroupsScreenModel dto, int index) {
-    context.pushNamed(AppRoute.group,
-        pathParameters: {'gid': dto.groups[index].id});
+  /// Handles the tap on the Group Tile.
+  void pushNamedGroup(BuildContext context, GroupsScreenModel dto, int index) {
+    context.pushNamed(
+      AppRoute.group,
+      pathParameters: {'gid': dto.groups[index].id},
+    );
   }
 
+  /// Handles the tap on the Project Tile.
   void onProjectTileTap(
-      BuildContext context, List<ProjectModel> projects, int index) {
-    context.pushNamed(AppRoute.project, pathParameters: {
-      'pid': projects[index].id,
-    });
+    BuildContext context,
+    List<ProjectModel> projects,
+    int index,
+  ) {
+    context.pushNamed(
+      AppRoute.project,
+      pathParameters: {
+        'pid': projects[index].id,
+      },
+    );
     state.value!.expansionTile.currentState!.collapse();
   }
 }
 
-// final groupsDataProvider = StreamProvider.autoDispose<GroupsScreenModel>((ref) {
-//   final groupsService = ref.watch(deviceStorageGroupsRepositoryProvider);
-//   return groupsService.streamGroupsScreenModel();
-// });
-
+/// Provider for the GroupsScreen, that streams the [GroupsScreenModel].
 final groupsDataProvider = StreamProvider.autoDispose<GroupsScreenModel>((ref) {
   final groupsService = ref.watch(groupsScreenServiceProvider);
   return groupsService.streamGroupsScreenModel();

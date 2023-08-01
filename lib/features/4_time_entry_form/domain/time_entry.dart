@@ -1,23 +1,27 @@
 import 'package:my_time/features/0_common/common_time_entry_model.dart';
 
+/// Model for the time entry for time entry form feature.
 class TimeEntryModel extends CommonTimeEntryModel {
-  TimeEntryModel(
-      {required super.projectId,
-      required super.startTime,
-      required super.endTime,
-      required super.totalTime,
-      required super.breakTime,
-      required super.description});
+  /// Creates a [TimeEntryModel].
+  TimeEntryModel({
+    required super.projectId,
+    required super.startTime,
+    required super.endTime,
+    required super.totalTime,
+    required super.breakTime,
+    required super.description,
+  });
 
-  TimeEntryModel.factory(
-      {required super.id,
-      required super.projectId,
-      required super.startTime,
-      required super.endTime,
-      required super.totalTime,
-      required super.breakTime,
-      required super.description})
-      : super.factory();
+  /// Factory for a [TimeEntryModel].
+  TimeEntryModel.factory({
+    required super.id,
+    required super.projectId,
+    required super.startTime,
+    required super.endTime,
+    required super.totalTime,
+    required super.breakTime,
+    required super.description,
+  }) : super.factory();
 
   @override
   TimeEntryModel copyWith({
@@ -28,8 +32,8 @@ class TimeEntryModel extends CommonTimeEntryModel {
     Duration? breakTime,
     String? description,
   }) {
-    DateTime tmpStartTime = startTime ?? this.startTime;
-    DateTime tmpEndTime = endTime ?? this.endTime;
+    final tmpStartTime = startTime ?? this.startTime;
+    final tmpEndTime = endTime ?? this.endTime;
 
     return TimeEntryModel.factory(
       id: id ?? this.id,

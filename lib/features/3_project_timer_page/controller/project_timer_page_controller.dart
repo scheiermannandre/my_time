@@ -1,25 +1,35 @@
-import 'package:my_time/features/3_project_timer_page/3_project_timer_page.dart';
-import 'package:my_time/router/app_route.dart';
-
 import 'dart:async' as async;
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:my_time/features/3_project_timer_page/3_project_timer_page.dart';
+import 'package:my_time/router/app_route.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'project_timer_shell_page_controller.g.dart';
 
+/// State of the ProjectTimerShellPage.
 class ProjectTimerPageState {
+  /// Creates a [ProjectTimerPageState].
   ProjectTimerPageState({required this.timerData, required this.duration})
       : refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
-  ProjectTimerPageState._private(
-      {required this.timerData,
-      required this.duration,
-      required this.refreshIndicatorKey});
+  ProjectTimerPageState._private({
+    required this.timerData,
+    required this.duration,
+    required this.refreshIndicatorKey,
+  });
 
+  /// The [ProjectTimerModel] of the page.
   final ProjectTimerModel? timerData;
+
+  /// The current duration of the timer.
   final Duration duration;
+
+  /// The key of the [RefreshIndicator].
   final GlobalKey<RefreshIndicatorState> refreshIndicatorKey;
 
+  /// Copy Method, so that the [ProjectTimerPageState] can be updated and still
+  /// be immutable.
   ProjectTimerPageState copyWith({
     ProjectTimerModel? timerData,
     Duration? duration,
@@ -32,13 +42,20 @@ class ProjectTimerPageState {
   }
 }
 
+/// Controller for the ProjectTimerShellPage.
 @riverpod
 class ProjectTimerShellPageController
     extends _$ProjectTimerShellPageController {
+  /// Needed to check if mounted.
   final initial = Object();
-  late var current = initial;
-  // An [Object] instance is equal to itself only.
+
+  /// Needed to check if mounted.
+  late Object current = initial;
+
+  /// Returns true if the screen is mounted.
   bool get mounted => current == initial;
+
+  /// The Timer that is used to update the timer duration.
   async.Timer? timer;
 
   @override
@@ -48,7 +65,7 @@ class ProjectTimerShellPageController
       timer?.cancel();
     });
     final timerData = await ref.read(timerDataProvider(projectId).future);
-    Duration duration = Duration.zero;
+    var duration = Duration.zero;
     if (timerData != null && timerData.state == TimerState.running) {
       _startTimer();
       duration = _getTimerDuration(timerData);
@@ -58,37 +75,39 @@ class ProjectTimerShellPageController
 
   Duration _getTimerDuration(ProjectTimerModel timerData) {
     // count all breakTimes
-    Duration breakTime = _calculateBreakTimer(timerData);
+    final breakTime = _calculateBreakTimer(timerData);
     return DateTime.now().toUtc().difference(timerData.startTime) - breakTime;
   }
 
   Duration _calculateBreakTimer(ProjectTimerModel timerData) {
-    Duration breakTime = Duration.zero;
-    for (int i = 0; i < timerData.breakStartTimes.length; i++) {
-      DateTime breakStart = timerData.breakStartTimes[i];
-      DateTime breakEnd = timerData.breakEndTimes[i];
+    var breakTime = Duration.zero;
+    for (var i = 0; i < timerData.breakStartTimes.length; i++) {
+      final breakStart = timerData.breakStartTimes[i];
+      final breakEnd = timerData.breakEndTimes[i];
       breakTime += breakEnd.difference(breakStart);
     }
     return breakTime;
   }
 
-  void timerCallBack() {
-    Duration duration = _getTimerDuration(state.value!.timerData!);
+  void _timerCallBack() {
+    final duration = _getTimerDuration(state.value!.timerData!);
     state = AsyncData(state.value!.copyWith(duration: duration));
   }
 
   void _startTimer() {
-    timer = ref.read(timerServiceProvider).startTimer(timerCallBack);
+    timer = ref.read(timerServiceProvider).startTimer(_timerCallBack);
   }
 
+  /// Handles the tap on the start button.
   Future<bool> startTimer(String projectId) async {
-    ProjectTimerModel timerData = ProjectTimerModel(
-        projectId: projectId,
-        startTime: DateTime.now().toUtc(),
-        endTime: DateTime(9999),
-        breakStartTimes: [],
-        breakEndTimes: [],
-        state: TimerState.running);
+    final timerData = ProjectTimerModel(
+      projectId: projectId,
+      startTime: DateTime.now().toUtc(),
+      endTime: DateTime(9999),
+      breakStartTimes: [],
+      breakEndTimes: [],
+      state: TimerState.running,
+    );
     state = await AsyncValue.guard<ProjectTimerPageState>(() async {
       final data =
           await ref.read(timerDataRepositoryProvider).saveTimerData(timerData);
@@ -102,20 +121,24 @@ class ProjectTimerShellPageController
     return true;
   }
 
-  void stopTimer(BuildContext context, ProjectModel project) async {
+  /// Handles the tap on the stop button.
+  async.Future<void> stopTimer(
+    BuildContext context,
+    ProjectModel project,
+  ) async {
     ref.read(timerServiceProvider).stopTimer();
-    ProjectTimerModel newTimerData = await ref
+    final newTimerData = await ref
         .read(timerDataRepositoryProvider)
         .deleteTimerData(state.value!.timerData!, DateTime.now().toUtc());
     state = AsyncValue.data(state.value!.copyWith(timerData: newTimerData));
 
-    TimeEntryModel entry = TimeEntryModel(
+    final entry = TimeEntryModel(
       projectId: projectId,
       startTime: newTimerData.startTime,
       endTime: newTimerData.endTime,
       totalTime: state.value!.duration,
       breakTime: _calculateBreakTimer(newTimerData),
-      description: "",
+      description: '',
     );
     state = await AsyncValue.guard(() async {
       await ref.read(timeEntriesRepositoryProvider).saveTimeEntry(entry);
@@ -124,31 +147,42 @@ class ProjectTimerShellPageController
 
     if (!state.hasError) {
       if (mounted) {
-        pushNamedTimeEntryForm(context, project, true, entry);
+        pushNamedTimeEntryForm(
+          context: context,
+          project: project,
+          isEdit: true,
+          entry: entry,
+        );
         state = AsyncValue.data(state.value!.copyWith(duration: Duration.zero));
       }
     }
   }
 
-  void pauseResumeTimer() async {
+  /// Handles the tap on the pause/resume button.
+  async.Future<void> pauseResumeTimer() async {
     ref.read(timerServiceProvider).pauseResumeTimer();
-    ProjectTimerModel currentTimerData = state.value!.timerData!;
+    final currentTimerData = state.value!.timerData!;
 
-    ProjectTimerModel newTimerData = await ref
-        .read(timerDataRepositoryProvider)
-        .updateTimerDataState(
-            currentTimerData.copyWith(
+    final newTimerData =
+        await ref.read(timerDataRepositoryProvider).updateTimerDataState(
+              currentTimerData.copyWith(
                 state: currentTimerData.state == TimerState.running
                     ? TimerState.paused
-                    : TimerState.running),
-            DateTime.now().toUtc());
+                    : TimerState.running,
+              ),
+              DateTime.now().toUtc(),
+            );
     state = AsyncValue.data(state.value!.copyWith(timerData: newTimerData));
   }
 
-  void pushNamedTimeEntryForm(
-      BuildContext context, ProjectModel project, bool isEdit,
-      [TimeEntryModel? entry]) {
-    String tid = entry?.id ?? "";
+  /// Handles the tap on the add break button.
+  void pushNamedTimeEntryForm({
+    required BuildContext context,
+    required ProjectModel project,
+    required bool isEdit,
+    TimeEntryModel? entry,
+  }) {
+    final tid = entry?.id ?? '';
     context.pushNamed(
       AppRoute.timeEntryForm,
       pathParameters: {
@@ -163,12 +197,14 @@ class ProjectTimerShellPageController
   }
 }
 
+/// Provides TimerData from the Repository.
 final timerDataProvider = FutureProvider.autoDispose
     .family<ProjectTimerModel?, String>((ref, projectId) {
   final timerDataRepo = ref.read(timerDataRepositoryProvider);
   return timerDataRepo.fetchTimerData(projectId);
 });
 
+/// Provides the Project.
 final projectFutureProvider =
     FutureProvider.autoDispose.family<ProjectModel?, String>((ref, projectId) {
   final projectRepo = ref.read(projectsRepositoryProvider);

@@ -2,19 +2,31 @@ import 'package:flutter/material.dart';
 import 'package:my_time/common/widgets/responsive_center.dart';
 import 'package:my_time/constants/breakpoints.dart';
 
+/// Widget that is displayed when no items are found.
 class NoItemsFoundWidget extends StatelessWidget {
-  const NoItemsFoundWidget(
-      {super.key,
-      required this.onBtnTap,
-      required this.title,
-      required this.description,
-      required this.btnLabel,
-      this.icon = Icons.add});
+  /// Constructor for the [NoItemsFoundWidget].
+  const NoItemsFoundWidget({
+    required this.onBtnTap,
+    required this.title,
+    required this.description,
+    required this.btnLabel,
+    super.key,
+    this.icon = Icons.add,
+  });
 
-  final Function() onBtnTap;
+  /// Callback that is called when the button is tapped.
+  final VoidCallback onBtnTap;
+
+  /// Title of the widget.
   final String title;
+
+  /// Description of the widget.
   final String description;
+
+  /// Label of the button.
   final String btnLabel;
+
+  /// Icon of the button.
   final IconData icon;
   @override
   Widget build(BuildContext context) {

@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:my_time/common/widgets/tab_bar/tab_item.dart';
 import 'package:my_time/features/6_group_analytics/view/pages/year/year_page.dart';
-import 'package:my_time/features/interface/presentation/tab_page/tab_page.dart';
+import 'package:my_time/features/6_group_analytics/view/tab_page.dart';
 
 /// Shows analytics per day
 /// Has a TabBar with the days the years has logged time for
 /// Rght now it is hardcoded and just a shell, later a controller
 /// and riverpod will be used to get the data from the backend and manage state
 class YearTabPage extends StatefulWidget {
+  /// Creates a YearTabPage.
   const YearTabPage({super.key});
   @override
   State<YearTabPage> createState() => _YearTabPageState();
@@ -34,9 +35,11 @@ class _YearTabPageState extends State<YearTabPage>
       stateKey: 'years',
       itemCount: years.length,
       tabItemBuilder: (context, index) {
-        return TabItem(children: [
-          Text(years[index], style: const TextStyle(fontSize: 16)),
-        ]);
+        return TabItem(
+          children: [
+            Text(years[index], style: const TextStyle(fontSize: 16)),
+          ],
+        );
       },
       pageItemBuilder: (context, index) {
         return const YearPage();

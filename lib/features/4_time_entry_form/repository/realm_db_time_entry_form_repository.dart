@@ -1,14 +1,18 @@
+// ignore_for_file: only_throw_errors
+
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:my_time/common/common.dart';
 import 'package:my_time/exceptions/custom_app_exception.dart' as app_exception;
 import 'package:my_time/features/4_time_entry_form/4_time_entry_form.dart';
-import 'package:my_time/features/interface/interface.dart';
-
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:realm/realm.dart';
 
+/// RealmDb implementation of the [TimeEntryFormRepository].
 class RealmDbTimeEntryFormRepository implements TimeEntryFormRepository {
-  final Realm realm;
+  /// Constructor for the [RealmDbTimeEntryFormRepository].
   RealmDbTimeEntryFormRepository(this.realm);
+
+  /// The realm instance.
+  final Realm realm;
 
   @override
   Future<bool> deleteEntry(TimeEntryModel entry) async {
@@ -25,7 +29,7 @@ class RealmDbTimeEntryFormRepository implements TimeEntryFormRepository {
 
   @override
   Future<TimeEntryModel> getEntryById(String id) async {
-    var entries = realm.all<TimeEntryRealmModel>().query("id == '$id'");
+    final entries = realm.all<TimeEntryRealmModel>().query("id == '$id'");
     if (entries.isEmpty) {
       throw const app_exception.CustomAppException.entryNotFound();
     }
@@ -34,13 +38,14 @@ class RealmDbTimeEntryFormRepository implements TimeEntryFormRepository {
 
   TimeEntryModel _convertEntryFromDB(TimeEntryRealmModel entryDB) {
     return TimeEntryModel.factory(
-        id: entryDB.id,
-        projectId: entryDB.projectId,
-        startTime: entryDB.startTime.toLocal(),
-        endTime: entryDB.endTime.toLocal(),
-        totalTime: DurationExtension.parseDuration(entryDB.totalTimeStr),
-        breakTime: DurationExtension.parseDuration(entryDB.breakTimeStr),
-        description: entryDB.description);
+      id: entryDB.id,
+      projectId: entryDB.projectId,
+      startTime: entryDB.startTime.toLocal(),
+      endTime: entryDB.endTime.toLocal(),
+      totalTime: DurationExtension.parseDuration(entryDB.totalTimeStr),
+      breakTime: DurationExtension.parseDuration(entryDB.breakTimeStr),
+      description: entryDB.description,
+    );
   }
 
   @override
@@ -52,11 +57,11 @@ class RealmDbTimeEntryFormRepository implements TimeEntryFormRepository {
     if (project == null) {
       throw const app_exception.CustomAppException.projectNotFound();
     }
-    realm.writeAsync(() {
+    await realm.writeAsync(() {
       final newEntryDB = TimeEntryRealmModel(
         entry.id,
         entry.projectId,
-        "",
+        '',
         entry.startTime,
         entry.endTime,
         entry.totalTime.toString(),
@@ -65,7 +70,7 @@ class RealmDbTimeEntryFormRepository implements TimeEntryFormRepository {
       );
       project.timeEntries.add(newEntryDB);
     });
-    return await Future.value(true);
+    return Future.value(true);
   }
 
   @override
@@ -78,27 +83,30 @@ class RealmDbTimeEntryFormRepository implements TimeEntryFormRepository {
       throw const app_exception.CustomAppException.entryNotFound();
     }
     realm.writeAsync(() {
-      entryDB.startTime = entry.startTime;
-      entryDB.endTime = entry.endTime;
-      entryDB.totalTimeStr = entry.totalTime.toString();
-      entryDB.breakTimeStr = entry.breakTime.toString();
-      entryDB.description = entry.description;
+      entryDB
+        ..startTime = entry.startTime
+        ..endTime = entry.endTime
+        ..totalTimeStr = entry.totalTime.toString()
+        ..breakTimeStr = entry.breakTime.toString()
+        ..description = entry.description;
     });
     return Future.value(true);
   }
 
   @override
   Future<List<TimeEntryModel>> getTimeEntriesByProjectId(
-      String projectId) async {
+    String projectId,
+  ) async {
     final entries =
         realm.all<TimeEntryRealmModel>().query("projectId == '$projectId'");
 
-    return await Future.value(
-      entries.map((entry) => _convertEntryFromDB(entry)).toList(),
+    return Future.value(
+      entries.map(_convertEntryFromDB).toList(),
     );
   }
 }
 
+/// Provides a [RealmDbTimeEntryFormRepository].
 final timeEntryFormRepositoryProvider =
     Provider<RealmDbTimeEntryFormRepository>((ref) {
   final config = Configuration.local([
@@ -106,5 +114,7 @@ final timeEntryFormRepositoryProvider =
     ProjectRealmModel.schema,
     TimeEntryRealmModel.schema
   ]);
-  return RealmDbTimeEntryFormRepository(Realm(config));
+  final realm = Realm(config);
+  ref.onDispose(realm.close);
+  return RealmDbTimeEntryFormRepository(realm);
 });

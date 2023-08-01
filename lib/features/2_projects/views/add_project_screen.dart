@@ -1,25 +1,28 @@
-import 'package:my_time/common/common.dart';
-import 'package:my_time/features/2_projects/2_projects.dart';
-
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:my_time/common/common.dart';
+import 'package:my_time/features/2_projects/2_projects.dart';
 
+/// The screen for adding a new project.
 class AddProjectScreen extends HookConsumerWidget {
+  /// Creates an [AddProjectScreen].
+  const AddProjectScreen({super.key, this.groupId});
+
+  /// The id of the group the project should be added to.
   final String? groupId;
-  const AddProjectScreen({Key? key, this.groupId}) : super(key: key);
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final projectNameController = useTextEditingController(text: '');
     final controller =
-        ref.watch(addProjectScreenControllerProvider(groupId ?? "").notifier);
+        ref.watch(addProjectScreenControllerProvider(groupId ?? '').notifier);
     final state =
-        ref.watch(addProjectScreenControllerProvider(groupId ?? "")).value;
+        ref.watch(addProjectScreenControllerProvider(groupId ?? '')).value;
 
     final AsyncValue<List<GroupModel>> groupsListValue;
     groupsListValue = ref.watch(groupsProvider(groupId));
-    ref.listen<AsyncValue>(
+    ref.listen<AsyncValue<void>>(
       groupsProvider(groupId),
       (_, state) => state.showAlertDialogOnError(context),
     );
@@ -38,14 +41,15 @@ class AddProjectScreen extends HookConsumerWidget {
         elevation: 0,
         backgroundColor: Theme.of(context).colorScheme.primary,
       ),
-      bottomNavigationBar: Container(
+      bottomNavigationBar: ColoredBox(
         color: Theme.of(context).colorScheme.background,
         child: NavBarSubmitButton(
           isLoading: state!.isLoading,
           btnText: context.loc.addProjectScreenBtnLabel,
           onBtnTap: state.isLoading
               ? null
-              : () => controller.onBtnTap(context, projectNameController.text),
+              : () =>
+                  controller.onAddBtnTap(context, projectNameController.text),
         ),
       ),
       backgroundColor: Theme.of(context).colorScheme.primary,
@@ -55,9 +59,11 @@ class AddProjectScreen extends HookConsumerWidget {
           color: Theme.of(context).colorScheme.primary,
           key: state.refreshIndicatorKey,
           onRefresh: () async {
-            await AsyncValue.guard(() => ref
-                .refresh(groupsProvider(groupId).future)
-                .timeout(const Duration(seconds: 20)));
+            await AsyncValue.guard(
+              () => ref
+                  .refresh(groupsProvider(groupId).future)
+                  .timeout(const Duration(seconds: 20)),
+            );
             return;
           },
           child: ScrollConfiguration(
@@ -80,8 +86,7 @@ class AddProjectScreen extends HookConsumerWidget {
                   defaultSelectedGroup: context
                       .loc.addProjectScreenGroupFieldDropDownDefaultLabel,
                   isExpandable: state.isExpandable,
-                  onListTileTap: (groups, index) =>
-                      controller.onGroupDropDownListTileTap(groups, index),
+                  onListTileTap: controller.onGroupDropDownListTileTap,
                   controller: projectNameController,
                 ),
                 error: (ex, st) => LoadingErrorWidget(
@@ -92,7 +97,7 @@ class AddProjectScreen extends HookConsumerWidget {
                   alignment: Alignment.topCenter,
                   padding: EdgeInsets.fromLTRB(10, 0, 10, 10),
                   child: SingleChildScrollView(
-                    child: AddGroupScreenLoadingState(),
+                    child: AddProjectScreenLoadingState(),
                   ),
                 ),
               ),

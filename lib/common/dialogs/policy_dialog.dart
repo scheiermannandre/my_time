@@ -3,31 +3,37 @@ import 'package:flutter/services.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:my_time/common/extensions/build_context_extension.dart';
 
+/// Shows a dialog with a markdown file.
 class PolicyDialog extends StatelessWidget {
+  /// Constructor for the [PolicyDialog].
   PolicyDialog({
-    Key? key,
-    this.radius = 5,
-    required this.mdFileName,
-  })  : assert(mdFileName.contains('.md'),
-            'The file must contain the .md extension'),
-        super(key: key);
+    required String mdFileName,
+    super.key,
+    double radius = 5,
+  })  : _mdFileName = mdFileName,
+        _borderRadius = radius,
+        assert(
+          mdFileName.contains('.md'),
+          'The file must contain the .md extension',
+        );
 
-  final double radius;
-  final String mdFileName;
+  final double _borderRadius;
+  final String _mdFileName;
 
   @override
   Widget build(BuildContext context) {
     return Dialog(
       insetPadding: const EdgeInsets.all(25),
-      shape:
-          RoundedRectangleBorder(borderRadius: BorderRadius.circular(radius)),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(_borderRadius),
+      ),
       child: Column(
         children: [
           Expanded(
             child: FutureBuilder(
-              future: Future.delayed(const Duration(milliseconds: 150))
+              future: Future<void>.delayed(const Duration(milliseconds: 150))
                   .then((value) {
-                return rootBundle.loadString('assets/$mdFileName');
+                return rootBundle.loadString('assets/$_mdFileName');
               }),
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
@@ -50,8 +56,8 @@ class PolicyDialog extends StatelessWidget {
               shape: MaterialStateProperty.all(
                 RoundedRectangleBorder(
                   borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(radius),
-                    bottomRight: Radius.circular(radius),
+                    bottomLeft: Radius.circular(_borderRadius),
+                    bottomRight: Radius.circular(_borderRadius),
                   ),
                 ),
               ),
@@ -59,8 +65,8 @@ class PolicyDialog extends StatelessWidget {
             child: Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(radius),
-                  bottomRight: Radius.circular(radius),
+                  bottomLeft: Radius.circular(_borderRadius),
+                  bottomRight: Radius.circular(_borderRadius),
                 ),
               ),
               alignment: Alignment.center,
