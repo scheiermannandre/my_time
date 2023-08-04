@@ -2,13 +2,26 @@
 
 import 'package:dart_pre_commit/dart_pre_commit.dart';
 import 'package:git_hooks/git_hooks.dart';
+import 'package:process_run/shell.dart';
 
 void main(List<String> arguments) {
   final params = <Git, UserBackFun>{
     Git.commitMsg: _conventionalCommitMsg,
     Git.preCommit: _preCommit,
+    Git.prePush: _prePush,
   };
   GitHooks.call(arguments, params);
+}
+
+Future<bool> _prePush() async {
+  const coverageThreshhold = 10;
+  final shell = Shell(throwOnError: false);
+  // run shellScript to generate test coverage and check if it
+  // passes the threshold
+  final results = await shell.run(
+    'dlcov --coverage=$coverageThreshhold --lcov-gen="flutter test --coverage"',
+  );
+  return results.first.exitCode == 0;
 }
 
 Future<bool> _preCommit() async {
