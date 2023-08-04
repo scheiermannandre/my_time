@@ -1,5 +1,3 @@
-// ignore_for_file: only_throw_errors
-
 import 'package:my_time/common/common.dart';
 import 'package:my_time/exceptions/custom_app_exception.dart' as app_exception;
 import 'package:my_time/features/3_project_timer_page/3_project_timer_page.dart';
@@ -26,7 +24,7 @@ class RealmDbProjectTimerPageRepository implements ProjectTimerPageRepository {
   }
 
   @override
-  Future<ProjectTimerModel> saveTimerData(ProjectTimerModel timerData) async {
+  Future<void> saveTimerData(ProjectTimerModel timerData) async {
     final timerDataList = realm.all<TimerDataRealmModel>();
     if (timerDataList.isNotEmpty) {
       throw const app_exception.CustomAppException.multipleTimerStarts();
@@ -44,31 +42,14 @@ class RealmDbProjectTimerPageRepository implements ProjectTimerPageRepository {
     await realm.writeAsync(() {
       realm.add(dbTimerData);
     });
-    return _mapTimerData(dbTimerData);
+    //return _mapTimerData(dbTimerData);
   }
 
   @override
-  Future<ProjectTimerModel> deleteTimerData(
-    ProjectTimerModel timerData,
-    DateTime endTime,
-  ) async {
-    final timerDataList = realm
-        .all<TimerDataRealmModel>()
-        .query("projectId == '${timerData.projectId}'");
-    final timerDataDB = timerDataList.first;
-
-    ProjectTimerModel? newTimerData;
+  Future<void> deleteTimerData() async {
     await realm.writeAsync(() {
-      timerDataDB.endTime = endTime;
-      if (timerDataDB.breakStartTimes.length >
-          timerDataDB.breakEndTimes.length) {
-        timerDataDB.breakEndTimes.add(endTime);
-      }
-      timerDataDB.timerState = TimerState.off.toString();
-      newTimerData = _mapTimerData(timerDataDB);
-      realm.delete<TimerDataRealmModel>(timerDataDB);
+      realm.deleteAll<TimerDataRealmModel>();
     });
-    return newTimerData!;
   }
 
   @override

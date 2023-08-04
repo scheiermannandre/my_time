@@ -1,5 +1,3 @@
-// ignore_for_file: only_throw_errors
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:my_time/common/common.dart';
 import 'package:my_time/exceptions/custom_app_exception.dart' as app_exception;

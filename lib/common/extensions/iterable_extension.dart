@@ -12,10 +12,12 @@ extension IterableExtensions<T> on Iterable<T> {
   static List<DateTime> deepCopyDateTimeList(List<DateTime> dateTimes) {
     final encodedList =
         json.encode(dateTimes, toEncodable: _dateTimeSerializer);
-    final decodedListDynami = json.decode(encodedList) as List<String>;
+    final decodedListDynamic = json.decode(encodedList) as List<dynamic>;
     final decodedListDateTime = <DateTime>[];
-    for (final value in decodedListDynami) {
-      decodedListDateTime.add(DateTime.parse(value));
+    for (final value in decodedListDynamic) {
+      if (value is String) {
+        decodedListDateTime.add(DateTime.parse(value));
+      }
     }
     return decodedListDateTime;
   }

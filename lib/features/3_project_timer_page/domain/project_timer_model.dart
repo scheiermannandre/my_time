@@ -9,11 +9,12 @@ class ProjectTimerModel {
   ProjectTimerModel({
     required this.projectId,
     required this.startTime,
-    required this.endTime,
     required this.breakStartTimes,
     required this.breakEndTimes,
     required this.state,
-  }) : id = const uuid.Uuid().v1();
+    DateTime? endTime,
+  })  : id = const uuid.Uuid().v1(),
+        endTime = endTime ?? DateTime(0);
 
   /// Factory for a [ProjectTimerModel].
   ProjectTimerModel.factory({

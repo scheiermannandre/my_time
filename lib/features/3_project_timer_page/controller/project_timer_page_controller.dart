@@ -1,12 +1,10 @@
-import 'dart:async' as async;
-
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:my_time/features/3_project_timer_page/3_project_timer_page.dart';
 import 'package:my_time/router/app_route.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-part 'project_timer_shell_page_controller.g.dart';
+part 'project_timer_page_controller.g.dart';
 
 /// State of the ProjectTimerShellPage.
 class ProjectTimerPageState {
@@ -54,95 +52,121 @@ class ProjectTimerShellPageController
 
   /// Returns true if the screen is mounted.
   bool get mounted => current == initial;
-
-  /// The Timer that is used to update the timer duration.
-  async.Timer? timer;
-
+  late final TimerService _timerService;
   @override
-  FutureOr<ProjectTimerPageState> build(String projectId) async {
+  FutureOr<ProjectTimerPageState> build(
+    String projectId,
+  ) async {
     ref.onDispose(() {
       current = Object();
-      timer?.cancel();
     });
-    final timerData = await ref.read(timerDataProvider(projectId).future);
-    var duration = Duration.zero;
-    if (timerData != null && timerData.state == TimerState.running) {
-      _startTimer();
-      duration = _getTimerDuration(timerData);
+    TimerServiceData timerData;
+
+    final timerModel = await ref.read(timerDataProvider(projectId).future);
+    _timerService = ref.watch(timerServiceProvider);
+
+    _timerService.init(
+      interval: const Duration(seconds: 1),
+      tickEvent: _timerCallBack,
+      timerData: timerModel != null
+          ? TimerServiceData(
+              start: timerModel.startTime,
+              breakStarts: timerModel.breakStartTimes,
+              breakEnds: timerModel.breakEndTimes,
+              state: timerModel.state,
+            )
+          : null,
+    );
+    // there is no timer
+    if (timerModel == null) {
+      return ProjectTimerPageState(
+        timerData: null,
+        duration: Duration.zero,
+      );
     }
-    return ProjectTimerPageState(timerData: timerData, duration: duration);
-  }
-
-  Duration _getTimerDuration(ProjectTimerModel timerData) {
-    // count all breakTimes
-    final breakTime = _calculateBreakTimer(timerData);
-    return DateTime.now().toUtc().difference(timerData.startTime) - breakTime;
-  }
-
-  Duration _calculateBreakTimer(ProjectTimerModel timerData) {
-    var breakTime = Duration.zero;
-    for (var i = 0; i < timerData.breakStartTimes.length; i++) {
-      final breakStart = timerData.breakStartTimes[i];
-      final breakEnd = timerData.breakEndTimes[i];
-      breakTime += breakEnd.difference(breakStart);
+    // there is a timer running
+    else if (timerModel.state == TimerState.running) {
+      timerData = _timerService.startTimer();
     }
-    return breakTime;
+    // there is a timer which is paused
+    else {
+      timerData = _timerService.timerServiceData!;
+    }
+
+    return ProjectTimerPageState(
+      timerData: timerModel.copyWith(
+        startTime: timerData.start,
+        breakStartTimes: timerData.breakStarts,
+        breakEndTimes: timerData.breakEnds,
+        state: timerData.state,
+      ),
+      duration: _timerService.timerServiceData!.totalRun,
+    );
   }
 
-  void _timerCallBack() {
-    final duration = _getTimerDuration(state.value!.timerData!);
-    state = AsyncData(state.value!.copyWith(duration: duration));
-  }
-
-  void _startTimer() {
-    timer = ref.read(timerServiceProvider).startTimer(_timerCallBack);
+  void _timerCallBack(Duration elapsed) {
+    state = AsyncData(state.value!.copyWith(duration: elapsed));
   }
 
   /// Handles the tap on the start button.
   Future<bool> startTimer(String projectId) async {
-    final timerData = ProjectTimerModel(
-      projectId: projectId,
-      startTime: DateTime.now().toUtc(),
-      endTime: DateTime(9999),
-      breakStartTimes: [],
-      breakEndTimes: [],
-      state: TimerState.running,
-    );
-    state = await AsyncValue.guard<ProjectTimerPageState>(() async {
-      final data =
-          await ref.read(timerDataRepositoryProvider).saveTimerData(timerData);
-      return state.value!.copyWith(timerData: data, duration: Duration.zero);
+    return _startTimerWithRollback(projectId, (timerData) async {
+      final model = ProjectTimerModel(
+        projectId: projectId,
+        startTime: timerData.start,
+        breakStartTimes: timerData.breakStarts,
+        breakEndTimes: timerData.breakEnds,
+        state: timerData.state,
+      );
+      state = await AsyncValue.guard<ProjectTimerPageState>(() async {
+        await ref.read(timerDataRepositoryProvider).saveTimerData(model);
+        return state.value!.copyWith(timerData: model, duration: Duration.zero);
+      });
+      return !state.hasError;
     });
+  }
 
-    if (state.hasError) {
-      return false;
+  Future<bool> _startTimerWithRollback(
+    String projectId,
+    Future<bool> Function(TimerServiceData data) callback,
+  ) async {
+    final timerData = _timerService.startTimer();
+    final succes = await callback(timerData);
+
+    if (!succes) {
+      _timerService.cancelTimer();
     }
-    _startTimer();
-    return true;
+
+    return succes;
   }
 
   /// Handles the tap on the stop button.
-  async.Future<void> stopTimer(
+  Future<void> stopTimer(
     BuildContext context,
     ProjectModel project,
   ) async {
-    ref.read(timerServiceProvider).stopTimer();
-    final newTimerData = await ref
-        .read(timerDataRepositoryProvider)
-        .deleteTimerData(state.value!.timerData!, DateTime.now().toUtc());
-    state = AsyncValue.data(state.value!.copyWith(timerData: newTimerData));
+    final timerData = _timerService.cancelTimer();
+    await ref.read(timerDataRepositoryProvider).deleteTimerData();
 
     final entry = TimeEntryModel(
       projectId: projectId,
-      startTime: newTimerData.startTime,
-      endTime: newTimerData.endTime,
-      totalTime: state.value!.duration,
-      breakTime: _calculateBreakTimer(newTimerData),
+      startTime: timerData.start,
+      endTime: timerData.end!,
+      totalTime: timerData.totalRun,
+      breakTime: timerData.totalBreak,
       description: '',
     );
     state = await AsyncValue.guard(() async {
       await ref.read(timeEntriesRepositoryProvider).saveTimeEntry(entry);
-      return state.value!.copyWith();
+      return state.value!.copyWith(
+        timerData: ProjectTimerModel(
+          projectId: projectId,
+          startTime: timerData.start,
+          breakStartTimes: timerData.breakStarts,
+          breakEndTimes: timerData.breakEnds,
+          state: timerData.state,
+        ),
+      );
     });
 
     if (!state.hasError) {
@@ -159,8 +183,8 @@ class ProjectTimerShellPageController
   }
 
   /// Handles the tap on the pause/resume button.
-  async.Future<void> pauseResumeTimer() async {
-    ref.read(timerServiceProvider).pauseResumeTimer();
+  Future<void> pauseResumeTimer() async {
+    _timerService.pauseResumeTimer();
     final currentTimerData = state.value!.timerData!;
 
     final newTimerData =

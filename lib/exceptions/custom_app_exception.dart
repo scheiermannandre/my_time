@@ -5,7 +5,7 @@ part 'custom_app_exception.freezed.dart';
 
 /// Custom exceptions for the app.
 @freezed
-class CustomAppException with _$CustomAppException {
+class CustomAppException with _$CustomAppException implements Exception {
   /// Entry not found exception.
   const factory CustomAppException.entryNotFound() = EntryNotFound;
 

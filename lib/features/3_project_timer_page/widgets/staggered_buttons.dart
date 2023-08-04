@@ -77,12 +77,6 @@ class _StaggeredButtonsState extends State<StaggeredButtons>
       widget.controller.value = 1;
     }
 
-    if (widget.timerState == TimerState.running) {
-      btnPauseResumeText = btnPauseStr;
-    } else if (widget.timerState == TimerState.paused) {
-      btnPauseResumeText = btnResumeStr;
-    }
-
     opacityStartBtn = Tween<double>(begin: 1, end: 0).animate(
       CurvedAnimation(
         parent: widget.controller.view,
@@ -195,6 +189,11 @@ class _StaggeredButtonsState extends State<StaggeredButtons>
 
   @override
   Widget build(BuildContext context) {
+    if (widget.timerState == TimerState.running) {
+      btnPauseResumeText = btnPauseStr;
+    } else if (widget.timerState == TimerState.paused) {
+      btnPauseResumeText = btnResumeStr;
+    }
     return AnimatedBuilder(
       builder: (context, child) {
         return Stack(

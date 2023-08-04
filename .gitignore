@@ -12,6 +12,7 @@
 .buildlog/
 .history
 .svn/
+coverage/
 
 # generated files
 *.g.dart

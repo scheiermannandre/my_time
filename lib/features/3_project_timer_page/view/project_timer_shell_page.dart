@@ -49,7 +49,6 @@ class ProjectTimerShellPage extends ProjectShellPage {
       duration: const Duration(milliseconds: 2000),
       reverseDuration: const Duration(milliseconds: 2000),
     );
-
     return Scaffold(
       body: project.when(
         data: (data) => ResponsiveAlign(

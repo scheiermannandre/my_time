@@ -6,13 +6,10 @@ abstract class ProjectTimerPageRepository {
   Future<ProjectTimerModel?> fetchTimerData(String projectId);
 
   /// Will save the timer data for the project.
-  Future<ProjectTimerModel> saveTimerData(ProjectTimerModel timerData);
+  Future<void> saveTimerData(ProjectTimerModel timerData);
 
   /// Will delete the timer data for the project.
-  Future<ProjectTimerModel> deleteTimerData(
-    ProjectTimerModel timerData,
-    DateTime endTime,
-  );
+  Future<void> deleteTimerData();
 
   /// Will update the timer data state.
   Future<ProjectTimerModel> updateTimerDataState(

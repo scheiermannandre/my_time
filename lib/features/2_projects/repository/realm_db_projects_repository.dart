@@ -1,5 +1,3 @@
-// ignore_for_file: only_throw_errors
-
 import 'dart:async';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
