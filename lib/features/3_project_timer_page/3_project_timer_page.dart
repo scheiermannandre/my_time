@@ -7,7 +7,7 @@ export 'package:my_time/features/3_project_timer_page/controller/project_timer_p
 export 'package:my_time/features/3_project_timer_page/domain/project_model.dart';
 export 'package:my_time/features/3_project_timer_page/domain/project_timer_model.dart';
 export 'package:my_time/features/3_project_timer_page/domain/time_entry.dart';
-export 'package:my_time/features/3_project_timer_page/domain/timer_data.dart';
+export 'package:my_time/features/3_project_timer_page/domain/timer_service_data.dart';
 export 'package:my_time/features/3_project_timer_page/domain/timer_state.dart';
 export 'package:my_time/features/3_project_timer_page/repository/project_timer_page_repository.dart';
 export 'package:my_time/features/3_project_timer_page/repository/realm_db/realm_db_project_shell_screen_repository.dart';
