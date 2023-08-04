@@ -148,15 +148,16 @@ class BalanceBarChart extends StatelessWidget {
 
   String _formatBalanceTime(double time) {
     String char;
-
-    if (time > 0) {
+    var localTime = time;
+    if (localTime > 0) {
       char = '+';
-    } else if (time < 0) {
+    } else if (localTime < 0) {
+      localTime *= -1;
       char = '-';
     } else {
       char = '';
     }
-    return '$char${_formatTime(time)}';
+    return '$char${_formatTime(localTime)}';
   }
 
   String _formatTime(double time) {

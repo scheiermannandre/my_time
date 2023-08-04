@@ -10,7 +10,11 @@ part 'timer_service.g.dart';
 @riverpod
 TimerService timerService(TimerServiceRef ref) {
   final service = TimerService();
-  ref.onDispose(service.cancelTimer);
+  ref.onDispose(() {
+    if (service._timer != null) {
+      service._clearTimer();
+    }
+  });
   return service;
 }
 
@@ -65,11 +69,15 @@ class TimerService {
     return _timerServiceData!;
   }
 
-  /// Stops the timer.
-  TimerServiceData cancelTimer() {
+  void _clearTimer() {
     if (_timer != null) {
       _timer!.cancel();
     }
+  }
+
+  /// Stops the timer.
+  TimerServiceData cancelTimer() {
+    _clearTimer();
     final timerData = _timerServiceData!.cancel();
     _timerServiceData = null;
     return timerData;

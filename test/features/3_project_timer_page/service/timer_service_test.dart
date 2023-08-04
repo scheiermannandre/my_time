@@ -2,11 +2,20 @@ import 'dart:async';
 
 import 'package:clock/clock.dart';
 import 'package:fake_async/fake_async.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:my_time/features/3_project_timer_page/3_project_timer_page.dart';
 
 void main() {
   group('PeriodicTimer', () {
+    TimerService makeTimerService() {
+      final container = ProviderContainer(
+        overrides: [],
+      );
+      addTearDown(container.dispose);
+      return container.read(timerServiceProvider);
+    }
+
     test('Timer starts with a given PeriodicTimerModel', () {
       final start = clock.now().toUtc();
       final model = TimerServiceData(
@@ -14,57 +23,49 @@ void main() {
         breakStarts: [],
         breakEnds: [],
       );
-      final periodicTimer = TimerService()
+      final timerService = makeTimerService()
         ..init(
           interval: const Duration(seconds: 1),
           tickEvent: (elapsed) {},
           timerData: model,
         );
 
-      expect(periodicTimer.timerServiceData!.state, TimerState.running);
+      expect(timerService.timerServiceData!.state, TimerState.running);
     });
 
-    test('Timer starts and creates PeriodicTimerModel', () {
-      final periodicTimer = TimerService()
+    test('Timer service is initialized with TimerServiceData equals null', () {
+      final timerService = makeTimerService()
         ..init(
           interval: const Duration(seconds: 1),
           tickEvent: (elapsed) {},
         );
-      expect(periodicTimer.timerServiceData!.state, TimerState.running);
+      expect(timerService.timerServiceData, isNull);
     });
 
     test('Timer starts and is cancelled', () {
-      final periodicTimer = TimerService()
+      final timerService = makeTimerService()
         ..init(
           interval: const Duration(seconds: 1),
           tickEvent: (elapsed) {},
         )
-        ..cancelTimer();
-      expect(periodicTimer.timerServiceData!.state, TimerState.off);
-    });
-
-    test('Timer starts with and creates PeriodicTimerModel', () {
-      final periodicTimer = TimerService()
-        ..init(
-          interval: const Duration(seconds: 1),
-          tickEvent: (elapsed) {},
-        )
-        ..cancelTimer();
-      expect(periodicTimer.timerServiceData!.state, TimerState.off);
+        ..startTimer();
+      final serviceData = timerService.cancelTimer();
+      expect(serviceData.state, TimerState.off);
     });
 
     test('Timer starts, then pauses and resumed', () {
-      final periodicTimer = TimerService()
+      final timerService = makeTimerService()
         ..init(
           interval: const Duration(seconds: 1),
           tickEvent: (elapsed) {},
         )
+        ..startTimer()
         ..pauseResumeTimer();
 
-      expect(periodicTimer.timerServiceData!.state, TimerState.paused);
+      expect(timerService.timerServiceData!.state, TimerState.paused);
 
-      periodicTimer.pauseResumeTimer();
-      expect(periodicTimer.timerServiceData!.state, TimerState.running);
+      timerService.pauseResumeTimer();
+      expect(timerService.timerServiceData!.state, TimerState.running);
     });
 
     test('Timer calls callback correctly', () {
@@ -75,11 +76,12 @@ void main() {
       fakeAsync(
         (async) {
           final durations = <Duration>[];
-
-          TimerService().init(
-            interval: const Duration(seconds: 1),
-            tickEvent: durations.add,
-          );
+          final timerService = TimerService()
+            ..init(
+              interval: const Duration(seconds: 1),
+              tickEvent: durations.add,
+            )
+            ..startTimer();
 
           // All asynchronous features that rely on timing are automatically
           // controlled by [fakeAsync].
@@ -99,6 +101,7 @@ void main() {
               start.add(Duration(seconds: i + 1)).difference(start),
             );
           }
+          timerService.cancelTimer();
         },
         initialTime: start,
       );
