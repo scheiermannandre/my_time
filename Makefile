@@ -1,24 +1,36 @@
-test:
-	@echo "╠ Running test..."
-	flutter test
-	@echo "SUCCESSS: All tests passed!"
+.PHONY: test ci-test lint generate help run locale coverage buildRunner watchRunner
 
-deploy-android:
-	@echo "╠ Sending Android Build to Google Play Store.."
-	flutter build appbundle
-#cd android && bundle install
-	cd android && fastlane deploy
+.DEFAULT_GOAL := help
 
+help: ## show this help
+	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
-# deploy-ios:
-#     @echo "╠ Sending iOS Build to TestFlight..."
-#     cd ios/fastlane && bundle exec fastlane deploy
+test: ## run tests
+	flutter test --coverage
 
-# deploy-web:
-#     @echo "╠ Sending Build to Firebase Hosting..."
-#     flutter build web
-#     firebase deploy
+ci-test: ## run tests with CI environment flag
+	flutter test --coverage --dart-define=CI=true
 
-deploy: test deploy-android
+golden: ## update golden tests
+	flutter test --update-goldens
 
-.PHONY: test deploy-android deploy-ios deploy-web
+lint: ## lint and autoformat this project
+	flutter analyze
+	flutter format --set-exit-if-changed .
+
+run: ## run the app with hot reload
+	flutter run --flavor development --target lib/main_development.dart --pid-file=${FLUTTER_PID_FILE}
+
+locale: ## generate locale files
+	flutter gen-l10n
+
+coverage: ## generate coverage report
+	flutter test --coverage
+	genhtml coverage/lcov.info -o coverage/html
+	open coverage/html/index.html
+
+buildRunner: ## run build runner
+	dart run build_runner build
+
+watchRunner: ## run build runner in watch mode
+	dart run build_runner watch -d

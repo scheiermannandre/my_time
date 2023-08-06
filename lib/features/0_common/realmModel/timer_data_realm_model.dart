@@ -6,6 +6,7 @@ part 'timer_data_realm_model.g.dart';
 @RealmModel()
 class $TimerDataRealmModel {
   /// The id of the timer data.
+  @PrimaryKey()
   late String id;
 
   /// The id of the project.

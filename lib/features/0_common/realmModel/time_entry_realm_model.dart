@@ -34,6 +34,7 @@ class $TimeEntry {
 @RealmModel()
 class $TimeEntryRealmModel {
   /// The id of the time entry.
+  @PrimaryKey()
   late String id;
 
   /// The id of the project.
