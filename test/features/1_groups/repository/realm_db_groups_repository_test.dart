@@ -10,6 +10,9 @@ import 'package:realm/realm.dart';
 typedef RealmRepoInstance = ({RealmDbGroupsRepository repo, Realm realm});
 
 void main() {
+  /// WHEN TESTING REALM YOU FIRST HAFE TO RUN
+  /// 'dart run realm install'
+  /// BE AWARE THAT YOU HAVE TO RUN THIS COMMAND IN THE CI PIPELINE AS WELL
   group('RealmDbGroupsRepository', () {
     final realms = <Realm>[];
 
