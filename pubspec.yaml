@@ -42,6 +42,7 @@ dev_dependencies:
     sdk: flutter
   freezed: ^2.4.1
   git_hooks: ^1.0.1
+  mocktail: ^1.0.0
   process_run: ^0.13.1
   pubspec_dependency_sorter: ^1.0.3
   rename: ^2.1.1
