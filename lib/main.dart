@@ -8,16 +8,19 @@ import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_time/global/globals.dart';
 import 'package:my_time/router/app_route.dart';
+// import 'package:realm/realm.dart';
 
 void main() async {
-  // Realm realm = Realm(Configuration.local([
-  //   Group.schema,
-  //   GroupRealmModel.schema,
-  //   Project.schema,
-  //   ProjectRealmModel.schema,
-  //   TimeEntry.schema,
-  //   TimeEntryRealmModel.schema,
-  // ]));
+  // final realm = Realm(
+  //   Configuration.local([
+  //     Group.schema,
+  //     GroupRealmModel.schema,
+  //     Project.schema,
+  //     ProjectRealmModel.schema,
+  //     TimeEntry.schema,
+  //     TimeEntryRealmModel.schema,
+  //   ]),
+  // );
   // await realm.writeAsync(() {
   //   try {
   //     realm.deleteAll<Group>();

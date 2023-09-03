@@ -6,7 +6,7 @@ help: ## show this help
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
 test: ## run tests
-	flutter test --coverage
+	dlcov --lcov-gen="flutter test --coverage"
 
 ci-test: ## run tests with CI environment flag
 	flutter test --coverage --dart-define=CI=true
