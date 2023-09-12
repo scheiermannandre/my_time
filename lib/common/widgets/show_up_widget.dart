@@ -21,7 +21,7 @@ class ShowUpWidgetState extends State<ShowUpWidget>
     with TickerProviderStateMixin {
   late AnimationController _animController;
   late Animation<Offset> _animOffset;
-
+  late bool _disposed = false;
   @override
   void initState() {
     super.initState();
@@ -36,7 +36,7 @@ class ShowUpWidgetState extends State<ShowUpWidget>
         .animate(curve);
 
     Timer(Duration(milliseconds: widget.delay), () {
-      if (!mounted) {
+      if (!_disposed) {
         _animController.forward();
       }
     });
@@ -46,6 +46,7 @@ class ShowUpWidgetState extends State<ShowUpWidget>
   void dispose() {
     _animController.dispose();
     super.dispose();
+    _disposed = true;
   }
 
   @override
