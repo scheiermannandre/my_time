@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:my_time/features/1_groups/1_groups.dart';
@@ -122,6 +123,7 @@ void main() {
     testWidgets('Groups Screen shows favourite Projects', (tester) async {
       await tester.runAsync(() async {
         final result = makeGroupsRepo(groupsCount: 2, favProjectCount: 2);
+
         final robot = TestRobot(tester)
           ..makeGroupScreenRobot(result.repo)
           ..makeProjectShellScreenRobot();
@@ -130,6 +132,7 @@ void main() {
             .expectFavProjectsTileIsWorking(1, result.favProjects);
         await robot.groupsScreen.clickProjectTile(result.favProjects[0]);
         await robot.projectShellScreen.close();
+        debugPrint('Stage 1 Works');
       });
     });
 
