@@ -152,7 +152,7 @@ class _ModalBottomSheetState extends State<ModalBottomSheet> {
                             child: CircularProgressIndicator(),
                           ),
                   ),
-                  const Padding(padding: EdgeInsets.only(bottom: 15))
+                  const Padding(padding: EdgeInsets.only(bottom: 15)),
                 ],
               ),
             ],

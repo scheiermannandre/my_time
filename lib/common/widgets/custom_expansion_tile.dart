@@ -19,6 +19,9 @@ class CustomExpansionTile extends StatefulWidget {
     this.isExpandable = true,
   });
 
+  /// Key for the drop down icon to find in tests.
+  static const dropDownIconKey = Key('dropDownIconKey');
+
   /// Leading widget.
   final Widget? leading;
 
@@ -144,6 +147,7 @@ class CustomExpansionTileState extends State<CustomExpansionTile>
                     RotationTransition(
                       turns: _iconTurns,
                       child: const Icon(
+                        key: CustomExpansionTile.dropDownIconKey,
                         Icons.expand_more,
                         size: 24,
                       ),

@@ -26,7 +26,7 @@ class $Project {
 @RealmModel()
 class $ProjectRealmModel {
   /// The id of the project.
-  @PrimaryKey()
+  //@PrimaryKey()
   late String id;
 
   /// The id of the group.

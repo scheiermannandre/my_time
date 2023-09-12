@@ -58,7 +58,7 @@ class TimeEntryCard extends StatelessWidget {
                       ),
                     ],
                   ),
-                )
+                ),
               ],
             ),
             Text(

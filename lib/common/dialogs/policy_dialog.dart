@@ -17,6 +17,9 @@ class PolicyDialog extends StatelessWidget {
           'The file must contain the .md extension',
         );
 
+  /// Key to find the close button in a test.
+  static const closePolicyDialogBtnKey = Key('closePolicyDialogKey');
+
   final double _borderRadius;
   final String _mdFileName;
 
@@ -51,6 +54,7 @@ class PolicyDialog extends StatelessWidget {
             padding: EdgeInsets.only(bottom: 5),
           ),
           ElevatedButton(
+            key: closePolicyDialogBtnKey,
             onPressed: () => Navigator.of(context).pop(),
             style: ButtonStyle(
               shape: MaterialStateProperty.all(

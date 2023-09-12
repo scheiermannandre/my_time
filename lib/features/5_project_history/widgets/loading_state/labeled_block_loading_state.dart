@@ -55,7 +55,7 @@ class LabeledBlockLoadingState extends StatelessWidget {
                                 '',
                               ),
                             ],
-                          )
+                          ),
                         ],
                       ),
                       Text(

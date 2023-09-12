@@ -31,7 +31,7 @@ class ProjectTimerShellPageLoadingState extends StatelessWidget {
               height: gapH52.height,
               width: Breakpoint.mobile,
             ),
-          )
+          ),
         ],
       ),
     );

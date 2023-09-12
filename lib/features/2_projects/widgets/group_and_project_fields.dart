@@ -51,7 +51,7 @@ class GroupAndProjectFields extends StatelessWidget {
               defaultSelectedGroup: defaultSelectedGroup,
               isExpandable: isExpandable,
               onListTileTap: (groups, index) => {
-                if (onListTileTap != null) {onListTileTap!(groups, index)}
+                if (onListTileTap != null) {onListTileTap!(groups, index)},
               },
             ),
             const Padding(padding: EdgeInsets.only(bottom: 10)),

@@ -43,7 +43,7 @@ class LabeledBlock extends StatelessWidget {
             languageCode: languageCode,
             onClick: onClicked,
             timeEntries: timeEntries,
-          )
+          ),
         ],
       ),
     );

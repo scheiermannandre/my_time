@@ -81,7 +81,7 @@ final projectsRepositoryProvider =
   final config = Configuration.local([
     GroupRealmModel.schema,
     ProjectRealmModel.schema,
-    TimeEntryRealmModel.schema
+    TimeEntryRealmModel.schema,
   ]);
   final realm = Realm(config);
   ref.onDispose(realm.close);

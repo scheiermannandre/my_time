@@ -68,7 +68,8 @@ class GroupSelectionField extends StatelessWidget {
                   return ListTile(
                     title: Text(groups[index].name),
                     onTap: () => {
-                      if (onListTileTap != null) {onListTileTap!(groups, index)}
+                      if (onListTileTap != null)
+                        {onListTileTap!(groups, index)},
                     },
                     contentPadding: const EdgeInsets.only(left: 12, right: 12),
                   );

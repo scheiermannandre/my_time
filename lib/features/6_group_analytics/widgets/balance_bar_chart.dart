@@ -83,7 +83,7 @@ class BalanceBarChart extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                     color: balanceValueTextColor,
                   ),
-                )
+                ),
               ],
             ),
             const Padding(padding: EdgeInsets.only(top: 12)),

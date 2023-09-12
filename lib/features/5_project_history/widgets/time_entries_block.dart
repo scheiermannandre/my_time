@@ -31,7 +31,7 @@ class TimeEntriesBlock extends StatelessWidget {
             BoxShadow(
               color: GlobalProperties.shadowColor,
               blurRadius: 1, // soften the shadow
-            )
+            ),
           ],
           color: Colors.white,
           border: Border.all(

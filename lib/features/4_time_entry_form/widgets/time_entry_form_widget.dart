@@ -119,7 +119,7 @@ class TimeEntryFormWidget extends StatelessWidget {
                         padding: EdgeInsets.zero,
                       ),
                     ),
-                    const Padding(padding: EdgeInsets.only(bottom: 16))
+                    const Padding(padding: EdgeInsets.only(bottom: 16)),
                   ],
                 ),
               ),

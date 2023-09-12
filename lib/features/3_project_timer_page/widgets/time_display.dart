@@ -54,7 +54,7 @@ class TimeDisplay extends StatelessWidget {
                   .textTheme
                   .bodyMedium!
                   .copyWith(color: Theme.of(context).colorScheme.secondary),
-            )
+            ),
           ],
         ),
       ),

@@ -36,6 +36,14 @@ class GroupsScreenState {
 /// Controller for the GroupsScreen.
 @riverpod
 class GroupsScreenController extends _$GroupsScreenController {
+  /// Key to find the terms of use ListTile in a Test
+  static const termsOfUseKey = Key('termsOfUse');
+
+  /// Key to find the privacyolicy ListTile in a Test
+  static const privacyPolicyKey = Key('privacyPolicy');
+
+  /// Key to find the third party licenses ListTile in a Test
+  static const thirdPartyLicenseKey = Key('thirdPartyLicense');
   @override
   FutureOr<GroupsScreenState> build() {
     return GroupsScreenState();
@@ -54,6 +62,7 @@ class GroupsScreenController extends _$GroupsScreenController {
       bottomSheetController: controller,
       widgets: [
         ListTile(
+          key: privacyPolicyKey,
           title: Text(
             context.loc.privacy,
             style: const TextStyle(color: Colors.black),
@@ -68,6 +77,7 @@ class GroupsScreenController extends _$GroupsScreenController {
           },
         ),
         ListTile(
+          key: termsOfUseKey,
           title: Text(
             context.loc.terms,
             style: const TextStyle(color: Colors.black),
@@ -82,6 +92,7 @@ class GroupsScreenController extends _$GroupsScreenController {
           },
         ),
         ListTile(
+          key: thirdPartyLicenseKey,
           title: Text(
             context.loc.thirdParty,
             style: const TextStyle(color: Colors.black),

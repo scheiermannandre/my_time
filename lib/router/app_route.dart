@@ -81,7 +81,7 @@ final goRouter = GoRouter(
               GroupAnalyticsShellPage(
                 groupId: groupId,
                 context: context,
-              )
+              ),
             ],
           ),
         );
@@ -124,7 +124,7 @@ final goRouter = GoRouter(
                 projectId: projectId,
                 context: context,
               ),
-              ProjectHistoryShellPage(projectId: projectId, context: context)
+              ProjectHistoryShellPage(projectId: projectId, context: context),
             ],
           ),
         );

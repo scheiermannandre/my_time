@@ -199,7 +199,7 @@ void main() {
             '2',
             'project 2',
             '2',
-          )
+          ),
         ];
         await expectLater(
           realmRepo.repo.streamFavouriteProjects(),

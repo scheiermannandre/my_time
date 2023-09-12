@@ -92,7 +92,7 @@ class GroupAnalyticsShellPage extends ShellPage {
                       ],
                     ),
                   ),
-                )
+                ),
               ],
               body: TabBarView(
                 physics: const NeverScrollableScrollPhysics(),

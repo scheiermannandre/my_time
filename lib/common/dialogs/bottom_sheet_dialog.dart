@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:my_time/global/globals.dart';
 
+/// Key for the bottom sheet.
+const bottomSheetKey = Key('bottomSheet');
+
 /// Shows a bottom sheet with widgets.
 Future<void> showBottomSheetWithWidgets({
   required BuildContext context,
@@ -17,6 +20,7 @@ Future<void> showBottomSheetWithWidgets({
     ),
     context: context,
     builder: (context) => FractionallySizedBox(
+      key: bottomSheetKey,
       heightFactor: 0.9,
       child: Container(
         padding: const EdgeInsets.all(16),

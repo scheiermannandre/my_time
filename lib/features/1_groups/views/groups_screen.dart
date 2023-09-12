@@ -10,7 +10,7 @@ import 'package:my_time/global/globals.dart';
 class GroupsScreen extends HookConsumerWidget {
   /// Creates a [GroupsScreen].
   const GroupsScreen({super.key});
-  @override
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final controller = ref.watch(groupsScreenControllerProvider.notifier);
