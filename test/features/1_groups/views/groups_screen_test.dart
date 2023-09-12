@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:my_time/features/1_groups/1_groups.dart';
@@ -132,7 +131,6 @@ void main() {
             .expectFavProjectsTileIsWorking(1, result.favProjects);
         await robot.groupsScreen.clickProjectTile(result.favProjects[0]);
         await robot.projectShellScreen.close();
-        debugPrint('Stage 1 Works');
       });
     });
 

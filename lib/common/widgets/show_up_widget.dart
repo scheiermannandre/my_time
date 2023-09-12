@@ -36,7 +36,9 @@ class ShowUpWidgetState extends State<ShowUpWidget>
         .animate(curve);
 
     Timer(Duration(milliseconds: widget.delay), () {
-      _animController.forward();
+      if (!mounted) {
+        _animController.forward();
+      }
     });
   }
 
