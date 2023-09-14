@@ -167,5 +167,16 @@ void main() {
         await robot.groupsScreen.expectLoadingErrorWidget();
       });
     });
+
+    testWidgets('Refresh via drag', (tester) async {
+      await tester.runAsync(() async {
+        final result = makeGroupsRepo(groupsCount: 2);
+        final robot = TestRobot(tester)
+          ..makeGroupScreenRobot(result.repo)
+          ..makeGroupProjectsShellPageRobot();
+        await robot.pumpMyApp();
+        await robot.groupsScreen.dragRefresh(result.groups[0]);
+      });
+    });
   });
 }

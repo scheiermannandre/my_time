@@ -187,4 +187,27 @@ class GroupScreenRobot {
     );
     await TestRobot.clickWidget(tester, refreshBtn);
   }
+
+  Future<void> dragRefresh(GroupModel group) async {
+    final handle = tester.ensureSemantics();
+
+    await tester.fling(find.text(group.name), const Offset(0, 300), 1000);
+    await tester.pump();
+    expect(
+      tester.getSemantics(find.byType(RefreshProgressIndicator)),
+      matchesSemantics(
+        label: 'Refresh',
+      ),
+    );
+    await tester
+        .pump(const Duration(seconds: 1)); // finish the scroll animation
+    await tester.pump(
+      const Duration(seconds: 1),
+    ); // finish the indicator settle animation
+    await tester.pump(
+      const Duration(seconds: 1),
+    ); // finish the indicator hide animation
+    //await TestRobot.dragCloseWidget(tester, scaffold, const Offset(0, -500));
+    handle.dispose();
+  }
 }

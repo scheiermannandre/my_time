@@ -92,4 +92,13 @@ class TestRobot {
       }
     });
   }
+
+  static Future<void> dragWidget(
+    WidgetTester tester,
+    Finder widget,
+    Offset offset, {
+    bool pumpAndSettle = true,
+  }) async {
+    await tester.drag(widget, offset);
+  }
 }

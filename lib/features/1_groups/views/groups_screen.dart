@@ -41,14 +41,11 @@ class GroupsScreen extends HookConsumerWidget {
       body: RefreshIndicator(
         key:
             ref.read(groupsScreenControllerProvider).value!.refreshIndicatorKey,
-        onRefresh: () async {
-          await AsyncValue.guard(
-            () => ref
-                .refresh(groupsDataProvider.future)
-                .timeout(const Duration(seconds: 20)),
-          );
-          return;
-        },
+        onRefresh: () async => AsyncValue.guard(
+          () => ref
+              .refresh(groupsDataProvider.future)
+              .timeout(const Duration(seconds: 20)),
+        ),
         child: CustomScrollView(
           slivers: [
             ScreenSliverAppBar(
