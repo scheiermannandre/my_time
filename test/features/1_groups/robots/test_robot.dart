@@ -14,12 +14,12 @@ import 'project_shell_screen_robot.dart';
 class TestRobot {
   TestRobot(this.tester);
   final WidgetTester tester;
-  late GroupScreenRobot groupsScreen;
-  late GroupScreenBottomSheetRobot groupsScreenBottomSheet;
-  late AddGroupScreenRobot addGroupScreen;
-  late GroupProjectsShellPageRobot groupProjectsShellPage;
-  late ProjectShellScreenRobot projectShellScreen;
-  late AddProjectScreenRobot addProjectScreen;
+  GroupScreenRobot? groupsScreen;
+  GroupScreenBottomSheetRobot? groupsScreenBottomSheet;
+  AddGroupScreenRobot? addGroupScreen;
+  GroupProjectsShellPageRobot? groupProjectsShellPage;
+  ProjectShellScreenRobot? projectShellScreen;
+  AddProjectScreenRobot? addProjectScreen;
 
   void makeGroupScreenRobot(MockRealmDbGroupsRepository groupsRepo) {
     groupsScreen = GroupScreenRobot(tester, groupsRepo);
@@ -29,8 +29,8 @@ class TestRobot {
     groupsScreenBottomSheet = GroupScreenBottomSheetRobot(tester);
   }
 
-  void makeAddGroupScreenRobot() {
-    addGroupScreen = AddGroupScreenRobot(tester);
+  void makeAddGroupScreenRobot(MockRealmDbGroupsRepository groupsRepo) {
+    addGroupScreen = AddGroupScreenRobot(tester, groupsRepo);
   }
 
   void makeGroupProjectsShellPageRobot() {
@@ -46,10 +46,12 @@ class TestRobot {
   }
 
   Future<void> pumpMyApp() async {
+    final overrides = <Override>[];
+    groupsScreen?.getOverride(overrides);
+    addGroupScreen?.getOverride(overrides);
+
     final container = ProviderContainer(
-      overrides: [
-        groupsScreen.getOverride(),
-      ],
+      overrides: overrides,
     );
     await disableOverflowErrorsFor(() async {
       await tester.pumpWidget(
@@ -70,7 +72,7 @@ class TestRobot {
     await tester.tap(widget);
     await disableOverflowErrorsFor(() async {
       if (pumpAndSettle) {
-        await tester.pumpAndSettle();
+        await tester.pumpAndSettle(const Duration(milliseconds: 1000));
       } else {
         await tester.pump();
       }

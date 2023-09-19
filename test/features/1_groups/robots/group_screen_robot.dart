@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mocktail/mocktail.dart';
 import 'package:my_time/common/common.dart';
 import 'package:my_time/features/1_groups/1_groups.dart';
 import 'package:my_time/features/1_groups/views/add_group_screen.dart';
@@ -11,13 +12,74 @@ import 'package:my_time/features/3_project_timer_page/view/project_shell_screen.
 import '../mock_realm_db_groups_repository.dart';
 import 'test_robot.dart';
 
+typedef MakeRepoReturn = ({
+  MockRealmDbGroupsRepository repo,
+  List<GroupModel> groups,
+  List<ProjectModel> favProjects,
+});
+
 class GroupScreenRobot {
   GroupScreenRobot(this.tester, this.groupsRepo);
   final WidgetTester tester;
   final MockRealmDbGroupsRepository groupsRepo;
 
-  Override getOverride() {
-    return deviceStorageGroupsRepositoryProvider.overrideWithValue(groupsRepo);
+  static MakeRepoReturn makeGroupsRepo({
+    int groupsCount = 0,
+    int favProjectCount = 0,
+    bool streamErrors = false,
+  }) {
+    final groupsRepo = MockRealmDbGroupsRepository();
+
+    final groups = <GroupModel>[];
+    final favProjects = <ProjectModel>[];
+    for (var i = 0; i < groupsCount; i++) {
+      groups.add(
+        GroupModel.factory(
+          id: i.toString(),
+          name: 'Group $i',
+        ),
+      );
+    }
+    for (var i = 0; i < favProjectCount; i++) {
+      favProjects.add(
+        ProjectModel.factory(
+          id: i.toString(),
+          name: 'Project $i',
+        ),
+      );
+    }
+
+    if (!streamErrors) {
+      when(groupsRepo.streamGroups).thenAnswer(
+        (_) => Stream.value(
+          groups,
+        ),
+      );
+      when(groupsRepo.streamFavouriteProjects).thenAnswer(
+        (_) => Stream.value(
+          favProjects,
+        ),
+      );
+    } else {
+      when(groupsRepo.streamGroups).thenAnswer(
+        (_) => Stream.error(
+          Exception('Error'),
+        ),
+      );
+      when(groupsRepo.streamFavouriteProjects).thenAnswer(
+        (_) => Stream.error(
+          Exception('Error'),
+        ),
+      );
+    }
+
+    return (repo: groupsRepo, groups: groups, favProjects: favProjects);
+  }
+
+  void getOverride(List<Override> overrides) {
+    overrides.add(
+      deviceStorageGroupsRepositoryProvider.overrideWithValue(groupsRepo),
+    );
   }
 
   Future<void> expectHeader() async {
