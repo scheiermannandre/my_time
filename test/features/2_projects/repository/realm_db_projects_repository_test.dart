@@ -145,7 +145,9 @@ void main() {
                 addProject(realmProjectRepo, group.id, 'project 2');
 
             expect(
+              // WHEN
               realmProjectRepo.streamProjectsByGroupId(group.id),
+              // THEN
               emitsInOrder([
                 <projects.ProjectModel>[],
                 <projects.ProjectModel>[project1],
