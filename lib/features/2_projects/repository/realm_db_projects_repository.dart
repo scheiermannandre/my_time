@@ -23,7 +23,6 @@ class RealmDbProjectsRepository implements ProjectsRepository {
       group.projects
           .add(ProjectRealmModel(project.id, project.groupId, project.name));
     });
-
     return Future(() => true);
   }
 

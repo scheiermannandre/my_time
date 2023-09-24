@@ -13,4 +13,9 @@ class GroupModel {
 
   /// The name of the group.
   String name = '';
+
+  @override
+  String toString() {
+    return 'GroupModel(id: $id, name: $name)';
+  }
 }

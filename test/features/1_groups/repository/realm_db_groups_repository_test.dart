@@ -1,13 +1,11 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:io';
-import 'dart:math';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:my_time/features/1_groups/1_groups.dart';
 import 'package:realm/realm.dart';
 
-typedef RealmRepoInstance = ({RealmDbGroupsRepository repo, Realm realm});
+import '../../RealmDBTests/RealmRepoTester.dart';
 
 void main() {
   /// WHEN TESTING REALM YOU FIRST HAFE TO RUN
@@ -17,44 +15,8 @@ void main() {
     final realms = <Realm>[];
 
     tearDownAll(() async {
-      for (final realm in realms) {
-        final path = realm.config.path;
-        realm.close();
-        Realm.deleteRealm(path);
-        await File('$path.lock').delete();
-
-        expect(realm.isClosed, true);
-      }
+      await RealmRepoTester.tearDownAll(realms);
     });
-    // Utility function to generate random realm name
-    String generateRandomRealmName(int len) {
-      final r = Random();
-      const chars =
-          'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
-      final nameBase =
-          List.generate(len, (index) => chars[r.nextInt(chars.length)]).join();
-      return '$nameBase.realm';
-    }
-
-    RealmRepoInstance makeRealmRepoInstance() {
-      Configuration.defaultRealmName = generateRandomRealmName(30);
-
-      final realm = Realm(
-        Configuration.inMemory(
-          [
-            GroupRealmModel.schema,
-            ProjectRealmModel.schema,
-            TimeEntryRealmModel.schema,
-          ],
-        ),
-      );
-      // realms need to get closed, this is why all realms get their own name
-      // and thus their own path.
-      // After all test are run, the tearDownAll() function will
-      // close all realms.
-      realms.add(realm);
-      return (realm: realm, repo: RealmDbGroupsRepository(realm));
-    }
 
     GroupModel addGroup(RealmDbGroupsRepository realmRepo, String name) {
       final group = GroupModel(name: name);
@@ -64,7 +26,7 @@ void main() {
 
     group('add Group', () {
       test('valid', () async {
-        final realmRepo = makeRealmRepoInstance();
+        final realmRepo = RealmRepoTester.makeRealmGroupsRepoInstance(realms);
         final group = GroupModel(name: 'Test Group');
         final result = await realmRepo.repo.addGroup(group);
 
@@ -72,7 +34,7 @@ void main() {
       });
 
       test('same group id throws exception', () async {
-        final realmRepo = makeRealmRepoInstance();
+        final realmRepo = RealmRepoTester.makeRealmGroupsRepoInstance(realms);
         final group = addGroup(realmRepo.repo, 'group 1');
 
         await expectLater(
@@ -84,7 +46,7 @@ void main() {
 
     group('streamGroup', () {
       test('get all groups with count = 0', () {
-        final realmRepo = makeRealmRepoInstance();
+        final realmRepo = RealmRepoTester.makeRealmGroupsRepoInstance(realms);
 
         expect(
           realmRepo.repo.streamGroups(),
@@ -93,7 +55,7 @@ void main() {
       });
 
       test('get all groups with count = 1', () {
-        final realmRepo = makeRealmRepoInstance();
+        final realmRepo = RealmRepoTester.makeRealmGroupsRepoInstance(realms);
 
         final group = addGroup(realmRepo.repo, 'group 1');
 
@@ -107,7 +69,7 @@ void main() {
       });
 
       test('get all groups with count = 2', () {
-        final realmRepo = makeRealmRepoInstance();
+        final realmRepo = RealmRepoTester.makeRealmGroupsRepoInstance(realms);
 
         final group1 = addGroup(realmRepo.repo, 'group 1');
         final group2 = addGroup(realmRepo.repo, 'group 2');
@@ -125,7 +87,7 @@ void main() {
 
     group('streamFavouriteProjects', () {
       test('get all FavouriteProjects with count = 0', () {
-        final realmRepo = makeRealmRepoInstance();
+        final realmRepo = RealmRepoTester.makeRealmGroupsRepoInstance(realms);
 
         expect(
           realmRepo.repo.streamFavouriteProjects(),
@@ -164,7 +126,7 @@ void main() {
       }
 
       test('get all FavouriteProjects with count = 1', () async {
-        final realmRepo = makeRealmRepoInstance();
+        final realmRepo = RealmRepoTester.makeRealmGroupsRepoInstance(realms);
 
         final project = await addGroupWithFavouriteProjects(
           realmRepo.repo,
@@ -184,7 +146,7 @@ void main() {
       });
 
       test('get all FavouriteProjects with count = 2', () async {
-        final realmRepo = makeRealmRepoInstance();
+        final realmRepo = RealmRepoTester.makeRealmGroupsRepoInstance(realms);
         final projects = <ProjectModel>[
           await addGroupWithFavouriteProjects(
             realmRepo.repo,
