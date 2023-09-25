@@ -9,7 +9,7 @@ import 'package:my_time/features/2_projects/views/add_project_screen.dart';
 import 'package:my_time/features/2_projects/views/group_projects_shell_page.dart';
 import 'package:my_time/features/3_project_timer_page/view/project_shell_screen.dart';
 
-import '../mock_realm_db_groups_repository.dart';
+import '../mock_realm_db_repositories.dart';
 import 'test_robot.dart';
 
 typedef MakeRepoReturn = ({

@@ -6,7 +6,7 @@ import 'package:my_time/common/common.dart';
 import 'package:my_time/features/1_groups/1_groups.dart';
 import 'package:my_time/features/1_groups/views/add_group_screen.dart';
 import 'package:my_time/features/1_groups/views/groups_screen.dart';
-import '../mock_realm_db_groups_repository.dart';
+import '../mock_realm_db_repositories.dart';
 import 'test_robot.dart';
 
 class AddGroupScreenRobot {

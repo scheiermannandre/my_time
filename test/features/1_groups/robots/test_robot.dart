@@ -3,7 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:my_time/main.dart';
 
 import '../../../test_helper.dart';
-import '../mock_realm_db_groups_repository.dart';
+import '../mock_realm_db_repositories.dart';
 import 'add_group_screen_robot.dart';
 import 'add_project_screen_robot.dart';
 import 'group_projects_shell_page_robot.dart';
