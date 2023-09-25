@@ -47,10 +47,10 @@ Furthermore the app was successfully published to the Android PlayStore. Due to 
 
 ### Q3 2023
 
-- **App Store Release:** MyTime will be released to the Apple App Store.
-- **Automatic Releases:** MyTime will be releasing new versions automatically to the Stores by using GitHub Action Workflows.
-- **Restructuring to Feature-First:** MyTimes folder structure will be changed to Feature-First.
-- **Test Coverage:** MyTime will have 100% test coverage, in order to secure the already existing and upcoming functionalities. Furthermore MyTimes new features will be developed using TDD.
-- **Design System:** MyTimes Design System will be improved and changed so, that the Design System will be tokenized. Figma should be utilized.
-- **Statistics Overview:** MyTimes will get new screens, so Users can better track and analyze their times.
-- **Firebase Migration:** MyTime will migrate to the Services that Firebase is providing including Authentication and data storage.
+[x] **App Store Release:** MyTime will be released to the Apple App Store.
+[x] **Automatic Releases:** MyTime will be releasing new versions automatically to the Stores by using GitHub Action Workflows.
+[x] **Restructuring to Feature-First:** MyTimes folder structure will be changed to Feature-First.
+[] **Test Coverage:** MyTime will have 100% test coverage, in order to secure the already existing and upcoming functionalities. Furthermore MyTimes new features will be developed using TDD.
+[] **Design System:** MyTimes Design System will be improved and changed so, that the Design System will be tokenized. Figma should be utilized.
+[] **Statistics Overview:** MyTimes will get new screens, so Users can better track and analyze their times.
+[] **Firebase Migration:** MyTime will migrate to the Services that Firebase is providing including Authentication and data storage.

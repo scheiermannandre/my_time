@@ -5,7 +5,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:my_time/features/1_groups/1_groups.dart';
 import 'package:realm/realm.dart';
 
-import '../../RealmDBTests/RealmRepoTester.dart';
+import '../../RealmDBTests/realm_repo_tester.dart';
 
 void main() {
   /// WHEN TESTING REALM YOU FIRST HAFE TO RUN

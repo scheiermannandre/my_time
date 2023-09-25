@@ -4,7 +4,7 @@ import 'package:my_time/features/1_groups/1_groups.dart' as groups;
 import 'package:my_time/features/2_projects/2_projects.dart' as projects;
 import 'package:my_time/features/2_projects/repository/realm_db_projects_repository.dart';
 import 'package:realm/realm.dart';
-import '../../RealmDBTests/RealmRepoTester.dart';
+import '../../RealmDBTests/realm_repo_tester.dart';
 
 void main() {
   group('RealmDbProjectsRepository', () {
