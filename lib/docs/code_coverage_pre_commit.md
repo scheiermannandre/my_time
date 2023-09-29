@@ -1,6 +1,6 @@
 # Check Test Coverage on PrePush with githooks
 
-## Rreconditions
+## Preconditions
 1. `git_hooks` is installed see `conventional_commits.md` for more infos
 
 ## Implementation

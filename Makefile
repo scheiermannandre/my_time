@@ -1,4 +1,4 @@
-.PHONY: test ci-test lint generate help run locale coverage buildRunner watchRunner
+.PHONY: test ci-test lint generate help run locale coverage buildRunner watchRunner gitHooks
 
 .DEFAULT_GOAL := help
 
@@ -34,3 +34,6 @@ buildRunner: ## run build runner
 
 watchRunner: ## run build runner in watch mode
 	dart run build_runner watch -d
+
+gitHooks: ## initialize git hooks
+	dart pub global activate git_hooks
