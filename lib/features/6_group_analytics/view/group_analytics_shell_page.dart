@@ -18,18 +18,19 @@ class GroupAnalyticsShellPage extends ShellPage {
   /// Creates a GroupAnalyticsShellPage.
   GroupAnalyticsShellPage({
     required this.groupId,
-    required BuildContext context,
     super.key,
-  }) : super(
-          iconData: Icons.bar_chart_rounded,
-          label: context.loc.analyticsTabLabel,
-        );
+  }) : super();
 
   /// The id of the group.
   final String groupId;
 
   /// The scroll controller for the nested scroll view.
   final ScrollController scrollController = ScrollController();
+
+  @override
+  IconData getIconData() => Icons.bar_chart_rounded;
+  @override
+  String getLabel(BuildContext context) => context.loc.analyticsTabLabel;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

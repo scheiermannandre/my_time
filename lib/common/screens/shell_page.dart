@@ -5,14 +5,14 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 abstract class ShellPage extends HookConsumerWidget {
   /// Creates a [ShellPage].
   const ShellPage({
-    required this.iconData,
-    required this.label,
+    // required this.iconData,
+    // required this.label,
     super.key,
   });
 
   /// Icon of the page, that will be displayed in a NavBar oder TabBar.
-  final IconData iconData;
+  IconData getIconData();
 
   /// Label of the page, that will be displayed in a NavBar oder TabBar.
-  final String label;
+  String getLabel(BuildContext context);
 }

@@ -7,17 +7,19 @@ import 'package:my_time/features/2_projects/2_projects.dart';
 /// Shell page for the group projects.
 class GroupProjectsShellPage extends ShellPage {
   /// Creates a [GroupProjectsShellPage].
-  GroupProjectsShellPage({
+  const GroupProjectsShellPage({
     required this.groupId,
-    required BuildContext context,
     super.key,
-  }) : super(
-          iconData: Icons.line_weight_sharp,
-          label: context.loc.projectsTabLabel,
-        );
+  }) : super();
 
   /// The id of the group.
   final String groupId;
+
+  @override
+  IconData getIconData() => Icons.line_weight_sharp;
+
+  @override
+  String getLabel(BuildContext context) => context.loc.projectsTabLabel;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

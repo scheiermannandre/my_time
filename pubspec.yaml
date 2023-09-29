@@ -45,6 +45,7 @@ dev_dependencies:
   integration_test:
     sdk: flutter
   mocktail: ^1.0.0
+  patrol_finders: ^1.0.0
   process_run: ^0.13.1
   pubspec_dependency_sorter: ^1.0.4
   riverpod_generator: ^2.3.2

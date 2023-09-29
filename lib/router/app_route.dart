@@ -76,11 +76,9 @@ final goRouter = GoRouter(
             children: [
               GroupProjectsShellPage(
                 groupId: groupId,
-                context: context,
               ),
               GroupAnalyticsShellPage(
                 groupId: groupId,
-                context: context,
               ),
             ],
           ),
@@ -122,9 +120,8 @@ final goRouter = GoRouter(
             children: [
               ProjectTimerShellPage(
                 projectId: projectId,
-                context: context,
               ),
-              ProjectHistoryShellPage(projectId: projectId, context: context),
+              ProjectHistoryShellPage(projectId: projectId),
             ],
           ),
         );

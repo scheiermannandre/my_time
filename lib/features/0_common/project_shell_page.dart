@@ -5,8 +5,6 @@ import 'package:my_time/common/common.dart';
 abstract class ProjectShellPage extends ShellPage {
   /// Creates a [ProjectShellPage].
   const ProjectShellPage({
-    required super.iconData,
-    required super.label,
     super.key,
     this.scrollController,
   });

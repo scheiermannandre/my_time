@@ -660,6 +660,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.8.3"
+  patrol_finders:
+    dependency: "direct dev"
+    description:
+      name: patrol_finders
+      sha256: "9de6b2c873843db6811c3def4a2d9f023968b1428a9fdc9127d5f089015df569"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0"
   petitparser:
     dependency: transitive
     description:

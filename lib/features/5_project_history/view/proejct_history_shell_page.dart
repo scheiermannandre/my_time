@@ -7,20 +7,14 @@ import 'package:my_time/features/5_project_history/5_project_history.dart';
 /// The shell page for the project history.
 class ProjectHistoryShellPage extends ProjectShellPage {
   /// Creates a [ProjectHistoryShellPage].
-  ProjectHistoryShellPage({
+  const ProjectHistoryShellPage({
     required this.projectId,
-    required BuildContext context,
     super.key,
-  }) : super(
-          iconData: Icons.timer_sharp,
-          label: context.loc.timerTabLabel,
-        );
+  }) : super();
 
   /// Creates a [ProjectHistoryShellPage] with a factory constructor.
   const ProjectHistoryShellPage.factory({
     required this.projectId,
-    required super.label,
-    required super.iconData,
     required ScrollController controller,
     super.key,
   }) : super(
@@ -29,6 +23,12 @@ class ProjectHistoryShellPage extends ProjectShellPage {
 
   /// The id of the project.
   final String projectId;
+
+  @override
+  IconData getIconData() => Icons.history;
+
+  @override
+  String getLabel(BuildContext context) => context.loc.historyTabLabel;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -118,8 +118,6 @@ class ProjectHistoryShellPage extends ProjectShellPage {
   }) {
     return ProjectHistoryShellPage.factory(
       projectId: projectId,
-      label: label,
-      iconData: iconData,
       controller: controller,
     );
   }

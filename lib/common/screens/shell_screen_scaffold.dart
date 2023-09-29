@@ -36,8 +36,8 @@ class ShellScreenScaffold extends HookWidget {
           items: _children
               .map(
                 (page) => CustomNavBarItem(
-                  iconData: page.iconData,
-                  label: page.label,
+                  iconData: page.getIconData(),
+                  label: page.getLabel(context),
                 ),
               )
               .toList(),

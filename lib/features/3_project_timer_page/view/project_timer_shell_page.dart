@@ -8,20 +8,14 @@ import 'package:my_time/features/3_project_timer_page/3_project_timer_page.dart'
 /// The ProjectTimerPage that displays the timer.
 class ProjectTimerShellPage extends ProjectShellPage {
   /// Creates a [ProjectTimerShellPage].
-  ProjectTimerShellPage({
+  const ProjectTimerShellPage({
     required this.projectId,
-    required BuildContext context,
     super.key,
-  }) : super(
-          iconData: Icons.timer_sharp,
-          label: context.loc.timerTabLabel,
-        );
+  }) : super();
 
   /// Creates a [ProjectTimerShellPage] with a factory constructor.
   const ProjectTimerShellPage.factory({
     required this.projectId,
-    required super.label,
-    required super.iconData,
     required ScrollController controller,
     super.key,
   }) : super(
@@ -30,6 +24,13 @@ class ProjectTimerShellPage extends ProjectShellPage {
 
   /// The id of the project.
   final String projectId;
+
+  @override
+  String getLabel(BuildContext context) => context.loc.timerTabLabel;
+
+  @override
+  IconData getIconData() => Icons.timer_sharp;
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final project = ref.watch(projectFutureProvider(projectId));
@@ -97,8 +98,6 @@ class ProjectTimerShellPage extends ProjectShellPage {
   }) {
     return ProjectTimerShellPage.factory(
       projectId: projectId,
-      label: label,
-      iconData: iconData,
       controller: controller,
     );
   }
