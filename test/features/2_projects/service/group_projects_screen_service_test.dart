@@ -3,7 +3,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:my_time/features/2_projects/2_projects.dart';
 
-import '../../1_groups/mock_realm_db_repositories.dart';
+import '../../mock_realm_db_repositories.dart';
 
 void main() {
   group('GroupsScreenService', () {

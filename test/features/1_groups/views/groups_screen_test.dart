@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import '../robots/group_screen_robot.dart';
-import '../robots/test_robot.dart';
+import '../../robots/group_screen_robot.dart';
+import '../../robots/test_robot.dart';
 
 void main() {
   setUpAll(() async {

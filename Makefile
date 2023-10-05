@@ -37,3 +37,4 @@ watchRunner: ## run build runner in watch mode
 
 gitHooks: ## initialize git hooks
 	dart pub global activate git_hooks
+	git_hooks create tools/git_hooks.dart

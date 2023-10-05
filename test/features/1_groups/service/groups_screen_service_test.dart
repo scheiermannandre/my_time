@@ -3,7 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:my_time/features/1_groups/1_groups.dart';
 
-import '../mock_realm_db_repositories.dart';
+import '../../mock_realm_db_repositories.dart';
 
 void main() {
   group('GroupsScreenService', () {

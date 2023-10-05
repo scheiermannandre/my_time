@@ -2,7 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:my_time/main.dart';
 
-import '../../../test_helper.dart';
+import '../../test_helper.dart';
 import '../mock_realm_db_repositories.dart';
 import 'add_group_screen_robot.dart';
 import 'add_project_screen_robot.dart';
@@ -10,6 +10,8 @@ import 'group_projects_shell_page_robot.dart';
 import 'group_screen_bottom_sheet_robot.dart';
 import 'group_screen_robot.dart';
 import 'project_shell_screen_robot.dart';
+
+typedef GetOverrideFunction = void Function(List<Override>);
 
 class TestRobot {
   TestRobot(this.tester);
@@ -45,11 +47,14 @@ class TestRobot {
     addProjectScreen = AddProjectScreenRobot(tester);
   }
 
-  Future<void> pumpMyApp() async {
+  Future<void> pumpMyApp({List<GetOverrideFunction>? getOverrides}) async {
     final overrides = <Override>[];
     groupsScreen?.getOverride(overrides);
     addGroupScreen?.getOverride(overrides);
 
+    getOverrides?.forEach((element) {
+      element(overrides);
+    });
     final container = ProviderContainer(
       overrides: overrides,
     );

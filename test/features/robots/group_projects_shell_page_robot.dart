@@ -23,16 +23,19 @@ class GroupProjectsShellPageRobot {
   final WidgetTester? tester;
   final PatrolTester? $;
   MockRealmDbProjectsRepository? repo;
+
   static MakeRepoReturn makeRepo({
+    required String groupId,
+    required String groupName,
     int projectCount = 0,
     bool streamErrors = false,
   }) {
     final projectsRepo = MockRealmDbProjectsRepository();
 
     final projects = <ProjectModel>[];
-    const group = GroupModel.factory(
-      id: '1',
-      name: 'Group 1',
+    final group = GroupModel.factory(
+      id: groupId,
+      name: groupName,
     );
 
     for (var i = 0; i < projectCount; i++) {
@@ -50,11 +53,11 @@ class GroupProjectsShellPageRobot {
         projects,
       ),
     );
-    when(() => projectsRepo.fetchGroup(group.id)).thenAnswer(
-      (_) => Future.value(
+    when(() => projectsRepo.fetchGroup(group.id)).thenAnswer((_) {
+      return Future.value(
         group,
-      ),
-    );
+      );
+    });
 
     return (repo: projectsRepo, group: group, projects: projects);
   }
@@ -92,11 +95,8 @@ class GroupProjectsShellPageRobot {
     );
   }
 
-  Future<void> noItemsFoundWidget() async {
-    expect(
-      $!(NoItemsFoundWidget),
-      findsOneWidget,
-    );
+  Future<void> expectNoItemsFoundWidget() async {
+    expect($!(NoItemsFoundWidget), findsOneWidget);
   }
 
   Future<void> expectProjects(List<ProjectModel> projects) async {
@@ -123,6 +123,32 @@ class GroupProjectsShellPageRobot {
       findsOneWidget,
     );
     await icon.tap(
+      settlePolicy: SettlePolicy.settle,
+      settleTimeout: const Duration(seconds: 1),
+    );
+  }
+
+  Future<void> tapAddIcon() async {
+    final icon = $!(CustomAppBar).$(IconButton).$(Icons.add);
+
+    expect(
+      icon,
+      findsOneWidget,
+    );
+    await icon.tap(
+      settlePolicy: SettlePolicy.settle,
+      settleTimeout: const Duration(seconds: 1),
+    );
+  }
+
+  Future<void> tapProjectTile(String projectName) async {
+    final projecttile = $!(CustomListTile).$(projectName);
+
+    expect(
+      projecttile,
+      findsOneWidget,
+    );
+    await projecttile.tap(
       settlePolicy: SettlePolicy.settle,
       settleTimeout: const Duration(seconds: 1),
     );
