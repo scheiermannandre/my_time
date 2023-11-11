@@ -36,11 +36,16 @@ class Wizard extends ConsumerWidget {
       vertical: SpaceTokens.small,
     ),
     this.btnsPadding = const EdgeInsets.all(SpaceTokens.medium),
+    this.infoDialogBuilder,
     super.key,
   });
 
   /// Callback function invoked when the wizard finishes.
   final void Function() onFinish;
+
+  /// Callback function that is called to show description for a step.
+  final Widget Function(BuildContext context, String title, String description)?
+      infoDialogBuilder;
 
   /// List of widgets representing individual steps in the wizard.
   final List<Widget> steps;
@@ -158,22 +163,15 @@ class Wizard extends ConsumerWidget {
                             ActionButton.roundedIcon(
                               iconData: Icons.info_outline,
                               onPressed: () async {
+                                if (infoDialogBuilder == null) return;
                                 await showDialog<void>(
                                   context: context,
-                                  builder: (BuildContext context) {
-                                    return AlertDialog(
-                                      title: Text(state.userInfo!.title),
-                                      content: Text(
-                                        state.userInfo!.description,
-                                      ),
-                                      actions: [
-                                        TextButton(
-                                          onPressed: Navigator.of(context).pop,
-                                          child: const Text('OK'),
-                                        ),
-                                      ],
-                                    );
-                                  },
+                                  builder: (BuildContext context) =>
+                                      infoDialogBuilder!(
+                                    context,
+                                    state.userInfo!.title,
+                                    state.userInfo!.description,
+                                  ),
                                 );
                               },
                               backgroundColor: Colors.transparent,

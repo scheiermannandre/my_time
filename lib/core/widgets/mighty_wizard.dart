@@ -5,6 +5,7 @@ import 'package:my_time/config/theme/mighty_theme.dart';
 import 'package:my_time/config/theme/space_tokens.dart';
 import 'package:my_time/config/theme/text_style_tokens.dart';
 import 'package:my_time/core/util/extentions/widget_ref_extension.dart';
+import 'package:my_time/core/widgets/mighty_action_button.dart';
 import 'package:my_time/core/widgets/wizard/wizard/wizard.dart';
 import 'package:my_time/core/widgets/wizard/wizard/wizard_buttons.dart';
 import 'package:my_time/core/widgets/wizard/wizard/wizard_step_indicator.dart';
@@ -165,6 +166,41 @@ class MightyWizard extends ConsumerWidget {
         backgroundColor: secondaryBackgroundColor,
         splashColor: secondarySplashColor,
         borderColor: secondaryBorderColor,
+      ),
+      infoDialogBuilder: (context, title, description) => Consumer(
+        builder: (context, ref, child) {
+          final theme = ref.watchStateProvider(
+            context,
+            mightyThemeControllerProvider,
+            mightyThemeControllerProvider.notifier,
+          );
+          return AlertDialog(
+            backgroundColor: theme.controller.mainBackgroundColor,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(
+                SpaceTokens.mediumSmall,
+              ),
+            ),
+            contentPadding: const EdgeInsets.symmetric(
+              horizontal: SpaceTokens.medium,
+            ),
+            titlePadding: const EdgeInsets.all(
+              SpaceTokens.medium,
+            ),
+            actionsPadding: const EdgeInsets.all(SpaceTokens.medium),
+            actionsAlignment: MainAxisAlignment.center,
+            actionsOverflowButtonSpacing: SpaceTokens.small,
+            title: Text(title, style: theme.controller.headline5),
+            content: Text(description, style: theme.controller.body),
+            actions: [
+              MightyActionButton.primary(
+                themeController: theme.controller,
+                label: 'Ok',
+                onPressed: () => Navigator.of(context).pop(),
+              ),
+            ],
+          );
+        },
       ),
     );
   }
