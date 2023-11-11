@@ -14,10 +14,149 @@
     "groups": "Gruppen",
     "addGroup": "Neue Gruppe",
     "addProject": "Neues Projekt",
+    "deleteGroup": "Gruppe löschen",
+    "showStatistics": "Zeige Details",
+    "openSettings": "Einstellungen",
+    "pickGroup": "Wähle eine Gruppe",
+    "noFavouritesLabel": "Es sind keine Projekte als Favoriten markiert.",
     "favourites": "Favoriten",
     "noGroupsFoundTitle": "Keine Gruppen gefunden",
     "noGroupsFoundDescription": "Drück den Knopf, um eine Gruppe zu erstellen",
     "noGroupsFoundBtnLabel": "Neue Gruppe erstellen",
+
+    "@AddProjectWizard":{},
+
+    "previousBtn": "Zurück",
+    "nextBtn": "Weiter",
+    "skipBtn": "Überspringen",
+    "backToReviewBtn": "Zurück zum Überblick",
+    "finishBtn": "Fertigstellen",
+
+    "stepInfoMessageSingleValue": "Diese Einstellung legt einen Standardwert für Ihre zukünftigen Einträge fest. Sie haben die Möglichkeit, diese Einstellung zu ändern, wenn Sie einen neuen Zeit-Eintrag hinzufügen.\n\nDarüber hinaus ermöglicht Ihnen diese Einstellung eine bessere Analyse Ihrer Einträge. Sie können dies überspringen, wenn Sie dies nicht nutzen möchten.\n\nSie können diese Einstellung später in den Projekt-Einstellungen ändern, wenn Sie Ihre Meinung ändern sollten.",
+    "stepInfoMessageMultipleValues": "Diese Einstellungen legen Standardwerte für Ihre zukünftigen Einträge fest. Sie haben die Möglichkeit, diese Einstellungen zu ändern, wenn Sie einen neuen Zeit-Eintrag hinzufügen.\n\nDarüber hinaus ermöglichen Ihnen diese Einstellungen eine bessere Analyse Ihrer Einträge. Sie können dies überspringen, wenn Sie dies nicht nutzen möchten.\n\nSie können diese Einstellungen später in den Projekt-Einstellungen ändern, wenn Sie Ihre Meinung ändern sollten.",
+    "stepIndicatorText": "Schritt {currentStep} von {totalSteps}",
+    "@stepIndicatorText": {
+        "placeholders": {
+            "currentStep": {
+                "type": "int"
+            },
+             "totalSteps": {
+                "type": "int"
+            }
+        }
+    },
+    "stepIndicatorReviewText": "Überblick",
+
+    "step1Title": "Wählen Sie eine Gruppe",
+
+    "step2Title": "Geben Sie dem Projekt einen Namen",
+    "step2ValidationEmpty": "Bitte geben Sie einen Namen ein",
+    "step2ValidationInvalidChars": "Bitte geben Sie einen gültigen Namen ein",
+
+    "step3Title": "Sind Krankheitstage bezahlt?",
+    "step3InfoTitle": "Bezahlung bei Krankheitstagen",
+
+    "step4Title": "Sind Feiertage bezahlt?",
+    "step4InfoTitle": "Bezahlung an Feiertagen",
+
+    "step5Title": "Urlaubsinformationen",
+    "step5InfoTitle": "Urlaubsinformationen",
+    "step5ValidationEmpty": "Bitte geben Sie die Anzahl der Urlaubstage ein",
+    "step5ValidationInvalidChars": "Bitte geben Sie eine gültige Anzahl von Urlaubstagen ein",
+    "step5HolidaysInputLabel": "Wie viele Urlaubstage haben Sie?",
+    "step5PaymentStatusLabel": "Sind Urlaubstage bezahlt?",
+
+    "step6Title": "Zeitmanagement",
+    "step6InfoTitle": "Zeitmanagement",
+    "step6ValidationEmpty": "Bitte geben Sie Ihre Arbeitsstunden ein",
+    "step6ValidationInvalidChars": "Bitte geben Sie eine gültige Anzahl von Stunden ein",
+    "step6ReferencePeriodInputLabel": "Referenzzeitraum",
+    "step6WorkingHoursInputLabel": "Arbeitsstunden pro {period}",
+    "@step6WorkingHoursInputLabel": {
+      "placeholders": {
+        "period": {
+          "type": "String"
+        }
+      }
+    },
+
+    "step7Title": "Geldmanagement",
+    "step7InfoTitle": "Geldmanagement",
+    "step7ValidationEmpty": "Bitte geben Sie Ihre Bezahlung ein",
+    "step7ValidationInvalidChars": "Bitte geben Sie eine gültige Bezahlung ein",
+    "step7PaymentIntervalInputLabel": "Zahlungsintervall",
+    "step7CurrencyInputLabel": "Währung",
+    "step7PaymentInputLabel": "Zahlung pro {period} in {currency}",
+    "@step7PaymentInputLabel": {
+      "placeholders": {
+        "period": {
+          "type": "String"
+        },
+        "currency": {
+          "type": "String"
+        }
+      }
+    },
+
+    "step8Title": "Üblicher Arbeitsplatz",
+    "step8InfoTitle": "Üblicher Arbeitsplatz",
+
+    "reviewStepGroupLabel": "Gruppe",    
+
+    "reviewStepProjectNameLabel": "Projektname",
+
+    "reviewStepSickDaysPaymentLabel": "Bezahlung bei Krankheitstagen",
+
+    "reviewStepPublicHolidaysPaymentLabel": "Bezahlung an Feiertagen",
+
+    "reviewStepVacationLabel": "Urlaub",
+    "reviewStepVacationDaysLabel": "Urlaubstage",
+    "reviewStepVacationPaymentLabel": "Bezahlung",
+
+    "reviewStepTimeManagementLabel": "Zeitmanagement",
+    "reviewStepTimeManagementReferencePeriodLabel": "Referenzzeitraum",
+    "reviewStepTimeManagementWorkingHoursLabel": "Arbeitsstunden pro {referencePeriod}",
+    "@reviewStepTimeManagementWorkingHoursLabel": {    
+      "placeholders": {
+        "referencePeriod": {
+          "type": "String"
+        }
+      }
+    },
+
+    "reviewStepMoneyManagementLabel": "Geldmanagement",
+    "reviewStepMoneyManagementPaymentIntervalLabel": "Zahlungsintervall",
+    "reviewStepMoneyManagementCurrencyLabel": "Währung",
+    "reviewStepMoneyManagementPaymentLabel": "Bezahlung pro {paymentInterval} in {currency}",
+    "@reviewStepMoneyManagementPaymentLabel": {    
+      "placeholders": {
+        "paymentInterval": {
+          "type": "String"
+        },
+        "currency": {
+          "type": "String"
+        }
+      }
+    },
+
+    "reviewStepWorkplaceLabel": "Bevorzugter Arbeitsplatz",
+
+    "paymentIntervalHourly" : "Stunde",
+    "paymentIntervalDaily" : "Tag",
+    "paymentIntervalWeekly" : "Woche",
+    "paymentIntervalMonthly" : "Monat",
+
+    "paymentStatusPaid": "Bezahlt",
+    "paymentStatusUnpaid": "Unbezahlt",
+
+    "referencePeriodDaily" : "Tag",
+    "referencePeriodWeekly" : "Woche",
+    "referencePeriodMonthly" : "Monat",
+    "referencePeriodYearly" : "Jahr",
+
+    "workplaceRemote": "Remote",
+    "workplaceOffice": "Büro",
+    "workplaceHomeOffice": "Home-Office",
 
     "@LoadingErrorWidget": {},
 

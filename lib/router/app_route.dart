@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:my_time/common/screens/shell_screen.dart';
 import 'package:my_time/features/1_groups/views/add_group_screen.dart';
-import 'package:my_time/features/1_groups/views/groups_screen.dart';
 import 'package:my_time/features/2_projects/views/add_project_screen.dart';
 import 'package:my_time/features/2_projects/views/group_projects_shell_page.dart';
 import 'package:my_time/features/3_project_timer_page/view/project_shell_screen.dart';
@@ -10,6 +9,8 @@ import 'package:my_time/features/3_project_timer_page/view/project_timer_shell_p
 import 'package:my_time/features/4_time_entry_form/view/time_entry_form_screen.dart';
 import 'package:my_time/features/5_project_history/view/proejct_history_shell_page.dart';
 import 'package:my_time/features/6_group_analytics/view/group_analytics_shell_page.dart';
+import 'package:my_time/features/7_groups_overview/presentation/pages/add_project_wizard/add_project_wizard.dart';
+import 'package:my_time/features/7_groups_overview/presentation/pages/groups_overview.dart';
 import 'package:my_time/router/not_found_screen.dart';
 
 enum _AppRoute {
@@ -19,6 +20,7 @@ enum _AppRoute {
   group,
   project,
   timeEntryForm,
+  addProjectWizard,
 }
 
 /// The routes of the app.
@@ -40,6 +42,9 @@ class AppRoute {
 
   /// The fast access to the time entry form route.
   static String get timeEntryForm => _AppRoute.timeEntryForm.name;
+
+  /// The fast access to the add project wizard route.
+  static String get addProjectWizard => _AppRoute.addProjectWizard.name;
 }
 
 /// Gorouter for the app.
@@ -49,7 +54,12 @@ final goRouter = GoRouter(
     GoRoute(
       path: '/',
       name: AppRoute.home,
-      builder: (context, state) => const GroupsScreen(),
+      builder: (context, state) => const GroupsOverview(),
+    ),
+    GoRoute(
+      path: '/addProjectWizard',
+      name: AppRoute.addProjectWizard,
+      builder: (context, state) => const AddProjectWizard(),
     ),
 
     // GoRoute(

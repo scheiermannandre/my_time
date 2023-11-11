@@ -14,11 +14,152 @@
     "groups": "Groups",
     "addGroup": "Add Group",
     "addProject": "Add Project",
+    "deleteGroup": "Delete Group",
+    "showStatistics": "Show Details",
+    "openSettings": "Settings",
+    "pickGroup": "Pick a group",
+    "noFavouritesLabel": "There are no projects marked as favourites.",
     "favourites": "Favourites",
     "noGroupsFoundTitle": "No Groups found",
     "noGroupsFoundDescription": "Click on the button below to add a new Group",
     "noGroupsFoundBtnLabel": "Create new Group",
 
+    "@AddProjectWizard":{},
+
+    "previousBtn": "Previous",
+    "nextBtn": "Next",
+    "skipBtn": "Skip",
+    "backToReviewBtn": "Back to review",
+    "finishBtn": "Finish",
+
+    "stepInfoMessageSingleValue": "This setting sets a default value for your future tracking. You will still have the chance to change this setting when adding a new time entry.\n\nFurthermore this stting allows you to better track and analze your data. You can skip this if you don't wish to track this.\n\nYou can later change this setting in the project settings if you have changed your mind.",
+    "stepInfoMessageMultipleValues": "This settings set default values for your future tracking. You will still have the chance to change this settings when adding a new time entry.\n\nFurthermore this sttings allow you to better track and analze your data. You can skip this if you don't wish to track this.\n\nYou can later change this settings in the project settings if you have changed your mind.",
+    "stepIndicatorText": "Step {currentStep} of {totalSteps}",
+    "@stepIndicatorText": {
+        "placeholders": {
+            "currentStep": {
+                "type": "int"
+            },
+             "totalSteps": {
+                "type": "int"
+            }
+        }
+    },
+    "stepIndicatorReviewText": "Review",
+
+
+    "step1Title": "Choose a group",
+
+    "step2Title": "Give the project a name",
+    "step2ValidationEmpty": "Please enter a name",
+    "step2ValidationInvalidChars": "Please enter a valid name",
+
+    "step3Title": "Are sick days paid?",
+    "step3InfoTitle": "Sick days payment",
+
+    "step4Title": "Are public holidays days paid?",
+    "step4InfoTitle": "Public holidays payment",
+
+    "step5Title": "Vacation information",
+    "step5InfoTitle": "Vacation information",
+    "step5ValidationEmpty": "Please enter the amount of vacation days",
+    "step5ValidationInvalidChars": "Please enter a valid number for vacation days",
+    "step5HolidaysInputLabel": "How many Vacation days do you have?",
+    "step5PaymentStatusLabel": "Are vacation days paid?",
+
+    "step6Title": "Time Management",
+    "step6InfoTitle": "Time Management",
+    "step6ValidationEmpty": "Please enter your working hours",
+    "step6ValidationInvalidChars": "Please enter a valid number for hours",
+    "step6ReferencePeriodInputLabel": "Reference period",
+    "step6WorkingHoursInputLabel": "Working hours per {period}",
+    "@step6WorkingHoursInputLabel": {
+        "placeholders": {
+            "period": {
+                "type": "String"
+            }
+        }
+    },
+
+    "step7Title": "Money Management",
+    "step7InfoTitle": "Money Management",
+    "step7ValidationEmpty": "Please enter your payment",
+    "step7ValidationInvalidChars": "Please enter a valid payment",
+    "step7PaymentIntervalInputLabel": "Payment interval",
+    "step7CurrencyInputLabel": "Currency",
+    "step7PaymentInputLabel": "Payment per {period} in {currency}",
+    "@step7PaymentInputLabel": {
+        "placeholders": {
+            "period": {
+                "type": "String"
+            },
+            "currency": {
+                "type": "String"
+            }
+        }
+    },
+
+    "step8Title": "Usual Workplace",
+    "step8InfoTitle": "Usual Workplace",
+
+    "reviewStepGroupLabel": "Group",    
+
+    "reviewStepProjectNameLabel": "Project Name",
+
+    "reviewStepSickDaysPaymentLabel": "Sick Days Payment",
+
+    "reviewStepPublicHolidaysPaymentLabel": "Public Holidays Payment",
+
+    "reviewStepVacationLabel": "Vacation",
+    "reviewStepVacationDaysLabel": "Vacation Days",
+    "reviewStepVacationPaymentLabel": "Payment",
+
+    "reviewStepTimeManagementLabel": "Time Management",
+    "reviewStepTimeManagementReferencePeriodLabel": "Reference period",
+    "reviewStepTimeManagementWorkingHoursLabel": "Working hours per {referencePeriod}",
+    "@reviewStepTimeManagementWorkingHoursLabel": {    
+        "placeholders": {
+            "referencePeriod": {
+                "type": "String"
+            }
+        }
+    },
+
+    "reviewStepMoneyManagementLabel": "Money Management",
+    "reviewStepMoneyManagementPaymentIntervalLabel": "Payment Interval",
+    "reviewStepMoneyManagementCurrencyLabel": "Currency",
+    "reviewStepMoneyManagementPaymentLabel": "Payment per {paymentInterval} in {currency}",
+    "@reviewStepMoneyManagementPaymentLabel": {    
+        "placeholders": {
+            "paymentInterval": {
+                "type": "String"
+            },
+            "currency": {
+                "type": "String"
+            }
+        }
+    },
+
+    "reviewStepWorkplaceLabel": "Prefered Workplace",
+
+
+    "paymentIntervalHourly" : "Hour",
+    "paymentIntervalDaily" : "Day",
+    "paymentIntervalWeekly" : "Week",
+    "paymentIntervalMonthly" : "Month",
+
+    "paymentStatusPaid": "Paid",
+    "paymentStatusUnpaid": "Unpaid",
+
+    "referencePeriodDaily" : "Day",
+    "referencePeriodWeekly" : "Week",
+    "referencePeriodMonthly" : "Month",
+    "referencePeriodYearly" : "Year",
+
+    "workplaceRemote": "Remote",
+    "workplaceOffice": "Office",
+    "workplaceHomeOffice": "Home-Office",
+    
     "@LoadingErrorWidget": {},
 
     "loadingErrorWidgetTitle": "Ooops, something went wrong",
