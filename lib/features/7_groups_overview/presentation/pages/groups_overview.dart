@@ -20,6 +20,7 @@ import 'package:my_time/core/widgets/spaced_row.dart';
 import 'package:my_time/features/7_groups_overview/data/repositories/group_repository_impl.dart';
 import 'package:my_time/features/7_groups_overview/domain/entities/group_entity.dart';
 import 'package:my_time/features/7_groups_overview/presentation/state_management/groups_overview_controller.dart';
+import 'package:my_time/features/8_authentication/data/repositories/auth_repository_impl.dart';
 import 'package:my_time/router/app_route.dart';
 
 /// GroupsOverviewInheritedWidget.
@@ -97,6 +98,14 @@ class GroupsOverview extends HookConsumerWidget {
         appBar: MightyAppBar(
           themeMode: mightyTheme.state,
           title: context.loc.groups,
+          actions: [
+            IconButton(
+              onPressed: () {
+                ref.read(authRepositoryProvider).signOut();
+              },
+              icon: const Icon(Icons.logout),
+            ),
+          ],
         ),
         body: AsyncValueWidget(
           value: groups,
@@ -460,7 +469,7 @@ class _LabeledList extends StatelessWidget {
               padding: const EdgeInsets.only(top: SpaceTokens.mediumSmall),
               child: Text(
                 emptyListLabel,
-                style: themeController.body,
+                style: themeController.alternateBody,
               ),
             )
           else

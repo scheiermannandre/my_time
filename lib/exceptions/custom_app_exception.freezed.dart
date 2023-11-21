@@ -105,25 +105,25 @@ class _$CustomAppExceptionCopyWithImpl<$Res, $Val extends CustomAppException>
 }
 
 /// @nodoc
-abstract class _$$EntryNotFoundCopyWith<$Res> {
-  factory _$$EntryNotFoundCopyWith(
-          _$EntryNotFound value, $Res Function(_$EntryNotFound) then) =
-      __$$EntryNotFoundCopyWithImpl<$Res>;
+abstract class _$$EntryNotFoundImplCopyWith<$Res> {
+  factory _$$EntryNotFoundImplCopyWith(
+          _$EntryNotFoundImpl value, $Res Function(_$EntryNotFoundImpl) then) =
+      __$$EntryNotFoundImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$EntryNotFoundCopyWithImpl<$Res>
-    extends _$CustomAppExceptionCopyWithImpl<$Res, _$EntryNotFound>
-    implements _$$EntryNotFoundCopyWith<$Res> {
-  __$$EntryNotFoundCopyWithImpl(
-      _$EntryNotFound _value, $Res Function(_$EntryNotFound) _then)
+class __$$EntryNotFoundImplCopyWithImpl<$Res>
+    extends _$CustomAppExceptionCopyWithImpl<$Res, _$EntryNotFoundImpl>
+    implements _$$EntryNotFoundImplCopyWith<$Res> {
+  __$$EntryNotFoundImplCopyWithImpl(
+      _$EntryNotFoundImpl _value, $Res Function(_$EntryNotFoundImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$EntryNotFound implements EntryNotFound {
-  const _$EntryNotFound();
+class _$EntryNotFoundImpl implements EntryNotFound {
+  const _$EntryNotFoundImpl();
 
   @override
   String toString() {
@@ -133,7 +133,7 @@ class _$EntryNotFound implements EntryNotFound {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$EntryNotFound);
+        (other.runtimeType == runtimeType && other is _$EntryNotFoundImpl);
   }
 
   @override
@@ -233,29 +233,29 @@ class _$EntryNotFound implements EntryNotFound {
 }
 
 abstract class EntryNotFound implements CustomAppException {
-  const factory EntryNotFound() = _$EntryNotFound;
+  const factory EntryNotFound() = _$EntryNotFoundImpl;
 }
 
 /// @nodoc
-abstract class _$$TimeRangesOverlapCopyWith<$Res> {
-  factory _$$TimeRangesOverlapCopyWith(
-          _$TimeRangesOverlap value, $Res Function(_$TimeRangesOverlap) then) =
-      __$$TimeRangesOverlapCopyWithImpl<$Res>;
+abstract class _$$TimeRangesOverlapImplCopyWith<$Res> {
+  factory _$$TimeRangesOverlapImplCopyWith(_$TimeRangesOverlapImpl value,
+          $Res Function(_$TimeRangesOverlapImpl) then) =
+      __$$TimeRangesOverlapImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$TimeRangesOverlapCopyWithImpl<$Res>
-    extends _$CustomAppExceptionCopyWithImpl<$Res, _$TimeRangesOverlap>
-    implements _$$TimeRangesOverlapCopyWith<$Res> {
-  __$$TimeRangesOverlapCopyWithImpl(
-      _$TimeRangesOverlap _value, $Res Function(_$TimeRangesOverlap) _then)
+class __$$TimeRangesOverlapImplCopyWithImpl<$Res>
+    extends _$CustomAppExceptionCopyWithImpl<$Res, _$TimeRangesOverlapImpl>
+    implements _$$TimeRangesOverlapImplCopyWith<$Res> {
+  __$$TimeRangesOverlapImplCopyWithImpl(_$TimeRangesOverlapImpl _value,
+      $Res Function(_$TimeRangesOverlapImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$TimeRangesOverlap implements TimeRangesOverlap {
-  const _$TimeRangesOverlap();
+class _$TimeRangesOverlapImpl implements TimeRangesOverlap {
+  const _$TimeRangesOverlapImpl();
 
   @override
   String toString() {
@@ -265,7 +265,7 @@ class _$TimeRangesOverlap implements TimeRangesOverlap {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$TimeRangesOverlap);
+        (other.runtimeType == runtimeType && other is _$TimeRangesOverlapImpl);
   }
 
   @override
@@ -365,29 +365,29 @@ class _$TimeRangesOverlap implements TimeRangesOverlap {
 }
 
 abstract class TimeRangesOverlap implements CustomAppException {
-  const factory TimeRangesOverlap() = _$TimeRangesOverlap;
+  const factory TimeRangesOverlap() = _$TimeRangesOverlapImpl;
 }
 
 /// @nodoc
-abstract class _$$ProjectNotFoundCopyWith<$Res> {
-  factory _$$ProjectNotFoundCopyWith(
-          _$ProjectNotFound value, $Res Function(_$ProjectNotFound) then) =
-      __$$ProjectNotFoundCopyWithImpl<$Res>;
+abstract class _$$ProjectNotFoundImplCopyWith<$Res> {
+  factory _$$ProjectNotFoundImplCopyWith(_$ProjectNotFoundImpl value,
+          $Res Function(_$ProjectNotFoundImpl) then) =
+      __$$ProjectNotFoundImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$ProjectNotFoundCopyWithImpl<$Res>
-    extends _$CustomAppExceptionCopyWithImpl<$Res, _$ProjectNotFound>
-    implements _$$ProjectNotFoundCopyWith<$Res> {
-  __$$ProjectNotFoundCopyWithImpl(
-      _$ProjectNotFound _value, $Res Function(_$ProjectNotFound) _then)
+class __$$ProjectNotFoundImplCopyWithImpl<$Res>
+    extends _$CustomAppExceptionCopyWithImpl<$Res, _$ProjectNotFoundImpl>
+    implements _$$ProjectNotFoundImplCopyWith<$Res> {
+  __$$ProjectNotFoundImplCopyWithImpl(
+      _$ProjectNotFoundImpl _value, $Res Function(_$ProjectNotFoundImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$ProjectNotFound implements ProjectNotFound {
-  const _$ProjectNotFound();
+class _$ProjectNotFoundImpl implements ProjectNotFound {
+  const _$ProjectNotFoundImpl();
 
   @override
   String toString() {
@@ -397,7 +397,7 @@ class _$ProjectNotFound implements ProjectNotFound {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$ProjectNotFound);
+        (other.runtimeType == runtimeType && other is _$ProjectNotFoundImpl);
   }
 
   @override
@@ -497,29 +497,29 @@ class _$ProjectNotFound implements ProjectNotFound {
 }
 
 abstract class ProjectNotFound implements CustomAppException {
-  const factory ProjectNotFound() = _$ProjectNotFound;
+  const factory ProjectNotFound() = _$ProjectNotFoundImpl;
 }
 
 /// @nodoc
-abstract class _$$GroupNotFoundCopyWith<$Res> {
-  factory _$$GroupNotFoundCopyWith(
-          _$GroupNotFound value, $Res Function(_$GroupNotFound) then) =
-      __$$GroupNotFoundCopyWithImpl<$Res>;
+abstract class _$$GroupNotFoundImplCopyWith<$Res> {
+  factory _$$GroupNotFoundImplCopyWith(
+          _$GroupNotFoundImpl value, $Res Function(_$GroupNotFoundImpl) then) =
+      __$$GroupNotFoundImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$GroupNotFoundCopyWithImpl<$Res>
-    extends _$CustomAppExceptionCopyWithImpl<$Res, _$GroupNotFound>
-    implements _$$GroupNotFoundCopyWith<$Res> {
-  __$$GroupNotFoundCopyWithImpl(
-      _$GroupNotFound _value, $Res Function(_$GroupNotFound) _then)
+class __$$GroupNotFoundImplCopyWithImpl<$Res>
+    extends _$CustomAppExceptionCopyWithImpl<$Res, _$GroupNotFoundImpl>
+    implements _$$GroupNotFoundImplCopyWith<$Res> {
+  __$$GroupNotFoundImplCopyWithImpl(
+      _$GroupNotFoundImpl _value, $Res Function(_$GroupNotFoundImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$GroupNotFound implements GroupNotFound {
-  const _$GroupNotFound();
+class _$GroupNotFoundImpl implements GroupNotFound {
+  const _$GroupNotFoundImpl();
 
   @override
   String toString() {
@@ -529,7 +529,7 @@ class _$GroupNotFound implements GroupNotFound {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$GroupNotFound);
+        (other.runtimeType == runtimeType && other is _$GroupNotFoundImpl);
   }
 
   @override
@@ -629,29 +629,29 @@ class _$GroupNotFound implements GroupNotFound {
 }
 
 abstract class GroupNotFound implements CustomAppException {
-  const factory GroupNotFound() = _$GroupNotFound;
+  const factory GroupNotFound() = _$GroupNotFoundImpl;
 }
 
 /// @nodoc
-abstract class _$$MultipleTimerStartsCopyWith<$Res> {
-  factory _$$MultipleTimerStartsCopyWith(_$MultipleTimerStarts value,
-          $Res Function(_$MultipleTimerStarts) then) =
-      __$$MultipleTimerStartsCopyWithImpl<$Res>;
+abstract class _$$MultipleTimerStartsImplCopyWith<$Res> {
+  factory _$$MultipleTimerStartsImplCopyWith(_$MultipleTimerStartsImpl value,
+          $Res Function(_$MultipleTimerStartsImpl) then) =
+      __$$MultipleTimerStartsImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$MultipleTimerStartsCopyWithImpl<$Res>
-    extends _$CustomAppExceptionCopyWithImpl<$Res, _$MultipleTimerStarts>
-    implements _$$MultipleTimerStartsCopyWith<$Res> {
-  __$$MultipleTimerStartsCopyWithImpl(
-      _$MultipleTimerStarts _value, $Res Function(_$MultipleTimerStarts) _then)
+class __$$MultipleTimerStartsImplCopyWithImpl<$Res>
+    extends _$CustomAppExceptionCopyWithImpl<$Res, _$MultipleTimerStartsImpl>
+    implements _$$MultipleTimerStartsImplCopyWith<$Res> {
+  __$$MultipleTimerStartsImplCopyWithImpl(_$MultipleTimerStartsImpl _value,
+      $Res Function(_$MultipleTimerStartsImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$MultipleTimerStarts implements MultipleTimerStarts {
-  const _$MultipleTimerStarts();
+class _$MultipleTimerStartsImpl implements MultipleTimerStarts {
+  const _$MultipleTimerStartsImpl();
 
   @override
   String toString() {
@@ -661,7 +661,8 @@ class _$MultipleTimerStarts implements MultipleTimerStarts {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$MultipleTimerStarts);
+        (other.runtimeType == runtimeType &&
+            other is _$MultipleTimerStartsImpl);
   }
 
   @override
@@ -761,29 +762,29 @@ class _$MultipleTimerStarts implements MultipleTimerStarts {
 }
 
 abstract class MultipleTimerStarts implements CustomAppException {
-  const factory MultipleTimerStarts() = _$MultipleTimerStarts;
+  const factory MultipleTimerStarts() = _$MultipleTimerStartsImpl;
 }
 
 /// @nodoc
-abstract class _$$TimerDataNotFoundCopyWith<$Res> {
-  factory _$$TimerDataNotFoundCopyWith(
-          _$TimerDataNotFound value, $Res Function(_$TimerDataNotFound) then) =
-      __$$TimerDataNotFoundCopyWithImpl<$Res>;
+abstract class _$$TimerDataNotFoundImplCopyWith<$Res> {
+  factory _$$TimerDataNotFoundImplCopyWith(_$TimerDataNotFoundImpl value,
+          $Res Function(_$TimerDataNotFoundImpl) then) =
+      __$$TimerDataNotFoundImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$TimerDataNotFoundCopyWithImpl<$Res>
-    extends _$CustomAppExceptionCopyWithImpl<$Res, _$TimerDataNotFound>
-    implements _$$TimerDataNotFoundCopyWith<$Res> {
-  __$$TimerDataNotFoundCopyWithImpl(
-      _$TimerDataNotFound _value, $Res Function(_$TimerDataNotFound) _then)
+class __$$TimerDataNotFoundImplCopyWithImpl<$Res>
+    extends _$CustomAppExceptionCopyWithImpl<$Res, _$TimerDataNotFoundImpl>
+    implements _$$TimerDataNotFoundImplCopyWith<$Res> {
+  __$$TimerDataNotFoundImplCopyWithImpl(_$TimerDataNotFoundImpl _value,
+      $Res Function(_$TimerDataNotFoundImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$TimerDataNotFound implements TimerDataNotFound {
-  const _$TimerDataNotFound();
+class _$TimerDataNotFoundImpl implements TimerDataNotFound {
+  const _$TimerDataNotFoundImpl();
 
   @override
   String toString() {
@@ -793,7 +794,7 @@ class _$TimerDataNotFound implements TimerDataNotFound {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$TimerDataNotFound);
+        (other.runtimeType == runtimeType && other is _$TimerDataNotFoundImpl);
   }
 
   @override
@@ -893,24 +894,24 @@ class _$TimerDataNotFound implements TimerDataNotFound {
 }
 
 abstract class TimerDataNotFound implements CustomAppException {
-  const factory TimerDataNotFound() = _$TimerDataNotFound;
+  const factory TimerDataNotFound() = _$TimerDataNotFoundImpl;
 }
 
 /// @nodoc
-abstract class _$$UnexpectedCopyWith<$Res> {
-  factory _$$UnexpectedCopyWith(
-          _$Unexpected value, $Res Function(_$Unexpected) then) =
-      __$$UnexpectedCopyWithImpl<$Res>;
+abstract class _$$UnexpectedImplCopyWith<$Res> {
+  factory _$$UnexpectedImplCopyWith(
+          _$UnexpectedImpl value, $Res Function(_$UnexpectedImpl) then) =
+      __$$UnexpectedImplCopyWithImpl<$Res>;
   @useResult
   $Res call({String status});
 }
 
 /// @nodoc
-class __$$UnexpectedCopyWithImpl<$Res>
-    extends _$CustomAppExceptionCopyWithImpl<$Res, _$Unexpected>
-    implements _$$UnexpectedCopyWith<$Res> {
-  __$$UnexpectedCopyWithImpl(
-      _$Unexpected _value, $Res Function(_$Unexpected) _then)
+class __$$UnexpectedImplCopyWithImpl<$Res>
+    extends _$CustomAppExceptionCopyWithImpl<$Res, _$UnexpectedImpl>
+    implements _$$UnexpectedImplCopyWith<$Res> {
+  __$$UnexpectedImplCopyWithImpl(
+      _$UnexpectedImpl _value, $Res Function(_$UnexpectedImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -918,7 +919,7 @@ class __$$UnexpectedCopyWithImpl<$Res>
   $Res call({
     Object? status = null,
   }) {
-    return _then(_$Unexpected(
+    return _then(_$UnexpectedImpl(
       null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -929,8 +930,8 @@ class __$$UnexpectedCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$Unexpected implements Unexpected {
-  const _$Unexpected(this.status);
+class _$UnexpectedImpl implements Unexpected {
+  const _$UnexpectedImpl(this.status);
 
   @override
   final String status;
@@ -944,7 +945,7 @@ class _$Unexpected implements Unexpected {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$Unexpected &&
+            other is _$UnexpectedImpl &&
             (identical(other.status, status) || other.status == status));
   }
 
@@ -954,8 +955,8 @@ class _$Unexpected implements Unexpected {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$UnexpectedCopyWith<_$Unexpected> get copyWith =>
-      __$$UnexpectedCopyWithImpl<_$Unexpected>(this, _$identity);
+  _$$UnexpectedImplCopyWith<_$UnexpectedImpl> get copyWith =>
+      __$$UnexpectedImplCopyWithImpl<_$UnexpectedImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -1051,10 +1052,10 @@ class _$Unexpected implements Unexpected {
 }
 
 abstract class Unexpected implements CustomAppException {
-  const factory Unexpected(final String status) = _$Unexpected;
+  const factory Unexpected(final String status) = _$UnexpectedImpl;
 
   String get status;
   @JsonKey(ignore: true)
-  _$$UnexpectedCopyWith<_$Unexpected> get copyWith =>
+  _$$UnexpectedImplCopyWith<_$UnexpectedImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

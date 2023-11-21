@@ -42,7 +42,7 @@ class MightyExpandableTile extends StatelessWidget {
           onPressed: items[index].onPressed,
           title: Text(
             items[index].title,
-            style: themeController.body,
+            style: themeController.alternateBody,
           ),
           trailingIcon: items[index].showTrailingIcon
               ? RotatedBox(
@@ -58,7 +58,7 @@ class MightyExpandableTile extends StatelessWidget {
         ),
       ).toList(),
       collapseOnContentTap: true,
-      backgroundColor: themeController.mainBackgroundColor,
+      backgroundColor: themeController.onBackgroundColor,
       iconColor: themeController.themeMode == SystemThemeMode.light
           ? LightThemeColorTokens.darkColor
           : DarkThemeColorTokens.primaryColor,

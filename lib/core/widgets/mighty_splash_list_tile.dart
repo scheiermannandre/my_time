@@ -41,7 +41,7 @@ class MightySplashListTile extends StatelessWidget {
         padding: contentPadding,
         child: Text(
           text,
-          style: themeController.body,
+          style: themeController.alternateBody,
         ),
       ),
       onPressed: onPressed,

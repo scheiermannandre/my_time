@@ -102,9 +102,24 @@ class ThemeColors {
 
   /// Returns the main background color depending on the [SystemThemeMode].
   ///
-  /// For [SystemThemeMode.light], returns [LightThemeColorTokens.white].
+  /// For [SystemThemeMode.light],
+  /// returns [LightThemeColorTokens.lightestColor].
   /// For [SystemThemeMode.dark], returns [DarkThemeColorTokens.darkestColor].
   static Color getMainBackgroundColor(SystemThemeMode mode) {
+    switch (mode) {
+      case SystemThemeMode.light:
+        return LightThemeColorTokens.lightestColor;
+      case SystemThemeMode.dark:
+        return DarkThemeColorTokens.darkestColor;
+    }
+  }
+
+  /// Returns the color to use on background color depending on
+  /// the [SystemThemeMode].
+  ///
+  /// For [SystemThemeMode.light], returns [LightThemeColorTokens.white].
+  /// For [SystemThemeMode.dark], returns [DarkThemeColorTokens.darkestColor].
+  static Color getOnBackgroundColor(SystemThemeMode mode) {
     switch (mode) {
       case SystemThemeMode.light:
         return LightThemeColorTokens.white;

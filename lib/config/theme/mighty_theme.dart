@@ -60,6 +60,12 @@ class MightyThemeController extends _$MightyThemeController {
   /// Gets the color for the main background based on the current theme mode.
   Color get mainBackgroundColor => ThemeColors.getMainBackgroundColor(state);
 
+  /// Gets the color for the main background based on the current theme mode.
+  Color get onBackgroundColor => ThemeColors.getOnBackgroundColor(state);
+
+  /// Gets the [TextStyle] for headline1 based on the current theme mode.
+  TextStyle get headline1 => TextStyleTokens.getHeadline1(headingTextColor);
+
   /// Gets the [TextStyle] for headline3 based on the current theme mode.
   TextStyle get headline3 => TextStyleTokens.getHeadline3(headingTextColor);
 
@@ -71,6 +77,10 @@ class MightyThemeController extends _$MightyThemeController {
 
   /// Gets the [TextStyle] for body text based on the current theme mode.
   TextStyle get body => TextStyleTokens.body(secondaryTextColor);
+
+  /// Gets the [TextStyle] for body text based on the current theme mode and
+  /// an alternate color.
+  TextStyle get alternateBody => TextStyleTokens.body(nonDecorativeBorderColor);
 
   /// Gets the [TextStyle] for small text based on the current theme mode.
   TextStyle get small => TextStyleTokens.small(headingTextColor);

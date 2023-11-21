@@ -3,6 +3,9 @@ class CornerRadiusTokens {
   /// A very small corner radius value (4.0).
   static const verySmall = 4.0;
 
+  /// A slighty small corner radius value (6.0).
+  static const slightySmall = 6.0;
+
   /// A small corner radius value (8.0).
   static const small = 8.0;
 

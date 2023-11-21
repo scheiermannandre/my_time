@@ -13,7 +13,8 @@ class MightyActionButton {
   static ActionButton primary({
     required MightyThemeController themeController,
     required String label,
-    required VoidCallback onPressed,
+    required VoidCallback? onPressed,
+    bool isLoading = false,
     Key? key,
   }) {
     final backgroundColor = themeController.themeMode == SystemThemeMode.light
@@ -33,12 +34,17 @@ class MightyActionButton {
         : DarkThemeColorTokens.darkColor;
 
     return ActionButton.regular(
-      title: Text(label, style: TextStyleTokens.body(textColor)),
+      title: Text(
+        label,
+        style: TextStyleTokens.body(textColor),
+        textAlign: TextAlign.center,
+      ),
       onPressed: onPressed,
       backgroundColor: backgroundColor,
       borderRadius: BorderRadius.circular(CornerRadiusTokens.small),
       borderColor: borderColor,
       splashColor: splashColor,
+      isLoading: isLoading,
     );
   }
 
@@ -66,7 +72,11 @@ class MightyActionButton {
         : DarkThemeColorTokens.lightestColor;
 
     return ActionButton.regular(
-      title: Text(label, style: TextStyleTokens.body(textColor)),
+      title: Text(
+        label,
+        style: TextStyleTokens.body(textColor),
+        textAlign: TextAlign.center,
+      ),
       onPressed: onPressed,
       backgroundColor: backgroundColor,
       borderColor: borderColor,
@@ -139,6 +149,40 @@ class MightyActionButton {
       iconColor: iconColor,
     );
   }
+
+  /// Returns a styled flat action button with text.
+  static ActionButton flatText({
+    required MightyThemeController themeController,
+    required String label,
+    required VoidCallback onPressed,
+    bool isLoading = false,
+    Key? key,
+  }) {
+    final textColor = themeController.themeMode == SystemThemeMode.light
+        ? LightThemeColorTokens.black
+        : DarkThemeColorTokens.primaryColor;
+
+    final splashColor = themeController.themeMode == SystemThemeMode.light
+        ? LightThemeColorTokens.primaryColor
+        : DarkThemeColorTokens.primaryColor;
+
+    return ActionButton.regular(
+      title: Text(
+        label,
+        style: TextStyleTokens.body(textColor),
+        textAlign: TextAlign.center,
+      ),
+      onPressed: onPressed,
+      backgroundColor: Colors.transparent,
+      borderRadius: BorderRadius.circular(CornerRadiusTokens.small),
+      splashColor: splashColor,
+      isLoading: isLoading,
+      contentPadding: const EdgeInsets.symmetric(
+        vertical: SpaceTokens.verySmall,
+        horizontal: SpaceTokens.mediumSmall,
+      ),
+    );
+  }
 }
 
 /// [ActionButton] is a class that provides the action buttons without any
@@ -151,12 +195,15 @@ class ActionButton extends StatefulWidget {
     super.key,
     this.splashColor,
     this.decoration,
-    this.width = double.infinity,
-    this.height = SizeTokens.x48,
     this.isLoading = false,
     this.indicatorColor = Colors.black,
     this.splashBorderRadius = BorderRadius.zero,
-  });
+    EdgeInsetsGeometry? contentPadding,
+  }) : contentPadding = contentPadding ??
+            const EdgeInsets.symmetric(
+              vertical: SpaceTokens.mediumSmall,
+              horizontal: SpaceTokens.medium,
+            );
 
   /// Creates a regular action button.
   factory ActionButton.regular({
@@ -168,6 +215,7 @@ class ActionButton extends StatefulWidget {
     Color? borderColor,
     Key? key,
     bool isLoading = false,
+    EdgeInsetsGeometry? contentPadding,
   }) {
     final radius = borderRadius ?? BorderRadius.zero;
 
@@ -185,6 +233,7 @@ class ActionButton extends StatefulWidget {
       ),
       splashBorderRadius: radius,
       isLoading: isLoading,
+      contentPadding: contentPadding,
     );
   }
 
@@ -223,7 +272,6 @@ class ActionButton extends StatefulWidget {
         color: backgroundColor,
         borderRadius: radius,
       ),
-      width: SizeTokens.x48,
       indicatorColor: iconColor,
     );
   }
@@ -287,14 +335,11 @@ class ActionButton extends StatefulWidget {
   /// The border radius of the splash effect.
   final BorderRadius splashBorderRadius;
 
-  /// The width of the button.
-  final double width;
-
-  /// The height of the button.
-  final double height;
-
   /// Whether the button is currently in a loading state.
   final bool isLoading;
+
+  /// The padding around the button's content.
+  final EdgeInsetsGeometry contentPadding;
 
   @override
   State<ActionButton> createState() => _ActionButtonState();
@@ -309,8 +354,6 @@ class _ActionButtonState extends State<ActionButton> {
       color: Colors.transparent,
       child: Ink(
         decoration: widget.decoration,
-        width: widget.width,
-        height: widget.height,
         child: InkWell(
           splashColor: widget.splashColor != null
               ? widget.splashColor!.withOpacity(.1)
@@ -326,17 +369,18 @@ class _ActionButtonState extends State<ActionButton> {
                     }
                   });
                 },
-          child: clicked && widget.isLoading
-              ? Center(
-                  child: SizedBox(
+          child: Padding(
+            padding: widget.contentPadding,
+            child: clicked && widget.isLoading
+                ? SizedBox(
                     height: SizeTokens.x24,
                     width: SizeTokens.x24,
                     child: CircularProgressIndicator(
                       color: widget.indicatorColor,
                     ),
-                  ),
-                )
-              : Center(child: widget.title),
+                  )
+                : widget.title,
+          ),
         ),
       ),
     );

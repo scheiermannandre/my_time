@@ -3,6 +3,15 @@ import 'package:flutter/painting.dart';
 /// A utility class providing predefined text style tokens for
 /// consistent typography.
 class TextStyleTokens {
+  /// Returns a text style for headline 1 with the specified [fontColor].
+  static TextStyle getHeadline1(Color fontColor) {
+    return TextStyle(
+      fontSize: 48,
+      fontWeight: FontWeight.w500,
+      color: fontColor,
+    );
+  }
+
   /// Returns a text style for headline 3 with the specified [fontColor].
   static TextStyle getHeadline3(Color fontColor) {
     return TextStyle(

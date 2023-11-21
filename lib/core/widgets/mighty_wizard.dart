@@ -74,6 +74,8 @@ class MightyWizard extends ConsumerWidget {
             ? LightThemeColorTokens.white
             : DarkThemeColorTokens.darkestColor;
 
+    final backgroundColor = themeController.mainBackgroundColor;
+
     final primaryTextColor = themeController.themeMode == SystemThemeMode.light
         ? LightThemeColorTokens.black
         : DarkThemeColorTokens.black;
@@ -144,7 +146,7 @@ class MightyWizard extends ConsumerWidget {
         title: finishBtnTitle,
         titleColor: primaryTextColor,
       ),
-      backgroundColor: secondaryBackgroundColor,
+      backgroundColor: backgroundColor,
       appBarTitleStyle: TextStyle(
         color: primaryTextColor,
       ),
@@ -191,7 +193,7 @@ class MightyWizard extends ConsumerWidget {
             actionsAlignment: MainAxisAlignment.center,
             actionsOverflowButtonSpacing: SpaceTokens.small,
             title: Text(title, style: theme.controller.headline5),
-            content: Text(description, style: theme.controller.body),
+            content: Text(description, style: theme.controller.alternateBody),
             actions: [
               MightyActionButton.primary(
                 themeController: theme.controller,

@@ -11,22 +11,52 @@ import 'package:my_time/features/5_project_history/view/proejct_history_shell_pa
 import 'package:my_time/features/6_group_analytics/view/group_analytics_shell_page.dart';
 import 'package:my_time/features/7_groups_overview/presentation/pages/add_project_wizard/add_project_wizard.dart';
 import 'package:my_time/features/7_groups_overview/presentation/pages/groups_overview.dart';
+import 'package:my_time/features/8_authentication/data/repositories/auth_repository_impl.dart';
+import 'package:my_time/features/8_authentication/presentation/pages/auth_actioncode_handler_page.dart';
+import 'package:my_time/features/8_authentication/presentation/pages/auth_reset_password_page.dart';
+import 'package:my_time/features/8_authentication/presentation/pages/forgot_password_page.dart';
+import 'package:my_time/features/8_authentication/presentation/pages/sign_in_page.dart';
+import 'package:my_time/features/8_authentication/presentation/pages/sign_up_page.dart';
+import 'package:my_time/router/go_router_refresh_stream.dart';
 import 'package:my_time/router/not_found_screen.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
+
+part 'app_route.g.dart';
 
 enum _AppRoute {
   home,
+  signIn,
   addGroup,
   addProject,
   group,
   project,
   timeEntryForm,
   addProjectWizard,
+  authHandler,
+  resetPassword,
+  signUp,
+  forgotPassword
 }
 
 /// The routes of the app.
 class AppRoute {
   /// The fast access to the home route.
   static String get home => _AppRoute.home.name;
+
+  /// The fast access to the auth route.
+  static String get signIn => _AppRoute.signIn.name;
+
+  /// The fast access to the signUp route.
+  static String get signUp => _AppRoute.signUp.name;
+
+  /// The fast access to the forgotPassword route.
+  static String get forgotPassword => _AppRoute.forgotPassword.name;
+
+  /// The fast access to the authHandler route.
+  static String get authHandler => _AppRoute.authHandler.name;
+
+  /// The fast access to the resetPassword route.
+  static String get resetPassword => _AppRoute.resetPassword.name;
 
   /// The fast access to the add group route.
   static String get addGroup => _AppRoute.addGroup.name;
@@ -48,116 +78,239 @@ class AppRoute {
 }
 
 /// Gorouter for the app.
-final goRouter = GoRouter(
-  initialLocation: '/',
-  routes: [
-    GoRoute(
-      path: '/',
-      name: AppRoute.home,
-      builder: (context, state) => const GroupsOverview(),
-    ),
-    GoRoute(
-      path: '/addProjectWizard',
-      name: AppRoute.addProjectWizard,
-      builder: (context, state) => const AddProjectWizard(),
-    ),
-
-    // GoRoute(
-    //   path: '/group/:gid',
-    //   name: AppRoute.group,
-    //   pageBuilder: (context, state) {
-    //     final groupId = state.pathParameters['gid']!;
-    //     return MaterialPage(
-    //       key: state.pageKey,
-    //       fullscreenDialog: false,
-    //       child: ProjectsPerGroupListScreen(groupId: groupId),
-    //     );
-    //   },
-    // ),
-
-    GoRoute(
-      path: '/group/:gid',
-      name: AppRoute.group,
-      pageBuilder: (context, state) {
-        final groupId = state.pathParameters['gid']!;
-        return MaterialPage(
+///
+@riverpod
+GoRouter goRouter(GoRouterRef ref) {
+  final authRepo = ref.watch(authRepositoryProvider);
+  return GoRouter(
+    refreshListenable: GoRouterRefreshStream(authRepo.authStateChanges),
+    initialLocation: '/',
+    redirect: (context, state) async {
+      final user = authRepo.currentUser;
+      final isLoggedIn = user != null;
+      final isVerified = user?.emailVerified ?? false;
+      final path = state.uri.path;
+      if (isLoggedIn && isVerified) {
+        if (path == '/signIn') {
+          return '/';
+        }
+      } else {
+        if (path == '/authHandler' ||
+            path.startsWith('/resetPassword/') ||
+            path == '/signIn' ||
+            path == '/signUp' ||
+            path == '/forgotPassword') {
+          return null;
+        }
+        return '/signIn';
+      }
+      return null;
+    },
+    routes: [
+      GoRoute(
+        path: '/signIn',
+        name: AppRoute.signIn,
+        pageBuilder: (context, state) {
+          return CustomTransitionPage<void>(
+            key: state.pageKey,
+            transitionDuration: const Duration(milliseconds: 200),
+            child: SignInPage(
+              email: state.uri.queryParameters['email'],
+              password: state.uri.queryParameters['password'],
+            ),
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) =>
+                    FadeTransition(
+              opacity: animation,
+              child: child,
+            ),
+          );
+        },
+      ),
+      GoRoute(
+        path: '/signUp',
+        name: AppRoute.signUp,
+        pageBuilder: (context, state) => CustomTransitionPage<void>(
           key: state.pageKey,
-          child: ShellScreen(
-            children: [
-              GroupProjectsShellPage(
-                groupId: groupId,
-              ),
-              GroupAnalyticsShellPage(
-                groupId: groupId,
-              ),
-            ],
+          child: SignUpPage(
+            email: state.uri.queryParameters['email'],
+            password: state.uri.queryParameters['password'],
           ),
-        );
-      },
-    ),
-    GoRoute(
-      path: '/newgroup',
-      name: AppRoute.addGroup,
-      pageBuilder: (context, state) {
-        return MaterialPage(
-          key: state.pageKey,
-          child: const AddGroupScreen(),
-        );
-      },
-    ),
-    GoRoute(
-      path: '/newproject',
-      name: AppRoute.addProject,
-      pageBuilder: (context, state) {
-        final groupId = state.uri.queryParameters['gid'];
-        return MaterialPage(
-          key: state.pageKey,
-          child: AddProjectScreen(
-            groupId: groupId,
+          transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+              SlideTransition(
+            position: animation.drive(
+              Tween<Offset>(
+                begin: const Offset(-1, 0),
+                end: Offset.zero,
+              ).chain(CurveTween(curve: Curves.easeIn)),
+            ),
+            child: child,
           ),
-        );
-      },
-    ),
-    GoRoute(
-      path: '/project/:pid',
-      name: AppRoute.project,
-      pageBuilder: (context, state) {
-        final projectId = state.pathParameters['pid']!;
-        return MaterialPage(
-          key: state.pageKey,
-          child: ProjectShellScreen(
-            projectId: projectId,
-            children: [
-              ProjectTimerShellPage(
-                projectId: projectId,
-              ),
-              ProjectHistoryShellPage(projectId: projectId),
-            ],
-          ),
-        );
-      },
-      routes: [
-        GoRoute(
-          path: 'timeentryform',
-          name: AppRoute.timeEntryForm,
-          pageBuilder: (context, state) {
-            final projectID = state.pathParameters['pid'] ?? '';
-            final isEdit = state.uri.queryParameters['isEdit'] ?? 'false';
-            final tid = state.uri.queryParameters['tid'] ?? '';
-            final projectName = state.uri.queryParameters['pname'] ?? '';
-            return MaterialPage(
-              key: state.pageKey,
-              child: TimeEntryFormScreen(
-                isEdit: isEdit == 'true',
-                timeEntryId: tid,
-                projectId: projectID,
-                projectName: projectName,
-              ),
-            );
-          },
         ),
-      ],
-    ),
-  ],
-  errorBuilder: (context, state) => const NotFoundScreen(),
-);
+      ),
+      GoRoute(
+        path: '/forgotPassword',
+        name: AppRoute.forgotPassword,
+        pageBuilder: (context, state) {
+          return CustomTransitionPage<void>(
+            key: state.pageKey,
+            child: ForgotPasswordPage(
+              email: state.uri.queryParameters['email'],
+            ),
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) =>
+                    SlideTransition(
+              position: animation.drive(
+                Tween<Offset>(
+                  begin: const Offset(1, 0),
+                  end: Offset.zero,
+                ).chain(CurveTween(curve: Curves.easeIn)),
+              ),
+              child: child,
+            ),
+          );
+        },
+      ),
+      GoRoute(
+        path: '/authHandler',
+        name: AppRoute.authHandler,
+        redirect: (context, state) {
+          final hasCode = state.uri.queryParameters['oobCode'] != null;
+          final hasMode = state.uri.queryParameters['mode'] != null;
+          if (!hasMode && !hasCode) {
+            return '/signIn';
+          }
+          return null;
+        },
+        builder: (context, state) => AuthActionCodeHandlerPage(
+          oobCode: state.uri.queryParameters['oobCode']!,
+          mode: state.uri.queryParameters['mode']!,
+        ),
+      ),
+      GoRoute(
+        redirect: (context, state) {
+          final hasCode = state.pathParameters['oobCode'] != null;
+          if (!hasCode) {
+            return '/signIn';
+          }
+          return null;
+        },
+        path: '/resetPassword/:oobCode',
+        name: AppRoute.resetPassword,
+        builder: (context, state) {
+          return AuthRestPasswordPage(
+            oobCode: state.pathParameters['oobCode']!,
+          );
+        },
+      ),
+      GoRoute(
+        path: '/',
+        name: AppRoute.home,
+        builder: (context, state) => const GroupsOverview(),
+      ),
+      GoRoute(
+        path: '/addProjectWizard',
+        name: AppRoute.addProjectWizard,
+        builder: (context, state) => const AddProjectWizard(),
+      ),
+
+      // GoRoute(
+      //   path: '/group/:gid',
+      //   name: AppRoute.group,
+      //   pageBuilder: (context, state) {
+      //     final groupId = state.pathParameters['gid']!;
+      //     return MaterialPage(
+      //       key: state.pageKey,
+      //       fullscreenDialog: false,
+      //       child: ProjectsPerGroupListScreen(groupId: groupId),
+      //     );
+      //   },
+      // ),
+
+      GoRoute(
+        path: '/group/:gid',
+        name: AppRoute.group,
+        pageBuilder: (context, state) {
+          final groupId = state.pathParameters['gid']!;
+          return MaterialPage(
+            key: state.pageKey,
+            child: ShellScreen(
+              children: [
+                GroupProjectsShellPage(
+                  groupId: groupId,
+                ),
+                GroupAnalyticsShellPage(
+                  groupId: groupId,
+                ),
+              ],
+            ),
+          );
+        },
+      ),
+      GoRoute(
+        path: '/newgroup',
+        name: AppRoute.addGroup,
+        pageBuilder: (context, state) {
+          return MaterialPage(
+            key: state.pageKey,
+            child: const AddGroupScreen(),
+          );
+        },
+      ),
+      GoRoute(
+        path: '/newproject',
+        name: AppRoute.addProject,
+        pageBuilder: (context, state) {
+          final groupId = state.uri.queryParameters['gid'];
+          return MaterialPage(
+            key: state.pageKey,
+            child: AddProjectScreen(
+              groupId: groupId,
+            ),
+          );
+        },
+      ),
+      GoRoute(
+        path: '/project/:pid',
+        name: AppRoute.project,
+        pageBuilder: (context, state) {
+          final projectId = state.pathParameters['pid']!;
+          return MaterialPage(
+            key: state.pageKey,
+            child: ProjectShellScreen(
+              projectId: projectId,
+              children: [
+                ProjectTimerShellPage(
+                  projectId: projectId,
+                ),
+                ProjectHistoryShellPage(projectId: projectId),
+              ],
+            ),
+          );
+        },
+        routes: [
+          GoRoute(
+            path: 'timeentryform',
+            name: AppRoute.timeEntryForm,
+            pageBuilder: (context, state) {
+              final projectID = state.pathParameters['pid'] ?? '';
+              final isEdit = state.uri.queryParameters['isEdit'] ?? 'false';
+              final tid = state.uri.queryParameters['tid'] ?? '';
+              final projectName = state.uri.queryParameters['pname'] ?? '';
+              return MaterialPage(
+                key: state.pageKey,
+                child: TimeEntryFormScreen(
+                  isEdit: isEdit == 'true',
+                  timeEntryId: tid,
+                  projectId: projectID,
+                  projectName: projectName,
+                ),
+              );
+            },
+          ),
+        ],
+      ),
+    ],
+    errorBuilder: (context, state) => const NotFoundScreen(),
+  );
+}

@@ -68,12 +68,12 @@ class GroupsScreenController extends _$GroupsScreenController {
             style: const TextStyle(color: Colors.black),
           ),
           onTap: () async {
-            await showDialog<void>(
-              context: context,
-              builder: (context) => PolicyDialog(
-                mdFileName: 'privacy_policy.md',
-              ),
-            );
+            // await showDialog<void>(
+            //   context: context,
+            //   builder: (context) => MightyMarkDownDialog(
+            //     mdFileName: 'privacy_policy.md',
+            //   ),
+            // );
           },
         ),
         ListTile(
@@ -83,12 +83,12 @@ class GroupsScreenController extends _$GroupsScreenController {
             style: const TextStyle(color: Colors.black),
           ),
           onTap: () async {
-            await showDialog<void>(
-              context: context,
-              builder: (context) => PolicyDialog(
-                mdFileName: 'terms_of_use.md',
-              ),
-            );
+            // await showDialog<void>(
+            //   context: context,
+            //   builder: (context) => MightyMarkDownDialog(
+            //     mdFileName: 'terms_of_use.md',
+            //   ),
+            // );
           },
         ),
         ListTile(

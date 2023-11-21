@@ -37,7 +37,7 @@ class MightyDropDown extends ConsumerWidget {
 
     return DropDownTile(
       horizontalPadding: SpaceTokens.medium,
-      textStyle: theme.controller.body,
+      textStyle: theme.controller.alternateBody,
       decoration: BoxDecoration(
         border: Border.all(
           color: theme.controller.nonDecorativeBorderColor,

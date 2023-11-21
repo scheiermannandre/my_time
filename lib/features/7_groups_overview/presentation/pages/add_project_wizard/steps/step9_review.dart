@@ -89,7 +89,7 @@ class _GroupReview extends StatelessWidget {
           builder: (data) => _ShowValue(
             label: data?.name ?? '',
             data: '',
-            labelStyle: themeController.body,
+            labelStyle: themeController.alternateBody,
           ),
         ),
       ],
@@ -111,7 +111,7 @@ class _ProjectNameReview extends StatelessWidget {
           builder: (data) => _ShowValue(
             label: data ?? '',
             data: '',
-            labelStyle: themeController.body,
+            labelStyle: themeController.alternateBody,
           ),
         ),
       ],
@@ -136,7 +136,7 @@ class _SickDaysReview extends StatelessWidget {
               _ShowValue(
                 label: data?.label(context) ?? '',
                 data: '',
-                labelStyle: themeController.body,
+                labelStyle: themeController.alternateBody,
               ),
             ],
           ),
@@ -164,7 +164,7 @@ class _PublicHolidaysReview extends StatelessWidget {
               _ShowValue(
                 label: data?.label(context) ?? '',
                 data: '',
-                labelStyle: themeController.body,
+                labelStyle: themeController.alternateBody,
               ),
             ],
           ),
@@ -180,7 +180,7 @@ class _VacationInfoReview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final labelStyle = themeController.body;
+    final labelStyle = themeController.alternateBody;
     final dataStyle = themeController.small;
     return WizardReviewStepWrapper<VacationEntity?>(
       stepToJumpTo: 4,
@@ -216,7 +216,7 @@ class _TimeManagementReview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final labelStyle = themeController.body;
+    final labelStyle = themeController.alternateBody;
     final dataStyle = themeController.small;
     return WizardReviewStepWrapper<ProjectTimeManagementEntity?>(
       stepToJumpTo: 5,
@@ -254,7 +254,7 @@ class _MoneyManagementReview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final labelStyle = themeController.body;
+    final labelStyle = themeController.alternateBody;
     final dataStyle = themeController.small;
     return WizardReviewStepWrapper<ProjectMoneyManagementEntity?>(
       stepToJumpTo: 6,
@@ -314,7 +314,7 @@ class _WorkplaceReview extends StatelessWidget {
               _ShowValue(
                 label: data?.label(context) ?? '',
                 data: '',
-                labelStyle: themeController.body,
+                labelStyle: themeController.alternateBody,
               ),
             ],
           ),

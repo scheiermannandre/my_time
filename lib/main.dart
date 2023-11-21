@@ -1,4 +1,5 @@
 //ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -6,12 +7,17 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 // ignore:depend_on_referenced_packages
 import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:my_time/firebase_options.dart';
 import 'package:my_time/router/app_route.dart';
-
 // import 'package:realm/realm.dart';
 // import 'package:my_time/features/0_common/realmModel/realm_model.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   // final realm = Realm(
   //   Configuration.local([
   //     Group.schema,
@@ -131,11 +137,12 @@ void registerErrorHandlers() {
   };
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends ConsumerWidget {
   const MyApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final goRouter = ref.watch(goRouterProvider);
     // Set portrait orientation
     return MaterialApp.router(
       routerConfig: goRouter,

@@ -21,6 +21,12 @@ class MightyTextFormField extends StatefulWidget {
     this.onEditingComplete,
     this.focusNode,
     this.readOnly = false,
+    this.textInputType,
+    this.suffixIcon,
+    this.onTap,
+    this.fieldKey,
+    this.onFocus,
+    this.onFocusLost,
   });
 
   /// The theme controller for adapting the field's appearance.
@@ -60,15 +66,34 @@ class MightyTextFormField extends StatefulWidget {
   /// Determines whether the field is in read-only mode.
   final bool readOnly;
 
+  /// The type of keyboard to display for text input.
+  final TextInputType? textInputType;
+
+  /// The icon to display at the end of the text field.
+  final Widget? suffixIcon;
+
+  /// Callback function triggered when the field is tapped.
+  final VoidCallback? onTap;
+
+  /// The key to use for the form field.
+  final GlobalKey<FormFieldState<String>>? fieldKey;
+
+  /// Callback function triggered when the field gains focus.
+  final VoidCallback? onFocus;
+
+  /// Callback function triggered when the field loses focus.
+  final VoidCallback? onFocusLost;
   @override
   State<MightyTextFormField> createState() => _MightyTextFormFieldState();
 }
 
 class _MightyTextFormFieldState extends State<MightyTextFormField> {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
-  final GlobalKey<FormFieldState<String>> _fieldKey =
-      GlobalKey<FormFieldState<String>>();
+  late final GlobalKey<FormFieldState<String>> _fieldKey;
+  @override
+  void initState() {
+    super.initState();
+    _fieldKey = widget.fieldKey ?? GlobalKey<FormFieldState<String>>();
+  }
 
   bool hasError = false;
 
@@ -95,34 +120,68 @@ class _MightyTextFormFieldState extends State<MightyTextFormField> {
           const SizedBox(
             height: SpaceTokens.verySmall,
           ),
-        Form(
-          key: _formKey,
+        Focus(
+          onFocusChange: (hasFocus) async {
+            if (!hasFocus) {
+              widget.onFocusLost?.call();
+              Future.delayed(const Duration(milliseconds: 200), () {
+                if (!context.mounted) return;
+                setState(() {
+                  hasError = !_fieldKey.currentState!.validate();
+                });
+              });
+            } else {
+              widget.onFocus?.call();
+            }
+          },
           child: TextFormField(
+            onTap: widget.onTap,
             key: _fieldKey,
+            keyboardType: widget.keyboardType,
+            obscureText: widget.obscureText,
             readOnly: widget.readOnly,
             onChanged: (value) {
               setState(() {
-                hasError = !_formKey.currentState!.validate();
+                hasError = !_fieldKey.currentState!.validate();
                 widget.onChanged?.call(value, !hasError);
               });
             },
             focusNode: widget.focusNode,
-            style: widget.mightyThemeController.body,
+            style: widget.mightyThemeController.alternateBody,
             cursorColor: cursorColor,
             controller: widget.controller,
             autofocus: widget.autofocus,
             decoration: InputDecoration(
+              fillColor: widget.mightyThemeController.onBackgroundColor,
+              filled: true,
+              hintText: widget.hintText,
+              hintStyle: widget.mightyThemeController.alternateBody,
               border: _getBorder(enabledBorderColor),
               enabledBorder: _getBorder(enabledBorderColor),
               focusedBorder: _getBorder(enabledBorderColor),
               errorBorder: _getBorder(errorColor),
               focusedErrorBorder: _getBorder(errorColor),
               errorStyle: TextStyle(color: errorColor),
-              suffixIcon:
-                  hasError ? Icon(Icons.cancel, color: errorColor) : null,
+              suffixIcon: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: SpaceTokens.mediumSmall,
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    if (hasError) Icon(Icons.close, color: errorColor),
+                    if (hasError && widget.suffixIcon != null)
+                      const SizedBox(width: SpaceTokens.small),
+                    if (widget.suffixIcon != null) widget.suffixIcon!,
+                  ],
+                ),
+              ),
             ),
             onEditingComplete: widget.onEditingComplete,
-            validator: widget.validator,
+            validator: (value) {
+              return widget.validator?.call(widget.controller?.text);
+            },
           ),
         ),
       ],

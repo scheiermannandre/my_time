@@ -7,7 +7,6 @@ import '../mock_realm_db_repositories.dart';
 import 'add_group_screen_robot.dart';
 import 'add_project_screen_robot.dart';
 import 'group_projects_shell_page_robot.dart';
-import 'group_screen_bottom_sheet_robot.dart';
 import 'group_screen_robot.dart';
 import 'project_shell_screen_robot.dart';
 
@@ -17,7 +16,7 @@ class TestRobot {
   TestRobot(this.tester);
   final WidgetTester tester;
   GroupScreenRobot? groupsScreen;
-  GroupScreenBottomSheetRobot? groupsScreenBottomSheet;
+  //GroupScreenBottomSheetRobot? groupsScreenBottomSheet;
   AddGroupScreenRobot? addGroupScreen;
   GroupProjectsShellPageRobot? groupProjectsShellPage;
   ProjectShellScreenRobot? projectShellScreen;
@@ -27,9 +26,9 @@ class TestRobot {
     groupsScreen = GroupScreenRobot(tester, groupsRepo);
   }
 
-  void makeGroupScreenBottomSheetRobot() {
-    groupsScreenBottomSheet = GroupScreenBottomSheetRobot(tester);
-  }
+  // void makeGroupScreenBottomSheetRobot() {
+  //   groupsScreenBottomSheet = GroupScreenBottomSheetRobot(tester);
+  // }
 
   void makeAddGroupScreenRobot(MockRealmDbGroupsRepository groupsRepo) {
     addGroupScreen = AddGroupScreenRobot(tester, groupsRepo);

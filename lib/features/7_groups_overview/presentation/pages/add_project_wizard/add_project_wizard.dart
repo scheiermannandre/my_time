@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_time/common/extensions/build_context_extension.dart';
@@ -13,7 +12,9 @@ import 'package:my_time/features/7_groups_overview/presentation/pages/add_projec
 import 'package:my_time/features/7_groups_overview/presentation/pages/add_project_wizard/steps/step8_workplace.dart';
 import 'package:my_time/features/7_groups_overview/presentation/pages/add_project_wizard/steps/step9_review.dart';
 
+/// A widget representing the add project wizard.
 class AddProjectWizard extends HookConsumerWidget {
+  /// Constructs an [AddProjectWizard] with required parameters.
   const AddProjectWizard({super.key});
 
   @override
