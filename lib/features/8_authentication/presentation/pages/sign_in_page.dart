@@ -57,7 +57,7 @@ class SignInPageState extends ConsumerState<SignInPage> {
     String email,
     String password,
   ) {
-    context.pushReplacementNamed(
+    context.goNamed(
       page,
       queryParameters: {'email': email, 'password': password},
     );
@@ -78,8 +78,9 @@ class SignInPageState extends ConsumerState<SignInPage> {
     final state = signIn.state.value!;
 
     // Controllers for email and password text fields with initial values
-    final emailTextController =
-        useTextEditingController(text: widget.email ?? '');
+    final emailTextController = useTextEditingController(
+      text: widget.email ?? '',
+    );
     final passwordController =
         useTextEditingController(text: widget.password ?? '');
 

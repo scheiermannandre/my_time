@@ -7,6 +7,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 // ignore:depend_on_referenced_packages
 import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:my_time/features/8_authentication/data/repositories/auth_repository_impl.dart';
 import 'package:my_time/firebase_options.dart';
 import 'package:my_time/router/app_route.dart';
 // import 'package:realm/realm.dart';
@@ -18,6 +19,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
   // final realm = Realm(
   //   Configuration.local([
   //     Group.schema,
@@ -142,6 +144,7 @@ class MyApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    ref.read(authRepositoryProvider).signOut();
     final goRouter = ref.watch(goRouterProvider);
     // Set portrait orientation
     return MaterialApp.router(

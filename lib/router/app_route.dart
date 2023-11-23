@@ -79,19 +79,25 @@ class AppRoute {
 
 /// Gorouter for the app.
 ///
+// @Riverpod(keepAlive: true)
 @riverpod
 GoRouter goRouter(GoRouterRef ref) {
   final authRepo = ref.watch(authRepositoryProvider);
+
+  //final user = ref.watch(currentUserStreamProvider);
   return GoRouter(
     refreshListenable: GoRouterRefreshStream(authRepo.authStateChanges),
-    initialLocation: '/',
+    initialLocation: '/signIn',
     redirect: (context, state) async {
       final user = authRepo.currentUser;
       final isLoggedIn = user != null;
       final isVerified = user?.emailVerified ?? false;
       final path = state.uri.path;
       if (isLoggedIn && isVerified) {
-        if (path == '/signIn') {
+        if (path == '/signIn' ||
+            path == '/signUp' ||
+            path == '/forgotPassword' ||
+            path == '') {
           return '/';
         }
       } else {

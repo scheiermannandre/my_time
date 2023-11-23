@@ -1,6 +1,6 @@
+import 'package:my_time/core/widgets/password_checker/password_checker.dart';
 import 'package:my_time/features/8_authentication/data/repositories/auth_repository_impl.dart';
 import 'package:my_time/features/8_authentication/presentation/pages/util/email_handle_mode.dart';
-import 'package:my_time/features/8_authentication/presentation/pages/widgets/mighty_password_strength.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'auth_reset_password_page_controller.g.dart';
@@ -24,7 +24,7 @@ class AuthResetPasswordPageState {
   final bool obscurePassword;
 
   /// Represents the password strength.
-  final MightyPasswordStrength? passwordStrength;
+  final PasswordStrength? passwordStrength;
 
   /// Represents whether the password reset was successful.
   final bool? isPasswordResetSuccess;
@@ -35,14 +35,14 @@ class AuthResetPasswordPageState {
     if (passwordStrength == null) {
       return false;
     }
-    return passwordStrength!.index >= MightyPasswordStrength.strong.index;
+    return passwordStrength!.index >= PasswordStrength.strong.index;
   }
 
   /// Copies the current state with optional modifications.
   AuthResetPasswordPageState copyWith({
     EmailHandleMode? emailHandleMode,
     bool? obscurePassword,
-    MightyPasswordStrength? passwordStrength,
+    PasswordStrength? passwordStrength,
     bool? isPasswordResetSuccess,
   }) {
     return AuthResetPasswordPageState(
@@ -87,7 +87,7 @@ class AuthResetPasswordPageController
   }
 
   /// Sets the password strength in the current state.
-  void setPasswordStrength(MightyPasswordStrength? passwordStrength) {
+  void setPasswordStrength(PasswordStrength? passwordStrength) {
     state = AsyncData(
       state.value!.copyWith(
         passwordStrength: passwordStrength,

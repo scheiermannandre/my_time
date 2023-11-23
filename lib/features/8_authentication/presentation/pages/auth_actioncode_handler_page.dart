@@ -54,7 +54,7 @@ class _AuthActionCodeHandlerPageState
 
       if (widget.mode == EmailHandleMode.resetPassword) {
         // ignore: cascade_invocations
-        context.pushReplacementNamed(
+        context.goNamed(
           AppRoute.resetPassword,
           pathParameters: {'oobCode': widget.oobCode},
         );
@@ -103,7 +103,7 @@ class _AuthActionCodeHandlerPageState
 
     if (!context.mounted) return;
 
-    context.pushReplacementNamed(AppRoute.signIn);
+    context.goNamed(AppRoute.signIn);
   }
 
   @override

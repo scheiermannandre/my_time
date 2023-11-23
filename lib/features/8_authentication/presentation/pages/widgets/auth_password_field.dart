@@ -3,9 +3,8 @@ import 'package:my_time/config/theme/corner_radius_tokens.dart';
 import 'package:my_time/config/theme/mighty_theme.dart';
 import 'package:my_time/config/theme/space_tokens.dart';
 import 'package:my_time/core/widgets/mighty_text_form_field.dart';
+import 'package:my_time/core/widgets/password_checker/password_checker.dart';
 import 'package:my_time/core/widgets/spaced_column.dart';
-import 'package:my_time/features/8_authentication/presentation/pages/widgets/mighty_password_strength.dart';
-import 'package:password_strength_checker/password_strength_checker.dart';
 
 /// A widget representing the password field for authentication.
 class AuthPasswordField extends StatelessWidget {
@@ -85,16 +84,16 @@ class AuthCheckedPasswordField extends StatelessWidget {
 
   /// Callback function for handling changes in the password field.
   // ignore: avoid_positional_boolean_parameters
-  final void Function(String, bool, MightyPasswordStrength?) onChanged;
+  final void Function(String, bool, PasswordStrength?) onChanged;
 
   /// Value notifier for tracking password strength.
-  final _passNotifier = ValueNotifier<MightyPasswordStrength?>(null);
+  final _passNotifier = ValueNotifier<PasswordStrength?>(null);
 
   @override
   Widget build(BuildContext context) {
     // Calculates password strength and updates the notifier.
     _passNotifier.value =
-        MightyPasswordStrength.calculate(text: passwordController.text);
+        PasswordStrengthExtension.calculate(text: passwordController.text);
 
     return SpacedColumn(
       spacing: SpaceTokens.medium,
@@ -106,13 +105,15 @@ class AuthCheckedPasswordField extends StatelessWidget {
           obscurePassword: obscurePassword,
           toggleObscurePassword: toggleObscurePassword,
           onChanged: (value, isValid) {
-            _passNotifier.value = MightyPasswordStrength.calculate(text: value);
+            _passNotifier.value =
+                PasswordStrengthExtension.calculate(text: value);
             onChanged(value, isValid, _passNotifier.value);
           },
         ),
-        PasswordStrengthChecker<MightyPasswordStrength>(
+        PasswordStrengthChecker(
           strength: _passNotifier,
           configuration: PasswordStrengthCheckerConfiguration(
+            statusMargin: const EdgeInsets.only(top: SpaceTokens.small),
             borderWidth: 1,
             borderColor: themeController.nonDecorativeBorderColor,
             externalBorderRadius: const BorderRadius.all(

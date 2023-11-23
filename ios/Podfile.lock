@@ -46,8 +46,6 @@ PODS:
   - GTMSessionFetcher/Core (3.1.1)
   - integration_test (0.0.1):
     - Flutter
-  - local_auth_ios (0.0.1):
-    - Flutter
   - PromisesObjC (2.3.1)
   - realm (1.5.0):
     - Flutter
@@ -59,7 +57,6 @@ DEPENDENCIES:
   - Flutter (from `Flutter`)
   - flutter_native_splash (from `.symlinks/plugins/flutter_native_splash/ios`)
   - integration_test (from `.symlinks/plugins/integration_test/ios`)
-  - local_auth_ios (from `.symlinks/plugins/local_auth_ios/ios`)
   - realm (from `.symlinks/plugins/realm/ios`)
 
 SPEC REPOS:
@@ -85,8 +82,6 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/flutter_native_splash/ios"
   integration_test:
     :path: ".symlinks/plugins/integration_test/ios"
-  local_auth_ios:
-    :path: ".symlinks/plugins/local_auth_ios/ios"
   realm:
     :path: ".symlinks/plugins/realm/ios"
 
@@ -103,7 +98,6 @@ SPEC CHECKSUMS:
   GoogleUtilities: 0759d1a57ebb953965c2dfe0ba4c82e95ccc2e34
   GTMSessionFetcher: e8647203b65cee28c5f73d0f473d096653945e72
   integration_test: 13825b8a9334a850581300559b8839134b124670
-  local_auth_ios: c6cf091ded637a88f24f86a8875d8b0f526e2605
   PromisesObjC: c50d2056b5253dadbd6c2bea79b0674bd5a52fa4
   realm: 1bf0436288aa66f2e149c65e2da4ad5ae7280155
   RecaptchaInterop: 7d1a4a01a6b2cb1610a47ef3f85f0c411434cb21

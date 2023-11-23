@@ -1,6 +1,6 @@
+import 'package:my_time/core/widgets/password_checker/password_checker.dart';
 import 'package:my_time/features/8_authentication/data/repositories/auth_repository_impl.dart';
 import 'package:my_time/features/8_authentication/presentation/pages/util/email_validation.dart';
-import 'package:my_time/features/8_authentication/presentation/pages/widgets/mighty_password_strength.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'sign_in_page_controller.g.dart';
@@ -34,7 +34,7 @@ class SignInPageState {
     bool? obscurePassword,
     bool? isSubmit,
     bool? shouldValidateEmail,
-    MightyPasswordStrength? passwordStrength,
+    PasswordStrength? passwordStrength,
     bool? isEmailValid,
   }) {
     return SignInPageState(
@@ -94,7 +94,7 @@ class SignInPageController extends _$SignInPageController with EmailValidator {
   }
 
   /// Sets the password strength in the current state.
-  void setPasswordStrength(MightyPasswordStrength? passwordStrength) {
+  void setPasswordStrength(PasswordStrength? passwordStrength) {
     state = AsyncData(
       state.value!.copyWith(
         passwordStrength: passwordStrength,

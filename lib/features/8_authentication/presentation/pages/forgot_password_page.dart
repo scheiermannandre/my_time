@@ -69,7 +69,7 @@ class ForgotPasswordPage extends HookConsumerWidget with EmailValidator {
     String? email,
   ) {
     if (!context.mounted) return;
-    context.pushReplacementNamed(
+    context.goNamed(
       page,
       queryParameters: {
         'email': email,

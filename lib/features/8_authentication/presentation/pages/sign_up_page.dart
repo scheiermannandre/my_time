@@ -8,12 +8,12 @@ import 'package:my_time/core/modals/mighty_snack_bar.dart';
 import 'package:my_time/core/util/extentions/widget_ref_extension.dart';
 import 'package:my_time/core/widgets/mighty_action_button.dart';
 import 'package:my_time/core/widgets/mighty_text_form_field.dart';
+import 'package:my_time/core/widgets/password_checker/password_checker.dart';
 import 'package:my_time/core/widgets/spaced_column.dart';
 import 'package:my_time/features/8_authentication/presentation/pages/util/email_validation.dart';
 import 'package:my_time/features/8_authentication/presentation/pages/widgets/auth_action_footer.dart';
 import 'package:my_time/features/8_authentication/presentation/pages/widgets/auth_password_field.dart';
 import 'package:my_time/features/8_authentication/presentation/pages/widgets/auth_social_buttons.dart';
-import 'package:my_time/features/8_authentication/presentation/pages/widgets/mighty_password_strength.dart';
 import 'package:my_time/features/8_authentication/presentation/state_management/sign_up_page_controller.dart';
 import 'package:my_time/router/app_route.dart';
 
@@ -54,7 +54,7 @@ class SignUpPageState extends ConsumerState<SignUpPage> {
       }
       if (password != null && password.isNotEmpty) {
         final passwordStrength =
-            MightyPasswordStrength.calculate(text: password);
+            PasswordStrengthExtension.calculate(text: password);
 
         ref
             .read(signUpPageControllerProvider.notifier)
@@ -103,7 +103,7 @@ class SignUpPageState extends ConsumerState<SignUpPage> {
     String email,
     String password,
   ) {
-    context.pushReplacementNamed(
+    context.goNamed(
       page,
       queryParameters: {'email': email, 'password': password},
     );
@@ -178,7 +178,7 @@ class SignUpPageState extends ConsumerState<SignUpPage> {
                     // Button to sign up
                     MightyActionButton.primary(
                       themeController: theme.controller,
-                      label: 'Sign me In!',
+                      label: 'Sign me Up!',
                       onPressed: !state.isSubmitEnabled
                           ? null
                           : () {

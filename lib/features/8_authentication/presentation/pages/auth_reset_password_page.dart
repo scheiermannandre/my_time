@@ -9,10 +9,9 @@ import 'package:my_time/core/modals/mighty_ok_alert_dialog.dart';
 import 'package:my_time/core/util/extentions/widget_ref_extension.dart';
 import 'package:my_time/core/widgets/mighty_action_button.dart';
 import 'package:my_time/core/widgets/mighty_text_form_field.dart';
-import 'package:my_time/features/8_authentication/presentation/pages/widgets/mighty_password_strength.dart';
+import 'package:my_time/core/widgets/password_checker/password_checker.dart';
 import 'package:my_time/features/8_authentication/presentation/state_management/auth_reset_password_page_controller.dart';
 import 'package:my_time/router/app_route.dart';
-import 'package:password_strength_checker/password_strength_checker.dart';
 
 /// Page widget handling the password reset functionality.
 class AuthRestPasswordPage extends StatefulHookConsumerWidget {
@@ -32,7 +31,7 @@ class AuthRestPasswordPage extends StatefulHookConsumerWidget {
 /// The state of the [AuthRestPasswordPage].
 class AuthEmailHandlerPageState extends ConsumerState<AuthRestPasswordPage> {
   /// The key to uniquely identify the form in the widget tree.
-  final _passNotifier = ValueNotifier<MightyPasswordStrength?>(null);
+  final _passNotifier = ValueNotifier<PasswordStrength?>(null);
 
   Future<void> _handleStateChange(
     BuildContext context,
@@ -54,7 +53,7 @@ class AuthEmailHandlerPageState extends ConsumerState<AuthRestPasswordPage> {
     }
     await showMightyOkAlertDialog(context, title, content);
     if (!context.mounted) return;
-    context.pushReplacementNamed(AppRoute.signIn);
+    context.goNamed(AppRoute.signIn);
   }
 
   @override
@@ -81,7 +80,7 @@ class AuthEmailHandlerPageState extends ConsumerState<AuthRestPasswordPage> {
     // Controllers for email and password text fields with initial values
     final passwordController = useTextEditingController(text: '');
     _passNotifier.value =
-        MightyPasswordStrength.calculate(text: passwordController.text);
+        PasswordStrengthExtension.calculate(text: passwordController.text);
     return Scaffold(
       backgroundColor: theme.controller.mainBackgroundColor,
       body: SafeArea(
@@ -120,14 +119,14 @@ class AuthEmailHandlerPageState extends ConsumerState<AuthRestPasswordPage> {
                     ),
                     onChanged: (value, isValid) {
                       _passNotifier.value =
-                          MightyPasswordStrength.calculate(text: value);
+                          PasswordStrengthExtension.calculate(text: value);
                       authPasswordResetPage.controller.setPasswordStrength(
                         _passNotifier.value,
                       );
                     },
                   ),
                   const SizedBox(height: SpaceTokens.medium),
-                  PasswordStrengthChecker<MightyPasswordStrength>(
+                  PasswordStrengthChecker(
                     strength: _passNotifier,
                     configuration: PasswordStrengthCheckerConfiguration(
                       borderWidth: 1,
@@ -162,7 +161,7 @@ class AuthEmailHandlerPageState extends ConsumerState<AuthRestPasswordPage> {
                     themeController: theme.controller,
                     label: 'Cancel',
                     onPressed: () async {
-                      context.pushReplacementNamed(AppRoute.signIn);
+                      context.goNamed(AppRoute.signIn);
                     },
                   ),
                 ],
