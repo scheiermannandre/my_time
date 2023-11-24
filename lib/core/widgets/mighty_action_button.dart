@@ -150,17 +150,32 @@ class MightyActionButton {
     );
   }
 
+  static Color _determineColor(
+    MightyThemeController themeController,
+    bool inverseColor,
+  ) {
+    final isLightMode = themeController.themeMode == SystemThemeMode.light;
+    if (inverseColor) {
+      return isLightMode
+          ? DarkThemeColorTokens.primaryColor
+          : LightThemeColorTokens.black;
+    } else {
+      return isLightMode
+          ? LightThemeColorTokens.black
+          : DarkThemeColorTokens.primaryColor;
+    }
+  }
+
   /// Returns a styled flat action button with text.
   static ActionButton flatText({
     required MightyThemeController themeController,
     required String label,
     required VoidCallback onPressed,
+    bool inverseColor = false,
     bool isLoading = false,
     Key? key,
   }) {
-    final textColor = themeController.themeMode == SystemThemeMode.light
-        ? LightThemeColorTokens.black
-        : DarkThemeColorTokens.primaryColor;
+    final textColor = _determineColor(themeController, inverseColor);
 
     final splashColor = themeController.themeMode == SystemThemeMode.light
         ? LightThemeColorTokens.primaryColor

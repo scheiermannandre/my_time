@@ -10,6 +10,7 @@ import 'package:my_time/core/widgets/mighty_action_button.dart';
 import 'package:my_time/core/widgets/mighty_text_form_field.dart';
 import 'package:my_time/core/widgets/password_checker/password_checker.dart';
 import 'package:my_time/core/widgets/spaced_column.dart';
+import 'package:my_time/features/8_authentication/presentation/pages/util/email_app_opener.dart';
 import 'package:my_time/features/8_authentication/presentation/pages/util/email_validation.dart';
 import 'package:my_time/features/8_authentication/presentation/pages/widgets/auth_action_footer.dart';
 import 'package:my_time/features/8_authentication/presentation/pages/widgets/auth_password_field.dart';
@@ -36,9 +37,16 @@ class SignUpPage extends StatefulHookConsumerWidget with EmailValidator {
 }
 
 /// The state of the [SignUpPage].
-class SignUpPageState extends ConsumerState<SignUpPage> {
+class SignUpPageState extends ConsumerState<SignUpPage>
+    with SingleTickerProviderStateMixin {
   /// The key to uniquely identify the form in the widget tree.
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  late final _animationController = AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: 300),
+    reverseDuration: const Duration(milliseconds: 300),
+  );
 
   @override
   void initState() {
@@ -90,6 +98,14 @@ class SignUpPageState extends ConsumerState<SignUpPage> {
           context,
           themeController,
           snackbarMessage,
+          actionLabel: 'Open inbox',
+          onTab: () async {
+            await EmailAppsUI.show(
+              context: context,
+              themeController: themeController,
+              animationController: _animationController,
+            );
+          },
         );
       },
     );

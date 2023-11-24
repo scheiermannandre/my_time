@@ -8,6 +8,7 @@ import 'package:my_time/core/modals/mighty_snack_bar.dart';
 import 'package:my_time/core/util/extentions/widget_ref_extension.dart';
 import 'package:my_time/core/widgets/mighty_action_button.dart';
 import 'package:my_time/core/widgets/mighty_text_form_field.dart';
+import 'package:my_time/features/8_authentication/presentation/pages/util/email_app_opener.dart';
 import 'package:my_time/features/8_authentication/presentation/pages/util/email_validation.dart';
 import 'package:my_time/features/8_authentication/presentation/state_management/forgot_password_page_controller.dart';
 import 'package:my_time/router/app_route.dart';
@@ -36,6 +37,7 @@ class ForgotPasswordPage extends HookConsumerWidget with EmailValidator {
     ForgotPasswordPageState state,
     ForgotPasswordPageController controller,
     MightyThemeController themeController,
+    AnimationController animationController,
   ) async {
     // Performs the password reset submission using the provided controller
     await controller.sendForgotPassword(
@@ -51,7 +53,15 @@ class ForgotPasswordPage extends HookConsumerWidget with EmailValidator {
           context,
           themeController,
           snackbarMessage,
-          onOk: () => _changePage(
+          actionLabel: 'Open inbox',
+          onTab: () async {
+            await EmailAppsUI.show(
+              context: context,
+              themeController: themeController,
+              animationController: animationController,
+            );
+          },
+          onHide: () => _changePage(
             context,
             AppRoute.signIn,
             email,
@@ -94,6 +104,11 @@ class ForgotPasswordPage extends HookConsumerWidget with EmailValidator {
 
     // Controllers for email and password text fields with initial values
     final emailTextController = useTextEditingController(text: email ?? '');
+
+    final animationController = useAnimationController(
+      duration: const Duration(milliseconds: 300),
+      reverseDuration: const Duration(milliseconds: 300),
+    );
     return Scaffold(
       backgroundColor: theme.controller.mainBackgroundColor,
       body: SafeArea(
@@ -140,6 +155,7 @@ class ForgotPasswordPage extends HookConsumerWidget with EmailValidator {
                           state!,
                           authPage.controller,
                           theme.controller,
+                          animationController,
                         );
                       },
                       isLoading: authPage.state.isLoading,

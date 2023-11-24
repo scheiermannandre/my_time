@@ -12,9 +12,9 @@ import 'package:my_time/core/widgets/mighty_action_button.dart';
 import 'package:my_time/core/widgets/mighty_app_bar.dart';
 import 'package:my_time/core/widgets/mighty_circular_progress_indicator.dart';
 import 'package:my_time/core/widgets/mighty_expandable_tile.dart';
+import 'package:my_time/core/widgets/mighty_labeled_list.dart';
 import 'package:my_time/core/widgets/mighty_loading_error_widget.dart';
 import 'package:my_time/core/widgets/mighty_persistent_sheet_scaffold.dart';
-import 'package:my_time/core/widgets/mighty_splash_list_tile.dart';
 import 'package:my_time/core/widgets/mighty_text_form_field.dart';
 import 'package:my_time/core/widgets/spaced_row.dart';
 import 'package:my_time/features/7_groups_overview/data/repositories/group_repository_impl.dart';
@@ -156,7 +156,7 @@ class GroupsOverview extends HookConsumerWidget {
                   groups: groups.value!,
                 ),
                 const SizedBox(height: SpaceTokens.medium),
-                _LabeledList(
+                MightyLabeledList(
                   label: context.loc.favourites,
                   emptyListLabel: context.loc.noFavouritesLabel,
                   themeController: mightyTheme.controller,
@@ -420,7 +420,7 @@ class _LabeledIconButtons extends HookWidget {
           ref.watch(mightyThemeControllerProvider);
           final themeController =
               ref.watch(mightyThemeControllerProvider.notifier);
-          return _LabeledList(
+          return MightyLabeledList(
             showIcons: false,
             themeController: themeController,
             label: context.loc.pickGroup,
@@ -434,63 +434,4 @@ class _LabeledIconButtons extends HookWidget {
 
   void _onAddProjectPressed(BuildContext context) =>
       context.pushNamed(AppRoute.addProjectWizard);
-}
-
-class _LabeledList extends StatelessWidget {
-  const _LabeledList({
-    required this.themeController,
-    required this.label,
-    required this.items,
-    this.emptyListLabel = '',
-    this.showIcons = true,
-  });
-
-  final MightyThemeController themeController;
-  final String label;
-  final String emptyListLabel;
-  final List<String> items;
-  final bool showIcons;
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(
-        left: SpaceTokens.medium,
-        right: SpaceTokens.medium,
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            label,
-            style: themeController.headline5,
-          ),
-          if (items.isEmpty)
-            Padding(
-              padding: const EdgeInsets.only(top: SpaceTokens.mediumSmall),
-              child: Text(
-                emptyListLabel,
-                style: themeController.alternateBody,
-              ),
-            )
-          else
-            ListView.separated(
-              physics: const NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              itemCount: items.length,
-              itemBuilder: (context, index) {
-                return MightySplashListTile(
-                  themeController: themeController,
-                  text: items[index],
-                  showIcon: showIcons,
-                  onPressed: () => Navigator.of(context).pop(index),
-                );
-              },
-              separatorBuilder: (context, index) => const SizedBox(
-                height: SpaceTokens.verySmall,
-              ),
-            ),
-        ],
-      ),
-    );
-  }
 }

@@ -46,10 +46,14 @@ PODS:
   - GTMSessionFetcher/Core (3.1.1)
   - integration_test (0.0.1):
     - Flutter
+  - open_mail_app (0.0.1):
+    - Flutter
   - PromisesObjC (2.3.1)
   - realm (1.5.0):
     - Flutter
   - RecaptchaInterop (100.0.0)
+  - url_launcher_ios (0.0.1):
+    - Flutter
 
 DEPENDENCIES:
   - firebase_auth (from `.symlinks/plugins/firebase_auth/ios`)
@@ -57,7 +61,9 @@ DEPENDENCIES:
   - Flutter (from `Flutter`)
   - flutter_native_splash (from `.symlinks/plugins/flutter_native_splash/ios`)
   - integration_test (from `.symlinks/plugins/integration_test/ios`)
+  - open_mail_app (from `.symlinks/plugins/open_mail_app/ios`)
   - realm (from `.symlinks/plugins/realm/ios`)
+  - url_launcher_ios (from `.symlinks/plugins/url_launcher_ios/ios`)
 
 SPEC REPOS:
   trunk:
@@ -82,8 +88,12 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/flutter_native_splash/ios"
   integration_test:
     :path: ".symlinks/plugins/integration_test/ios"
+  open_mail_app:
+    :path: ".symlinks/plugins/open_mail_app/ios"
   realm:
     :path: ".symlinks/plugins/realm/ios"
+  url_launcher_ios:
+    :path: ".symlinks/plugins/url_launcher_ios/ios"
 
 SPEC CHECKSUMS:
   Firebase: f4ac0b02927af9253ae094d23deecf0890da7374
@@ -98,9 +108,11 @@ SPEC CHECKSUMS:
   GoogleUtilities: 0759d1a57ebb953965c2dfe0ba4c82e95ccc2e34
   GTMSessionFetcher: e8647203b65cee28c5f73d0f473d096653945e72
   integration_test: 13825b8a9334a850581300559b8839134b124670
+  open_mail_app: 794172f6a22cd16319d3ddaf45e945b2f74952b0
   PromisesObjC: c50d2056b5253dadbd6c2bea79b0674bd5a52fa4
   realm: 1bf0436288aa66f2e149c65e2da4ad5ae7280155
   RecaptchaInterop: 7d1a4a01a6b2cb1610a47ef3f85f0c411434cb21
+  url_launcher_ios: bf5ce03e0e2088bad9cc378ea97fa0ed5b49673b
 
 PODFILE CHECKSUM: ef19549a9bc3046e7bb7d2fab4d021637c0c58a3
 

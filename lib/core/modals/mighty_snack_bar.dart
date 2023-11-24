@@ -12,7 +12,10 @@ class MightySnackBar {
     BuildContext context,
     MightyThemeController controller,
     String message, {
-    VoidCallback? onOk,
+    String? actionLabel,
+    Future<void> Function()? onTab,
+    VoidCallback? onHide,
+    Duration duration = const Duration(seconds: 30),
   }) {
     final mode = controller.themeMode == SystemThemeMode.light
         ? SystemThemeMode.dark
@@ -21,37 +24,45 @@ class MightySnackBar {
 
     final textColor = ThemeColors.getHeadingTextColor(mode);
     final textStyle = TextStyleTokens.small(textColor);
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        duration: const Duration(seconds: 60),
-        backgroundColor: backgroundColor,
-        content: Row(
-          children: [
-            Expanded(
-              child: Text(
-                message,
-                style: textStyle.copyWith(
-                  height: 1.5,
+    ScaffoldMessenger.of(context)
+        .showSnackBar(
+          SnackBar(
+            duration: duration,
+            backgroundColor: backgroundColor,
+            content: Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    message,
+                    style: textStyle.copyWith(
+                      height: 1.5,
+                    ),
+                  ),
                 ),
-              ),
+                SizedBox(
+                  width: 80,
+                  child: MightyActionButton.flatText(
+                    inverseColor: true,
+                    themeController: controller,
+                    label: actionLabel ?? 'OK',
+                    onPressed: () async {
+                      await onTab?.call();
+                      if (!context.mounted) return;
+                      ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                    },
+                  ),
+                ),
+              ],
             ),
-            MightyActionButton.flatText(
-              themeController: controller,
-              label: 'OK',
-              onPressed: () {
-                onOk?.call();
-                ScaffoldMessenger.of(context).hideCurrentSnackBar();
-              },
+            elevation: 6,
+            behavior: SnackBarBehavior.floating,
+            shape: const RoundedRectangleBorder(
+              borderRadius:
+                  BorderRadius.all(Radius.circular(CornerRadiusTokens.small)),
             ),
-          ],
-        ),
-        elevation: 6,
-        behavior: SnackBarBehavior.floating,
-        shape: const RoundedRectangleBorder(
-          borderRadius:
-              BorderRadius.all(Radius.circular(CornerRadiusTokens.small)),
-        ),
-      ),
-    );
+          ),
+        )
+        .closed
+        .then((value) => onHide?.call());
   }
 }
