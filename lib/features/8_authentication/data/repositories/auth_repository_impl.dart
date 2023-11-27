@@ -86,29 +86,70 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<void> sendPasswordResetEmail(String email) =>
-      ref.read(firebaseDataSourceProvider).sendPasswordResetEmail(email);
+  Future<void> sendPasswordResetEmail(String email) async {
+    try {
+      await ref.read(firebaseDataSourceProvider).sendPasswordResetEmail(email);
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'network-request-failed') {
+        throw const CustomAppException.networkRequestFailed();
+      }
+    } on Exception catch (e) {
+      throw CustomAppException.unexpected(e.toString());
+    }
+  }
 
   @override
   Future<bool> confirmPasswordReset({
     required String newPassword,
     required String oobCode,
   }) async {
-    return ref
-        .read(firebaseDataSourceProvider)
-        .confirmPasswordReset(newPassword: newPassword, oobCode: oobCode);
+    try {
+      await ref
+          .read(firebaseDataSourceProvider)
+          .confirmPasswordReset(newPassword: newPassword, oobCode: oobCode);
+
+      return true;
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'network-request-failed') {
+        throw const CustomAppException.networkRequestFailed();
+      }
+      return false;
+    } on Exception catch (e) {
+      throw CustomAppException.unexpected(e.toString());
+    }
   }
 
   @override
   Future<bool> checkActionCode({required String oobCode}) async {
-    return ref
-        .read(firebaseDataSourceProvider)
-        .checkActionCode(oobCode: oobCode);
+    try {
+      await ref
+          .read(firebaseDataSourceProvider)
+          .checkActionCode(oobCode: oobCode);
+
+      return true;
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'network-request-failed') {
+        throw const CustomAppException.networkRequestFailed();
+      }
+      return false;
+    } on Exception catch (e) {
+      throw CustomAppException.unexpected(e.toString());
+    }
   }
 
   @override
   Future<bool> verifyEmail({required String oobCode}) async {
-    return ref.read(firebaseDataSourceProvider).verifyEmail(oobCode: oobCode);
+    try {
+      await ref.read(firebaseDataSourceProvider).verifyEmail(oobCode: oobCode);
+      return true;
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'network-request-failed') {
+        throw const CustomAppException.networkRequestFailed();
+      }
+      return false;
+    } on Exception catch (e) {
+      throw CustomAppException.unexpected(e.toString());
+    }
   }
 }
 

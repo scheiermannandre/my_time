@@ -59,39 +59,24 @@ class FirebaseDataSource {
   }
 
   /// Confirms and fulfills the password reset that was requested by the user.
-  Future<bool> confirmPasswordReset({
+  Future<void> confirmPasswordReset({
     required String newPassword,
     required String oobCode,
   }) async {
-    try {
-      await _firebaseAuth.confirmPasswordReset(
-        newPassword: newPassword,
-        code: oobCode,
-      );
-      return true;
-    } on FirebaseAuthException {
-      return false;
-    }
+    await _firebaseAuth.confirmPasswordReset(
+      newPassword: newPassword,
+      code: oobCode,
+    );
   }
 
   /// Checks the validity of the given [oobCode].
-  Future<bool> checkActionCode({required String oobCode}) async {
-    try {
-      await _firebaseAuth.checkActionCode(oobCode);
-      return true;
-    } on FirebaseAuthException {
-      return false;
-    }
+  Future<void> checkActionCode({required String oobCode}) async {
+    await _firebaseAuth.checkActionCode(oobCode);
   }
 
   /// Verifies the user with the given [oobCode].
-  Future<bool> verifyEmail({required String oobCode}) async {
-    try {
-      await _firebaseAuth.applyActionCode(oobCode);
-      return true;
-    } on FirebaseAuthException {
-      return false;
-    }
+  Future<void> verifyEmail({required String oobCode}) async {
+    await _firebaseAuth.applyActionCode(oobCode);
   }
 
   /// Returns a stream of [UserModel] objects representing the current user,

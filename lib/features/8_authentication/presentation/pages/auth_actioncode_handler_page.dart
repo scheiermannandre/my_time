@@ -75,7 +75,8 @@ class _AuthActionCodeHandlerPageState
 
     if (!newState.isOobCodeValid!) {
       title = 'Your request could not be completed!';
-      content = 'The given ActionCode is invalid or has expired.';
+      content =
+          '''The given ActionCode is invalid or has expired. Alternatively it might be that your account has been disabled or deleted.''';
 
       await showMessageAndReturnToAuth(context, title, content);
       return;

@@ -46,7 +46,8 @@ class AuthEmailHandlerPageState extends ConsumerState<AuthRestPasswordPage> {
 
     if (!newState.isPasswordResetSuccess!) {
       title = 'Password reset failed!';
-      content = 'The given ActionCode is invalid or has expired.';
+      content =
+          '''The given ActionCode is invalid or has expired. Alternatively it might be that your account has been disabled or deleted.''';
     } else {
       title = 'Reset password successfully!';
       content = 'You can now log in with your new credentials.';
