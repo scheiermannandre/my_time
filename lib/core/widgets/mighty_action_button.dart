@@ -370,9 +370,7 @@ class _ActionButtonState extends State<ActionButton> {
       child: Ink(
         decoration: widget.decoration,
         child: InkWell(
-          splashColor: widget.splashColor != null
-              ? widget.splashColor!.withOpacity(.1)
-              : null,
+          splashColor: widget.splashColor?.withOpacity(.1),
           borderRadius: widget.splashBorderRadius,
           onTap: widget.onPressed == null || widget.isLoading
               ? null

@@ -64,6 +64,7 @@ class GroupAnalyticsShellPage extends ShellPage {
                     snap: true,
                     floating: true,
                     forceElevated: innerBoxIsScrolled,
+                    // ignore: deprecated_member_use
                     title: const Text('Project X', textScaleFactor: 1),
                     backgroundColor: GlobalProperties.primaryColor,
                     bottom: TabBar(

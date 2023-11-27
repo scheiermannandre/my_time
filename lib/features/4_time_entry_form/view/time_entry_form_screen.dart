@@ -41,7 +41,7 @@ class TimeEntryFormScreen extends HookConsumerWidget {
 
     final controller = ref.watch(provider.notifier);
     final state = ref.watch(provider);
-    final key = state.value != null ? state.value!.refreshIndicatorKey : null;
+    final key = state.value?.refreshIndicatorKey;
     late var entry = const AsyncValue<TimeEntryModel>.loading();
     if (isEdit) {
       entry = ref.watch(projectTimeEntryProvider(timeEntryId!));

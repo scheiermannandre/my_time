@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:my_time/common/extensions/build_context_extension.dart';
+import 'package:my_time/config/theme/color_tokens.dart';
 import 'package:my_time/config/theme/corner_radius_tokens.dart';
+import 'package:my_time/config/theme/mighty_theme.dart';
+import 'package:my_time/config/theme/space_tokens.dart';
+import 'package:my_time/config/theme/text_style_tokens.dart';
+import 'package:my_time/core/util/extentions/widget_ref_extension.dart';
+import 'package:my_time/core/widgets/mighty_action_button.dart';
 
 /// Utility class to display a dialog with a markdown file content.
 class MightyMarkDownDialog {
@@ -28,7 +35,7 @@ class MightyMarkDownDialog {
 }
 
 /// Dialog widget to display markdown content.
-class MarkDownDialog extends StatelessWidget {
+class MarkDownDialog extends ConsumerWidget {
   /// Constructs a [MarkDownDialog].
   const MarkDownDialog({
     required this.mdFileName,
@@ -43,7 +50,15 @@ class MarkDownDialog extends StatelessWidget {
   final double borderRadius;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final theme = ref.watchStateProvider(
+      context,
+      mightyThemeControllerProvider,
+      mightyThemeControllerProvider.notifier,
+    );
+    final splashColor = theme.controller.themeMode == SystemThemeMode.light
+        ? LightThemeColorTokens.primaryColor
+        : DarkThemeColorTokens.primaryColor;
     return Dialog(
       insetPadding: const EdgeInsets.all(25),
       shape: RoundedRectangleBorder(
@@ -66,43 +81,22 @@ class MarkDownDialog extends StatelessWidget {
               },
             ),
           ),
-          const Padding(
-            padding: EdgeInsets.only(bottom: 5),
-          ),
           // Close button
-          // ActionButton.flatText(
-          //   key: ShowMarkdownDialog.closePolicyDialogBtnKey,
-          //   onPressed: () => Navigator.of(context).pop(),
-          //   text: context.loc.closePolicyDialog,
-          //   borderRadius: BorderRadius.only(
-          //     bottomLeft: Radius.circular(borderRadius),
-          //     bottomRight: Radius.circular(borderRadius),
-          //   ),
-          // ),
-          ElevatedButton(
-            onPressed: () => Navigator.of(context).pop(),
-            style: ButtonStyle(
-              shape: MaterialStateProperty.all(
-                RoundedRectangleBorder(
-                  borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(borderRadius),
-                    bottomRight: Radius.circular(borderRadius),
-                  ),
-                ),
-              ),
-            ),
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(borderRadius),
-                  bottomRight: Radius.circular(borderRadius),
-                ),
-              ),
-              alignment: Alignment.center,
-              height: 22.5,
-              width: double.infinity,
-              child: Text(
+          Padding(
+            padding: const EdgeInsets.all(SpaceTokens.small),
+            child: ActionButton.regular(
+              title: Text(
                 context.loc.closePolicyDialog,
+                style: TextStyleTokens.body(LightThemeColorTokens.black),
+                textAlign: TextAlign.center,
+              ),
+              onPressed: () => Navigator.of(context).pop(),
+              backgroundColor: Colors.transparent,
+              borderRadius: BorderRadius.circular(CornerRadiusTokens.small),
+              splashColor: splashColor,
+              contentPadding: const EdgeInsets.symmetric(
+                vertical: SpaceTokens.verySmall,
+                horizontal: SpaceTokens.mediumSmall,
               ),
             ),
           ),
