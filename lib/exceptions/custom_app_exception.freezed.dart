@@ -25,6 +25,7 @@ mixin _$CustomAppException {
     required TResult Function() multipleTimerStarts,
     required TResult Function() timerDataNotFound,
     required TResult Function(String status) unexpected,
+    required TResult Function() userAlreadyExists,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -36,6 +37,7 @@ mixin _$CustomAppException {
     TResult? Function()? multipleTimerStarts,
     TResult? Function()? timerDataNotFound,
     TResult? Function(String status)? unexpected,
+    TResult? Function()? userAlreadyExists,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -47,6 +49,7 @@ mixin _$CustomAppException {
     TResult Function()? multipleTimerStarts,
     TResult Function()? timerDataNotFound,
     TResult Function(String status)? unexpected,
+    TResult Function()? userAlreadyExists,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -59,6 +62,7 @@ mixin _$CustomAppException {
     required TResult Function(MultipleTimerStarts value) multipleTimerStarts,
     required TResult Function(TimerDataNotFound value) timerDataNotFound,
     required TResult Function(Unexpected value) unexpected,
+    required TResult Function(UserAlreadyExists value) userAlreadyExists,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -70,6 +74,7 @@ mixin _$CustomAppException {
     TResult? Function(MultipleTimerStarts value)? multipleTimerStarts,
     TResult? Function(TimerDataNotFound value)? timerDataNotFound,
     TResult? Function(Unexpected value)? unexpected,
+    TResult? Function(UserAlreadyExists value)? userAlreadyExists,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -81,6 +86,7 @@ mixin _$CustomAppException {
     TResult Function(MultipleTimerStarts value)? multipleTimerStarts,
     TResult Function(TimerDataNotFound value)? timerDataNotFound,
     TResult Function(Unexpected value)? unexpected,
+    TResult Function(UserAlreadyExists value)? userAlreadyExists,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -149,6 +155,7 @@ class _$EntryNotFoundImpl implements EntryNotFound {
     required TResult Function() multipleTimerStarts,
     required TResult Function() timerDataNotFound,
     required TResult Function(String status) unexpected,
+    required TResult Function() userAlreadyExists,
   }) {
     return entryNotFound();
   }
@@ -163,6 +170,7 @@ class _$EntryNotFoundImpl implements EntryNotFound {
     TResult? Function()? multipleTimerStarts,
     TResult? Function()? timerDataNotFound,
     TResult? Function(String status)? unexpected,
+    TResult? Function()? userAlreadyExists,
   }) {
     return entryNotFound?.call();
   }
@@ -177,6 +185,7 @@ class _$EntryNotFoundImpl implements EntryNotFound {
     TResult Function()? multipleTimerStarts,
     TResult Function()? timerDataNotFound,
     TResult Function(String status)? unexpected,
+    TResult Function()? userAlreadyExists,
     required TResult orElse(),
   }) {
     if (entryNotFound != null) {
@@ -195,6 +204,7 @@ class _$EntryNotFoundImpl implements EntryNotFound {
     required TResult Function(MultipleTimerStarts value) multipleTimerStarts,
     required TResult Function(TimerDataNotFound value) timerDataNotFound,
     required TResult Function(Unexpected value) unexpected,
+    required TResult Function(UserAlreadyExists value) userAlreadyExists,
   }) {
     return entryNotFound(this);
   }
@@ -209,6 +219,7 @@ class _$EntryNotFoundImpl implements EntryNotFound {
     TResult? Function(MultipleTimerStarts value)? multipleTimerStarts,
     TResult? Function(TimerDataNotFound value)? timerDataNotFound,
     TResult? Function(Unexpected value)? unexpected,
+    TResult? Function(UserAlreadyExists value)? userAlreadyExists,
   }) {
     return entryNotFound?.call(this);
   }
@@ -223,6 +234,7 @@ class _$EntryNotFoundImpl implements EntryNotFound {
     TResult Function(MultipleTimerStarts value)? multipleTimerStarts,
     TResult Function(TimerDataNotFound value)? timerDataNotFound,
     TResult Function(Unexpected value)? unexpected,
+    TResult Function(UserAlreadyExists value)? userAlreadyExists,
     required TResult orElse(),
   }) {
     if (entryNotFound != null) {
@@ -281,6 +293,7 @@ class _$TimeRangesOverlapImpl implements TimeRangesOverlap {
     required TResult Function() multipleTimerStarts,
     required TResult Function() timerDataNotFound,
     required TResult Function(String status) unexpected,
+    required TResult Function() userAlreadyExists,
   }) {
     return timeRangesOverlap();
   }
@@ -295,6 +308,7 @@ class _$TimeRangesOverlapImpl implements TimeRangesOverlap {
     TResult? Function()? multipleTimerStarts,
     TResult? Function()? timerDataNotFound,
     TResult? Function(String status)? unexpected,
+    TResult? Function()? userAlreadyExists,
   }) {
     return timeRangesOverlap?.call();
   }
@@ -309,6 +323,7 @@ class _$TimeRangesOverlapImpl implements TimeRangesOverlap {
     TResult Function()? multipleTimerStarts,
     TResult Function()? timerDataNotFound,
     TResult Function(String status)? unexpected,
+    TResult Function()? userAlreadyExists,
     required TResult orElse(),
   }) {
     if (timeRangesOverlap != null) {
@@ -327,6 +342,7 @@ class _$TimeRangesOverlapImpl implements TimeRangesOverlap {
     required TResult Function(MultipleTimerStarts value) multipleTimerStarts,
     required TResult Function(TimerDataNotFound value) timerDataNotFound,
     required TResult Function(Unexpected value) unexpected,
+    required TResult Function(UserAlreadyExists value) userAlreadyExists,
   }) {
     return timeRangesOverlap(this);
   }
@@ -341,6 +357,7 @@ class _$TimeRangesOverlapImpl implements TimeRangesOverlap {
     TResult? Function(MultipleTimerStarts value)? multipleTimerStarts,
     TResult? Function(TimerDataNotFound value)? timerDataNotFound,
     TResult? Function(Unexpected value)? unexpected,
+    TResult? Function(UserAlreadyExists value)? userAlreadyExists,
   }) {
     return timeRangesOverlap?.call(this);
   }
@@ -355,6 +372,7 @@ class _$TimeRangesOverlapImpl implements TimeRangesOverlap {
     TResult Function(MultipleTimerStarts value)? multipleTimerStarts,
     TResult Function(TimerDataNotFound value)? timerDataNotFound,
     TResult Function(Unexpected value)? unexpected,
+    TResult Function(UserAlreadyExists value)? userAlreadyExists,
     required TResult orElse(),
   }) {
     if (timeRangesOverlap != null) {
@@ -413,6 +431,7 @@ class _$ProjectNotFoundImpl implements ProjectNotFound {
     required TResult Function() multipleTimerStarts,
     required TResult Function() timerDataNotFound,
     required TResult Function(String status) unexpected,
+    required TResult Function() userAlreadyExists,
   }) {
     return projectNotFound();
   }
@@ -427,6 +446,7 @@ class _$ProjectNotFoundImpl implements ProjectNotFound {
     TResult? Function()? multipleTimerStarts,
     TResult? Function()? timerDataNotFound,
     TResult? Function(String status)? unexpected,
+    TResult? Function()? userAlreadyExists,
   }) {
     return projectNotFound?.call();
   }
@@ -441,6 +461,7 @@ class _$ProjectNotFoundImpl implements ProjectNotFound {
     TResult Function()? multipleTimerStarts,
     TResult Function()? timerDataNotFound,
     TResult Function(String status)? unexpected,
+    TResult Function()? userAlreadyExists,
     required TResult orElse(),
   }) {
     if (projectNotFound != null) {
@@ -459,6 +480,7 @@ class _$ProjectNotFoundImpl implements ProjectNotFound {
     required TResult Function(MultipleTimerStarts value) multipleTimerStarts,
     required TResult Function(TimerDataNotFound value) timerDataNotFound,
     required TResult Function(Unexpected value) unexpected,
+    required TResult Function(UserAlreadyExists value) userAlreadyExists,
   }) {
     return projectNotFound(this);
   }
@@ -473,6 +495,7 @@ class _$ProjectNotFoundImpl implements ProjectNotFound {
     TResult? Function(MultipleTimerStarts value)? multipleTimerStarts,
     TResult? Function(TimerDataNotFound value)? timerDataNotFound,
     TResult? Function(Unexpected value)? unexpected,
+    TResult? Function(UserAlreadyExists value)? userAlreadyExists,
   }) {
     return projectNotFound?.call(this);
   }
@@ -487,6 +510,7 @@ class _$ProjectNotFoundImpl implements ProjectNotFound {
     TResult Function(MultipleTimerStarts value)? multipleTimerStarts,
     TResult Function(TimerDataNotFound value)? timerDataNotFound,
     TResult Function(Unexpected value)? unexpected,
+    TResult Function(UserAlreadyExists value)? userAlreadyExists,
     required TResult orElse(),
   }) {
     if (projectNotFound != null) {
@@ -545,6 +569,7 @@ class _$GroupNotFoundImpl implements GroupNotFound {
     required TResult Function() multipleTimerStarts,
     required TResult Function() timerDataNotFound,
     required TResult Function(String status) unexpected,
+    required TResult Function() userAlreadyExists,
   }) {
     return groupNotFound();
   }
@@ -559,6 +584,7 @@ class _$GroupNotFoundImpl implements GroupNotFound {
     TResult? Function()? multipleTimerStarts,
     TResult? Function()? timerDataNotFound,
     TResult? Function(String status)? unexpected,
+    TResult? Function()? userAlreadyExists,
   }) {
     return groupNotFound?.call();
   }
@@ -573,6 +599,7 @@ class _$GroupNotFoundImpl implements GroupNotFound {
     TResult Function()? multipleTimerStarts,
     TResult Function()? timerDataNotFound,
     TResult Function(String status)? unexpected,
+    TResult Function()? userAlreadyExists,
     required TResult orElse(),
   }) {
     if (groupNotFound != null) {
@@ -591,6 +618,7 @@ class _$GroupNotFoundImpl implements GroupNotFound {
     required TResult Function(MultipleTimerStarts value) multipleTimerStarts,
     required TResult Function(TimerDataNotFound value) timerDataNotFound,
     required TResult Function(Unexpected value) unexpected,
+    required TResult Function(UserAlreadyExists value) userAlreadyExists,
   }) {
     return groupNotFound(this);
   }
@@ -605,6 +633,7 @@ class _$GroupNotFoundImpl implements GroupNotFound {
     TResult? Function(MultipleTimerStarts value)? multipleTimerStarts,
     TResult? Function(TimerDataNotFound value)? timerDataNotFound,
     TResult? Function(Unexpected value)? unexpected,
+    TResult? Function(UserAlreadyExists value)? userAlreadyExists,
   }) {
     return groupNotFound?.call(this);
   }
@@ -619,6 +648,7 @@ class _$GroupNotFoundImpl implements GroupNotFound {
     TResult Function(MultipleTimerStarts value)? multipleTimerStarts,
     TResult Function(TimerDataNotFound value)? timerDataNotFound,
     TResult Function(Unexpected value)? unexpected,
+    TResult Function(UserAlreadyExists value)? userAlreadyExists,
     required TResult orElse(),
   }) {
     if (groupNotFound != null) {
@@ -678,6 +708,7 @@ class _$MultipleTimerStartsImpl implements MultipleTimerStarts {
     required TResult Function() multipleTimerStarts,
     required TResult Function() timerDataNotFound,
     required TResult Function(String status) unexpected,
+    required TResult Function() userAlreadyExists,
   }) {
     return multipleTimerStarts();
   }
@@ -692,6 +723,7 @@ class _$MultipleTimerStartsImpl implements MultipleTimerStarts {
     TResult? Function()? multipleTimerStarts,
     TResult? Function()? timerDataNotFound,
     TResult? Function(String status)? unexpected,
+    TResult? Function()? userAlreadyExists,
   }) {
     return multipleTimerStarts?.call();
   }
@@ -706,6 +738,7 @@ class _$MultipleTimerStartsImpl implements MultipleTimerStarts {
     TResult Function()? multipleTimerStarts,
     TResult Function()? timerDataNotFound,
     TResult Function(String status)? unexpected,
+    TResult Function()? userAlreadyExists,
     required TResult orElse(),
   }) {
     if (multipleTimerStarts != null) {
@@ -724,6 +757,7 @@ class _$MultipleTimerStartsImpl implements MultipleTimerStarts {
     required TResult Function(MultipleTimerStarts value) multipleTimerStarts,
     required TResult Function(TimerDataNotFound value) timerDataNotFound,
     required TResult Function(Unexpected value) unexpected,
+    required TResult Function(UserAlreadyExists value) userAlreadyExists,
   }) {
     return multipleTimerStarts(this);
   }
@@ -738,6 +772,7 @@ class _$MultipleTimerStartsImpl implements MultipleTimerStarts {
     TResult? Function(MultipleTimerStarts value)? multipleTimerStarts,
     TResult? Function(TimerDataNotFound value)? timerDataNotFound,
     TResult? Function(Unexpected value)? unexpected,
+    TResult? Function(UserAlreadyExists value)? userAlreadyExists,
   }) {
     return multipleTimerStarts?.call(this);
   }
@@ -752,6 +787,7 @@ class _$MultipleTimerStartsImpl implements MultipleTimerStarts {
     TResult Function(MultipleTimerStarts value)? multipleTimerStarts,
     TResult Function(TimerDataNotFound value)? timerDataNotFound,
     TResult Function(Unexpected value)? unexpected,
+    TResult Function(UserAlreadyExists value)? userAlreadyExists,
     required TResult orElse(),
   }) {
     if (multipleTimerStarts != null) {
@@ -810,6 +846,7 @@ class _$TimerDataNotFoundImpl implements TimerDataNotFound {
     required TResult Function() multipleTimerStarts,
     required TResult Function() timerDataNotFound,
     required TResult Function(String status) unexpected,
+    required TResult Function() userAlreadyExists,
   }) {
     return timerDataNotFound();
   }
@@ -824,6 +861,7 @@ class _$TimerDataNotFoundImpl implements TimerDataNotFound {
     TResult? Function()? multipleTimerStarts,
     TResult? Function()? timerDataNotFound,
     TResult? Function(String status)? unexpected,
+    TResult? Function()? userAlreadyExists,
   }) {
     return timerDataNotFound?.call();
   }
@@ -838,6 +876,7 @@ class _$TimerDataNotFoundImpl implements TimerDataNotFound {
     TResult Function()? multipleTimerStarts,
     TResult Function()? timerDataNotFound,
     TResult Function(String status)? unexpected,
+    TResult Function()? userAlreadyExists,
     required TResult orElse(),
   }) {
     if (timerDataNotFound != null) {
@@ -856,6 +895,7 @@ class _$TimerDataNotFoundImpl implements TimerDataNotFound {
     required TResult Function(MultipleTimerStarts value) multipleTimerStarts,
     required TResult Function(TimerDataNotFound value) timerDataNotFound,
     required TResult Function(Unexpected value) unexpected,
+    required TResult Function(UserAlreadyExists value) userAlreadyExists,
   }) {
     return timerDataNotFound(this);
   }
@@ -870,6 +910,7 @@ class _$TimerDataNotFoundImpl implements TimerDataNotFound {
     TResult? Function(MultipleTimerStarts value)? multipleTimerStarts,
     TResult? Function(TimerDataNotFound value)? timerDataNotFound,
     TResult? Function(Unexpected value)? unexpected,
+    TResult? Function(UserAlreadyExists value)? userAlreadyExists,
   }) {
     return timerDataNotFound?.call(this);
   }
@@ -884,6 +925,7 @@ class _$TimerDataNotFoundImpl implements TimerDataNotFound {
     TResult Function(MultipleTimerStarts value)? multipleTimerStarts,
     TResult Function(TimerDataNotFound value)? timerDataNotFound,
     TResult Function(Unexpected value)? unexpected,
+    TResult Function(UserAlreadyExists value)? userAlreadyExists,
     required TResult orElse(),
   }) {
     if (timerDataNotFound != null) {
@@ -968,6 +1010,7 @@ class _$UnexpectedImpl implements Unexpected {
     required TResult Function() multipleTimerStarts,
     required TResult Function() timerDataNotFound,
     required TResult Function(String status) unexpected,
+    required TResult Function() userAlreadyExists,
   }) {
     return unexpected(status);
   }
@@ -982,6 +1025,7 @@ class _$UnexpectedImpl implements Unexpected {
     TResult? Function()? multipleTimerStarts,
     TResult? Function()? timerDataNotFound,
     TResult? Function(String status)? unexpected,
+    TResult? Function()? userAlreadyExists,
   }) {
     return unexpected?.call(status);
   }
@@ -996,6 +1040,7 @@ class _$UnexpectedImpl implements Unexpected {
     TResult Function()? multipleTimerStarts,
     TResult Function()? timerDataNotFound,
     TResult Function(String status)? unexpected,
+    TResult Function()? userAlreadyExists,
     required TResult orElse(),
   }) {
     if (unexpected != null) {
@@ -1014,6 +1059,7 @@ class _$UnexpectedImpl implements Unexpected {
     required TResult Function(MultipleTimerStarts value) multipleTimerStarts,
     required TResult Function(TimerDataNotFound value) timerDataNotFound,
     required TResult Function(Unexpected value) unexpected,
+    required TResult Function(UserAlreadyExists value) userAlreadyExists,
   }) {
     return unexpected(this);
   }
@@ -1028,6 +1074,7 @@ class _$UnexpectedImpl implements Unexpected {
     TResult? Function(MultipleTimerStarts value)? multipleTimerStarts,
     TResult? Function(TimerDataNotFound value)? timerDataNotFound,
     TResult? Function(Unexpected value)? unexpected,
+    TResult? Function(UserAlreadyExists value)? userAlreadyExists,
   }) {
     return unexpected?.call(this);
   }
@@ -1042,6 +1089,7 @@ class _$UnexpectedImpl implements Unexpected {
     TResult Function(MultipleTimerStarts value)? multipleTimerStarts,
     TResult Function(TimerDataNotFound value)? timerDataNotFound,
     TResult Function(Unexpected value)? unexpected,
+    TResult Function(UserAlreadyExists value)? userAlreadyExists,
     required TResult orElse(),
   }) {
     if (unexpected != null) {
@@ -1058,4 +1106,142 @@ abstract class Unexpected implements CustomAppException {
   @JsonKey(ignore: true)
   _$$UnexpectedImplCopyWith<_$UnexpectedImpl> get copyWith =>
       throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$UserAlreadyExistsImplCopyWith<$Res> {
+  factory _$$UserAlreadyExistsImplCopyWith(_$UserAlreadyExistsImpl value,
+          $Res Function(_$UserAlreadyExistsImpl) then) =
+      __$$UserAlreadyExistsImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$UserAlreadyExistsImplCopyWithImpl<$Res>
+    extends _$CustomAppExceptionCopyWithImpl<$Res, _$UserAlreadyExistsImpl>
+    implements _$$UserAlreadyExistsImplCopyWith<$Res> {
+  __$$UserAlreadyExistsImplCopyWithImpl(_$UserAlreadyExistsImpl _value,
+      $Res Function(_$UserAlreadyExistsImpl) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$UserAlreadyExistsImpl implements UserAlreadyExists {
+  const _$UserAlreadyExistsImpl();
+
+  @override
+  String toString() {
+    return 'CustomAppException.userAlreadyExists()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$UserAlreadyExistsImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() entryNotFound,
+    required TResult Function() timeRangesOverlap,
+    required TResult Function() projectNotFound,
+    required TResult Function() groupNotFound,
+    required TResult Function() multipleTimerStarts,
+    required TResult Function() timerDataNotFound,
+    required TResult Function(String status) unexpected,
+    required TResult Function() userAlreadyExists,
+  }) {
+    return userAlreadyExists();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? entryNotFound,
+    TResult? Function()? timeRangesOverlap,
+    TResult? Function()? projectNotFound,
+    TResult? Function()? groupNotFound,
+    TResult? Function()? multipleTimerStarts,
+    TResult? Function()? timerDataNotFound,
+    TResult? Function(String status)? unexpected,
+    TResult? Function()? userAlreadyExists,
+  }) {
+    return userAlreadyExists?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? entryNotFound,
+    TResult Function()? timeRangesOverlap,
+    TResult Function()? projectNotFound,
+    TResult Function()? groupNotFound,
+    TResult Function()? multipleTimerStarts,
+    TResult Function()? timerDataNotFound,
+    TResult Function(String status)? unexpected,
+    TResult Function()? userAlreadyExists,
+    required TResult orElse(),
+  }) {
+    if (userAlreadyExists != null) {
+      return userAlreadyExists();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(EntryNotFound value) entryNotFound,
+    required TResult Function(TimeRangesOverlap value) timeRangesOverlap,
+    required TResult Function(ProjectNotFound value) projectNotFound,
+    required TResult Function(GroupNotFound value) groupNotFound,
+    required TResult Function(MultipleTimerStarts value) multipleTimerStarts,
+    required TResult Function(TimerDataNotFound value) timerDataNotFound,
+    required TResult Function(Unexpected value) unexpected,
+    required TResult Function(UserAlreadyExists value) userAlreadyExists,
+  }) {
+    return userAlreadyExists(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(EntryNotFound value)? entryNotFound,
+    TResult? Function(TimeRangesOverlap value)? timeRangesOverlap,
+    TResult? Function(ProjectNotFound value)? projectNotFound,
+    TResult? Function(GroupNotFound value)? groupNotFound,
+    TResult? Function(MultipleTimerStarts value)? multipleTimerStarts,
+    TResult? Function(TimerDataNotFound value)? timerDataNotFound,
+    TResult? Function(Unexpected value)? unexpected,
+    TResult? Function(UserAlreadyExists value)? userAlreadyExists,
+  }) {
+    return userAlreadyExists?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(EntryNotFound value)? entryNotFound,
+    TResult Function(TimeRangesOverlap value)? timeRangesOverlap,
+    TResult Function(ProjectNotFound value)? projectNotFound,
+    TResult Function(GroupNotFound value)? groupNotFound,
+    TResult Function(MultipleTimerStarts value)? multipleTimerStarts,
+    TResult Function(TimerDataNotFound value)? timerDataNotFound,
+    TResult Function(Unexpected value)? unexpected,
+    TResult Function(UserAlreadyExists value)? userAlreadyExists,
+    required TResult orElse(),
+  }) {
+    if (userAlreadyExists != null) {
+      return userAlreadyExists(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class UserAlreadyExists implements CustomAppException {
+  const factory UserAlreadyExists() = _$UserAlreadyExistsImpl;
 }

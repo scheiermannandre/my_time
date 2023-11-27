@@ -8,6 +8,16 @@
     "groupNotFoundException": "The Group you are looking for could not be found!",
     "multipleTimerStartsException": "Can't run multiple project timers at once! Multi-Tasking is bad for you!",
     "timerDataNotFoundException": "TimerData not found! Please contact me and send me a screenshot: dev.scheiermann@gmail.com",
+    "userAlreadyExistsException": "You are trying to register a user that already exists, please Sign In to use your account.\n\nIf you have forgotten your password, you will need to reset it at the Sign In page.",
+    "unexpectedException": "Unexpected error: {message}",
+    "@unexpectedException": {
+            "placeholders": {
+                "message": {
+                    "type": "String"
+                }
+            }
+        },
+
 
     "@HomePage": {},
 

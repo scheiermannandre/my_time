@@ -26,6 +26,9 @@ class CustomAppException with _$CustomAppException implements Exception {
 
   /// Unexpected exception.
   const factory CustomAppException.unexpected(String status) = Unexpected;
+
+  /// User already exists exception.
+  const factory CustomAppException.userAlreadyExists() = UserAlreadyExists;
 }
 
 /// Exception data for the custom exception
@@ -75,9 +78,13 @@ extension CustomAppExceptioDetails on CustomAppException {
         code: '006',
         message: loc.timerDataNotFoundException,
       ),
+      userAlreadyExists: () => CustomAppExceptionData(
+        code: '007',
+        message: loc.userAlreadyExistsException,
+      ),
       unexpected: (status) => CustomAppExceptionData(
         code: '500',
-        message: 'Unexpected error: $status',
+        message: loc.unexpectedException(status),
       ),
     );
   }

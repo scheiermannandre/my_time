@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:my_time/exceptions/custom_app_exception.dart';
 import 'package:my_time/features/8_authentication/data/datasources/firebase_data_source.dart';
 import 'package:my_time/features/8_authentication/domain/entities/user_entity.dart';
 import 'package:my_time/features/8_authentication/domain/repositories/auth_repository.dart';
@@ -24,10 +26,20 @@ class AuthRepositoryImpl implements AuthRepository {
   Future<void> createUserWithEmailAndPassword(
     String email,
     String password,
-  ) =>
-      ref
+  ) async {
+    try {
+      await ref
           .read(firebaseDataSourceProvider)
           .createUserWithEmailAndPassword(email, password);
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'email-already-in-use') {
+        throw const CustomAppException.userAlreadyExists();
+      }
+      throw CustomAppException.unexpected(e.message ?? '');
+    } on Exception catch (e) {
+      throw CustomAppException.unexpected(e.toString());
+    }
+  }
 
   @override
   UserEntity? get currentUser =>

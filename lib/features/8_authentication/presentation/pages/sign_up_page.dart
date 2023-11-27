@@ -133,7 +133,7 @@ class SignUpPageState extends ConsumerState<SignUpPage>
       mightyThemeControllerProvider,
       mightyThemeControllerProvider.notifier,
     );
-    final signUpPage = ref.watchStateProvider(
+    final signUpPage = ref.watchAndListenStateProviderError(
       context,
       signUpPageControllerProvider,
       signUpPageControllerProvider.notifier,
