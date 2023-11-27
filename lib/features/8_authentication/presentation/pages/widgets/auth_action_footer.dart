@@ -36,7 +36,7 @@ class AuthActionFooter extends StatelessWidget {
   Widget build(BuildContext context) {
     return SpacedColumn(
       spacing: SpaceTokens.medium,
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         // Rich text for account creation and agreements
         RichText(
