@@ -69,10 +69,18 @@ class SignInPageController extends _$SignInPageController with EmailValidator {
     state = const AsyncLoading();
     final authRepo = ref.read(authRepositoryProvider);
 
-    await authRepo.signInWithEmailAndPassword(
-      email,
-      password,
-    );
+    // await authRepo.signInWithEmailAndPassword(
+    //   email,
+    //   password,
+    // );
+
+    state = await AsyncValue.guard(() async {
+      await authRepo.signInWithEmailAndPassword(
+        email,
+        password,
+      );
+      return state.value!;
+    });
   }
 
   /// Toggles the visibility of the password.

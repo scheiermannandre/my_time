@@ -34,6 +34,8 @@ class AuthRepositoryImpl implements AuthRepository {
     } on FirebaseAuthException catch (e) {
       if (e.code == 'email-already-in-use') {
         throw const CustomAppException.userAlreadyExists();
+      } else if (e.code == 'network-request-failed') {
+        throw const CustomAppException.networkRequestFailed();
       }
       throw CustomAppException.unexpected(e.message ?? '');
     } on Exception catch (e) {
@@ -49,13 +51,39 @@ class AuthRepositoryImpl implements AuthRepository {
   Future<void> signInWithEmailAndPassword(
     String email,
     String password,
-  ) =>
-      ref
+  ) async {
+    try {
+      await ref
           .read(firebaseDataSourceProvider)
           .signInWithEmailAndPassword(email, password);
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found' ||
+          e.code == 'wrong-password' ||
+          e.code == 'INVALID_LOGIN_CREDENTIALS') {
+        throw const CustomAppException.invalidCredentials();
+      } else if (e.code == 'user-disabled') {
+        throw const CustomAppException.userDisabled();
+      } else if (e.code == 'network-request-failed') {
+        throw const CustomAppException.networkRequestFailed();
+      }
+      throw CustomAppException.unexpected(e.message ?? '');
+    } on Exception catch (e) {
+      throw CustomAppException.unexpected(e.toString());
+    }
+  }
 
   @override
-  Future<void> signOut() => ref.read(firebaseDataSourceProvider).signOut();
+  Future<void> signOut() async {
+    try {
+      await ref.read(firebaseDataSourceProvider).signOut();
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'network-request-failed') {
+        throw const CustomAppException.networkRequestFailed();
+      }
+    } on Exception catch (e) {
+      throw CustomAppException.unexpected(e.toString());
+    }
+  }
 
   @override
   Future<void> sendPasswordResetEmail(String email) =>

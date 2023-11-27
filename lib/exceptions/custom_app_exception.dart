@@ -27,8 +27,19 @@ class CustomAppException with _$CustomAppException implements Exception {
   /// Unexpected exception.
   const factory CustomAppException.unexpected(String status) = Unexpected;
 
-  /// User already exists exception.
+  /// Thrown when an email adress is trying to be signed up, which is
+  /// already in use.
   const factory CustomAppException.userAlreadyExists() = UserAlreadyExists;
+
+  /// Throw when the user enters invalid credentials.
+  const factory CustomAppException.invalidCredentials() = InvalidCredentials;
+
+  /// Thrown when the user is disabled.
+  const factory CustomAppException.userDisabled() = UserDisabled;
+
+  /// Thrown when there are some issues with the network.
+  const factory CustomAppException.networkRequestFailed() =
+      NetworkRequestFailed;
 }
 
 /// Exception data for the custom exception
@@ -81,6 +92,18 @@ extension CustomAppExceptioDetails on CustomAppException {
       userAlreadyExists: () => CustomAppExceptionData(
         code: '007',
         message: loc.userAlreadyExistsException,
+      ),
+      invalidCredentials: () => CustomAppExceptionData(
+        code: '008',
+        message: loc.invalidCredentialsException,
+      ),
+      userDisabled: () => CustomAppExceptionData(
+        code: '009',
+        message: loc.userDisabledException,
+      ),
+      networkRequestFailed: () => CustomAppExceptionData(
+        code: '010',
+        message: loc.networkRequestFailedException,
       ),
       unexpected: (status) => CustomAppExceptionData(
         code: '500',

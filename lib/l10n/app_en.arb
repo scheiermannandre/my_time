@@ -9,6 +9,9 @@
     "multipleTimerStartsException": "Can't run multiple project timers at once! Multi-Tasking is bad for you!",
     "timerDataNotFoundException": "TimerData not found! Please contact me and send me a screenshot: dev.scheiermann@gmail.com",
     "userAlreadyExistsException": "You are trying to register a user that already exists, please Sign In to use your account.\n\nIf you have forgotten your password, you will need to reset it at the Sign In page.",
+    "invalidCredentialsException": "The entered credentials are invalid. Please check your input and try again.",
+    "userDisabledException": "Your account has been disabled. Please contact support for further assistance.",
+    "networkRequestFailedException": "Network error (such as timeout, interrupted connection or unreachable host) has occurred. Please try again later.",
     "unexpectedException": "Unexpected error: {message}",
     "@unexpectedException": {
             "placeholders": {

@@ -84,15 +84,6 @@ class SignUpPageController extends _$SignUpPageController with EmailValidator {
       );
       return state.value!;
     });
-
-    // state = AsyncValue.guard(() {
-    //    await authRepo.createUserWithEmailAndPassword(
-    //   email,
-    //   password,
-    // );
-
-    // return   AsyncData(state.value!);
-    // });
     if (state is AsyncError) return;
     postSignUp();
   }

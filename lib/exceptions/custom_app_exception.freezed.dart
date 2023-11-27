@@ -26,6 +26,9 @@ mixin _$CustomAppException {
     required TResult Function() timerDataNotFound,
     required TResult Function(String status) unexpected,
     required TResult Function() userAlreadyExists,
+    required TResult Function() invalidCredentials,
+    required TResult Function() userDisabled,
+    required TResult Function() networkRequestFailed,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -38,6 +41,9 @@ mixin _$CustomAppException {
     TResult? Function()? timerDataNotFound,
     TResult? Function(String status)? unexpected,
     TResult? Function()? userAlreadyExists,
+    TResult? Function()? invalidCredentials,
+    TResult? Function()? userDisabled,
+    TResult? Function()? networkRequestFailed,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -50,6 +56,9 @@ mixin _$CustomAppException {
     TResult Function()? timerDataNotFound,
     TResult Function(String status)? unexpected,
     TResult Function()? userAlreadyExists,
+    TResult Function()? invalidCredentials,
+    TResult Function()? userDisabled,
+    TResult Function()? networkRequestFailed,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -63,6 +72,9 @@ mixin _$CustomAppException {
     required TResult Function(TimerDataNotFound value) timerDataNotFound,
     required TResult Function(Unexpected value) unexpected,
     required TResult Function(UserAlreadyExists value) userAlreadyExists,
+    required TResult Function(InvalidCredentials value) invalidCredentials,
+    required TResult Function(UserDisabled value) userDisabled,
+    required TResult Function(NetworkRequestFailed value) networkRequestFailed,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -75,6 +87,9 @@ mixin _$CustomAppException {
     TResult? Function(TimerDataNotFound value)? timerDataNotFound,
     TResult? Function(Unexpected value)? unexpected,
     TResult? Function(UserAlreadyExists value)? userAlreadyExists,
+    TResult? Function(InvalidCredentials value)? invalidCredentials,
+    TResult? Function(UserDisabled value)? userDisabled,
+    TResult? Function(NetworkRequestFailed value)? networkRequestFailed,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -87,6 +102,9 @@ mixin _$CustomAppException {
     TResult Function(TimerDataNotFound value)? timerDataNotFound,
     TResult Function(Unexpected value)? unexpected,
     TResult Function(UserAlreadyExists value)? userAlreadyExists,
+    TResult Function(InvalidCredentials value)? invalidCredentials,
+    TResult Function(UserDisabled value)? userDisabled,
+    TResult Function(NetworkRequestFailed value)? networkRequestFailed,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -156,6 +174,9 @@ class _$EntryNotFoundImpl implements EntryNotFound {
     required TResult Function() timerDataNotFound,
     required TResult Function(String status) unexpected,
     required TResult Function() userAlreadyExists,
+    required TResult Function() invalidCredentials,
+    required TResult Function() userDisabled,
+    required TResult Function() networkRequestFailed,
   }) {
     return entryNotFound();
   }
@@ -171,6 +192,9 @@ class _$EntryNotFoundImpl implements EntryNotFound {
     TResult? Function()? timerDataNotFound,
     TResult? Function(String status)? unexpected,
     TResult? Function()? userAlreadyExists,
+    TResult? Function()? invalidCredentials,
+    TResult? Function()? userDisabled,
+    TResult? Function()? networkRequestFailed,
   }) {
     return entryNotFound?.call();
   }
@@ -186,6 +210,9 @@ class _$EntryNotFoundImpl implements EntryNotFound {
     TResult Function()? timerDataNotFound,
     TResult Function(String status)? unexpected,
     TResult Function()? userAlreadyExists,
+    TResult Function()? invalidCredentials,
+    TResult Function()? userDisabled,
+    TResult Function()? networkRequestFailed,
     required TResult orElse(),
   }) {
     if (entryNotFound != null) {
@@ -205,6 +232,9 @@ class _$EntryNotFoundImpl implements EntryNotFound {
     required TResult Function(TimerDataNotFound value) timerDataNotFound,
     required TResult Function(Unexpected value) unexpected,
     required TResult Function(UserAlreadyExists value) userAlreadyExists,
+    required TResult Function(InvalidCredentials value) invalidCredentials,
+    required TResult Function(UserDisabled value) userDisabled,
+    required TResult Function(NetworkRequestFailed value) networkRequestFailed,
   }) {
     return entryNotFound(this);
   }
@@ -220,6 +250,9 @@ class _$EntryNotFoundImpl implements EntryNotFound {
     TResult? Function(TimerDataNotFound value)? timerDataNotFound,
     TResult? Function(Unexpected value)? unexpected,
     TResult? Function(UserAlreadyExists value)? userAlreadyExists,
+    TResult? Function(InvalidCredentials value)? invalidCredentials,
+    TResult? Function(UserDisabled value)? userDisabled,
+    TResult? Function(NetworkRequestFailed value)? networkRequestFailed,
   }) {
     return entryNotFound?.call(this);
   }
@@ -235,6 +268,9 @@ class _$EntryNotFoundImpl implements EntryNotFound {
     TResult Function(TimerDataNotFound value)? timerDataNotFound,
     TResult Function(Unexpected value)? unexpected,
     TResult Function(UserAlreadyExists value)? userAlreadyExists,
+    TResult Function(InvalidCredentials value)? invalidCredentials,
+    TResult Function(UserDisabled value)? userDisabled,
+    TResult Function(NetworkRequestFailed value)? networkRequestFailed,
     required TResult orElse(),
   }) {
     if (entryNotFound != null) {
@@ -294,6 +330,9 @@ class _$TimeRangesOverlapImpl implements TimeRangesOverlap {
     required TResult Function() timerDataNotFound,
     required TResult Function(String status) unexpected,
     required TResult Function() userAlreadyExists,
+    required TResult Function() invalidCredentials,
+    required TResult Function() userDisabled,
+    required TResult Function() networkRequestFailed,
   }) {
     return timeRangesOverlap();
   }
@@ -309,6 +348,9 @@ class _$TimeRangesOverlapImpl implements TimeRangesOverlap {
     TResult? Function()? timerDataNotFound,
     TResult? Function(String status)? unexpected,
     TResult? Function()? userAlreadyExists,
+    TResult? Function()? invalidCredentials,
+    TResult? Function()? userDisabled,
+    TResult? Function()? networkRequestFailed,
   }) {
     return timeRangesOverlap?.call();
   }
@@ -324,6 +366,9 @@ class _$TimeRangesOverlapImpl implements TimeRangesOverlap {
     TResult Function()? timerDataNotFound,
     TResult Function(String status)? unexpected,
     TResult Function()? userAlreadyExists,
+    TResult Function()? invalidCredentials,
+    TResult Function()? userDisabled,
+    TResult Function()? networkRequestFailed,
     required TResult orElse(),
   }) {
     if (timeRangesOverlap != null) {
@@ -343,6 +388,9 @@ class _$TimeRangesOverlapImpl implements TimeRangesOverlap {
     required TResult Function(TimerDataNotFound value) timerDataNotFound,
     required TResult Function(Unexpected value) unexpected,
     required TResult Function(UserAlreadyExists value) userAlreadyExists,
+    required TResult Function(InvalidCredentials value) invalidCredentials,
+    required TResult Function(UserDisabled value) userDisabled,
+    required TResult Function(NetworkRequestFailed value) networkRequestFailed,
   }) {
     return timeRangesOverlap(this);
   }
@@ -358,6 +406,9 @@ class _$TimeRangesOverlapImpl implements TimeRangesOverlap {
     TResult? Function(TimerDataNotFound value)? timerDataNotFound,
     TResult? Function(Unexpected value)? unexpected,
     TResult? Function(UserAlreadyExists value)? userAlreadyExists,
+    TResult? Function(InvalidCredentials value)? invalidCredentials,
+    TResult? Function(UserDisabled value)? userDisabled,
+    TResult? Function(NetworkRequestFailed value)? networkRequestFailed,
   }) {
     return timeRangesOverlap?.call(this);
   }
@@ -373,6 +424,9 @@ class _$TimeRangesOverlapImpl implements TimeRangesOverlap {
     TResult Function(TimerDataNotFound value)? timerDataNotFound,
     TResult Function(Unexpected value)? unexpected,
     TResult Function(UserAlreadyExists value)? userAlreadyExists,
+    TResult Function(InvalidCredentials value)? invalidCredentials,
+    TResult Function(UserDisabled value)? userDisabled,
+    TResult Function(NetworkRequestFailed value)? networkRequestFailed,
     required TResult orElse(),
   }) {
     if (timeRangesOverlap != null) {
@@ -432,6 +486,9 @@ class _$ProjectNotFoundImpl implements ProjectNotFound {
     required TResult Function() timerDataNotFound,
     required TResult Function(String status) unexpected,
     required TResult Function() userAlreadyExists,
+    required TResult Function() invalidCredentials,
+    required TResult Function() userDisabled,
+    required TResult Function() networkRequestFailed,
   }) {
     return projectNotFound();
   }
@@ -447,6 +504,9 @@ class _$ProjectNotFoundImpl implements ProjectNotFound {
     TResult? Function()? timerDataNotFound,
     TResult? Function(String status)? unexpected,
     TResult? Function()? userAlreadyExists,
+    TResult? Function()? invalidCredentials,
+    TResult? Function()? userDisabled,
+    TResult? Function()? networkRequestFailed,
   }) {
     return projectNotFound?.call();
   }
@@ -462,6 +522,9 @@ class _$ProjectNotFoundImpl implements ProjectNotFound {
     TResult Function()? timerDataNotFound,
     TResult Function(String status)? unexpected,
     TResult Function()? userAlreadyExists,
+    TResult Function()? invalidCredentials,
+    TResult Function()? userDisabled,
+    TResult Function()? networkRequestFailed,
     required TResult orElse(),
   }) {
     if (projectNotFound != null) {
@@ -481,6 +544,9 @@ class _$ProjectNotFoundImpl implements ProjectNotFound {
     required TResult Function(TimerDataNotFound value) timerDataNotFound,
     required TResult Function(Unexpected value) unexpected,
     required TResult Function(UserAlreadyExists value) userAlreadyExists,
+    required TResult Function(InvalidCredentials value) invalidCredentials,
+    required TResult Function(UserDisabled value) userDisabled,
+    required TResult Function(NetworkRequestFailed value) networkRequestFailed,
   }) {
     return projectNotFound(this);
   }
@@ -496,6 +562,9 @@ class _$ProjectNotFoundImpl implements ProjectNotFound {
     TResult? Function(TimerDataNotFound value)? timerDataNotFound,
     TResult? Function(Unexpected value)? unexpected,
     TResult? Function(UserAlreadyExists value)? userAlreadyExists,
+    TResult? Function(InvalidCredentials value)? invalidCredentials,
+    TResult? Function(UserDisabled value)? userDisabled,
+    TResult? Function(NetworkRequestFailed value)? networkRequestFailed,
   }) {
     return projectNotFound?.call(this);
   }
@@ -511,6 +580,9 @@ class _$ProjectNotFoundImpl implements ProjectNotFound {
     TResult Function(TimerDataNotFound value)? timerDataNotFound,
     TResult Function(Unexpected value)? unexpected,
     TResult Function(UserAlreadyExists value)? userAlreadyExists,
+    TResult Function(InvalidCredentials value)? invalidCredentials,
+    TResult Function(UserDisabled value)? userDisabled,
+    TResult Function(NetworkRequestFailed value)? networkRequestFailed,
     required TResult orElse(),
   }) {
     if (projectNotFound != null) {
@@ -570,6 +642,9 @@ class _$GroupNotFoundImpl implements GroupNotFound {
     required TResult Function() timerDataNotFound,
     required TResult Function(String status) unexpected,
     required TResult Function() userAlreadyExists,
+    required TResult Function() invalidCredentials,
+    required TResult Function() userDisabled,
+    required TResult Function() networkRequestFailed,
   }) {
     return groupNotFound();
   }
@@ -585,6 +660,9 @@ class _$GroupNotFoundImpl implements GroupNotFound {
     TResult? Function()? timerDataNotFound,
     TResult? Function(String status)? unexpected,
     TResult? Function()? userAlreadyExists,
+    TResult? Function()? invalidCredentials,
+    TResult? Function()? userDisabled,
+    TResult? Function()? networkRequestFailed,
   }) {
     return groupNotFound?.call();
   }
@@ -600,6 +678,9 @@ class _$GroupNotFoundImpl implements GroupNotFound {
     TResult Function()? timerDataNotFound,
     TResult Function(String status)? unexpected,
     TResult Function()? userAlreadyExists,
+    TResult Function()? invalidCredentials,
+    TResult Function()? userDisabled,
+    TResult Function()? networkRequestFailed,
     required TResult orElse(),
   }) {
     if (groupNotFound != null) {
@@ -619,6 +700,9 @@ class _$GroupNotFoundImpl implements GroupNotFound {
     required TResult Function(TimerDataNotFound value) timerDataNotFound,
     required TResult Function(Unexpected value) unexpected,
     required TResult Function(UserAlreadyExists value) userAlreadyExists,
+    required TResult Function(InvalidCredentials value) invalidCredentials,
+    required TResult Function(UserDisabled value) userDisabled,
+    required TResult Function(NetworkRequestFailed value) networkRequestFailed,
   }) {
     return groupNotFound(this);
   }
@@ -634,6 +718,9 @@ class _$GroupNotFoundImpl implements GroupNotFound {
     TResult? Function(TimerDataNotFound value)? timerDataNotFound,
     TResult? Function(Unexpected value)? unexpected,
     TResult? Function(UserAlreadyExists value)? userAlreadyExists,
+    TResult? Function(InvalidCredentials value)? invalidCredentials,
+    TResult? Function(UserDisabled value)? userDisabled,
+    TResult? Function(NetworkRequestFailed value)? networkRequestFailed,
   }) {
     return groupNotFound?.call(this);
   }
@@ -649,6 +736,9 @@ class _$GroupNotFoundImpl implements GroupNotFound {
     TResult Function(TimerDataNotFound value)? timerDataNotFound,
     TResult Function(Unexpected value)? unexpected,
     TResult Function(UserAlreadyExists value)? userAlreadyExists,
+    TResult Function(InvalidCredentials value)? invalidCredentials,
+    TResult Function(UserDisabled value)? userDisabled,
+    TResult Function(NetworkRequestFailed value)? networkRequestFailed,
     required TResult orElse(),
   }) {
     if (groupNotFound != null) {
@@ -709,6 +799,9 @@ class _$MultipleTimerStartsImpl implements MultipleTimerStarts {
     required TResult Function() timerDataNotFound,
     required TResult Function(String status) unexpected,
     required TResult Function() userAlreadyExists,
+    required TResult Function() invalidCredentials,
+    required TResult Function() userDisabled,
+    required TResult Function() networkRequestFailed,
   }) {
     return multipleTimerStarts();
   }
@@ -724,6 +817,9 @@ class _$MultipleTimerStartsImpl implements MultipleTimerStarts {
     TResult? Function()? timerDataNotFound,
     TResult? Function(String status)? unexpected,
     TResult? Function()? userAlreadyExists,
+    TResult? Function()? invalidCredentials,
+    TResult? Function()? userDisabled,
+    TResult? Function()? networkRequestFailed,
   }) {
     return multipleTimerStarts?.call();
   }
@@ -739,6 +835,9 @@ class _$MultipleTimerStartsImpl implements MultipleTimerStarts {
     TResult Function()? timerDataNotFound,
     TResult Function(String status)? unexpected,
     TResult Function()? userAlreadyExists,
+    TResult Function()? invalidCredentials,
+    TResult Function()? userDisabled,
+    TResult Function()? networkRequestFailed,
     required TResult orElse(),
   }) {
     if (multipleTimerStarts != null) {
@@ -758,6 +857,9 @@ class _$MultipleTimerStartsImpl implements MultipleTimerStarts {
     required TResult Function(TimerDataNotFound value) timerDataNotFound,
     required TResult Function(Unexpected value) unexpected,
     required TResult Function(UserAlreadyExists value) userAlreadyExists,
+    required TResult Function(InvalidCredentials value) invalidCredentials,
+    required TResult Function(UserDisabled value) userDisabled,
+    required TResult Function(NetworkRequestFailed value) networkRequestFailed,
   }) {
     return multipleTimerStarts(this);
   }
@@ -773,6 +875,9 @@ class _$MultipleTimerStartsImpl implements MultipleTimerStarts {
     TResult? Function(TimerDataNotFound value)? timerDataNotFound,
     TResult? Function(Unexpected value)? unexpected,
     TResult? Function(UserAlreadyExists value)? userAlreadyExists,
+    TResult? Function(InvalidCredentials value)? invalidCredentials,
+    TResult? Function(UserDisabled value)? userDisabled,
+    TResult? Function(NetworkRequestFailed value)? networkRequestFailed,
   }) {
     return multipleTimerStarts?.call(this);
   }
@@ -788,6 +893,9 @@ class _$MultipleTimerStartsImpl implements MultipleTimerStarts {
     TResult Function(TimerDataNotFound value)? timerDataNotFound,
     TResult Function(Unexpected value)? unexpected,
     TResult Function(UserAlreadyExists value)? userAlreadyExists,
+    TResult Function(InvalidCredentials value)? invalidCredentials,
+    TResult Function(UserDisabled value)? userDisabled,
+    TResult Function(NetworkRequestFailed value)? networkRequestFailed,
     required TResult orElse(),
   }) {
     if (multipleTimerStarts != null) {
@@ -847,6 +955,9 @@ class _$TimerDataNotFoundImpl implements TimerDataNotFound {
     required TResult Function() timerDataNotFound,
     required TResult Function(String status) unexpected,
     required TResult Function() userAlreadyExists,
+    required TResult Function() invalidCredentials,
+    required TResult Function() userDisabled,
+    required TResult Function() networkRequestFailed,
   }) {
     return timerDataNotFound();
   }
@@ -862,6 +973,9 @@ class _$TimerDataNotFoundImpl implements TimerDataNotFound {
     TResult? Function()? timerDataNotFound,
     TResult? Function(String status)? unexpected,
     TResult? Function()? userAlreadyExists,
+    TResult? Function()? invalidCredentials,
+    TResult? Function()? userDisabled,
+    TResult? Function()? networkRequestFailed,
   }) {
     return timerDataNotFound?.call();
   }
@@ -877,6 +991,9 @@ class _$TimerDataNotFoundImpl implements TimerDataNotFound {
     TResult Function()? timerDataNotFound,
     TResult Function(String status)? unexpected,
     TResult Function()? userAlreadyExists,
+    TResult Function()? invalidCredentials,
+    TResult Function()? userDisabled,
+    TResult Function()? networkRequestFailed,
     required TResult orElse(),
   }) {
     if (timerDataNotFound != null) {
@@ -896,6 +1013,9 @@ class _$TimerDataNotFoundImpl implements TimerDataNotFound {
     required TResult Function(TimerDataNotFound value) timerDataNotFound,
     required TResult Function(Unexpected value) unexpected,
     required TResult Function(UserAlreadyExists value) userAlreadyExists,
+    required TResult Function(InvalidCredentials value) invalidCredentials,
+    required TResult Function(UserDisabled value) userDisabled,
+    required TResult Function(NetworkRequestFailed value) networkRequestFailed,
   }) {
     return timerDataNotFound(this);
   }
@@ -911,6 +1031,9 @@ class _$TimerDataNotFoundImpl implements TimerDataNotFound {
     TResult? Function(TimerDataNotFound value)? timerDataNotFound,
     TResult? Function(Unexpected value)? unexpected,
     TResult? Function(UserAlreadyExists value)? userAlreadyExists,
+    TResult? Function(InvalidCredentials value)? invalidCredentials,
+    TResult? Function(UserDisabled value)? userDisabled,
+    TResult? Function(NetworkRequestFailed value)? networkRequestFailed,
   }) {
     return timerDataNotFound?.call(this);
   }
@@ -926,6 +1049,9 @@ class _$TimerDataNotFoundImpl implements TimerDataNotFound {
     TResult Function(TimerDataNotFound value)? timerDataNotFound,
     TResult Function(Unexpected value)? unexpected,
     TResult Function(UserAlreadyExists value)? userAlreadyExists,
+    TResult Function(InvalidCredentials value)? invalidCredentials,
+    TResult Function(UserDisabled value)? userDisabled,
+    TResult Function(NetworkRequestFailed value)? networkRequestFailed,
     required TResult orElse(),
   }) {
     if (timerDataNotFound != null) {
@@ -1011,6 +1137,9 @@ class _$UnexpectedImpl implements Unexpected {
     required TResult Function() timerDataNotFound,
     required TResult Function(String status) unexpected,
     required TResult Function() userAlreadyExists,
+    required TResult Function() invalidCredentials,
+    required TResult Function() userDisabled,
+    required TResult Function() networkRequestFailed,
   }) {
     return unexpected(status);
   }
@@ -1026,6 +1155,9 @@ class _$UnexpectedImpl implements Unexpected {
     TResult? Function()? timerDataNotFound,
     TResult? Function(String status)? unexpected,
     TResult? Function()? userAlreadyExists,
+    TResult? Function()? invalidCredentials,
+    TResult? Function()? userDisabled,
+    TResult? Function()? networkRequestFailed,
   }) {
     return unexpected?.call(status);
   }
@@ -1041,6 +1173,9 @@ class _$UnexpectedImpl implements Unexpected {
     TResult Function()? timerDataNotFound,
     TResult Function(String status)? unexpected,
     TResult Function()? userAlreadyExists,
+    TResult Function()? invalidCredentials,
+    TResult Function()? userDisabled,
+    TResult Function()? networkRequestFailed,
     required TResult orElse(),
   }) {
     if (unexpected != null) {
@@ -1060,6 +1195,9 @@ class _$UnexpectedImpl implements Unexpected {
     required TResult Function(TimerDataNotFound value) timerDataNotFound,
     required TResult Function(Unexpected value) unexpected,
     required TResult Function(UserAlreadyExists value) userAlreadyExists,
+    required TResult Function(InvalidCredentials value) invalidCredentials,
+    required TResult Function(UserDisabled value) userDisabled,
+    required TResult Function(NetworkRequestFailed value) networkRequestFailed,
   }) {
     return unexpected(this);
   }
@@ -1075,6 +1213,9 @@ class _$UnexpectedImpl implements Unexpected {
     TResult? Function(TimerDataNotFound value)? timerDataNotFound,
     TResult? Function(Unexpected value)? unexpected,
     TResult? Function(UserAlreadyExists value)? userAlreadyExists,
+    TResult? Function(InvalidCredentials value)? invalidCredentials,
+    TResult? Function(UserDisabled value)? userDisabled,
+    TResult? Function(NetworkRequestFailed value)? networkRequestFailed,
   }) {
     return unexpected?.call(this);
   }
@@ -1090,6 +1231,9 @@ class _$UnexpectedImpl implements Unexpected {
     TResult Function(TimerDataNotFound value)? timerDataNotFound,
     TResult Function(Unexpected value)? unexpected,
     TResult Function(UserAlreadyExists value)? userAlreadyExists,
+    TResult Function(InvalidCredentials value)? invalidCredentials,
+    TResult Function(UserDisabled value)? userDisabled,
+    TResult Function(NetworkRequestFailed value)? networkRequestFailed,
     required TResult orElse(),
   }) {
     if (unexpected != null) {
@@ -1154,6 +1298,9 @@ class _$UserAlreadyExistsImpl implements UserAlreadyExists {
     required TResult Function() timerDataNotFound,
     required TResult Function(String status) unexpected,
     required TResult Function() userAlreadyExists,
+    required TResult Function() invalidCredentials,
+    required TResult Function() userDisabled,
+    required TResult Function() networkRequestFailed,
   }) {
     return userAlreadyExists();
   }
@@ -1169,6 +1316,9 @@ class _$UserAlreadyExistsImpl implements UserAlreadyExists {
     TResult? Function()? timerDataNotFound,
     TResult? Function(String status)? unexpected,
     TResult? Function()? userAlreadyExists,
+    TResult? Function()? invalidCredentials,
+    TResult? Function()? userDisabled,
+    TResult? Function()? networkRequestFailed,
   }) {
     return userAlreadyExists?.call();
   }
@@ -1184,6 +1334,9 @@ class _$UserAlreadyExistsImpl implements UserAlreadyExists {
     TResult Function()? timerDataNotFound,
     TResult Function(String status)? unexpected,
     TResult Function()? userAlreadyExists,
+    TResult Function()? invalidCredentials,
+    TResult Function()? userDisabled,
+    TResult Function()? networkRequestFailed,
     required TResult orElse(),
   }) {
     if (userAlreadyExists != null) {
@@ -1203,6 +1356,9 @@ class _$UserAlreadyExistsImpl implements UserAlreadyExists {
     required TResult Function(TimerDataNotFound value) timerDataNotFound,
     required TResult Function(Unexpected value) unexpected,
     required TResult Function(UserAlreadyExists value) userAlreadyExists,
+    required TResult Function(InvalidCredentials value) invalidCredentials,
+    required TResult Function(UserDisabled value) userDisabled,
+    required TResult Function(NetworkRequestFailed value) networkRequestFailed,
   }) {
     return userAlreadyExists(this);
   }
@@ -1218,6 +1374,9 @@ class _$UserAlreadyExistsImpl implements UserAlreadyExists {
     TResult? Function(TimerDataNotFound value)? timerDataNotFound,
     TResult? Function(Unexpected value)? unexpected,
     TResult? Function(UserAlreadyExists value)? userAlreadyExists,
+    TResult? Function(InvalidCredentials value)? invalidCredentials,
+    TResult? Function(UserDisabled value)? userDisabled,
+    TResult? Function(NetworkRequestFailed value)? networkRequestFailed,
   }) {
     return userAlreadyExists?.call(this);
   }
@@ -1233,6 +1392,9 @@ class _$UserAlreadyExistsImpl implements UserAlreadyExists {
     TResult Function(TimerDataNotFound value)? timerDataNotFound,
     TResult Function(Unexpected value)? unexpected,
     TResult Function(UserAlreadyExists value)? userAlreadyExists,
+    TResult Function(InvalidCredentials value)? invalidCredentials,
+    TResult Function(UserDisabled value)? userDisabled,
+    TResult Function(NetworkRequestFailed value)? networkRequestFailed,
     required TResult orElse(),
   }) {
     if (userAlreadyExists != null) {
@@ -1244,4 +1406,473 @@ class _$UserAlreadyExistsImpl implements UserAlreadyExists {
 
 abstract class UserAlreadyExists implements CustomAppException {
   const factory UserAlreadyExists() = _$UserAlreadyExistsImpl;
+}
+
+/// @nodoc
+abstract class _$$InvalidCredentialsImplCopyWith<$Res> {
+  factory _$$InvalidCredentialsImplCopyWith(_$InvalidCredentialsImpl value,
+          $Res Function(_$InvalidCredentialsImpl) then) =
+      __$$InvalidCredentialsImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$InvalidCredentialsImplCopyWithImpl<$Res>
+    extends _$CustomAppExceptionCopyWithImpl<$Res, _$InvalidCredentialsImpl>
+    implements _$$InvalidCredentialsImplCopyWith<$Res> {
+  __$$InvalidCredentialsImplCopyWithImpl(_$InvalidCredentialsImpl _value,
+      $Res Function(_$InvalidCredentialsImpl) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$InvalidCredentialsImpl implements InvalidCredentials {
+  const _$InvalidCredentialsImpl();
+
+  @override
+  String toString() {
+    return 'CustomAppException.invalidCredentials()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$InvalidCredentialsImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() entryNotFound,
+    required TResult Function() timeRangesOverlap,
+    required TResult Function() projectNotFound,
+    required TResult Function() groupNotFound,
+    required TResult Function() multipleTimerStarts,
+    required TResult Function() timerDataNotFound,
+    required TResult Function(String status) unexpected,
+    required TResult Function() userAlreadyExists,
+    required TResult Function() invalidCredentials,
+    required TResult Function() userDisabled,
+    required TResult Function() networkRequestFailed,
+  }) {
+    return invalidCredentials();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? entryNotFound,
+    TResult? Function()? timeRangesOverlap,
+    TResult? Function()? projectNotFound,
+    TResult? Function()? groupNotFound,
+    TResult? Function()? multipleTimerStarts,
+    TResult? Function()? timerDataNotFound,
+    TResult? Function(String status)? unexpected,
+    TResult? Function()? userAlreadyExists,
+    TResult? Function()? invalidCredentials,
+    TResult? Function()? userDisabled,
+    TResult? Function()? networkRequestFailed,
+  }) {
+    return invalidCredentials?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? entryNotFound,
+    TResult Function()? timeRangesOverlap,
+    TResult Function()? projectNotFound,
+    TResult Function()? groupNotFound,
+    TResult Function()? multipleTimerStarts,
+    TResult Function()? timerDataNotFound,
+    TResult Function(String status)? unexpected,
+    TResult Function()? userAlreadyExists,
+    TResult Function()? invalidCredentials,
+    TResult Function()? userDisabled,
+    TResult Function()? networkRequestFailed,
+    required TResult orElse(),
+  }) {
+    if (invalidCredentials != null) {
+      return invalidCredentials();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(EntryNotFound value) entryNotFound,
+    required TResult Function(TimeRangesOverlap value) timeRangesOverlap,
+    required TResult Function(ProjectNotFound value) projectNotFound,
+    required TResult Function(GroupNotFound value) groupNotFound,
+    required TResult Function(MultipleTimerStarts value) multipleTimerStarts,
+    required TResult Function(TimerDataNotFound value) timerDataNotFound,
+    required TResult Function(Unexpected value) unexpected,
+    required TResult Function(UserAlreadyExists value) userAlreadyExists,
+    required TResult Function(InvalidCredentials value) invalidCredentials,
+    required TResult Function(UserDisabled value) userDisabled,
+    required TResult Function(NetworkRequestFailed value) networkRequestFailed,
+  }) {
+    return invalidCredentials(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(EntryNotFound value)? entryNotFound,
+    TResult? Function(TimeRangesOverlap value)? timeRangesOverlap,
+    TResult? Function(ProjectNotFound value)? projectNotFound,
+    TResult? Function(GroupNotFound value)? groupNotFound,
+    TResult? Function(MultipleTimerStarts value)? multipleTimerStarts,
+    TResult? Function(TimerDataNotFound value)? timerDataNotFound,
+    TResult? Function(Unexpected value)? unexpected,
+    TResult? Function(UserAlreadyExists value)? userAlreadyExists,
+    TResult? Function(InvalidCredentials value)? invalidCredentials,
+    TResult? Function(UserDisabled value)? userDisabled,
+    TResult? Function(NetworkRequestFailed value)? networkRequestFailed,
+  }) {
+    return invalidCredentials?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(EntryNotFound value)? entryNotFound,
+    TResult Function(TimeRangesOverlap value)? timeRangesOverlap,
+    TResult Function(ProjectNotFound value)? projectNotFound,
+    TResult Function(GroupNotFound value)? groupNotFound,
+    TResult Function(MultipleTimerStarts value)? multipleTimerStarts,
+    TResult Function(TimerDataNotFound value)? timerDataNotFound,
+    TResult Function(Unexpected value)? unexpected,
+    TResult Function(UserAlreadyExists value)? userAlreadyExists,
+    TResult Function(InvalidCredentials value)? invalidCredentials,
+    TResult Function(UserDisabled value)? userDisabled,
+    TResult Function(NetworkRequestFailed value)? networkRequestFailed,
+    required TResult orElse(),
+  }) {
+    if (invalidCredentials != null) {
+      return invalidCredentials(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class InvalidCredentials implements CustomAppException {
+  const factory InvalidCredentials() = _$InvalidCredentialsImpl;
+}
+
+/// @nodoc
+abstract class _$$UserDisabledImplCopyWith<$Res> {
+  factory _$$UserDisabledImplCopyWith(
+          _$UserDisabledImpl value, $Res Function(_$UserDisabledImpl) then) =
+      __$$UserDisabledImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$UserDisabledImplCopyWithImpl<$Res>
+    extends _$CustomAppExceptionCopyWithImpl<$Res, _$UserDisabledImpl>
+    implements _$$UserDisabledImplCopyWith<$Res> {
+  __$$UserDisabledImplCopyWithImpl(
+      _$UserDisabledImpl _value, $Res Function(_$UserDisabledImpl) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$UserDisabledImpl implements UserDisabled {
+  const _$UserDisabledImpl();
+
+  @override
+  String toString() {
+    return 'CustomAppException.userDisabled()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$UserDisabledImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() entryNotFound,
+    required TResult Function() timeRangesOverlap,
+    required TResult Function() projectNotFound,
+    required TResult Function() groupNotFound,
+    required TResult Function() multipleTimerStarts,
+    required TResult Function() timerDataNotFound,
+    required TResult Function(String status) unexpected,
+    required TResult Function() userAlreadyExists,
+    required TResult Function() invalidCredentials,
+    required TResult Function() userDisabled,
+    required TResult Function() networkRequestFailed,
+  }) {
+    return userDisabled();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? entryNotFound,
+    TResult? Function()? timeRangesOverlap,
+    TResult? Function()? projectNotFound,
+    TResult? Function()? groupNotFound,
+    TResult? Function()? multipleTimerStarts,
+    TResult? Function()? timerDataNotFound,
+    TResult? Function(String status)? unexpected,
+    TResult? Function()? userAlreadyExists,
+    TResult? Function()? invalidCredentials,
+    TResult? Function()? userDisabled,
+    TResult? Function()? networkRequestFailed,
+  }) {
+    return userDisabled?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? entryNotFound,
+    TResult Function()? timeRangesOverlap,
+    TResult Function()? projectNotFound,
+    TResult Function()? groupNotFound,
+    TResult Function()? multipleTimerStarts,
+    TResult Function()? timerDataNotFound,
+    TResult Function(String status)? unexpected,
+    TResult Function()? userAlreadyExists,
+    TResult Function()? invalidCredentials,
+    TResult Function()? userDisabled,
+    TResult Function()? networkRequestFailed,
+    required TResult orElse(),
+  }) {
+    if (userDisabled != null) {
+      return userDisabled();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(EntryNotFound value) entryNotFound,
+    required TResult Function(TimeRangesOverlap value) timeRangesOverlap,
+    required TResult Function(ProjectNotFound value) projectNotFound,
+    required TResult Function(GroupNotFound value) groupNotFound,
+    required TResult Function(MultipleTimerStarts value) multipleTimerStarts,
+    required TResult Function(TimerDataNotFound value) timerDataNotFound,
+    required TResult Function(Unexpected value) unexpected,
+    required TResult Function(UserAlreadyExists value) userAlreadyExists,
+    required TResult Function(InvalidCredentials value) invalidCredentials,
+    required TResult Function(UserDisabled value) userDisabled,
+    required TResult Function(NetworkRequestFailed value) networkRequestFailed,
+  }) {
+    return userDisabled(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(EntryNotFound value)? entryNotFound,
+    TResult? Function(TimeRangesOverlap value)? timeRangesOverlap,
+    TResult? Function(ProjectNotFound value)? projectNotFound,
+    TResult? Function(GroupNotFound value)? groupNotFound,
+    TResult? Function(MultipleTimerStarts value)? multipleTimerStarts,
+    TResult? Function(TimerDataNotFound value)? timerDataNotFound,
+    TResult? Function(Unexpected value)? unexpected,
+    TResult? Function(UserAlreadyExists value)? userAlreadyExists,
+    TResult? Function(InvalidCredentials value)? invalidCredentials,
+    TResult? Function(UserDisabled value)? userDisabled,
+    TResult? Function(NetworkRequestFailed value)? networkRequestFailed,
+  }) {
+    return userDisabled?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(EntryNotFound value)? entryNotFound,
+    TResult Function(TimeRangesOverlap value)? timeRangesOverlap,
+    TResult Function(ProjectNotFound value)? projectNotFound,
+    TResult Function(GroupNotFound value)? groupNotFound,
+    TResult Function(MultipleTimerStarts value)? multipleTimerStarts,
+    TResult Function(TimerDataNotFound value)? timerDataNotFound,
+    TResult Function(Unexpected value)? unexpected,
+    TResult Function(UserAlreadyExists value)? userAlreadyExists,
+    TResult Function(InvalidCredentials value)? invalidCredentials,
+    TResult Function(UserDisabled value)? userDisabled,
+    TResult Function(NetworkRequestFailed value)? networkRequestFailed,
+    required TResult orElse(),
+  }) {
+    if (userDisabled != null) {
+      return userDisabled(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class UserDisabled implements CustomAppException {
+  const factory UserDisabled() = _$UserDisabledImpl;
+}
+
+/// @nodoc
+abstract class _$$NetworkRequestFailedImplCopyWith<$Res> {
+  factory _$$NetworkRequestFailedImplCopyWith(_$NetworkRequestFailedImpl value,
+          $Res Function(_$NetworkRequestFailedImpl) then) =
+      __$$NetworkRequestFailedImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$NetworkRequestFailedImplCopyWithImpl<$Res>
+    extends _$CustomAppExceptionCopyWithImpl<$Res, _$NetworkRequestFailedImpl>
+    implements _$$NetworkRequestFailedImplCopyWith<$Res> {
+  __$$NetworkRequestFailedImplCopyWithImpl(_$NetworkRequestFailedImpl _value,
+      $Res Function(_$NetworkRequestFailedImpl) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$NetworkRequestFailedImpl implements NetworkRequestFailed {
+  const _$NetworkRequestFailedImpl();
+
+  @override
+  String toString() {
+    return 'CustomAppException.networkRequestFailed()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$NetworkRequestFailedImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() entryNotFound,
+    required TResult Function() timeRangesOverlap,
+    required TResult Function() projectNotFound,
+    required TResult Function() groupNotFound,
+    required TResult Function() multipleTimerStarts,
+    required TResult Function() timerDataNotFound,
+    required TResult Function(String status) unexpected,
+    required TResult Function() userAlreadyExists,
+    required TResult Function() invalidCredentials,
+    required TResult Function() userDisabled,
+    required TResult Function() networkRequestFailed,
+  }) {
+    return networkRequestFailed();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? entryNotFound,
+    TResult? Function()? timeRangesOverlap,
+    TResult? Function()? projectNotFound,
+    TResult? Function()? groupNotFound,
+    TResult? Function()? multipleTimerStarts,
+    TResult? Function()? timerDataNotFound,
+    TResult? Function(String status)? unexpected,
+    TResult? Function()? userAlreadyExists,
+    TResult? Function()? invalidCredentials,
+    TResult? Function()? userDisabled,
+    TResult? Function()? networkRequestFailed,
+  }) {
+    return networkRequestFailed?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? entryNotFound,
+    TResult Function()? timeRangesOverlap,
+    TResult Function()? projectNotFound,
+    TResult Function()? groupNotFound,
+    TResult Function()? multipleTimerStarts,
+    TResult Function()? timerDataNotFound,
+    TResult Function(String status)? unexpected,
+    TResult Function()? userAlreadyExists,
+    TResult Function()? invalidCredentials,
+    TResult Function()? userDisabled,
+    TResult Function()? networkRequestFailed,
+    required TResult orElse(),
+  }) {
+    if (networkRequestFailed != null) {
+      return networkRequestFailed();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(EntryNotFound value) entryNotFound,
+    required TResult Function(TimeRangesOverlap value) timeRangesOverlap,
+    required TResult Function(ProjectNotFound value) projectNotFound,
+    required TResult Function(GroupNotFound value) groupNotFound,
+    required TResult Function(MultipleTimerStarts value) multipleTimerStarts,
+    required TResult Function(TimerDataNotFound value) timerDataNotFound,
+    required TResult Function(Unexpected value) unexpected,
+    required TResult Function(UserAlreadyExists value) userAlreadyExists,
+    required TResult Function(InvalidCredentials value) invalidCredentials,
+    required TResult Function(UserDisabled value) userDisabled,
+    required TResult Function(NetworkRequestFailed value) networkRequestFailed,
+  }) {
+    return networkRequestFailed(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(EntryNotFound value)? entryNotFound,
+    TResult? Function(TimeRangesOverlap value)? timeRangesOverlap,
+    TResult? Function(ProjectNotFound value)? projectNotFound,
+    TResult? Function(GroupNotFound value)? groupNotFound,
+    TResult? Function(MultipleTimerStarts value)? multipleTimerStarts,
+    TResult? Function(TimerDataNotFound value)? timerDataNotFound,
+    TResult? Function(Unexpected value)? unexpected,
+    TResult? Function(UserAlreadyExists value)? userAlreadyExists,
+    TResult? Function(InvalidCredentials value)? invalidCredentials,
+    TResult? Function(UserDisabled value)? userDisabled,
+    TResult? Function(NetworkRequestFailed value)? networkRequestFailed,
+  }) {
+    return networkRequestFailed?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(EntryNotFound value)? entryNotFound,
+    TResult Function(TimeRangesOverlap value)? timeRangesOverlap,
+    TResult Function(ProjectNotFound value)? projectNotFound,
+    TResult Function(GroupNotFound value)? groupNotFound,
+    TResult Function(MultipleTimerStarts value)? multipleTimerStarts,
+    TResult Function(TimerDataNotFound value)? timerDataNotFound,
+    TResult Function(Unexpected value)? unexpected,
+    TResult Function(UserAlreadyExists value)? userAlreadyExists,
+    TResult Function(InvalidCredentials value)? invalidCredentials,
+    TResult Function(UserDisabled value)? userDisabled,
+    TResult Function(NetworkRequestFailed value)? networkRequestFailed,
+    required TResult orElse(),
+  }) {
+    if (networkRequestFailed != null) {
+      return networkRequestFailed(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class NetworkRequestFailed implements CustomAppException {
+  const factory NetworkRequestFailed() = _$NetworkRequestFailedImpl;
 }

@@ -70,7 +70,7 @@ class SignInPageState extends ConsumerState<SignInPage> {
       mightyThemeControllerProvider,
       mightyThemeControllerProvider.notifier,
     );
-    final signIn = ref.watchStateProvider(
+    final signIn = ref.watchAndListenStateProviderError(
       context,
       signInPageControllerProvider,
       signInPageControllerProvider.notifier,
