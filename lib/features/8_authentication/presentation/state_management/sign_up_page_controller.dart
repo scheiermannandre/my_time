@@ -35,7 +35,8 @@ class SignUpPageState {
       return false;
     }
 
-    return passwordStrength!.index >= PasswordStrength.strong.index &&
+    return passwordStrength!.enumValue.index >=
+            PasswordStrengthEnum.strong.index &&
         isEmailValid;
   }
 

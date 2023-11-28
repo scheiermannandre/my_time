@@ -153,6 +153,19 @@ class MyApp extends ConsumerWidget {
       supportedLocales: AppLocalizations.supportedLocales,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       theme: ThemeData(
+        colorScheme: const ColorScheme(
+          brightness: Brightness.light,
+          primary: Colors.white,
+          onPrimary: Colors.white,
+          secondary: Colors.white,
+          onSecondary: Colors.white,
+          error: Colors.red,
+          onError: Colors.white,
+          background: Colors.white,
+          onBackground: Colors.white,
+          surface: Colors.white,
+          onSurface: Colors.white,
+        ),
         // This is needed
         bottomSheetTheme: const BottomSheetThemeData(
           backgroundColor: Colors.transparent,

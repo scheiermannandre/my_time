@@ -35,7 +35,8 @@ class AuthResetPasswordPageState {
     if (passwordStrength == null) {
       return false;
     }
-    return passwordStrength!.index >= PasswordStrength.strong.index;
+    return passwordStrength!.enumValue.index >=
+        PasswordStrengthEnum.strong.index;
   }
 
   /// Copies the current state with optional modifications.

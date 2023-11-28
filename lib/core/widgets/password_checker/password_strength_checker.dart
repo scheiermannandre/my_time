@@ -37,7 +37,7 @@ class _PasswordStrengthCheckerState extends State<PasswordStrengthChecker>
       builder: (_, currentStrength, __) {
         final statusWidget = currentStrength?.statusWidget;
         if (widget.configuration.showStatusWidget &&
-            currentStrength != PasswordStrength.empty) {
+            currentStrength!.enumValue != PasswordStrengthEnum.empty) {
           controller.forward();
         } else {
           controller.reverse();

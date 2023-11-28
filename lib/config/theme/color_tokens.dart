@@ -149,14 +149,14 @@ class LightThemeColorTokens {
   /// Used for alternate backgrounds.
   static const lightestColor = Color(0xFFF5F5F5);
 
-  /// Used for main backgrounds.
-  static const white = Color(0xFFFFFFFF);
+  /// Used for heading text.
+  static const white = ThemelessColorTokens.white;
 
   /// Used for heading text.
-  static const black = Color(0xFF000000);
+  static const black = ThemelessColorTokens.black;
 
   /// Used for error messages.
-  static const errorColor = Color(0xFFF03D3E);
+  static const errorColor = ThemelessColorTokens.red;
 }
 
 /// A class that provides the color tokens for the dark theme.
@@ -165,10 +165,10 @@ class DarkThemeColorTokens {
   static const primaryColor = Color(0xFFFADEB4);
 
   /// Used for heading text.
-  static const white = Color(0xFFFFFFFF);
+  static const white = ThemelessColorTokens.white;
 
   /// Used for heading text.
-  static const black = Color(0xFF000000);
+  static const black = ThemelessColorTokens.black;
 
   /// Used for secondary text.
   static const lightestColor = Color(0xFFF5F5F5);
@@ -186,5 +186,32 @@ class DarkThemeColorTokens {
   static const darkestColor = Color(0xFF414141);
 
   /// Used for error messages.
-  static const errorColor = Color(0xFFF03D3E);
+  static const errorColor = ThemelessColorTokens.red;
+}
+
+/// A class that provides the color tokens that are independet of the theme.
+class ThemelessColorTokens {
+  /// White
+  static const white = Color(0xFFFFFFFF);
+
+  /// Black
+  static const black = Color(0xFF000000);
+
+  /// Red
+  static const red = Color(0xffF11919);
+
+  /// DarkOrange
+  static const darkOrange = Color(0xffF9856D);
+
+  /// lightOrange
+  static const lightOrange = Color(0xffF49B1E);
+
+  /// Yellow
+  static const yellow = Color(0xffF4DE1E);
+
+  /// lightGreen
+  static const lightGreen = Color(0xffA8E234);
+
+  /// Green
+  static const green = Color(0xff52CC15);
 }

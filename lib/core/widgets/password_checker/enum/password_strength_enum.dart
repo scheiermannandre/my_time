@@ -4,25 +4,17 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:my_time/common/extensions/int_extensions.dart';
+import 'package:my_time/config/theme/color_tokens.dart';
 import 'package:my_time/config/theme/mighty_theme.dart';
 import 'package:my_time/config/theme/space_tokens.dart';
+import 'package:my_time/core/modals/mighty_ok_alert_dialog.dart';
 import 'package:my_time/core/util/extentions/widget_ref_extension.dart';
 import 'package:my_time/core/widgets/password_checker/dict/common_passwords.dart';
 import 'package:my_time/core/widgets/spaced_column.dart';
 
-/// The abstract class for the password strength enum.
-// abstract class PasswordStrengthItem {
-//   /// The color for every status.
-//   Color get statusColor;
-
-//   /// The percentual width of every status.
-//   double get widthPerc;
-
-//   /// The widget to show for every status under the bar.
-//   Widget? get statusWidget => null;
-// }
-
-enum PasswordStrength {
+/// Enum for the password strength.
+enum PasswordStrengthEnum {
   /// The password is empty state.
   empty,
 
@@ -45,42 +37,58 @@ enum PasswordStrength {
   veryStrong;
 }
 
+/// Class that holds the password strength as encoded int and as an enum.
+class PasswordStrength {
+  /// Constructor
+  PasswordStrength({
+    required this.numericalValue,
+    required this.enumValue,
+  });
+
+  /// Password strength encoded as integer, the bits tell which conditions are
+  /// fulfilled.
+  final int numericalValue;
+
+  /// Password strength encoded as enum.
+  final PasswordStrengthEnum enumValue;
+}
+
 /// The default enum for the password strength.
 extension PasswordStrengthExtension on PasswordStrength {
   /// The color for every status.
   Color get statusColor {
-    switch (this) {
-      case PasswordStrength.alreadyExposed:
-        return const Color(0xffF11919);
-      case PasswordStrength.veryWeak:
-        return const Color(0xffF9856D);
-      case PasswordStrength.weak:
-        return const Color(0xffF49B1E);
-      case PasswordStrength.medium:
-        return const Color(0xffF4DE1E);
-      case PasswordStrength.strong:
-        return const Color(0xffA8E234);
-      case PasswordStrength.veryStrong:
-        return const Color(0xff52CC15);
+    switch (enumValue) {
+      case PasswordStrengthEnum.alreadyExposed:
+        return ThemelessColorTokens.red;
+      case PasswordStrengthEnum.veryWeak:
+        return ThemelessColorTokens.darkOrange;
+      case PasswordStrengthEnum.weak:
+        return ThemelessColorTokens.lightOrange;
+      case PasswordStrengthEnum.medium:
+        return ThemelessColorTokens.yellow;
+      case PasswordStrengthEnum.strong:
+        return ThemelessColorTokens.lightGreen;
+      case PasswordStrengthEnum.veryStrong:
+        return ThemelessColorTokens.green;
       default:
-        return const Color(0xffF11919);
+        return ThemelessColorTokens.red;
     }
   }
 
   /// The percentual width of every status.
   double get widthPerc {
-    switch (this) {
-      case PasswordStrength.alreadyExposed:
+    switch (enumValue) {
+      case PasswordStrengthEnum.alreadyExposed:
         return 0.075;
-      case PasswordStrength.veryWeak:
+      case PasswordStrengthEnum.veryWeak:
         return 0.20;
-      case PasswordStrength.weak:
+      case PasswordStrengthEnum.weak:
         return 0.4;
-      case PasswordStrength.medium:
+      case PasswordStrengthEnum.medium:
         return 0.6;
-      case PasswordStrength.strong:
+      case PasswordStrengthEnum.strong:
         return 0.8;
-      case PasswordStrength.veryStrong:
+      case PasswordStrengthEnum.veryStrong:
         return 1;
       default:
         return 0;
@@ -94,22 +102,23 @@ extension PasswordStrengthExtension on PasswordStrength {
       message: _message,
       statusColor: statusColor,
       showIcon: _showIcon,
+      passwordStrength: this,
     );
   }
 
   bool get _showIcon {
-    switch (this) {
-      case PasswordStrength.alreadyExposed:
+    switch (enumValue) {
+      case PasswordStrengthEnum.alreadyExposed:
         return true;
-      case PasswordStrength.veryWeak:
+      case PasswordStrengthEnum.veryWeak:
         return false;
-      case PasswordStrength.weak:
+      case PasswordStrengthEnum.weak:
         return false;
-      case PasswordStrength.medium:
+      case PasswordStrengthEnum.medium:
         return false;
-      case PasswordStrength.strong:
+      case PasswordStrengthEnum.strong:
         return false;
-      case PasswordStrength.veryStrong:
+      case PasswordStrengthEnum.veryStrong:
         return true;
       default:
         return false;
@@ -117,18 +126,18 @@ extension PasswordStrengthExtension on PasswordStrength {
   }
 
   String get _info {
-    switch (this) {
-      case PasswordStrength.alreadyExposed:
+    switch (enumValue) {
+      case PasswordStrengthEnum.alreadyExposed:
         return 'Already exposed';
-      case PasswordStrength.veryWeak:
+      case PasswordStrengthEnum.veryWeak:
         return 'Very weak';
-      case PasswordStrength.weak:
+      case PasswordStrengthEnum.weak:
         return 'Weak';
-      case PasswordStrength.medium:
+      case PasswordStrengthEnum.medium:
         return 'Medium';
-      case PasswordStrength.strong:
+      case PasswordStrengthEnum.strong:
         return 'Strong';
-      case PasswordStrength.veryStrong:
+      case PasswordStrengthEnum.veryStrong:
         return 'Very strong';
       default:
         return '';
@@ -136,70 +145,124 @@ extension PasswordStrengthExtension on PasswordStrength {
   }
 
   String get _message {
-    switch (this) {
-      case PasswordStrength.alreadyExposed:
+    switch (enumValue) {
+      case PasswordStrengthEnum.alreadyExposed:
         return '''Very common password that many have used before you''';
-      case PasswordStrength.veryWeak:
+      case PasswordStrengthEnum.veryWeak:
         return '''Oh dear, using that password is like leaving your front door wide open''';
-      case PasswordStrength.weak:
+      case PasswordStrengthEnum.weak:
         return '''Oops, using that password is like leaving your key in the lock.''';
-      case PasswordStrength.medium:
+      case PasswordStrengthEnum.medium:
         return '''Hmm, using that password is like locking your front door, but leaving the key under the mat.''';
-      case PasswordStrength.strong:
+      case PasswordStrengthEnum.strong:
         return '''Good, using that password is like locking your front door and keeping the key in a safety deposit box.''';
-      case PasswordStrength.veryStrong:
+      case PasswordStrengthEnum.veryStrong:
         return '''Fantastic, using that password makes you as secure as Fort Knox.''';
       default:
         return '';
     }
   }
 
-  /// Returns the [PasswordStrength] from the [text] value.
+  /// Returns the [PasswordStrengthEnum] from the [text] value.
   static PasswordStrength? calculate({required String text}) {
     if (text.isEmpty) {
-      return PasswordStrength.empty;
+      return PasswordStrength(
+        numericalValue: 0,
+        enumValue: PasswordStrengthEnum.empty,
+      );
     }
 
+    // if (commonDictionary[text] ?? false) {
+    //   return PasswordStrengthEnum.alreadyExposed;
+    // }
+    var binaryCounter = 0;
+    var strength = PasswordStrengthEnum.veryWeak;
+
+    if (text.length > 8) {
+      binaryCounter = binaryCounter | 32;
+    }
+    if (text.contains(RegExp('[a-z]'))) {
+      binaryCounter = binaryCounter | 16;
+    }
+    if (text.contains(RegExp('[A-Z]'))) {
+      binaryCounter = binaryCounter | 8;
+    }
+    if (text.contains(RegExp('[0-9]'))) {
+      binaryCounter = binaryCounter | 4;
+    }
+    if (text.contains(RegExp(r'[!@#\$%&*()?£\-_=]'))) {
+      binaryCounter = binaryCounter | 2;
+    }
+    if (text.length > 10) {
+      binaryCounter = binaryCounter | 1;
+    }
+
+    final minLengthBit = binaryCounter.getBit(5);
+    final charVariationsSum = binaryCounter.sumBitsInRange(1, 4);
+    final maxLengthBit = binaryCounter.getBit(0);
+
+    if (!minLengthBit || charVariationsSum == 11) {
+      strength = PasswordStrengthEnum.veryWeak;
+    } else if (charVariationsSum == 2) {
+      strength = PasswordStrengthEnum.weak;
+    } else if (charVariationsSum == 3) {
+      strength = PasswordStrengthEnum.medium;
+    } else if (!maxLengthBit && charVariationsSum == 4) {
+      strength = PasswordStrengthEnum.strong;
+    } else if (maxLengthBit && charVariationsSum == 4) {
+      strength = PasswordStrengthEnum.veryStrong;
+    }
     if (commonDictionary[text] ?? false) {
-      return PasswordStrength.alreadyExposed;
+      strength = PasswordStrengthEnum.alreadyExposed;
     }
-
-    if (text.length < 8) {
-      return PasswordStrength.veryWeak;
-    }
-    var counter = 0;
-
-    if (text.contains(RegExp('[a-z]'))) counter++;
-    if (text.contains(RegExp('[A-Z]'))) counter++;
-    if (text.contains(RegExp('[0-9]'))) counter++;
-    if (text.contains(RegExp(r'[!@#\$%&*()?£\-_=]'))) counter++;
-    if (text.length > 10) counter++;
-
-    switch (counter) {
-      case 1:
-        return PasswordStrength.veryWeak;
-      case 2:
-        return PasswordStrength.weak;
-      case 3:
-        return PasswordStrength.medium;
-      case 4:
-        return PasswordStrength.strong;
-      case 5:
-        return PasswordStrength.veryStrong;
-      default:
-        return PasswordStrength.veryWeak;
-    }
+    return PasswordStrength(
+      numericalValue: binaryCounter,
+      enumValue: strength,
+    );
   }
 
   /// Instructions for the password strength.
-  static String get instructions {
-    return 'Enter a password that contains:\n\n'
-        '• At least 8 characters\n'
-        '• At least 1 lowercase letter\n'
-        '• At least 1 uppercase letter\n'
-        '• At least 1 digit\n'
-        '• At least 1 special character\n'
-        '• More than 10 characters';
+  List<String> get _instructionsList {
+    return [
+      'At least 8 characters',
+      'At least 1 lowercase letter',
+      'At least 1 uppercase letter',
+      'At least 1 digit',
+      'At least 1 special character',
+      'More than 10 characters',
+    ];
+  }
+
+  /// Gets the values for each instruction if it is fulfilled or not
+  List<bool> get _instructionsFulfilment {
+    return [
+      numericalValue.getBit(5),
+      numericalValue.getBit(4),
+      numericalValue.getBit(3),
+      numericalValue.getBit(2),
+      numericalValue.getBit(1),
+      numericalValue.getBit(0),
+    ];
+  }
+
+  ///
+  Map<String, bool> get sortedInstructionFulfilmentMap {
+    final instructions = _instructionsList;
+    final fulfilment = _instructionsFulfilment;
+    final instructionsMap = <String, bool>{};
+    for (var i = 0; i < instructions.length; i++) {
+      instructionsMap[instructions[i]] = fulfilment[i];
+    }
+
+    // Convert the map entries to a list and sort by the values
+    final sortedEntries = instructionsMap.entries.toList()
+      ..sort((a, b) => a.value ? 1 : -1);
+
+    // Convert the sorted entries back into a map
+    final sortedMap = {
+      for (final entry in sortedEntries) entry.key: entry.value,
+    };
+    return sortedMap;
   }
 }
 
@@ -211,6 +274,7 @@ class PasswordMessage extends ConsumerStatefulWidget {
     required this.statusColor,
     required this.showIcon,
     required this.info,
+    required this.passwordStrength,
     super.key,
   });
 
@@ -225,6 +289,9 @@ class PasswordMessage extends ConsumerStatefulWidget {
 
   /// Indicates whether to show an icon for the password strength.
   final bool showIcon;
+
+  /// Value of the password strength.
+  final PasswordStrength passwordStrength;
 
   @override
   PasswordMessageState createState() => PasswordMessageState();
@@ -300,10 +367,63 @@ class PasswordMessageState extends ConsumerState<PasswordMessage>
           const SizedBox(width: SpaceTokens.small),
           IconButton(
             icon: Icon(Icons.info, color: theme.controller.secondaryTextColor),
-            onPressed: () {},
+            onPressed: () {
+              showMightyOkAlertDialogCustomContent(
+                context,
+                'Password Policies',
+                PasswordInstructions(
+                  instructions:
+                      widget.passwordStrength.sortedInstructionFulfilmentMap,
+                ),
+              );
+            },
           ),
         ],
       ),
+    );
+  }
+}
+
+/// The widget that shows the instructions for the password strength.
+class PasswordInstructions extends ConsumerWidget {
+  /// Creates a [PasswordInstructions] widget.
+  const PasswordInstructions({required this.instructions, super.key});
+
+  /// The instructions for the password strength classified by fulfilled or not.
+  final Map<String, bool> instructions;
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final theme = ref.watchStateProvider(
+      context,
+      mightyThemeControllerProvider,
+      mightyThemeControllerProvider.notifier,
+    );
+    final textStyle = theme.controller.small;
+    return SingleChildScrollView(
+      child: Column(
+        children: instructions.keys.map((instruction) {
+          final fulfilled = instructions[instruction] ?? false;
+          return _buildInstruction(instruction, fulfilled, textStyle);
+        }).toList(),
+      ),
+    );
+  }
+
+  Widget _buildInstruction(
+    String instruction,
+    bool fulfilled,
+    TextStyle textStyle,
+  ) {
+    return Row(
+      children: [
+        Icon(
+          fulfilled ? Icons.check : Icons.close,
+          color:
+              fulfilled ? ThemelessColorTokens.green : ThemelessColorTokens.red,
+        ),
+        const SizedBox(width: SpaceTokens.small),
+        Text(instruction, style: textStyle),
+      ],
     );
   }
 }
