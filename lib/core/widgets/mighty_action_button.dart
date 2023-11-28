@@ -260,6 +260,10 @@ class ActionButton extends StatefulWidget {
     required bool isLoading,
     required Color iconColor,
     Color? splashColor,
+    EdgeInsetsGeometry? contentPadding = const EdgeInsets.symmetric(
+      vertical: SpaceTokens.mediumSmall,
+      horizontal: SpaceTokens.mediumSmall,
+    ),
     Key? key,
   }) {
     backgroundColor = _getColor(
@@ -288,6 +292,7 @@ class ActionButton extends StatefulWidget {
         borderRadius: radius,
       ),
       indicatorColor: iconColor,
+      contentPadding: contentPadding,
     );
   }
   static Color _getColor({

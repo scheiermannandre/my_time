@@ -10,6 +10,7 @@ import 'package:my_time/config/theme/mighty_theme.dart';
 import 'package:my_time/config/theme/space_tokens.dart';
 import 'package:my_time/core/modals/mighty_ok_alert_dialog.dart';
 import 'package:my_time/core/util/extentions/widget_ref_extension.dart';
+import 'package:my_time/core/widgets/mighty_action_button.dart';
 import 'package:my_time/core/widgets/password_checker/dict/common_passwords.dart';
 import 'package:my_time/core/widgets/spaced_column.dart';
 
@@ -172,9 +173,6 @@ extension PasswordStrengthExtension on PasswordStrength {
       );
     }
 
-    // if (commonDictionary[text] ?? false) {
-    //   return PasswordStrengthEnum.alreadyExposed;
-    // }
     var binaryCounter = 0;
     var strength = PasswordStrengthEnum.veryWeak;
 
@@ -328,34 +326,44 @@ class PasswordMessageState extends ConsumerState<PasswordMessage>
     return Expanded(
       child: Row(
         children: [
-          Row(
-            children: [
-              Icon(Icons.check_circle, color: widget.statusColor),
-              const SizedBox(width: SpaceTokens.small),
-            ],
-          )
-              .animate(controller: _controller, autoPlay: false)
-              .custom(
-                duration: _duration,
-                builder: (context, value, child) {
-                  return SizeTransition(
-                    sizeFactor: _controller,
-                    axis: Axis.horizontal,
-                    child: child,
-                  );
-                },
-              )
-              .fade(
-                duration: _duration,
-              ),
           Expanded(
             child: SpacedColumn(
               spacing: SpaceTokens.verySmall,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  widget.info,
-                  style: theme.controller.smallHeadline,
+                Row(
+                  children: [
+                    Row(
+                      children: [
+                        Icon(
+                          widget.passwordStrength.enumValue ==
+                                  PasswordStrengthEnum.veryStrong
+                              ? Icons.check_circle
+                              : Icons.cancel,
+                          color: widget.statusColor,
+                        ),
+                        const SizedBox(width: SpaceTokens.small),
+                      ],
+                    )
+                        .animate(controller: _controller, autoPlay: false)
+                        .custom(
+                          duration: _duration,
+                          builder: (context, value, child) {
+                            return SizeTransition(
+                              sizeFactor: _controller,
+                              axis: Axis.horizontal,
+                              child: child,
+                            );
+                          },
+                        )
+                        .fade(
+                          duration: _duration,
+                        ),
+                    Text(
+                      widget.info,
+                      style: theme.controller.smallHeadline,
+                    ),
+                  ],
                 ),
                 Text(
                   widget.message,
@@ -365,8 +373,8 @@ class PasswordMessageState extends ConsumerState<PasswordMessage>
             ),
           ),
           const SizedBox(width: SpaceTokens.small),
-          IconButton(
-            icon: Icon(Icons.info, color: theme.controller.secondaryTextColor),
+          ActionButton.roundedIcon(
+            iconData: Icons.info,
             onPressed: () {
               showMightyOkAlertDialogCustomContent(
                 context,
@@ -377,6 +385,9 @@ class PasswordMessageState extends ConsumerState<PasswordMessage>
                 ),
               );
             },
+            backgroundColor: theme.controller.mainBackgroundColor,
+            isLoading: false,
+            iconColor: theme.controller.secondaryTextColor,
           ),
         ],
       ),
