@@ -52,11 +52,8 @@ class EmailAppsUI extends EmailApps {
     if (emailApps.isEmpty) {
       await showMightyOkAlertDialog(
         context,
-        'No email apps found',
-        '''
-Please install your provider's email app to proceed.
-\n\nAlternatively, you can open your email provider's website in the browser and click on the link we have sent to you.
-                       ''',
+        context.loc.emailOpenerNoAppsTitle,
+        context.loc.emailOpenerNoAppsDescription,
       );
       return;
     }

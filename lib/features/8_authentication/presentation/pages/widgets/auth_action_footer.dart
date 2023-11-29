@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:my_time/common/dialogs/policy_dialog.dart';
+import 'package:my_time/common/extensions/build_context_extension.dart';
 import 'package:my_time/config/theme/mighty_theme.dart';
 import 'package:my_time/config/theme/space_tokens.dart';
 import 'package:my_time/core/widgets/spaced_column.dart';
@@ -62,7 +63,7 @@ class AuthActionFooter extends StatelessWidget {
             style: controller.small,
             children: [
               TextSpan(
-                text: 'Terms of Service',
+                text: context.loc.authActionFooterToS,
                 style: controller.small.copyWith(
                   decoration: TextDecoration.underline,
                 ),
@@ -75,11 +76,11 @@ class AuthActionFooter extends StatelessWidget {
                   },
               ),
               TextSpan(
-                text: ' and ',
+                text: context.loc.authActionFooterAnd,
                 style: controller.small,
               ),
               TextSpan(
-                text: 'Privacy Policy.',
+                text: context.loc.authActionFooterPP,
                 style: controller.small.copyWith(
                   decoration: TextDecoration.underline,
                 ),

@@ -1,12 +1,15 @@
+import 'package:flutter/material.dart';
+import 'package:my_time/common/extensions/build_context_extension.dart';
+
 /// Mixin class to be used for client-side email & password validation
 mixin EmailValidator {
   /// Validates the given [value] as an email address.
-  String? validateEmail(String? value) {
+  String? validateEmail(BuildContext context, String? value) {
     if (value == null || value.isEmpty) {
-      return "Email can't be empty";
+      return context.loc.emailValidationEmptyEmail;
     }
     if (!_isEmail(value)) {
-      return 'Invalid email';
+      return context.loc.emailValidationInvalidEmail;
     }
     return null;
   }

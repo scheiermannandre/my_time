@@ -35,7 +35,7 @@ class _PasswordStrengthCheckerState extends State<PasswordStrengthChecker>
     return ValueListenableBuilder(
       valueListenable: widget.strength,
       builder: (_, currentStrength, __) {
-        final statusWidget = currentStrength?.statusWidget;
+        final statusWidget = currentStrength?.getStatusWidget(context);
         if (widget.configuration.showStatusWidget &&
             currentStrength!.enumValue != PasswordStrengthEnum.empty) {
           controller.forward();

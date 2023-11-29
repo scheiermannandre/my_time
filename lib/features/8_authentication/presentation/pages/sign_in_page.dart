@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:my_time/common/extensions/build_context_extension.dart';
 import 'package:my_time/config/theme/mighty_theme.dart';
 import 'package:my_time/config/theme/space_tokens.dart';
 import 'package:my_time/core/util/extentions/widget_ref_extension.dart';
@@ -100,18 +101,19 @@ class SignInPageState extends ConsumerState<SignInPage> {
                   children: [
                     // Displays the title of the authentication page
                     Text(
-                      'Welcome\nBack!',
+                      context.loc.authSignInPageHeader,
                       style: theme.controller.headline1,
                     ),
 
                     // Email text field for sign-in
                     MightyTextFormField(
                       onFocusLost: signIn.controller.setShouldValidateEmail,
-                      validator: signIn.controller.emailValidator,
+                      validator: (value) =>
+                          signIn.controller.emailValidator(context, value),
                       controller: emailTextController,
                       mightyThemeController: theme.controller,
-                      labelText: 'Your e-mail address',
-                      hintText: 'Please enter your e-mail address',
+                      labelText: context.loc.authPagesEmailFieldLabel,
+                      hintText: context.loc.passwordFieldHint,
                       textInputType: TextInputType.emailAddress,
                     ),
 
@@ -123,8 +125,8 @@ class SignInPageState extends ConsumerState<SignInPage> {
                         MightyTextFormField(
                           controller: passwordController,
                           mightyThemeController: theme.controller,
-                          labelText: 'Your password',
-                          hintText: 'Please enter your password',
+                          labelText: context.loc.passwordFieldLabel,
+                          hintText: context.loc.signInPasswordFieldHint,
                           textInputType: TextInputType.visiblePassword,
                           obscureText: state.obscurePassword,
                           suffixIcon: GestureDetector(
@@ -144,7 +146,8 @@ class SignInPageState extends ConsumerState<SignInPage> {
                           child: RichText(
                             textAlign: TextAlign.end,
                             text: TextSpan(
-                              text: 'Forgot your password?',
+                              text: context
+                                  .loc.authSignInPageForgotPasswordButtonLabel,
                               style: theme.controller.small.copyWith(
                                 decoration: TextDecoration.underline,
                               ),
@@ -164,7 +167,7 @@ class SignInPageState extends ConsumerState<SignInPage> {
                     // Button to sign in
                     MightyActionButton.primary(
                       themeController: theme.controller,
-                      label: 'Sign me In!',
+                      label: context.loc.authSignInPageSubmitButtonLabel,
                       onPressed: !state.isSubmitEnabled
                           ? null
                           : () async {
@@ -180,9 +183,9 @@ class SignInPageState extends ConsumerState<SignInPage> {
                     // Social login buttons
                     AuthSocialButtons(
                       controller: theme.controller,
-                      googleBtnText: 'Sign in with Google',
+                      googleBtnText: context.loc.authSignInGoogleButtonLabel,
                       googleBtnAction: () {},
-                      appleBtnText: 'Sign in with Apple',
+                      appleBtnText: context.loc.authSignInAppleButtonLabel,
                       appleBtnAction: () {},
                     ),
 
@@ -195,9 +198,10 @@ class SignInPageState extends ConsumerState<SignInPage> {
                         emailTextController.text,
                         passwordController.text,
                       ),
-                      pageSwitchActionText: 'Create one here!',
-                      pageSwitchQuestion: "Don't have an account? ",
-                      agreementOnActionText: 'By signing in, I agree to our ',
+                      pageSwitchQuestion: context.loc.authSignInFooterNoAccount,
+                      pageSwitchActionText: context.loc.authSignInFooterSignUp,
+                      agreementOnActionText:
+                          context.loc.authSignInFooterAgreementOn,
                     ),
                   ],
                 ),

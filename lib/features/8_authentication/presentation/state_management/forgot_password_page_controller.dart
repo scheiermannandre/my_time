@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:my_time/core/widgets/password_checker/password_checker.dart';
 import 'package:my_time/features/8_authentication/data/repositories/auth_repository_impl.dart';
 import 'package:my_time/features/8_authentication/presentation/pages/util/email_validation.dart';
@@ -72,11 +73,11 @@ class ForgotPasswordPageController extends _$ForgotPasswordPageController
 
   /// Validates the email input and updates the state with the
   /// validation result.
-  String? emailValidator(String? value) {
+  String? emailValidator(BuildContext context, String? value) {
     final shouldValidateEmail = state.value!.shouldValidateEmail;
     if (!shouldValidateEmail) return null;
 
-    final error = validateEmail(value);
+    final error = validateEmail(context, value);
     state = AsyncData(
       state.value!.copyWith(
         isEmailValid: error?.isEmpty ?? true,

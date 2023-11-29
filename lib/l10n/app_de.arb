@@ -21,6 +21,86 @@
             }
         },
 
+    "@Auth":{},
+
+    "emailOpenerNoAppsTitle": "Keine Email App gefunden",
+    "emailOpenerNoAppsDescription": "Bitte installiere die E-Mail-App deines Anbieters, um fortzufahren.\n\nAlternativ kannst du die Website deines E-Mail-Anbieters im Browser öffnen und auf den Link klicken, den wir dir geschickt haben.",
+    "emailValidationEmptyEmail": "Email darf nicht leer sein",
+    "emailValidationInvalidEmail": "Ungültige Email",
+    "authActionFooterToS": "Nutzungsbedingungen",
+    "authActionFooterAnd": " und zu der ",
+    "authActionFooterPP": "Datenschutzerklärung.",
+    "passwordFieldLabel": "Dein Passwort",
+    "passwordFieldHint": "1-Starkes-Pass-Wort-Oder-Phrase!",
+    "signInPasswordFieldHint": "Bitte gib dein Passwort ein",
+
+    "authSocialBtnOr": "oder",
+    "authActionCodeHandlerRequestFailedTitle": "Deine Anfrage konnte nicht abgeschlossen werden!",
+    "authActionCodeHandlerRequestFailedContent": "Der angegebene Aktionscode ist ungültig oder abgelaufen. Alternativ könnte es sein, dass dein Konto deaktiviert oder gelöscht wurde.",
+    "authActionCodeHandlerEmailVerifiedTitle": "Deine E-Mail wurde verifiziert!",
+    "authActionCodeHandlerEmailVerifiedContent": "Du kannst dich jetzt anmelden.",
+    "authActionCodeHandlerEmailVerificationFailedTitle": "Deine E-Mail konnte nicht verifiziert werden!",
+    "authActionCodeHandlerEmailVerificationFailedContent": "Du hast wahrscheinlich bereits deine E-Mail verifiziert.",
+    
+    "authActionCodeHandlerPasswordResetTitle": "Dein Passwort wurde zurückgesetzt!",
+    "authActionCodeHandlerPasswordResetContent": "Du kannst dich jetzt mit deinem neuen Passwort anmelden.",
+    "authActionCodeHandlerPasswordResetFailedTitle": "Dein Passwort konnte nicht zurückgesetzt werden!",
+    "authActionCodeHandlerPasswordResetFailedContent": "Der angegebene Aktionscode ist ungültig oder abgelaufen. Alternativ könnte es sein, dass dein Konto deaktiviert oder gelöscht wurde.",
+    "authResetPasswordPageHeader": "Neues\nPasswort",
+    "authResetPasswordPageSubmitButtonLabel": "Neues Passwort speichern!",
+
+    "authForgotPasswordPageHeader":             "Passwort\nZurücksetzen",
+    "authPagesEmailFieldLabel":                 "Deine E-Mail-Adresse",
+    "authPagesEmailFieldHint":                  "Gib deine E-Mail-Adresse ein",
+    "authForgotPasswordPageSubmitButtonLabel":  "Schick mir den Zurücksetzungslink!",
+
+    "authForgotPasswordSnackbarMessage": "Ein Zurücksetzungslink wurde an deine E-Mail-Adresse gesendet.\nBitte überprüfe deinen Posteingang.",
+    "authSnackbarActionLabel": "Emails öffnen",
+
+    "authSignInPageHeader": "Willkommen\nZurück!",
+    "authSignInPageSubmitButtonLabel": "Melde mich an!",
+    "authSignInPageForgotPasswordButtonLabel": "Passwort vergessen?",
+
+    "authSignInGoogleButtonLabel": "Mit Google anmelden",
+    "authSignInAppleButtonLabel": "Mit Apple anmelden",
+
+    "authSignInFooterNoAccount": "Du hast noch keinen Account? ",
+    "authSignInFooterSignUp": "Hier registrieren!",
+    "authSignInFooterAgreementOn": "Eine Anmeldung geht einher mit der Zustimmung zu unseren ",
+
+    "authSignUpPageHeader": "Konto\nerstellen",
+    "authSignUpPageSubmitButtonLabel": "Registriere mich!",
+    "authSignUpFooterHaveAccount": "Du hast bereits ein Konto? ",
+    "authSignUpFooterSignIp": "Hier anmelden!",
+    "authSignUpFooterAgreementOn": "Eine Registrierung geht einher mit der Zustimmung zu unseren ",
+    "authSignUpPageGoogleButtonLabel": "Mit Google registrieren",
+    "authSignUpPageAppleButtonLabel": "Mit Apple registrieren",
+    "authSignUpSnackbarMessage": "Wir haben dich registriert!\nBitte überprüfe deinen Posteingang, um dich zu verifizieren.",
+
+
+    "authPasswordInfoExposedHeader": "Kennt jeder",
+    "authPasswordInfoExposedContent": "Sehr schlechtes Passwort, das viele vor dir verwendet haben. Du solltest ein anderes wählen.",
+    "authPasswordInfoVeryWeakHeader": "Sehr schwach",
+    "authPasswordInfoVeryWeakContent": "Oh je, dieses Passwort zu benutzen ist so, als würde man die Haustür weit offen lassen.",
+    "authPasswordInfoWeakHeader": "Schwach",
+    "authPasswordInfoWeakContent": "Hoppla, dieses Passwort zu benutzen ist, als würde man den Schlüssel im Schloss stecken lassen.",
+    "authPasswordInfoMediumHeader": "Mittel",
+    "authPasswordInfoMediumContent": "Hmm, die Verwendung dieses Passworts ist so, als würde man die Haustür abschließen, aber den Schlüssel unter der Matte liegen lassen.",
+    "authPasswordInfoStrongHeader": "Stark",
+    "authPasswordInfoStrongContent": "Gut, dieses Passwort zu verwenden ist so, als würde man seine Haustür abschließen und den Schlüssel in einem Bankschließfach aufbewahren.",
+    "authPasswordInfoVeryStrongHeader": "Sehr Stark",
+    "authPasswordInfoVeryStrongContent": "Fantastisch, dieses Passwort zu benutzen ist, als würde man seine Haustür abschließen und den Schlüssel auf dem Mond verstecken.",
+
+    "authPasswordInstructionsMinChars": "Mindestens 8 Zeichen",
+    "authPasswordInstructionsMinOneLowercase": "Mindestens 1 Kleinbuchstabe",
+    "authPasswordInstructionsMinOneUppercase": "Mindestens 1 Großbuchstabe",
+    "authPasswordInstructionsMinOneNumber": "Mindestens 1 Zahl",
+    "authPasswordInstructionsMinOneSpecialChar": "Mindestens 1 Sonderzeichen",
+    "authPasswordInstructionsStrongAmountChars": "Mehr als 10 Zeichen",
+    "authPasswordInstructionsTitle": "Passwortrichtlinien",
+    "authPasswordInstructionsHint": "Bitte wähle ein Passwort, das mindestens als stark eingestuft wird.",
+
+
     "@HomePage": {},
 
     "groups": "Gruppen",

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:my_time/common/extensions/build_context_extension.dart';
 import 'package:my_time/config/theme/mighty_theme.dart';
 import 'package:my_time/core/modals/mighty_ok_alert_dialog.dart';
 import 'package:my_time/core/util/extentions/widget_ref_extension.dart';
@@ -74,9 +75,8 @@ class _AuthActionCodeHandlerPageState
     if (newState.isOobCodeValid == null) return;
 
     if (!newState.isOobCodeValid!) {
-      title = 'Your request could not be completed!';
-      content =
-          '''The given ActionCode is invalid or has expired. Alternatively it might be that your account has been disabled or deleted.''';
+      title = context.loc.authActionCodeHandlerRequestFailedTitle;
+      content = context.loc.authActionCodeHandlerRequestFailedContent;
 
       await showMessageAndReturnToAuth(context, title, content);
       return;
@@ -85,11 +85,11 @@ class _AuthActionCodeHandlerPageState
     if (widget.mode != EmailHandleMode.verifyEmail) return;
 
     if (newState.isEmailVerified) {
-      title = 'Your Email has been verified!';
-      content = 'You can now sign in.';
+      title = context.loc.authActionCodeHandlerEmailVerifiedTitle;
+      content = context.loc.authActionCodeHandlerEmailVerifiedContent;
     } else {
-      title = 'Your Email could not be verified!';
-      content = 'You probably have already verified your Email.';
+      title = context.loc.authActionCodeHandlerEmailVerificationFailedTitle;
+      content = context.loc.authActionCodeHandlerEmailVerificationFailedContent;
     }
     if (!context.mounted) return;
     await showMessageAndReturnToAuth(context, title, content);

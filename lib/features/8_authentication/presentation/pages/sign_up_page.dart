@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:my_time/common/extensions/build_context_extension.dart';
 import 'package:my_time/config/theme/mighty_theme.dart';
 import 'package:my_time/config/theme/space_tokens.dart';
 import 'package:my_time/core/modals/mighty_snack_bar.dart';
@@ -91,14 +92,13 @@ class SignUpPageState extends ConsumerState<SignUpPage>
       postSignUp: () {
         // Show a snackbar with the submission result
         if (!context.mounted) return;
-        const snackbarMessage =
-            '''Signed you up successfully! \nPlease verify your email address to Sign In.''';
+        final snackbarMessage = context.loc.authSignUpSnackbarMessage;
         if (snackbarMessage.isEmpty) return;
         MightySnackBar.show(
           context,
           themeController,
           snackbarMessage,
-          actionLabel: 'Open inbox',
+          actionLabel: context.loc.authSnackbarActionLabel,
           onTab: () async {
             await EmailAppsUI.show(
               context: context,
@@ -162,18 +162,19 @@ class SignUpPageState extends ConsumerState<SignUpPage>
                   children: [
                     // Displays the title of the authentication page
                     Text(
-                      'Create\nAccount!',
+                      context.loc.authSignUpPageHeader,
                       style: theme.controller.headline1,
                     ),
 
                     // Email text field for sign-up
                     MightyTextFormField(
                       onFocusLost: signUpPage.controller.setShouldValidateEmail,
-                      validator: signUpPage.controller.emailValidator,
+                      validator: (value) =>
+                          signUpPage.controller.emailValidator(context, value),
                       controller: emailTextController,
                       mightyThemeController: theme.controller,
-                      labelText: 'Your e-mail address',
-                      hintText: 'Please enter your e-mail address',
+                      labelText: context.loc.authPagesEmailFieldLabel,
+                      hintText: context.loc.authPagesEmailFieldHint,
                       textInputType: TextInputType.emailAddress,
                     ),
 
@@ -194,7 +195,7 @@ class SignUpPageState extends ConsumerState<SignUpPage>
                     // Button to sign up
                     MightyActionButton.primary(
                       themeController: theme.controller,
-                      label: 'Sign me Up!',
+                      label: context.loc.authSignUpPageSubmitButtonLabel,
                       onPressed: !state.isSubmitEnabled
                           ? null
                           : () {
@@ -213,17 +214,19 @@ class SignUpPageState extends ConsumerState<SignUpPage>
                     // Social sign-up buttons
                     AuthSocialButtons(
                       controller: theme.controller,
-                      googleBtnText: 'Sign up with Google',
+                      googleBtnText:
+                          context.loc.authSignUpPageGoogleButtonLabel,
                       googleBtnAction: () async {},
-                      appleBtnText: 'Sign up with Apple',
+                      appleBtnText: context.loc.authSignUpPageAppleButtonLabel,
                       appleBtnAction: () {},
                     ),
 
                     // Footer action for navigation and agreements
                     AuthActionFooter(
                       controller: theme.controller,
-                      pageSwitchActionText: 'Sign in here!',
-                      pageSwitchQuestion: 'Already have an account? ',
+                      pageSwitchActionText: context.loc.authSignUpFooterSignIp,
+                      pageSwitchQuestion:
+                          context.loc.authSignUpFooterHaveAccount,
                       pageSwitchAction: () => _changePage(
                         context,
                         AppRoute.signIn,
@@ -231,7 +234,7 @@ class SignUpPageState extends ConsumerState<SignUpPage>
                         passwordController.text,
                       ),
                       agreementOnActionText:
-                          'By creating an Account, I agree to our ',
+                          context.loc.authSignUpFooterAgreementOn,
                     ),
                   ],
                 ),

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:my_time/common/extensions/build_context_extension.dart';
 import 'package:my_time/common/extensions/int_extensions.dart';
 import 'package:my_time/config/theme/color_tokens.dart';
 import 'package:my_time/config/theme/mighty_theme.dart';
@@ -97,10 +98,10 @@ extension PasswordStrengthExtension on PasswordStrength {
   }
 
   /// The widget to show for every status under the bar.
-  Widget get statusWidget {
+  Widget getStatusWidget(BuildContext context) {
     return PasswordMessage(
-      info: _info,
-      message: _message,
+      info: _getInfo(context),
+      message: _getMessage(context),
       statusColor: statusColor,
       showIcon: _showIcon,
       passwordStrength: this,
@@ -126,39 +127,39 @@ extension PasswordStrengthExtension on PasswordStrength {
     }
   }
 
-  String get _info {
+  String _getInfo(BuildContext context) {
     switch (enumValue) {
       case PasswordStrengthEnum.alreadyExposed:
-        return 'Already exposed';
+        return context.loc.authPasswordInfoExposedHeader;
       case PasswordStrengthEnum.veryWeak:
-        return 'Very weak';
+        return context.loc.authPasswordInfoVeryWeakHeader;
       case PasswordStrengthEnum.weak:
-        return 'Weak';
+        return context.loc.authPasswordInfoWeakHeader;
       case PasswordStrengthEnum.medium:
-        return 'Medium';
+        return context.loc.authPasswordInfoMediumHeader;
       case PasswordStrengthEnum.strong:
-        return 'Strong';
+        return context.loc.authPasswordInfoStrongHeader;
       case PasswordStrengthEnum.veryStrong:
-        return 'Very strong';
+        return context.loc.authPasswordInfoVeryStrongHeader;
       default:
         return '';
     }
   }
 
-  String get _message {
+  String _getMessage(BuildContext context) {
     switch (enumValue) {
       case PasswordStrengthEnum.alreadyExposed:
-        return '''Very common password that many have used before you''';
+        return context.loc.authPasswordInfoExposedContent;
       case PasswordStrengthEnum.veryWeak:
-        return '''Oh dear, using that password is like leaving your front door wide open''';
+        return context.loc.authPasswordInfoVeryWeakContent;
       case PasswordStrengthEnum.weak:
-        return '''Oops, using that password is like leaving your key in the lock.''';
+        return context.loc.authPasswordInfoWeakContent;
       case PasswordStrengthEnum.medium:
-        return '''Hmm, using that password is like locking your front door, but leaving the key under the mat.''';
+        return context.loc.authPasswordInfoMediumContent;
       case PasswordStrengthEnum.strong:
-        return '''Good, using that password is like locking your front door and keeping the key in a safety deposit box.''';
+        return context.loc.authPasswordInfoStrongContent;
       case PasswordStrengthEnum.veryStrong:
-        return '''Fantastic, using that password makes you as secure as Fort Knox.''';
+        return context.loc.authPasswordInfoVeryStrongContent;
       default:
         return '';
     }
@@ -220,14 +221,14 @@ extension PasswordStrengthExtension on PasswordStrength {
   }
 
   /// Instructions for the password strength.
-  List<String> get _instructionsList {
+  List<String> _getInstructionsList(BuildContext context) {
     return [
-      'At least 8 characters',
-      'At least 1 lowercase letter',
-      'At least 1 uppercase letter',
-      'At least 1 digit',
-      'At least 1 special character',
-      'More than 10 characters',
+      context.loc.authPasswordInstructionsMinChars,
+      context.loc.authPasswordInstructionsMinOneLowercase,
+      context.loc.authPasswordInstructionsMinOneUppercase,
+      context.loc.authPasswordInstructionsMinOneNumber,
+      context.loc.authPasswordInstructionsMinOneSpecialChar,
+      context.loc.authPasswordInstructionsStrongAmountChars,
     ];
   }
 
@@ -244,8 +245,8 @@ extension PasswordStrengthExtension on PasswordStrength {
   }
 
   ///
-  Map<String, bool> get sortedInstructionFulfilmentMap {
-    final instructions = _instructionsList;
+  Map<String, bool> sortedInstructionFulfilmentMap(BuildContext context) {
+    final instructions = _getInstructionsList(context);
     final fulfilment = _instructionsFulfilment;
     final instructionsMap = <String, bool>{};
     for (var i = 0; i < instructions.length; i++) {
@@ -378,10 +379,11 @@ class PasswordMessageState extends ConsumerState<PasswordMessage>
             onPressed: () {
               showMightyOkAlertDialogCustomContent(
                 context,
-                'Password Policies',
+                context.loc.authPasswordInstructionsTitle,
                 PasswordInstructions(
-                  instructions:
-                      widget.passwordStrength.sortedInstructionFulfilmentMap,
+                  instructionHint: context.loc.authPasswordInstructionsHint,
+                  instructions: widget.passwordStrength
+                      .sortedInstructionFulfilmentMap(context),
                 ),
               );
             },
@@ -398,10 +400,18 @@ class PasswordMessageState extends ConsumerState<PasswordMessage>
 /// The widget that shows the instructions for the password strength.
 class PasswordInstructions extends ConsumerWidget {
   /// Creates a [PasswordInstructions] widget.
-  const PasswordInstructions({required this.instructions, super.key});
+  const PasswordInstructions({
+    required this.instructions,
+    required this.instructionHint,
+    super.key,
+  });
 
   /// The instructions for the password strength classified by fulfilled or not.
   final Map<String, bool> instructions;
+
+  /// The hint for the instructions.
+  final String instructionHint;
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watchStateProvider(
@@ -412,10 +422,15 @@ class PasswordInstructions extends ConsumerWidget {
     final textStyle = theme.controller.small;
     return SingleChildScrollView(
       child: Column(
-        children: instructions.keys.map((instruction) {
-          final fulfilled = instructions[instruction] ?? false;
-          return _buildInstruction(instruction, fulfilled, textStyle);
-        }).toList(),
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          ...instructions.keys.map((instruction) {
+            final fulfilled = instructions[instruction] ?? false;
+            return _buildInstruction(instruction, fulfilled, textStyle);
+          }),
+          const SizedBox(height: SpaceTokens.medium),
+          Text(instructionHint, style: textStyle),
+        ],
       ),
     );
   }

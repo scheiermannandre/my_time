@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_time/common/extensions/build_context_extension.dart';
 import 'package:my_time/config/theme/corner_radius_tokens.dart';
 import 'package:my_time/config/theme/mighty_theme.dart';
 import 'package:my_time/config/theme/space_tokens.dart';
@@ -41,8 +42,8 @@ class AuthPasswordField extends StatelessWidget {
     return MightyTextFormField(
       controller: passwordController,
       mightyThemeController: themeController,
-      labelText: 'Your password',
-      hintText: '1-Strong-Password-Or-Passphrase!',
+      labelText: context.loc.passwordFieldLabel,
+      hintText: context.loc.passwordFieldHint,
       textInputType: TextInputType.visiblePassword,
       obscureText: obscurePassword,
       suffixIcon: GestureDetector(

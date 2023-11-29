@@ -40,7 +40,7 @@ class MightySnackBar {
                   ),
                 ),
                 SizedBox(
-                  width: 80,
+                  width: 100,
                   child: MightyActionButton.flatText(
                     inverseColor: true,
                     themeController: controller,

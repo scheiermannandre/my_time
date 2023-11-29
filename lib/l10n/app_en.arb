@@ -21,6 +21,84 @@
             }
         },
 
+    "@Auth":{},
+
+    "emailOpenerNoAppsTitle": "No email apps found",
+    "emailOpenerNoAppsDescription": "Please install your provider's email app to proceed.\n\nAlternatively, you can open your email provider's website in the browser and click on the link we have sent to you.",
+    "emailValidationEmptyEmail": "Email can't be empty",
+    "emailValidationInvalidEmail": "Invalid email",
+    "authActionFooterToS": "Terms of Service",
+    "authActionFooterAnd": " and ",
+    "authActionFooterPP": "Privacy Policy.",
+    "passwordFieldLabel": "Your password",
+    "passwordFieldHint": "1-Strong-Password-Or-Passphrase!",
+    "signInPasswordFieldHint": "Please enter your password",
+
+    "authSocialBtnOr": "or",
+    "authActionCodeHandlerRequestFailedTitle": "Your request could not be completed!",
+    "authActionCodeHandlerRequestFailedContent": "The given ActionCode is invalid or has expired. Alternatively it might be that your account has been disabled or deleted.",
+    "authActionCodeHandlerEmailVerifiedTitle": "Your Email has been verified!",
+    "authActionCodeHandlerEmailVerifiedContent": "You can now sign in.",
+    "authActionCodeHandlerEmailVerificationFailedTitle": "Your Email could not be verified!",
+    "authActionCodeHandlerEmailVerificationFailedContent": "You probably have already verified your Email.",
+    "authActionCodeHandlerPasswordResetTitle": "Your Password has been reset!",
+    "authActionCodeHandlerPasswordResetContent": "You can now sign in with your new password.",
+    "authActionCodeHandlerPasswordResetFailedTitle": "Your Password could not be reset!",
+    "authActionCodeHandlerPasswordResetFailedContent": "The given ActionCode is invalid or has expired. Alternatively it might be that your account has been disabled or deleted.",
+    "authResetPasswordPageHeader": "New\nPassword",
+    "authResetPasswordPageSubmitButtonLabel": "Set my new Password!",
+
+    "authForgotPasswordPageHeader": "Reset\nPassword",
+    "authPagesEmailFieldLabel": "Your e-mail address",
+    "authPagesEmailFieldHint": "Enter your e-mail address",
+    "authForgotPasswordPageSubmitButtonLabel": "Send me a reset link!",
+
+    "authForgotPasswordSnackbarMessage": "A reset link has been sent to your email address.\nPlease check your inbox.",
+    "authSnackbarActionLabel": "Open Inbox",
+
+    "authSignInPageHeader": "Welcome\nBack!",
+    "authSignInPageSubmitButtonLabel": "Sign me In",
+    "authSignInPageForgotPasswordButtonLabel": "Forgot your Password?",
+
+    "authSignInGoogleButtonLabel": "Sign in with Google",
+    "authSignInAppleButtonLabel": "Sign in with Apple",
+
+    "authSignInFooterNoAccount": "Don't have an account? ",
+    "authSignInFooterSignUp": "Create one here!",
+    "authSignInFooterAgreementOn": "By signing in, you agree to our ",
+
+    "authSignUpPageHeader": "Create\nAccount",
+    "authSignUpPageSubmitButtonLabel": "Sign me Up!",
+    "authSignUpFooterHaveAccount": "Already have an account? ",
+    "authSignUpFooterSignIp": "Sign In here!",
+    "authSignUpFooterAgreementOn": "By signing up, you agree to our ",
+    "authSignUpPageGoogleButtonLabel": "Sign up with Google",
+    "authSignUpPageAppleButtonLabel": "Sign up with Apple",
+    "authSignUpSnackbarMessage": "Signed you up successfully!\nPlease verify your email address to Sign In.",
+
+    "authPasswordInfoExposedHeader": "Already exposed",
+    "authPasswordInfoExposedContent": "Very common password that many have used before you. You better choose a different one.",
+    "authPasswordInfoVeryWeakHeader": "Very weak",
+    "authPasswordInfoVeryWeakContent": "Oh dear, using that password is like leaving your front door wide open.",
+    "authPasswordInfoWeakHeader": "Weak",
+    "authPasswordInfoWeakContent": "Oops, using that password is like leaving your key in the lock.",
+    "authPasswordInfoMediumHeader": "Medium",
+    "authPasswordInfoMediumContent": "Hmm, using that password is like locking your front door, but leaving the key under the mat.",
+    "authPasswordInfoStrongHeader": "Strong",
+    "authPasswordInfoStrongContent": "Good, using that password is like locking your front door and keeping the key in a safety deposit box.",
+    "authPasswordInfoVeryStrongHeader": "Very strong",
+    "authPasswordInfoVeryStrongContent": "Fantastic, using that password is like locking your front door and hiding the key on the moon.",
+
+    "authPasswordInstructionsMinChars": "At least 8 characters",
+    "authPasswordInstructionsMinOneLowercase": "At least 1 lowercase letter",
+    "authPasswordInstructionsMinOneUppercase": "At least 1 uppercase letter",
+    "authPasswordInstructionsMinOneNumber": "At least 1 number",
+    "authPasswordInstructionsMinOneSpecialChar": "At least 1 special character",
+    "authPasswordInstructionsStrongAmountChars": "More than 10 characters",
+
+    "authPasswordInstructionsTitle": "Password Policies",
+    "authPasswordInstructionsHint": "Please choose a password that is at least classified as strong.",
+
 
     "@HomePage": {},
 

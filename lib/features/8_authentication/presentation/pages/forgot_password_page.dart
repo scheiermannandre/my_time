@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:my_time/common/extensions/build_context_extension.dart';
 import 'package:my_time/config/theme/mighty_theme.dart';
 import 'package:my_time/config/theme/space_tokens.dart';
 import 'package:my_time/core/modals/mighty_snack_bar.dart';
@@ -46,14 +47,13 @@ class ForgotPasswordPage extends HookConsumerWidget with EmailValidator {
       postSubmit: () {
         // Shows a snackbar with the submission result
         if (!context.mounted) return;
-        const snackbarMessage =
-            '''Password reset email sent successfully! \nPlease check your inbox.''';
+        final snackbarMessage = context.loc.authForgotPasswordSnackbarMessage;
         if (snackbarMessage.isEmpty) return;
         MightySnackBar.show(
           context,
           themeController,
           snackbarMessage,
-          actionLabel: 'Open inbox',
+          actionLabel: context.loc.authSnackbarActionLabel,
           onTab: () async {
             await EmailAppsUI.show(
               context: context,
@@ -125,20 +125,21 @@ class ForgotPasswordPage extends HookConsumerWidget with EmailValidator {
                   children: [
                     // Displays the title of the authentication page
                     Text(
-                      'Reset\nPassword',
+                      context.loc.authForgotPasswordPageHeader,
                       style: theme.controller.headline1,
                     ),
                     const SizedBox(height: SpaceTokens.medium),
 
                     // Email text field for resetting password
                     MightyTextFormField(
-                      validator: authPage.controller.emailValidator,
+                      validator: (value) =>
+                          authPage.controller.emailValidator(context, value),
                       onChanged: (value, isValid) => _formKey.currentState!
                           .validate(), // Triggers validation
                       controller: emailTextController,
                       mightyThemeController: theme.controller,
-                      labelText: 'Your e-mail address',
-                      hintText: 'Please enter your e-mail address',
+                      labelText: context.loc.authPagesEmailFieldLabel,
+                      hintText: context.loc.authPagesEmailFieldHint,
                       textInputType: TextInputType.emailAddress,
                     ),
                     const SizedBox(height: SpaceTokens.medium),
@@ -146,7 +147,8 @@ class ForgotPasswordPage extends HookConsumerWidget with EmailValidator {
                     // Button to trigger password reset
                     MightyActionButton.primary(
                       themeController: theme.controller,
-                      label: 'Reset my Password!',
+                      label:
+                          context.loc.authForgotPasswordPageSubmitButtonLabel,
                       onPressed: () {
                         // Triggers the form submission for password reset
                         _submit(
@@ -165,7 +167,7 @@ class ForgotPasswordPage extends HookConsumerWidget with EmailValidator {
                     // Buttons for primary and secondary actions
                     MightyActionButton.secondary(
                       themeController: theme.controller,
-                      label: 'Cancel',
+                      label: context.loc.deleteEntryCancelBtnLabel,
                       onPressed: () => _changePage(
                         context,
                         AppRoute.signIn,

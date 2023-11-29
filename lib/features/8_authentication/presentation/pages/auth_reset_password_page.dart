@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:my_time/common/extensions/build_context_extension.dart';
 import 'package:my_time/config/theme/corner_radius_tokens.dart';
 import 'package:my_time/config/theme/mighty_theme.dart';
 import 'package:my_time/config/theme/space_tokens.dart';
@@ -45,12 +46,11 @@ class AuthEmailHandlerPageState extends ConsumerState<AuthRestPasswordPage> {
     if (newState.isPasswordResetSuccess == null) return;
 
     if (!newState.isPasswordResetSuccess!) {
-      title = 'Password reset failed!';
-      content =
-          '''The given ActionCode is invalid or has expired. Alternatively it might be that your account has been disabled or deleted.''';
+      title = context.loc.authActionCodeHandlerPasswordResetFailedTitle;
+      content = context.loc.authActionCodeHandlerPasswordResetFailedContent;
     } else {
-      title = 'Reset password successfully!';
-      content = 'You can now log in with your new credentials.';
+      title = context.loc.authActionCodeHandlerPasswordResetTitle;
+      content = context.loc.authActionCodeHandlerPasswordResetContent;
     }
     await showMightyOkAlertDialog(context, title, content);
     if (!context.mounted) return;
@@ -95,7 +95,7 @@ class AuthEmailHandlerPageState extends ConsumerState<AuthRestPasswordPage> {
                 children: [
                   // Display the title of the authentication page
                   Text(
-                    'New Password!',
+                    context.loc.authResetPasswordPageHeader,
                     style: theme.controller.headline1.copyWith(
                       wordSpacing: 10,
                     ),
@@ -104,8 +104,8 @@ class AuthEmailHandlerPageState extends ConsumerState<AuthRestPasswordPage> {
                   MightyTextFormField(
                     controller: passwordController,
                     mightyThemeController: theme.controller,
-                    labelText: 'Your password',
-                    hintText: 'Please enter your password',
+                    labelText: context.loc.passwordFieldLabel,
+                    hintText: context.loc.passwordFieldHint,
                     textInputType: TextInputType.visiblePassword,
                     obscureText: state.obscurePassword,
                     suffixIcon: GestureDetector(
@@ -145,7 +145,7 @@ class AuthEmailHandlerPageState extends ConsumerState<AuthRestPasswordPage> {
                   const SizedBox(height: SpaceTokens.medium),
                   MightyActionButton.primary(
                     themeController: theme.controller,
-                    label: 'Set my new Password!',
+                    label: context.loc.authResetPasswordPageSubmitButtonLabel,
                     onPressed: !state.isSubmitEnabled
                         ? null
                         : () async {
@@ -160,7 +160,7 @@ class AuthEmailHandlerPageState extends ConsumerState<AuthRestPasswordPage> {
                   const SizedBox(height: SpaceTokens.medium),
                   MightyActionButton.secondary(
                     themeController: theme.controller,
-                    label: 'Cancel',
+                    label: context.loc.deleteEntryCancelBtnLabel,
                     onPressed: () async {
                       context.goNamed(AppRoute.signIn);
                     },
