@@ -103,7 +103,6 @@ class AuthEmailHandlerPageState extends ConsumerState<AuthRestPasswordPage> {
                   const SizedBox(height: SpaceTokens.medium),
                   MightyTextFormField(
                     controller: passwordController,
-                    mightyThemeController: theme.controller,
                     labelText: context.loc.passwordFieldLabel,
                     hintText: context.loc.passwordFieldHint,
                     textInputType: TextInputType.visiblePassword,

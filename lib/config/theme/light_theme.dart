@@ -4,6 +4,8 @@ import 'package:my_time/config/theme/primary_button_theme.dart';
 import 'package:my_time/config/theme/secondary_button_theme.dart';
 import 'package:my_time/config/theme/text_theme.dart';
 import 'package:my_time/config/theme/tokens/color_tokens.dart';
+import 'package:my_time/config/theme/tokens/corner_radius_tokens.dart';
+import 'package:my_time/config/theme/tokens/space_tokens.dart';
 
 /// The light theme of the application.
 ThemeData lightTheme = ThemeData(
@@ -22,6 +24,7 @@ ThemeData lightTheme = ThemeData(
     onBackground: LightThemeColorTokens.black, //TBD
     surface: LightThemeColorTokens.white,
     onSurface: LightThemeColorTokens.black,
+    surfaceTint: Colors.transparent, // removes color blur on dialog background
   ),
 
   inputDecorationTheme: getInputDecorationTheme(
@@ -30,9 +33,45 @@ ThemeData lightTheme = ThemeData(
   ),
   elevatedButtonTheme: PrimaryButtonThemeData.light(),
   outlinedButtonTheme: SecondaryButtonThemeData.light(),
+  iconButtonTheme: IconButtonThemeData(
+    style: ButtonStyle(
+      foregroundColor: MaterialStateProperty.all<Color>(
+        LightThemeColorTokens.darkColor,
+      ),
+    ),
+  ),
+
+  textButtonTheme: TextButtonThemeData(
+    style: ButtonStyle(
+      minimumSize: MaterialStateProperty.all<Size>(Size.zero),
+      padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+        const EdgeInsets.symmetric(
+          horizontal: SpaceTokens.medium,
+        ),
+      ),
+      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+      shape: MaterialStateProperty.all<OutlinedBorder>(
+        RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(
+            CornerRadiusTokens.small,
+          ),
+        ),
+      ),
+      foregroundColor: MaterialStateProperty.all<Color>(
+        LightThemeColorTokens.darkColor,
+      ),
+      overlayColor: MaterialStateProperty.all<Color>(
+        LightThemeColorTokens.darkColor.withOpacity(0.1),
+      ),
+    ),
+  ),
 
   progressIndicatorTheme: const ProgressIndicatorThemeData(
     color: LightThemeColorTokens.mediumColor,
+  ),
+
+  textSelectionTheme: const TextSelectionThemeData(
+    cursorColor: LightThemeColorTokens.mediumColor,
   ),
   // This is needed
   bottomSheetTheme: const BottomSheetThemeData(

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_time/common/extensions/build_context_extension.dart';
-import 'package:my_time/config/theme/mighty_theme.dart';
 import 'package:my_time/config/theme/tokens/space_tokens.dart';
 import 'package:my_time/core/util/extentions/string_extension.dart';
 import 'package:my_time/core/widgets/mighty_text_form_field.dart';
@@ -66,7 +65,6 @@ class _ProjectNameStep extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final textController = useTextEditingController(text: name ?? '');
-    final themeController = ref.watch(mightyThemeControllerProvider.notifier);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: SpaceTokens.medium),
       child: MightyTextFormField(
@@ -80,7 +78,6 @@ class _ProjectNameStep extends HookConsumerWidget {
         },
         validator: (value) => validate(context, value),
         controller: textController,
-        mightyThemeController: themeController,
         autofocus: name == null,
         onEditingComplete: () {
           if (validate(context, textController.text) != null) return;

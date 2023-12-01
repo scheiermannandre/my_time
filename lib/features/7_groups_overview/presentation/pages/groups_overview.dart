@@ -294,7 +294,6 @@ class _LabeledIconButtons extends HookWidget {
                   Text(context.loc.addGroup, style: theme.controller.headline5),
               content: MightyTextFormField(
                 controller: controller,
-                mightyThemeController: theme.controller,
                 autofocus: true,
               ),
               actions: [

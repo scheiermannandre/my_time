@@ -7,7 +7,7 @@ import 'package:my_time/config/theme/mighty_theme.dart';
 import 'package:my_time/config/theme/tokens/space_tokens.dart';
 import 'package:my_time/core/modals/mighty_snack_bar.dart';
 import 'package:my_time/core/util/extentions/widget_ref_extension.dart';
-import 'package:my_time/core/widgets/mighty_action_button.dart';
+import 'package:my_time/core/widgets/action_button.dart';
 import 'package:my_time/core/widgets/mighty_text_form_field.dart';
 import 'package:my_time/core/widgets/password_checker/password_checker.dart';
 import 'package:my_time/core/widgets/spaced_column.dart';
@@ -172,7 +172,6 @@ class SignUpPageState extends ConsumerState<SignUpPage>
                       validator: (value) =>
                           signUpPage.controller.emailValidator(context, value),
                       controller: emailTextController,
-                      mightyThemeController: theme.controller,
                       labelText: context.loc.authPagesEmailFieldLabel,
                       hintText: context.loc.authPagesEmailFieldHint,
                       textInputType: TextInputType.emailAddress,
@@ -181,7 +180,6 @@ class SignUpPageState extends ConsumerState<SignUpPage>
                     // Password text field for sign-up
                     AuthCheckedPasswordField(
                       passwordController: passwordController,
-                      themeController: theme.controller,
                       obscurePassword: state.obscurePassword,
                       toggleObscurePassword:
                           signUpPage.controller.toggleObscurePassword,
@@ -193,14 +191,12 @@ class SignUpPageState extends ConsumerState<SignUpPage>
                     ),
 
                     // Button to sign up
-                    MightyActionButton.primary(
-                      themeController: theme.controller,
-                      label: context.loc.authSignUpPageSubmitButtonLabel,
+                    ActionButton.primary(
                       onPressed: !state.isSubmitEnabled
                           ? null
-                          : () {
+                          : () async {
                               // Trigger the form submission
-                              _submit(
+                              await _submit(
                                 context,
                                 signUpPage.controller,
                                 emailTextController.text,
@@ -209,6 +205,7 @@ class SignUpPageState extends ConsumerState<SignUpPage>
                               );
                             },
                       isLoading: signUpPage.state.isLoading,
+                      child: Text(context.loc.authSignInPageSubmitButtonLabel),
                     ),
 
                     // Social sign-up buttons

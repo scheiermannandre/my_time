@@ -159,7 +159,6 @@ class _TimeManagementStepState extends State<_TimeManagementStep> {
                   },
                   validator: validate,
                   controller: textController,
-                  mightyThemeController: widget.themeController,
                   autofocus: widget.data == null,
                   onEditingComplete: () {
                     FocusScope.of(context).unfocus();

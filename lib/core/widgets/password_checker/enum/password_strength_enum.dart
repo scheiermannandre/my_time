@@ -5,12 +5,11 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:my_time/common/extensions/build_context_extension.dart';
 import 'package:my_time/common/extensions/int_extensions.dart';
-import 'package:my_time/config/theme/mighty_theme.dart';
 import 'package:my_time/config/theme/tokens/color_tokens.dart';
 import 'package:my_time/config/theme/tokens/space_tokens.dart';
+import 'package:my_time/config/theme/tokens/text_style_tokens.dart';
 import 'package:my_time/core/modals/mighty_ok_alert_dialog.dart';
-import 'package:my_time/core/util/extentions/widget_ref_extension.dart';
-import 'package:my_time/core/widgets/mighty_action_button.dart';
+import 'package:my_time/core/widgets/action_button.dart';
 import 'package:my_time/core/widgets/password_checker/dict/common_passwords.dart';
 import 'package:my_time/core/widgets/spaced_column.dart';
 
@@ -313,11 +312,6 @@ class PasswordMessageState extends ConsumerState<PasswordMessage>
 
   @override
   Widget build(BuildContext context) {
-    final theme = ref.watchStateProvider(
-      context,
-      mightyThemeControllerProvider,
-      mightyThemeControllerProvider.notifier,
-    );
     if (widget.showIcon) {
       _controller.forward();
     } else {
@@ -361,22 +355,21 @@ class PasswordMessageState extends ConsumerState<PasswordMessage>
                         ),
                     Text(
                       widget.info,
-                      style: theme.controller.smallHeadline,
+                      style: TextStyleTokens.getHeadline5(null),
                     ),
                   ],
                 ),
                 Text(
                   widget.message,
-                  style: theme.controller.small,
                 ),
               ],
             ),
           ),
           const SizedBox(width: SpaceTokens.small),
-          ActionButton.roundedIcon(
-            iconData: Icons.info,
-            onPressed: () {
-              showMightyOkAlertDialogCustomContent(
+          ActionButton.icon(
+            child: const Icon(Icons.info),
+            onPressed: () async {
+              await showMightyOkAlertDialogCustomContent(
                 context,
                 context.loc.authPasswordInstructionsTitle,
                 PasswordInstructions(
@@ -386,9 +379,6 @@ class PasswordMessageState extends ConsumerState<PasswordMessage>
                 ),
               );
             },
-            backgroundColor: theme.controller.mainBackgroundColor,
-            isLoading: false,
-            iconColor: theme.controller.secondaryTextColor,
           ),
         ],
       ),
@@ -413,22 +403,16 @@ class PasswordInstructions extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watchStateProvider(
-      context,
-      mightyThemeControllerProvider,
-      mightyThemeControllerProvider.notifier,
-    );
-    final textStyle = theme.controller.small;
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           ...instructions.keys.map((instruction) {
             final fulfilled = instructions[instruction] ?? false;
-            return _buildInstruction(instruction, fulfilled, textStyle);
+            return _buildInstruction(instruction, fulfilled);
           }),
           const SizedBox(height: SpaceTokens.medium),
-          Text(instructionHint, style: textStyle),
+          Text(instructionHint),
         ],
       ),
     );
@@ -437,7 +421,6 @@ class PasswordInstructions extends ConsumerWidget {
   Widget _buildInstruction(
     String instruction,
     bool fulfilled,
-    TextStyle textStyle,
   ) {
     return Row(
       children: [
@@ -447,7 +430,7 @@ class PasswordInstructions extends ConsumerWidget {
               fulfilled ? ThemelessColorTokens.green : ThemelessColorTokens.red,
         ),
         const SizedBox(width: SpaceTokens.small),
-        Text(instruction, style: textStyle),
+        Text(instruction),
       ],
     );
   }

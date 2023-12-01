@@ -203,7 +203,6 @@ class _MoneyManagementStepState extends State<_MoneyManagementStep> {
                     validator: validate,
                     focusNode: payAmountFocusNode,
                     controller: amountTextController,
-                    mightyThemeController: widget.themeController,
                     onEditingComplete: FocusScope.of(context).unfocus,
                   ),
                 ],

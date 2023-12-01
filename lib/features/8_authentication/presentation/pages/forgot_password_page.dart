@@ -137,7 +137,6 @@ class ForgotPasswordPage extends HookConsumerWidget with EmailValidator {
                       onChanged: (value, isValid) => _formKey.currentState!
                           .validate(), // Triggers validation
                       controller: emailTextController,
-                      mightyThemeController: theme.controller,
                       labelText: context.loc.authPagesEmailFieldLabel,
                       hintText: context.loc.authPagesEmailFieldHint,
                       textInputType: TextInputType.emailAddress,

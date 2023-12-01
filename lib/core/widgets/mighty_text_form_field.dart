@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:my_time/config/theme/mighty_theme.dart';
+import 'package:my_time/config/theme/tokens/color_tokens.dart';
 import 'package:my_time/config/theme/tokens/space_tokens.dart';
 
 /// A customizable text form field with theming support.
 class MightyTextFormField extends StatefulWidget {
   /// Constructs a [MightyTextFormField] with the required parameters.
   const MightyTextFormField({
-    required this.mightyThemeController,
     this.labelText,
     this.hintText,
     this.controller,
@@ -29,7 +28,6 @@ class MightyTextFormField extends StatefulWidget {
   });
 
   /// The theme controller for adapting the field's appearance.
-  final MightyThemeController mightyThemeController;
 
   /// The label text to display above the text field.
   final String? labelText;
@@ -98,11 +96,11 @@ class _MightyTextFormFieldState extends State<MightyTextFormField> {
 
   @override
   Widget build(BuildContext context) {
-    final errorColor = widget.mightyThemeController.errorColor;
-    final cursorColor =
-        widget.mightyThemeController.themeMode == SystemThemeMode.light
-            ? widget.mightyThemeController.nonDecorativeBorderColor
-            : widget.mightyThemeController.actionsColor;
+    // final errorColor = widget.mightyThemeController.errorColor;
+    // final cursorColor =
+    //     widget.mightyThemeController.themeMode == SystemThemeMode.light
+    //         ? widget.mightyThemeController.nonDecorativeBorderColor
+    //         : widget.mightyThemeController.actionsColor;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
@@ -110,7 +108,7 @@ class _MightyTextFormFieldState extends State<MightyTextFormField> {
         if (widget.labelText != null)
           Text(
             widget.labelText!,
-            style: widget.mightyThemeController.small,
+            // style: widget.mightyThemeController.small,
           ),
         if (widget.labelText != null)
           const SizedBox(
@@ -143,7 +141,7 @@ class _MightyTextFormFieldState extends State<MightyTextFormField> {
               });
             },
             focusNode: widget.focusNode,
-            cursorColor: cursorColor,
+            //cursorColor: cursorColor,
             controller: widget.controller,
             autofocus: widget.autofocus,
             decoration: InputDecoration(
@@ -156,7 +154,8 @@ class _MightyTextFormFieldState extends State<MightyTextFormField> {
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    if (hasError) Icon(Icons.close, color: errorColor),
+                    if (hasError)
+                      const Icon(Icons.close, color: ThemelessColorTokens.red),
                     if (hasError && widget.suffixIcon != null)
                       const SizedBox(width: SpaceTokens.small),
                     if (widget.suffixIcon != null) widget.suffixIcon!,

@@ -121,7 +121,6 @@ class _VacationDaysStepState extends State<_VacationDaysStep> {
             },
             validator: (value) => validate(context, value),
             controller: textController,
-            mightyThemeController: widget.themeController,
             autofocus: widget.data == null,
             onEditingComplete: () {
               if (validate(context, textController.text) != null) return;

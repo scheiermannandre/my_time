@@ -49,6 +49,43 @@ class ActionButton extends StatelessWidget {
     );
   }
 
+  /// Constructs a text [ActionButton] with loading capability.
+  factory ActionButton.text({
+    required Widget child,
+    required Future<void> Function()? onPressed,
+    bool isLoading = false,
+    Key? key,
+  }) {
+    return ActionButton(
+      key: key,
+      isLoading: isLoading,
+      child: child,
+      buttonBuilder: (child) => TextButton(
+        onPressed: onPressed,
+        child: child,
+      ),
+    );
+  }
+
+  /// Constructs an icon [ActionButton] with loading capability.
+  factory ActionButton.icon({
+    required Widget child,
+    required Future<void> Function()? onPressed,
+    bool isLoading = false,
+    Key? key,
+  }) {
+    return ActionButton(
+      key: key,
+      isLoading: isLoading,
+      child: child,
+      buttonBuilder: (child) => IconButton(
+        padding: EdgeInsets.zero,
+        onPressed: onPressed,
+        icon: child,
+      ),
+    );
+  }
+
   /// The child widget to display within the button.
   final Widget child;
 

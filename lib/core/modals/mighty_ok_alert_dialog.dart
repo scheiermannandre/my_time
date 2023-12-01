@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:my_time/config/theme/mighty_theme.dart';
 import 'package:my_time/config/theme/tokens/space_tokens.dart';
 import 'package:my_time/core/util/extentions/widget_ref_extension.dart';
-import 'package:my_time/core/widgets/mighty_action_button.dart';
+import 'package:my_time/core/widgets/action_button.dart';
 
 /// Shows a mighty styled Ok Alert Dialog.
 Future<void> showMightyOkAlertDialog(
@@ -57,16 +57,15 @@ class MightyOkAlertDialog extends ConsumerWidget {
       title: Text(title, style: theme.controller.headline4),
       content: Text(content, style: theme.controller.body),
       actions: [
-        MightyActionButton.flatText(
-          themeController: theme.controller,
-          onPressed: () {
+        ActionButton.text(
+          child: const Text('Ok'),
+          onPressed: () async {
             Navigator.of(context).pop();
           },
-          label: 'Ok',
         ),
       ],
       actionsAlignment: MainAxisAlignment.end,
-      backgroundColor: theme.controller.mainBackgroundColor,
+      backgroundColor: Colors.white,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(
           SpaceTokens.mediumSmall,
@@ -102,26 +101,19 @@ class MightyOkAlertDialogCustomContent extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watchStateProvider(
-      context,
-      mightyThemeControllerProvider,
-      mightyThemeControllerProvider.notifier,
-    );
-
     return AlertDialog(
-      title: Text(title, style: theme.controller.headline4),
+      title: Text(title),
       content: content,
       actions: [
-        MightyActionButton.flatText(
-          themeController: theme.controller,
-          onPressed: () {
+        ActionButton.text(
+          child: const Text('Ok'),
+          onPressed: () async {
             Navigator.of(context).pop();
           },
-          label: 'Ok',
         ),
       ],
+      //backgroundColor: Colors.red,
       actionsAlignment: MainAxisAlignment.end,
-      backgroundColor: theme.controller.mainBackgroundColor,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(
           SpaceTokens.mediumSmall,

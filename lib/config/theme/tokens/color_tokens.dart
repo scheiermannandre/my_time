@@ -235,4 +235,18 @@ class ThemeColorBuilder {
         return DarkThemeColorTokens.lightColor;
     }
   }
+
+  /// Returns the color for icons that are not on primary depending on
+  /// the [Brightness].
+  ///
+  /// For [Brightness.light], returns [LightThemeColorTokens.darkColor].
+  /// For [Brightness.dark], returns [DarkThemeColorTokens.lightestColor].
+  Color getIconColor() {
+    switch (Theme.of(_context).brightness) {
+      case Brightness.light:
+        return LightThemeColorTokens.darkColor;
+      case Brightness.dark:
+        return DarkThemeColorTokens.lightestColor;
+    }
+  }
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_time/common/extensions/build_context_extension.dart';
-import 'package:my_time/config/theme/mighty_theme.dart';
+import 'package:my_time/config/theme/tokens/color_tokens.dart';
 import 'package:my_time/config/theme/tokens/corner_radius_tokens.dart';
 import 'package:my_time/config/theme/tokens/space_tokens.dart';
 import 'package:my_time/core/widgets/mighty_text_form_field.dart';
@@ -12,7 +12,6 @@ class AuthPasswordField extends StatelessWidget {
   /// Constructs an [AuthPasswordField] with required parameters.
   const AuthPasswordField({
     required this.passwordController,
-    required this.themeController,
     required this.obscurePassword,
     required this.toggleObscurePassword,
     required this.onChanged,
@@ -21,9 +20,6 @@ class AuthPasswordField extends StatelessWidget {
 
   /// The controller for the password text field.
   final TextEditingController passwordController;
-
-  /// The theme controller for managing the appearance.
-  final MightyThemeController themeController;
 
   /// Represents whether the password is obscured or visible.
   final bool obscurePassword;
@@ -41,7 +37,6 @@ class AuthPasswordField extends StatelessWidget {
     // Includes a suffix icon to toggle password visibility.
     return MightyTextFormField(
       controller: passwordController,
-      mightyThemeController: themeController,
       labelText: context.loc.passwordFieldLabel,
       hintText: context.loc.passwordFieldHint,
       textInputType: TextInputType.visiblePassword,
@@ -50,7 +45,7 @@ class AuthPasswordField extends StatelessWidget {
         onTap: toggleObscurePassword,
         child: Icon(
           obscurePassword ? Icons.visibility : Icons.visibility_off,
-          color: themeController.secondaryTextColor,
+          color: ThemeColorBuilder(context).getIconColor(),
         ),
       ),
       onChanged: onChanged,
@@ -64,7 +59,6 @@ class AuthCheckedPasswordField extends StatelessWidget {
   /// Constructs an [AuthCheckedPasswordField] with required parameters.
   AuthCheckedPasswordField({
     required this.passwordController,
-    required this.themeController,
     required this.obscurePassword,
     required this.toggleObscurePassword,
     required this.onChanged,
@@ -73,9 +67,6 @@ class AuthCheckedPasswordField extends StatelessWidget {
 
   /// The controller for the password text field.
   final TextEditingController passwordController;
-
-  /// The theme controller for managing the appearance.
-  final MightyThemeController themeController;
 
   /// Represents whether the password is obscured or visible.
   final bool obscurePassword;
@@ -98,11 +89,11 @@ class AuthCheckedPasswordField extends StatelessWidget {
 
     return SpacedColumn(
       spacing: SpaceTokens.medium,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         AuthPasswordField(
           // This is the AuthPasswordField widget
           passwordController: passwordController,
-          themeController: themeController,
           obscurePassword: obscurePassword,
           toggleObscurePassword: toggleObscurePassword,
           onChanged: (value, isValid) {
@@ -116,7 +107,8 @@ class AuthCheckedPasswordField extends StatelessWidget {
           configuration: PasswordStrengthCheckerConfiguration(
             statusMargin: const EdgeInsets.only(top: SpaceTokens.small),
             borderWidth: 1,
-            borderColor: themeController.nonDecorativeBorderColor,
+            borderColor:
+                ThemeColorBuilder(context).getNonDecorativeBorderColor(),
             externalBorderRadius: const BorderRadius.all(
               Radius.circular(
                 CornerRadiusTokens.slightySmall,

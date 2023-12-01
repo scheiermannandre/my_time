@@ -110,7 +110,7 @@ class SignInPageState extends ConsumerState<SignInPage> {
                       validator: (value) =>
                           signIn.controller.emailValidator(context, value),
                       controller: emailTextController,
-                      mightyThemeController: theme.controller,
+                      // mightyThemeController: theme.controller,
                       labelText: context.loc.authPagesEmailFieldLabel,
                       hintText: context.loc.authPagesEmailFieldHint,
                       textInputType: TextInputType.emailAddress,
@@ -123,7 +123,7 @@ class SignInPageState extends ConsumerState<SignInPage> {
                       children: [
                         MightyTextFormField(
                           controller: passwordController,
-                          mightyThemeController: theme.controller,
+                          //mightyThemeController: theme.controller,
                           labelText: context.loc.passwordFieldLabel,
                           hintText: context.loc.signInPasswordFieldHint,
                           textInputType: TextInputType.visiblePassword,
@@ -134,7 +134,7 @@ class SignInPageState extends ConsumerState<SignInPage> {
                               state.obscurePassword
                                   ? Icons.visibility
                                   : Icons.visibility_off,
-                              color: theme.controller.secondaryTextColor,
+                              // color: theme.controller.secondaryTextColor,
                             ),
                           ),
                           onChanged: (value, isValid) {},
