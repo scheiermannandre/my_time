@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:my_time/config/theme/color_tokens.dart';
-import 'package:my_time/config/theme/text_style_tokens.dart';
+import 'package:my_time/config/theme/tokens/color_tokens.dart';
+import 'package:my_time/config/theme/tokens/text_style_tokens.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'mighty_theme.g.dart';
 
@@ -83,7 +83,7 @@ class MightyThemeController extends _$MightyThemeController {
   TextStyle get alternateBody => TextStyleTokens.body(nonDecorativeBorderColor);
 
   /// Gets the [TextStyle] for small text based on the current theme mode.
-  TextStyle get small => TextStyleTokens.small(headingTextColor);
+  TextStyle get small => TextStyleTokens.bodyMedium(headingTextColor);
 
   /// Gets the [TextStyle] for small headline text based on the current theme
   /// mode.

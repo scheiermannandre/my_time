@@ -7,6 +7,8 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 // ignore:depend_on_referenced_packages
 import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:my_time/config/theme/dark_theme.dart';
+import 'package:my_time/config/theme/light_theme.dart';
 import 'package:my_time/firebase_options.dart';
 import 'package:my_time/router/app_route.dart';
 // import 'package:realm/realm.dart';
@@ -152,26 +154,29 @@ class MyApp extends ConsumerWidget {
       onGenerateTitle: (BuildContext context) => 'My Time-Tracker',
       supportedLocales: AppLocalizations.supportedLocales,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
-      theme: ThemeData(
-        colorScheme: const ColorScheme(
-          brightness: Brightness.light,
-          primary: Colors.white,
-          onPrimary: Colors.white,
-          secondary: Colors.white,
-          onSecondary: Colors.white,
-          error: Colors.red,
-          onError: Colors.white,
-          background: Colors.white,
-          onBackground: Colors.white,
-          surface: Colors.white,
-          onSurface: Colors.white,
-        ),
-        // This is needed
-        bottomSheetTheme: const BottomSheetThemeData(
-          backgroundColor: Colors.transparent,
-        ),
-        // This is needed
-      ),
+      theme: lightTheme,
+      darkTheme: darkTheme,
+
+      // theme: ThemeData(
+      //   colorScheme: const ColorScheme(
+      //     brightness: Brightness.light,
+      //     primary: Colors.white,
+      //     onPrimary: Colors.white,
+      //     secondary: Colors.white,
+      //     onSecondary: Colors.white,
+      //     error: Colors.red,
+      //     onError: Colors.white,
+      //     background: Colors.white,
+      //     onBackground: Colors.white,
+      //     surface: Colors.white,
+      //     onSurface: Colors.white,
+      //   ),
+      //   // This is needed
+      //   bottomSheetTheme: const BottomSheetThemeData(
+      //     backgroundColor: Colors.transparent,
+      //   ),
+      //   // This is needed
+      // ),
     );
   }
 }

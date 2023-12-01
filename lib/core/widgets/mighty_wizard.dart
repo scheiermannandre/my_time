@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:my_time/config/theme/color_tokens.dart';
 import 'package:my_time/config/theme/mighty_theme.dart';
-import 'package:my_time/config/theme/space_tokens.dart';
-import 'package:my_time/config/theme/text_style_tokens.dart';
+import 'package:my_time/config/theme/tokens/color_tokens.dart';
+import 'package:my_time/config/theme/tokens/space_tokens.dart';
+import 'package:my_time/config/theme/tokens/text_style_tokens.dart';
 import 'package:my_time/core/util/extentions/widget_ref_extension.dart';
 import 'package:my_time/core/widgets/mighty_action_button.dart';
 import 'package:my_time/core/widgets/wizard/wizard/wizard.dart';

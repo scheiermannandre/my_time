@@ -5,9 +5,10 @@ import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_time/common/extensions/build_context_extension.dart';
 import 'package:my_time/config/theme/mighty_theme.dart';
-import 'package:my_time/config/theme/space_tokens.dart';
+import 'package:my_time/config/theme/tokens/space_tokens.dart';
+import 'package:my_time/config/theme/tokens/text_style_tokens.dart';
 import 'package:my_time/core/util/extentions/widget_ref_extension.dart';
-import 'package:my_time/core/widgets/mighty_action_button.dart';
+import 'package:my_time/core/widgets/action_button.dart';
 import 'package:my_time/core/widgets/mighty_text_form_field.dart';
 import 'package:my_time/core/widgets/spaced_column.dart';
 import 'package:my_time/features/8_authentication/presentation/pages/widgets/auth_action_footer.dart';
@@ -80,13 +81,12 @@ class SignInPageState extends ConsumerState<SignInPage> {
 
     // Controllers for email and password text fields with initial values
     final emailTextController = useTextEditingController(
-      text: widget.email ?? '',
+      text: widget.email ?? 'test@test.com',
     );
     final passwordController =
-        useTextEditingController(text: widget.password ?? '');
+        useTextEditingController(text: widget.password ?? '123123');
 
     return Scaffold(
-      backgroundColor: theme.controller.mainBackgroundColor,
       body: SafeArea(
         child: Center(
           child: Padding(
@@ -104,7 +104,6 @@ class SignInPageState extends ConsumerState<SignInPage> {
                       context.loc.authSignInPageHeader,
                       style: theme.controller.headline1,
                     ),
-
                     // Email text field for sign-in
                     MightyTextFormField(
                       onFocusLost: signIn.controller.setShouldValidateEmail,
@@ -113,7 +112,7 @@ class SignInPageState extends ConsumerState<SignInPage> {
                       controller: emailTextController,
                       mightyThemeController: theme.controller,
                       labelText: context.loc.authPagesEmailFieldLabel,
-                      hintText: context.loc.passwordFieldHint,
+                      hintText: context.loc.authPagesEmailFieldHint,
                       textInputType: TextInputType.emailAddress,
                     ),
 
@@ -143,14 +142,12 @@ class SignInPageState extends ConsumerState<SignInPage> {
                         Padding(
                           padding:
                               const EdgeInsets.only(top: SpaceTokens.small),
-                          child: RichText(
-                            textAlign: TextAlign.end,
-                            text: TextSpan(
+                          child: Text.rich(
+                            TextSpan(
                               text: context
                                   .loc.authSignInPageForgotPasswordButtonLabel,
-                              style: theme.controller.small.copyWith(
-                                decoration: TextDecoration.underline,
-                              ),
+                              style:
+                                  TextStyleTokens.bodyMedium(null).underline(),
                               recognizer: TapGestureRecognizer()
                                 ..onTap = () => _changePage(
                                       context,
@@ -159,15 +156,12 @@ class SignInPageState extends ConsumerState<SignInPage> {
                                       passwordController.text,
                                     ),
                             ),
+                            textAlign: TextAlign.end,
                           ),
                         ),
                       ],
                     ),
-
-                    // Button to sign in
-                    MightyActionButton.primary(
-                      themeController: theme.controller,
-                      label: context.loc.authSignInPageSubmitButtonLabel,
+                    ActionButton.primary(
                       onPressed: !state.isSubmitEnabled
                           ? null
                           : () async {
@@ -178,11 +172,10 @@ class SignInPageState extends ConsumerState<SignInPage> {
                               );
                             },
                       isLoading: signIn.state.isLoading,
+                      child: Text(context.loc.authSignInPageSubmitButtonLabel),
                     ),
-
                     // Social login buttons
                     AuthSocialButtons(
-                      controller: theme.controller,
                       googleBtnText: context.loc.authSignInGoogleButtonLabel,
                       googleBtnAction: () {},
                       appleBtnText: context.loc.authSignInAppleButtonLabel,
@@ -191,7 +184,6 @@ class SignInPageState extends ConsumerState<SignInPage> {
 
                     // Footer action for navigation and agreements
                     AuthActionFooter(
-                      controller: theme.controller,
                       pageSwitchAction: () => _changePage(
                         context,
                         AppRoute.signUp,

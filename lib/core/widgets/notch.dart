@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:my_time/config/theme/corner_radius_tokens.dart';
-import 'package:my_time/config/theme/space_tokens.dart';
+import 'package:my_time/config/theme/tokens/corner_radius_tokens.dart';
+import 'package:my_time/config/theme/tokens/space_tokens.dart';
 
 /// A customizable notch widget typically used for indicating
 /// selection or focus.

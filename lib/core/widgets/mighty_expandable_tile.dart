@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:my_time/config/theme/color_tokens.dart';
-import 'package:my_time/config/theme/corner_radius_tokens.dart';
 import 'package:my_time/config/theme/mighty_theme.dart';
-import 'package:my_time/config/theme/size_tokens.dart';
-import 'package:my_time/config/theme/space_tokens.dart';
+import 'package:my_time/config/theme/tokens/color_tokens.dart';
+import 'package:my_time/config/theme/tokens/corner_radius_tokens.dart';
+import 'package:my_time/config/theme/tokens/size_tokens.dart';
+import 'package:my_time/config/theme/tokens/space_tokens.dart';
 import 'package:my_time/core/widgets/mighty_action_button.dart';
 
 /// A tile that can be expanded to reveal additional items in a

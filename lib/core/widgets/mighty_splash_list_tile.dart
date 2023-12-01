@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:my_time/config/theme/color_tokens.dart';
 import 'package:my_time/config/theme/mighty_theme.dart';
+import 'package:my_time/config/theme/tokens/color_tokens.dart';
 import 'package:my_time/core/widgets/mighty_action_button.dart';
 
 /// A list tile with a splash effect, customizable with various parameters.

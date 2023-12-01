@@ -2,24 +2,20 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:my_time/common/dialogs/policy_dialog.dart';
 import 'package:my_time/common/extensions/build_context_extension.dart';
-import 'package:my_time/config/theme/mighty_theme.dart';
-import 'package:my_time/config/theme/space_tokens.dart';
+import 'package:my_time/config/theme/tokens/space_tokens.dart';
+import 'package:my_time/config/theme/tokens/text_style_tokens.dart';
 import 'package:my_time/core/widgets/spaced_column.dart';
 
 /// A widget representing the action footer for authentication pages.
 class AuthActionFooter extends StatelessWidget {
   /// Constructs an [AuthActionFooter].
   const AuthActionFooter({
-    required this.controller,
     required this.pageSwitchAction,
     required this.pageSwitchActionText,
     required this.pageSwitchQuestion,
     required this.agreementOnActionText,
     super.key,
   });
-
-  /// The controller for the theme.
-  final MightyThemeController controller;
 
   /// The question prompting the page switch action.
   final String pageSwitchQuestion;
@@ -40,16 +36,13 @@ class AuthActionFooter extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         // Rich text for account creation and agreements
-        RichText(
-          text: TextSpan(
+        Text.rich(
+          TextSpan(
             text: pageSwitchQuestion,
-            style: controller.small,
             children: [
               TextSpan(
                 text: pageSwitchActionText,
-                style: controller.small.copyWith(
-                  decoration: TextDecoration.underline,
-                ),
+                style: TextStyleTokens.bodyMedium(null).underline(),
                 recognizer: TapGestureRecognizer()..onTap = pageSwitchAction,
               ),
             ],
@@ -57,16 +50,13 @@ class AuthActionFooter extends StatelessWidget {
         ),
 
         // Agreements text with hyperlinks
-        RichText(
-          text: TextSpan(
+        Text.rich(
+          TextSpan(
             text: agreementOnActionText,
-            style: controller.small,
             children: [
               TextSpan(
                 text: context.loc.authActionFooterToS,
-                style: controller.small.copyWith(
-                  decoration: TextDecoration.underline,
-                ),
+                style: TextStyleTokens.bodyMedium(null).underline(),
                 recognizer: TapGestureRecognizer()
                   ..onTap = () async {
                     await MightyMarkDownDialog.show(
@@ -77,13 +67,10 @@ class AuthActionFooter extends StatelessWidget {
               ),
               TextSpan(
                 text: context.loc.authActionFooterAnd,
-                style: controller.small,
               ),
               TextSpan(
                 text: context.loc.authActionFooterPP,
-                style: controller.small.copyWith(
-                  decoration: TextDecoration.underline,
-                ),
+                style: TextStyleTokens.bodyMedium(null).underline(),
                 recognizer: TapGestureRecognizer()
                   ..onTap = () async {
                     await MightyMarkDownDialog.show(

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_time/config/theme/mighty_theme.dart';
-import 'package:my_time/config/theme/space_tokens.dart';
+import 'package:my_time/config/theme/tokens/space_tokens.dart';
 import 'package:my_time/core/widgets/mighty_bottom_sheet.dart';
 
 /// A scaffold with a persistent bottom sheet that can be dragged to

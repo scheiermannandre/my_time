@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:my_time/config/theme/color_tokens.dart';
-import 'package:my_time/config/theme/corner_radius_tokens.dart';
 import 'package:my_time/config/theme/mighty_theme.dart';
-import 'package:my_time/config/theme/text_style_tokens.dart';
+import 'package:my_time/config/theme/tokens/color_tokens.dart';
+import 'package:my_time/config/theme/tokens/corner_radius_tokens.dart';
+import 'package:my_time/config/theme/tokens/text_style_tokens.dart';
 import 'package:my_time/core/widgets/mighty_action_button.dart';
 
 /// A custom SnackBar for the Mighty App.
@@ -23,7 +23,7 @@ class MightySnackBar {
     final backgroundColor = ThemeColors.getMainBackgroundColor(mode);
 
     final textColor = ThemeColors.getHeadingTextColor(mode);
-    final textStyle = TextStyleTokens.small(textColor);
+    final textStyle = TextStyleTokens.bodyMedium(textColor);
     ScaffoldMessenger.of(context)
         .showSnackBar(
           SnackBar(

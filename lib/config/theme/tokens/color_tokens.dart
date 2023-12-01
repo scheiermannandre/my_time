@@ -1,5 +1,4 @@
-import 'dart:ui';
-
+import 'package:flutter/material.dart';
 import 'package:my_time/config/theme/mighty_theme.dart';
 
 /// [ThemeColors] is a class that provides the colors for the app depending
@@ -214,4 +213,26 @@ class ThemelessColorTokens {
 
   /// Green
   static const green = Color(0xff52CC15);
+}
+
+/// A class that provides Colors based on the current [ThemeMode].
+class ThemeColorBuilder {
+  /// Constructs a [ThemeColorBuilder].
+  ThemeColorBuilder(this._context);
+
+  final BuildContext _context;
+
+  /// Returns the color for non-decorative borders depending on
+  /// the [Brightness].
+  ///
+  /// For [Brightness.light], returns [LightThemeColorTokens.mediumColor].
+  /// For [Brightness.dark], returns [DarkThemeColorTokens.lightColor].
+  Color getNonDecorativeBorderColor() {
+    switch (Theme.of(_context).brightness) {
+      case Brightness.light:
+        return LightThemeColorTokens.mediumColor;
+      case Brightness.dark:
+        return DarkThemeColorTokens.lightColor;
+    }
+  }
 }

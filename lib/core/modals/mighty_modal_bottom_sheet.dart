@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:my_time/config/theme/color_tokens.dart';
-import 'package:my_time/config/theme/corner_radius_tokens.dart';
 import 'package:my_time/config/theme/mighty_theme.dart';
+import 'package:my_time/config/theme/tokens/color_tokens.dart';
+import 'package:my_time/config/theme/tokens/corner_radius_tokens.dart';
 import 'package:my_time/core/widgets/notch.dart';
 
 /// Shows a bottom sheet with widgets.

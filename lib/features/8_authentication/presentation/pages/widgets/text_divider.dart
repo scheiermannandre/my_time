@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:my_time/config/theme/space_tokens.dart';
+import 'package:my_time/config/theme/tokens/space_tokens.dart';
 
 /// A custom divider with text in the middle.
 class TextDivider extends StatelessWidget {

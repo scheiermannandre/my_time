@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:my_time/config/theme/corner_radius_tokens.dart';
 import 'package:my_time/config/theme/mighty_theme.dart';
-import 'package:my_time/config/theme/space_tokens.dart';
+import 'package:my_time/config/theme/tokens/space_tokens.dart';
 
 /// A customizable text form field with theming support.
 class MightyTextFormField extends StatefulWidget {
@@ -99,13 +98,10 @@ class _MightyTextFormFieldState extends State<MightyTextFormField> {
 
   @override
   Widget build(BuildContext context) {
-    final enabledBorderColor =
-        widget.mightyThemeController.nonDecorativeBorderColor;
-
     final errorColor = widget.mightyThemeController.errorColor;
     final cursorColor =
         widget.mightyThemeController.themeMode == SystemThemeMode.light
-            ? enabledBorderColor
+            ? widget.mightyThemeController.nonDecorativeBorderColor
             : widget.mightyThemeController.actionsColor;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -147,21 +143,11 @@ class _MightyTextFormFieldState extends State<MightyTextFormField> {
               });
             },
             focusNode: widget.focusNode,
-            style: widget.mightyThemeController.alternateBody,
             cursorColor: cursorColor,
             controller: widget.controller,
             autofocus: widget.autofocus,
             decoration: InputDecoration(
-              fillColor: widget.mightyThemeController.onBackgroundColor,
-              filled: true,
               hintText: widget.hintText,
-              hintStyle: widget.mightyThemeController.alternateBody,
-              border: _getBorder(enabledBorderColor),
-              enabledBorder: _getBorder(enabledBorderColor),
-              focusedBorder: _getBorder(enabledBorderColor),
-              errorBorder: _getBorder(errorColor),
-              focusedErrorBorder: _getBorder(errorColor),
-              errorStyle: TextStyle(color: errorColor),
               suffixIcon: Padding(
                 padding: const EdgeInsets.symmetric(
                   horizontal: SpaceTokens.mediumSmall,
@@ -185,19 +171,6 @@ class _MightyTextFormFieldState extends State<MightyTextFormField> {
           ),
         ),
       ],
-    );
-  }
-
-  InputBorder _getBorder(Color borderColor) {
-    return OutlineInputBorder(
-      borderRadius: const BorderRadius.all(
-        Radius.circular(
-          CornerRadiusTokens.small,
-        ),
-      ),
-      borderSide: BorderSide(
-        color: borderColor,
-      ),
     );
   }
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_time/config/theme/mighty_theme.dart';
-import 'package:my_time/config/theme/space_tokens.dart';
+import 'package:my_time/config/theme/tokens/space_tokens.dart';
 import 'package:my_time/core/widgets/mighty_splash_list_tile.dart';
 
 /// A widget for selecting a value from a list of options.

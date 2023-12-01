@@ -1,14 +1,70 @@
 import 'package:flutter/material.dart';
-import 'package:my_time/config/theme/color_tokens.dart';
-import 'package:my_time/config/theme/corner_radius_tokens.dart';
 import 'package:my_time/config/theme/mighty_theme.dart';
-import 'package:my_time/config/theme/size_tokens.dart';
-import 'package:my_time/config/theme/space_tokens.dart';
-import 'package:my_time/config/theme/text_style_tokens.dart';
+import 'package:my_time/config/theme/tokens/color_tokens.dart';
+import 'package:my_time/config/theme/tokens/corner_radius_tokens.dart';
+import 'package:my_time/config/theme/tokens/size_tokens.dart';
+import 'package:my_time/config/theme/tokens/space_tokens.dart';
+import 'package:my_time/config/theme/tokens/text_style_tokens.dart';
 
 /// [MightyActionButton] is a class that provides the styled action buttons
 /// for the app.
 class MightyActionButton {
+  /// Returns a styled elevated button.
+  static ElevatedButton elevated({
+    required MightyThemeController themeController,
+    required String label,
+    required VoidCallback? onPressed,
+    bool isLoading = false,
+    Key? key,
+  }) {
+    final backgroundColor = themeController.themeMode == SystemThemeMode.light
+        ? LightThemeColorTokens.primaryColor
+        : DarkThemeColorTokens.primaryColor;
+
+    final textColor = themeController.themeMode == SystemThemeMode.light
+        ? LightThemeColorTokens.black
+        : DarkThemeColorTokens.black;
+
+    final borderColor = themeController.themeMode == SystemThemeMode.light
+        ? LightThemeColorTokens.black
+        : null;
+
+    return ElevatedButton(
+      key: key,
+      onPressed: onPressed,
+      style: ElevatedButton.styleFrom(
+        elevation: 0,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(CornerRadiusTokens.small),
+          side: BorderSide(
+            color: borderColor ?? backgroundColor,
+          ),
+        ),
+        padding: const EdgeInsets.symmetric(
+          vertical: SpaceTokens.mediumSmall,
+          horizontal: SpaceTokens.medium,
+        ),
+        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+        minimumSize: const Size(0, SizeTokens.x48),
+        animationDuration: const Duration(milliseconds: 100),
+        splashFactory: InkRipple.splashFactory,
+      ),
+      child: isLoading
+          ? SizedBox(
+              height: SizeTokens.x24,
+              width: SizeTokens.x24,
+              child: CircularProgressIndicator(
+                color: textColor,
+              ),
+            )
+          : Text(
+              label,
+              style: TextStyleTokens.body(textColor),
+              textAlign: TextAlign.center,
+            ),
+    );
+  }
+
   /// Returns a styled primary action button.
   static ActionButton primary({
     required MightyThemeController themeController,
@@ -45,6 +101,7 @@ class MightyActionButton {
       borderColor: borderColor,
       splashColor: splashColor,
       isLoading: isLoading,
+      stretch: true,
     );
   }
 
@@ -82,6 +139,7 @@ class MightyActionButton {
       borderColor: borderColor,
       borderRadius: BorderRadius.circular(CornerRadiusTokens.small),
       splashColor: splashColor,
+      stretch: true,
     );
   }
 
@@ -208,6 +266,7 @@ class ActionButton extends StatefulWidget {
     required this.title,
     required this.onPressed,
     super.key,
+    this.stretch = false,
     this.splashColor,
     this.decoration,
     this.isLoading = false,
@@ -231,6 +290,7 @@ class ActionButton extends StatefulWidget {
     Key? key,
     bool isLoading = false,
     EdgeInsetsGeometry? contentPadding,
+    bool stretch = false,
   }) {
     final radius = borderRadius ?? BorderRadius.zero;
 
@@ -249,6 +309,7 @@ class ActionButton extends StatefulWidget {
       splashBorderRadius: radius,
       isLoading: isLoading,
       contentPadding: contentPadding,
+      stretch: stretch,
     );
   }
 
@@ -361,43 +422,57 @@ class ActionButton extends StatefulWidget {
   /// The padding around the button's content.
   final EdgeInsetsGeometry contentPadding;
 
+  /// Whether the button should stretch to fill the available space.
+  final bool stretch;
   @override
   State<ActionButton> createState() => _ActionButtonState();
 }
 
 class _ActionButtonState extends State<ActionButton> {
   bool clicked = false;
-
+  bool stretch = true;
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: Colors.transparent,
-      child: Ink(
-        decoration: widget.decoration,
-        child: InkWell(
-          splashColor: widget.splashColor?.withOpacity(.1),
-          borderRadius: widget.splashBorderRadius,
-          onTap: widget.onPressed == null || widget.isLoading
-              ? null
-              : () {
-                  setState(() {
-                    clicked = true;
-                    if (!widget.isLoading) {
-                      widget.onPressed!();
-                    }
-                  });
-                },
-          child: Padding(
-            padding: widget.contentPadding,
-            child: clicked && widget.isLoading
-                ? SizedBox(
-                    height: SizeTokens.x24,
-                    width: SizeTokens.x24,
-                    child: CircularProgressIndicator(
-                      color: widget.indicatorColor,
+    return Container(
+      alignment: stretch ? Alignment.center : null,
+      child: Material(
+        color: Colors.transparent,
+        child: Ink(
+          width: stretch ? double.infinity : null,
+          decoration: widget.decoration,
+          child: InkWell(
+            splashColor: widget.splashColor?.withOpacity(.1),
+            borderRadius: widget.splashBorderRadius,
+            onTap: widget.onPressed == null || widget.isLoading
+                ? null
+                : () {
+                    setState(() {
+                      clicked = true;
+                      if (!widget.isLoading) {
+                        widget.onPressed!();
+                      }
+                    });
+                  },
+            child: Padding(
+              padding: widget.contentPadding,
+              child: Stack(
+                alignment: Alignment.center,
+                children: [
+                  Opacity(
+                    opacity: widget.isLoading ? 0 : 1,
+                    child: widget.title,
+                  ),
+                  if (clicked && widget.isLoading)
+                    SizedBox(
+                      height: SizeTokens.x24,
+                      width: SizeTokens.x24,
+                      child: CircularProgressIndicator(
+                        color: widget.indicatorColor,
+                      ),
                     ),
-                  )
-                : widget.title,
+                ],
+              ),
+            ),
           ),
         ),
       ),
@@ -465,7 +540,7 @@ class LabeledIconButton extends StatelessWidget {
           Text(
             label,
             textAlign: TextAlign.center,
-            style: TextStyleTokens.small(fontColor),
+            style: TextStyleTokens.bodyMedium(fontColor),
           ),
         ],
       ),

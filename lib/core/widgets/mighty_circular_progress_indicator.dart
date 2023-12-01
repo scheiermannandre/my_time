@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:my_time/config/theme/color_tokens.dart';
 import 'package:my_time/config/theme/mighty_theme.dart';
-import 'package:my_time/config/theme/size_tokens.dart';
-import 'package:my_time/config/theme/space_tokens.dart';
+import 'package:my_time/config/theme/tokens/color_tokens.dart';
+import 'package:my_time/config/theme/tokens/size_tokens.dart';
+import 'package:my_time/config/theme/tokens/space_tokens.dart';
 
 /// A circular progress indicator that adapts its appearance based
 /// on the provided theme.

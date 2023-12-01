@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_time/common/extensions/build_context_extension.dart';
 import 'package:my_time/config/theme/mighty_theme.dart';
-import 'package:my_time/config/theme/space_tokens.dart';
+import 'package:my_time/config/theme/tokens/space_tokens.dart';
 import 'package:my_time/core/modals/mighty_snack_bar.dart';
 import 'package:my_time/core/util/extentions/widget_ref_extension.dart';
 import 'package:my_time/core/widgets/mighty_action_button.dart';
@@ -213,7 +213,6 @@ class SignUpPageState extends ConsumerState<SignUpPage>
 
                     // Social sign-up buttons
                     AuthSocialButtons(
-                      controller: theme.controller,
                       googleBtnText:
                           context.loc.authSignUpPageGoogleButtonLabel,
                       googleBtnAction: () async {},
@@ -223,7 +222,6 @@ class SignUpPageState extends ConsumerState<SignUpPage>
 
                     // Footer action for navigation and agreements
                     AuthActionFooter(
-                      controller: theme.controller,
                       pageSwitchActionText: context.loc.authSignUpFooterSignIp,
                       pageSwitchQuestion:
                           context.loc.authSignUpFooterHaveAccount,

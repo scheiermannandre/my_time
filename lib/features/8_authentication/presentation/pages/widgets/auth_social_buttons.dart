@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:my_time/common/extensions/build_context_extension.dart';
-import 'package:my_time/config/theme/mighty_theme.dart';
-import 'package:my_time/config/theme/space_tokens.dart';
-import 'package:my_time/core/widgets/mighty_action_button.dart';
+import 'package:my_time/config/theme/tokens/color_tokens.dart';
+import 'package:my_time/config/theme/tokens/space_tokens.dart';
+import 'package:my_time/core/widgets/action_button.dart';
 import 'package:my_time/core/widgets/spaced_column.dart';
 import 'package:my_time/features/8_authentication/presentation/pages/widgets/text_divider.dart';
 
@@ -10,16 +10,12 @@ import 'package:my_time/features/8_authentication/presentation/pages/widgets/tex
 class AuthSocialButtons extends StatelessWidget {
   /// Constructs an [AuthSocialButtons] with required parameters.
   const AuthSocialButtons({
-    required this.controller,
     required this.googleBtnText,
     required this.googleBtnAction,
     required this.appleBtnText,
     required this.appleBtnAction,
     super.key,
   });
-
-  /// The controller for managing the theme.
-  final MightyThemeController controller;
 
   /// Text displayed on the Google sign-in button.
   final String googleBtnText;
@@ -44,23 +40,23 @@ class AuthSocialButtons extends StatelessWidget {
         TextDivider(
           dividerText: Text(
             context.loc.authSocialBtnOr,
-            style: controller.small,
           ),
-          dividerColor: controller.nonDecorativeBorderColor,
+          dividerColor:
+              ThemeColorBuilder(context).getNonDecorativeBorderColor(),
         ),
-
         // Google sign-in button
-        MightyActionButton.secondary(
-          themeController: controller,
-          label: googleBtnText,
-          onPressed: googleBtnAction,
+        ActionButton.secondary(
+          onPressed: () async {
+            googleBtnAction.call();
+          },
+          child: Text(googleBtnText),
         ),
-
         // Apple sign-in button
-        MightyActionButton.secondary(
-          themeController: controller,
-          label: appleBtnText,
-          onPressed: appleBtnAction,
+        ActionButton.secondary(
+          onPressed: () async {
+            appleBtnAction.call();
+          },
+          child: Text(appleBtnText),
         ),
       ],
     );
