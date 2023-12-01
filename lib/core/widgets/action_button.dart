@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:my_time/config/theme/tokens/size_tokens.dart';
-import 'package:my_time/config/theme/tokens/space_tokens.dart';
 
 /// A customizable action button widget that can display
 /// buttons with or without loading indicators.
@@ -54,6 +53,7 @@ class ActionButton extends StatelessWidget {
     required Widget child,
     required Future<void> Function()? onPressed,
     bool isLoading = false,
+    ButtonStyle? style,
     Key? key,
   }) {
     return ActionButton(
@@ -61,6 +61,7 @@ class ActionButton extends StatelessWidget {
       isLoading: isLoading,
       child: child,
       buttonBuilder: (child) => TextButton(
+        style: style,
         onPressed: onPressed,
         child: child,
       ),
@@ -79,7 +80,6 @@ class ActionButton extends StatelessWidget {
       isLoading: isLoading,
       child: child,
       buttonBuilder: (child) => IconButton(
-        padding: EdgeInsets.zero,
         onPressed: onPressed,
         icon: child,
       ),
@@ -119,25 +119,22 @@ class _ButtonChild extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(SpaceTokens.mediumSmall),
-      child: Stack(
-        alignment: Alignment.center,
-        children: [
-          Opacity(
-            opacity: isLoading ? 0 : 1,
-            child: child,
+    return Stack(
+      alignment: Alignment.center,
+      children: [
+        Opacity(
+          opacity: isLoading ? 0 : 1,
+          child: child,
+        ),
+        Visibility(
+          visible: isLoading,
+          child: const SizedBox(
+            height: SizeTokens.x24,
+            width: SizeTokens.x24,
+            child: CircularProgressIndicator(),
           ),
-          Visibility(
-            visible: isLoading,
-            child: const SizedBox(
-              height: SizeTokens.x24,
-              width: SizeTokens.x24,
-              child: CircularProgressIndicator(),
-            ),
-          ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

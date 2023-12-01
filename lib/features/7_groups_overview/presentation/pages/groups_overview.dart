@@ -351,7 +351,6 @@ class _LabeledIconButtons extends HookWidget {
     String groupName,
   ) async {
     final shouldDelete = await showMightyModalBottomSheet<bool>(
-      themeController: themeController,
       context: context,
       bottomSheetController: animationController,
       widget: Consumer(
@@ -411,7 +410,6 @@ class _LabeledIconButtons extends HookWidget {
   ) async {
     final clickedIndex = await showMightyModalBottomSheet<int>(
       heightFactor: .5,
-      themeController: themeController,
       context: context,
       bottomSheetController: animationController,
       widget: Consumer(

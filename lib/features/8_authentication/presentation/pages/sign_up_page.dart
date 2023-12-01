@@ -3,8 +3,8 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_time/common/extensions/build_context_extension.dart';
-import 'package:my_time/config/theme/mighty_theme.dart';
 import 'package:my_time/config/theme/tokens/space_tokens.dart';
+import 'package:my_time/config/theme/tokens/text_style_tokens.dart';
 import 'package:my_time/core/modals/mighty_snack_bar.dart';
 import 'package:my_time/core/util/extentions/widget_ref_extension.dart';
 import 'package:my_time/core/widgets/action_button.dart';
@@ -79,7 +79,6 @@ class SignUpPageState extends ConsumerState<SignUpPage>
     SignUpPageController controller,
     String email,
     String password,
-    MightyThemeController themeController,
   ) async {
     // Validate the form fields
     if (!_formKey.currentState!.validate()) return;
@@ -96,13 +95,11 @@ class SignUpPageState extends ConsumerState<SignUpPage>
         if (snackbarMessage.isEmpty) return;
         MightySnackBar.show(
           context,
-          themeController,
           snackbarMessage,
           actionLabel: context.loc.authSnackbarActionLabel,
           onTab: () async {
             await EmailAppsUI.show(
               context: context,
-              themeController: themeController,
               animationController: _animationController,
             );
           },
@@ -127,12 +124,6 @@ class SignUpPageState extends ConsumerState<SignUpPage>
 
   @override
   Widget build(BuildContext context) {
-    // Obtain the theme and authentication page state
-    final theme = ref.watchStateProvider(
-      context,
-      mightyThemeControllerProvider,
-      mightyThemeControllerProvider.notifier,
-    );
     final signUpPage = ref.watchAndListenStateProviderError(
       context,
       signUpPageControllerProvider,
@@ -147,7 +138,6 @@ class SignUpPageState extends ConsumerState<SignUpPage>
         useTextEditingController(text: widget.password ?? '');
 
     return Scaffold(
-      backgroundColor: theme.controller.mainBackgroundColor,
       body: SafeArea(
         child: Center(
           child: Padding(
@@ -163,7 +153,7 @@ class SignUpPageState extends ConsumerState<SignUpPage>
                     // Displays the title of the authentication page
                     Text(
                       context.loc.authSignUpPageHeader,
-                      style: theme.controller.headline1,
+                      style: TextStyleTokens.getHeadline1(null),
                     ),
 
                     // Email text field for sign-up
@@ -201,7 +191,6 @@ class SignUpPageState extends ConsumerState<SignUpPage>
                                 signUpPage.controller,
                                 emailTextController.text,
                                 passwordController.text,
-                                theme.controller,
                               );
                             },
                       isLoading: signUpPage.state.isLoading,

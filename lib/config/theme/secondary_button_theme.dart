@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_time/config/theme/tokens/color_tokens.dart';
 import 'package:my_time/config/theme/tokens/corner_radius_tokens.dart';
+import 'package:my_time/config/theme/tokens/space_tokens.dart';
 import 'package:my_time/config/theme/tokens/text_style_tokens.dart';
 
 /// ThemeData to define the styling for secondary buttons across the app.
@@ -36,6 +37,10 @@ class SecondaryButtonThemeData extends OutlinedButtonThemeData {
   }) {
     return SecondaryButtonThemeData._(
       style: OutlinedButton.styleFrom(
+        padding: const EdgeInsets.symmetric(
+          horizontal: SpaceTokens.medium,
+          vertical: SpaceTokens.mediumSmall,
+        ),
         elevation: 0,
         shadowColor: Colors.transparent,
         foregroundColor: foregroundColor,

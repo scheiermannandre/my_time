@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_time/config/theme/tokens/color_tokens.dart';
 import 'package:my_time/config/theme/tokens/corner_radius_tokens.dart';
+import 'package:my_time/config/theme/tokens/space_tokens.dart';
 import 'package:my_time/config/theme/tokens/text_style_tokens.dart';
 
 /// ThemeData to define the styling for primary buttons across the app.
@@ -37,6 +38,10 @@ class PrimaryButtonThemeData extends ElevatedButtonThemeData {
     return PrimaryButtonThemeData._(
       style: ElevatedButton.styleFrom(
         elevation: 0,
+        padding: const EdgeInsets.symmetric(
+          horizontal: SpaceTokens.medium,
+          vertical: SpaceTokens.mediumSmall,
+        ),
         shadowColor: Colors.transparent,
         foregroundColor: foregroundColor,
         backgroundColor: backgroundColor,

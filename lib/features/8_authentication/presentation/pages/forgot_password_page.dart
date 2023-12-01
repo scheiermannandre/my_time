@@ -3,11 +3,11 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_time/common/extensions/build_context_extension.dart';
-import 'package:my_time/config/theme/mighty_theme.dart';
 import 'package:my_time/config/theme/tokens/space_tokens.dart';
+import 'package:my_time/config/theme/tokens/text_style_tokens.dart';
 import 'package:my_time/core/modals/mighty_snack_bar.dart';
 import 'package:my_time/core/util/extentions/widget_ref_extension.dart';
-import 'package:my_time/core/widgets/mighty_action_button.dart';
+import 'package:my_time/core/widgets/action_button.dart';
 import 'package:my_time/core/widgets/mighty_text_form_field.dart';
 import 'package:my_time/features/8_authentication/presentation/pages/util/email_app_opener.dart';
 import 'package:my_time/features/8_authentication/presentation/pages/util/email_validation.dart';
@@ -37,7 +37,6 @@ class ForgotPasswordPage extends HookConsumerWidget with EmailValidator {
     String email,
     ForgotPasswordPageState state,
     ForgotPasswordPageController controller,
-    MightyThemeController themeController,
     AnimationController animationController,
   ) async {
     // Performs the password reset submission using the provided controller
@@ -51,13 +50,11 @@ class ForgotPasswordPage extends HookConsumerWidget with EmailValidator {
         if (snackbarMessage.isEmpty) return;
         MightySnackBar.show(
           context,
-          themeController,
           snackbarMessage,
           actionLabel: context.loc.authSnackbarActionLabel,
           onTab: () async {
             await EmailAppsUI.show(
               context: context,
-              themeController: themeController,
               animationController: animationController,
             );
           },
@@ -89,12 +86,6 @@ class ForgotPasswordPage extends HookConsumerWidget with EmailValidator {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // Obtains the theme and authentication page state
-    final theme = ref.watchStateProvider(
-      context,
-      mightyThemeControllerProvider,
-      mightyThemeControllerProvider.notifier,
-    );
     final authPage = ref.watchStateProvider(
       context,
       forgotPasswordPageControllerProvider,
@@ -110,7 +101,6 @@ class ForgotPasswordPage extends HookConsumerWidget with EmailValidator {
       reverseDuration: const Duration(milliseconds: 300),
     );
     return Scaffold(
-      backgroundColor: theme.controller.mainBackgroundColor,
       body: SafeArea(
         child: Center(
           child: Padding(
@@ -126,7 +116,7 @@ class ForgotPasswordPage extends HookConsumerWidget with EmailValidator {
                     // Displays the title of the authentication page
                     Text(
                       context.loc.authForgotPasswordPageHeader,
-                      style: theme.controller.headline1,
+                      style: TextStyleTokens.getHeadline1(null),
                     ),
                     const SizedBox(height: SpaceTokens.medium),
 
@@ -144,34 +134,33 @@ class ForgotPasswordPage extends HookConsumerWidget with EmailValidator {
                     const SizedBox(height: SpaceTokens.medium),
 
                     // Button to trigger password reset
-                    MightyActionButton.primary(
-                      themeController: theme.controller,
-                      label:
-                          context.loc.authForgotPasswordPageSubmitButtonLabel,
-                      onPressed: () {
-                        // Triggers the form submission for password reset
-                        _submit(
+
+                    ActionButton.primary(
+                      onPressed: () async {
+                        await _submit(
                           context,
                           emailTextController.text,
                           state!,
                           authPage.controller,
-                          theme.controller,
                           animationController,
                         );
                       },
                       isLoading: authPage.state.isLoading,
+                      child: Text(
+                        context.loc.authForgotPasswordPageSubmitButtonLabel,
+                      ),
                     ),
                     const SizedBox(height: SpaceTokens.medium),
 
-                    // Buttons for primary and secondary actions
-                    MightyActionButton.secondary(
-                      themeController: theme.controller,
-                      label: context.loc.deleteEntryCancelBtnLabel,
-                      onPressed: () => _changePage(
-                        context,
-                        AppRoute.signIn,
-                        emailTextController.text,
-                      ),
+                    ActionButton.secondary(
+                      child: Text(context.loc.deleteEntryCancelBtnLabel),
+                      onPressed: () async {
+                        _changePage(
+                          context,
+                          AppRoute.signIn,
+                          emailTextController.text,
+                        );
+                      },
                     ),
                   ],
                 ),

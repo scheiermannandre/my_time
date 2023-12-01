@@ -55,7 +55,7 @@
     "authForgotPasswordPageSubmitButtonLabel":  "Schick mir den Zurücksetzungslink!",
 
     "authForgotPasswordSnackbarMessage": "Ein Zurücksetzungslink wurde an deine E-Mail-Adresse gesendet.\nBitte überprüfe deinen Posteingang.",
-    "authSnackbarActionLabel": "Emails öffnen",
+    "authSnackbarActionLabel": "Emails\nöffnen",
 
     "authSignInPageHeader": "Willkommen\nZurück!",
     "authSignInPageSubmitButtonLabel": "Melde mich an!",

@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:my_time/config/theme/input_decoration_theme.dart';
 import 'package:my_time/config/theme/primary_button_theme.dart';
 import 'package:my_time/config/theme/secondary_button_theme.dart';
+import 'package:my_time/config/theme/snackbar_theme.dart';
+import 'package:my_time/config/theme/tertiary_button_theme.dart';
 import 'package:my_time/config/theme/text_theme.dart';
 import 'package:my_time/config/theme/tokens/color_tokens.dart';
-import 'package:my_time/config/theme/tokens/corner_radius_tokens.dart';
-import 'package:my_time/config/theme/tokens/space_tokens.dart';
 
 /// The dark theme of the application.
 ThemeData darkTheme = ThemeData(
@@ -40,30 +40,9 @@ ThemeData darkTheme = ThemeData(
       ),
     ),
   ),
-  textButtonTheme: TextButtonThemeData(
-    style: ButtonStyle(
-      minimumSize: MaterialStateProperty.all<Size>(Size.zero),
-      padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
-        const EdgeInsets.symmetric(
-          horizontal: SpaceTokens.medium,
-        ),
-      ),
-      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-      shape: MaterialStateProperty.all<OutlinedBorder>(
-        RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(
-            CornerRadiusTokens.small,
-          ),
-        ),
-      ),
-      foregroundColor: MaterialStateProperty.all<Color>(
-        DarkThemeColorTokens.primaryColor,
-      ),
-      overlayColor: MaterialStateProperty.all<Color>(
-        DarkThemeColorTokens.primaryColor.withOpacity(0.1),
-      ),
-    ),
-  ),
+  textButtonTheme: TertiaryButtonThemeData.dark(),
+  snackBarTheme: SnackBarTheme.dark(),
+
   progressIndicatorTheme: const ProgressIndicatorThemeData(
     color: DarkThemeColorTokens.mediumColor,
   ),

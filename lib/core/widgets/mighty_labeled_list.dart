@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_time/config/theme/mighty_theme.dart';
 import 'package:my_time/config/theme/tokens/space_tokens.dart';
+import 'package:my_time/config/theme/tokens/text_style_tokens.dart';
 import 'package:my_time/core/widgets/mighty_splash_list_tile.dart';
 
 /// A widget that displays a labeled list of items.
@@ -58,14 +59,13 @@ class MightyLabeledList extends StatelessWidget {
         children: [
           Text(
             label,
-            style: themeController.headline5,
+            style: TextStyleTokens.getHeadline5(null),
           ),
           if (items.isEmpty)
             Padding(
               padding: const EdgeInsets.only(top: SpaceTokens.mediumSmall),
               child: Text(
                 emptyListLabel,
-                style: themeController.alternateBody,
               ),
             )
           else

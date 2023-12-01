@@ -54,7 +54,7 @@
     "authForgotPasswordPageSubmitButtonLabel": "Send me a reset link!",
 
     "authForgotPasswordSnackbarMessage": "A reset link has been sent to your email address.\nPlease check your inbox.",
-    "authSnackbarActionLabel": "Open Inbox",
+    "authSnackbarActionLabel": "Open\nInbox",
 
     "authSignInPageHeader": "Welcome\nBack!",
     "authSignInPageSubmitButtonLabel": "Sign me In",

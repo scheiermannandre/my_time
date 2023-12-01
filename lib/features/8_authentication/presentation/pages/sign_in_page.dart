@@ -4,7 +4,6 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_time/common/extensions/build_context_extension.dart';
-import 'package:my_time/config/theme/mighty_theme.dart';
 import 'package:my_time/config/theme/tokens/space_tokens.dart';
 import 'package:my_time/config/theme/tokens/text_style_tokens.dart';
 import 'package:my_time/core/util/extentions/widget_ref_extension.dart';
@@ -67,11 +66,6 @@ class SignInPageState extends ConsumerState<SignInPage> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = ref.watchStateProvider(
-      context,
-      mightyThemeControllerProvider,
-      mightyThemeControllerProvider.notifier,
-    );
     final signIn = ref.watchAndListenStateProviderError(
       context,
       signInPageControllerProvider,
@@ -102,7 +96,7 @@ class SignInPageState extends ConsumerState<SignInPage> {
                     // Displays the title of the authentication page
                     Text(
                       context.loc.authSignInPageHeader,
-                      style: theme.controller.headline1,
+                      style: TextStyleTokens.getHeadline1(null),
                     ),
                     // Email text field for sign-in
                     MightyTextFormField(

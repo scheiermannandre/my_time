@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:my_time/config/theme/mighty_theme.dart';
 import 'package:my_time/config/theme/tokens/color_tokens.dart';
 import 'package:my_time/config/theme/tokens/corner_radius_tokens.dart';
 import 'package:my_time/core/widgets/notch.dart';
 
 /// Shows a bottom sheet with widgets.
 Future<T?> showMightyModalBottomSheet<T>({
-  required MightyThemeController themeController,
   required BuildContext context,
   required AnimationController bottomSheetController,
   required Widget widget,
@@ -25,18 +23,19 @@ Future<T?> showMightyModalBottomSheet<T>({
     context: context,
     builder: (context) => Consumer(
       builder: (context, ref, child) {
-        ref.watch(mightyThemeControllerProvider);
-        final themeController =
-            ref.read(mightyThemeControllerProvider.notifier);
+        // ignore: unused_local_variable
+        final themColorBuilder = ThemeColorBuilder(context);
         return ModalBottomSheetBody(
           cornerRadius: cornerRadius,
           heightFactor: heightFactor,
           widget: widget,
-          backgroundColor: themeController.mainBackgroundColor,
-          notchColor: themeController.nonDecorativeBorderColor,
-          shadowColor: themeController.themeMode == SystemThemeMode.light
-              ? LightThemeColorTokens.lightColor
-              : DarkThemeColorTokens.black,
+          backgroundColor:
+              Colors.yellow, // themColorBuilder.mainBackgroundColor,
+          notchColor:
+              Colors.yellow, //themColorBuilder.nonDecorativeBorderColor,
+          // shadowColor: themColorBuilder.themeMode == SystemThemeMode.light
+          //     ? LightThemeColorTokens.lightColor
+          //     : DarkThemeColorTokens.black,
         );
       },
     ),
@@ -56,7 +55,7 @@ class ModalBottomSheetBody extends StatelessWidget {
     required this.widget,
     required this.notchColor,
     required this.backgroundColor,
-    required this.shadowColor,
+    // required this.shadowColor,
     super.key,
     this.heightFactor,
     this.cornerRadius = 0,
@@ -80,7 +79,7 @@ class ModalBottomSheetBody extends StatelessWidget {
   final double cornerRadius;
 
   /// The color of the shadow beneath the modal bottom sheet.
-  final Color shadowColor;
+  // final Color shadowColor;
 
   @override
   Widget build(BuildContext context) {
@@ -88,17 +87,17 @@ class ModalBottomSheetBody extends StatelessWidget {
       heightFactor: heightFactor,
       child: Container(
         decoration: BoxDecoration(
-          color: backgroundColor,
+          //color: backgroundColor,
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(cornerRadius),
             topRight: Radius.circular(cornerRadius),
           ),
-          boxShadow: [
+          boxShadow: const [
             BoxShadow(
-              color: shadowColor,
+              //color: shadowColor,
               spreadRadius: 1,
               blurRadius: 5,
-              offset: const Offset(.6, 0),
+              offset: Offset(.6, 0),
             ),
           ],
         ),

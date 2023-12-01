@@ -42,7 +42,6 @@ class EmailAppsUI extends EmailApps {
   /// - `animationController`: The controller for managing animations.
   static Future<void> show({
     required BuildContext context,
-    required MightyThemeController themeController,
     required AnimationController animationController,
   }) async {
     final emailApps = await EmailApps.get();
@@ -65,7 +64,6 @@ class EmailAppsUI extends EmailApps {
 
     final clickedIndex = await showMightyModalBottomSheet<int>(
       heightFactor: .5,
-      themeController: themeController,
       context: context,
       bottomSheetController: animationController,
       widget: Consumer(
