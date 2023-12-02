@@ -8,9 +8,9 @@ import 'package:my_time/config/theme/tokens/space_tokens.dart';
 import 'package:my_time/core/modals/mighty_modal_bottom_sheet.dart';
 import 'package:my_time/core/util/extentions/widget_ref_extension.dart';
 import 'package:my_time/core/widgets/async_value_widget.dart';
+import 'package:my_time/core/widgets/loading_indicator.dart';
 import 'package:my_time/core/widgets/mighty_action_button.dart';
 import 'package:my_time/core/widgets/mighty_app_bar.dart';
-import 'package:my_time/core/widgets/mighty_circular_progress_indicator.dart';
 import 'package:my_time/core/widgets/mighty_expandable_tile.dart';
 import 'package:my_time/core/widgets/mighty_labeled_list.dart';
 import 'package:my_time/core/widgets/mighty_loading_error_widget.dart';
@@ -137,9 +137,7 @@ class GroupsOverview extends HookConsumerWidget {
               ],
             );
           },
-          loading: () => MightyCircularProgressIndicator(
-            themeController: mightyTheme.controller,
-          ),
+          loading: LoadingIndicator.new,
           error: (error, stackTrace) => MightyLoadingErrorWidget(
             onRefresh: () {
               ref.invalidate(groupsStreamProvider);

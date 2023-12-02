@@ -2,10 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:my_time/common/extensions/build_context_extension.dart';
-import 'package:my_time/config/theme/mighty_theme.dart';
-import 'package:my_time/core/modals/mighty_ok_alert_dialog.dart';
-import 'package:my_time/core/util/extentions/widget_ref_extension.dart';
-import 'package:my_time/core/widgets/mighty_circular_progress_indicator.dart';
+import 'package:my_time/core/modals/ok_alert_dialog.dart';
+import 'package:my_time/core/widgets/loading_indicator.dart';
 import 'package:my_time/features/8_authentication/presentation/pages/util/email_handle_mode.dart';
 import 'package:my_time/features/8_authentication/presentation/state_management/auth_actioncode_handler_page_controller.dart';
 import 'package:my_time/router/app_route.dart';
@@ -100,7 +98,7 @@ class _AuthActionCodeHandlerPageState
     String title,
     String content,
   ) async {
-    await showMightyOkAlertDialog(context, title, content);
+    await showOkAlertDialog(context, title, content);
 
     if (!context.mounted) return;
 
@@ -109,12 +107,6 @@ class _AuthActionCodeHandlerPageState
 
   @override
   Widget build(BuildContext context) {
-    final theme = ref.watchStateProvider(
-      context,
-      mightyThemeControllerProvider,
-      mightyThemeControllerProvider.notifier,
-    );
-
     final state = ref.watch(authActionCodeHandlerPageControllerProvider);
 
     ref.listen(
@@ -123,15 +115,10 @@ class _AuthActionCodeHandlerPageState
     );
 
     return Scaffold(
-      backgroundColor: theme.controller.mainBackgroundColor,
       body: state.when(
         data: (_) => const Center(),
         error: (err, stack) => const Center(),
-        loading: () => Center(
-          child: MightyCircularProgressIndicator(
-            themeController: theme.controller,
-          ),
-        ),
+        loading: LoadingIndicator.new,
       ),
     );
   }

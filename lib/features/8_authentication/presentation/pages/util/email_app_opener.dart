@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:my_time/common/common.dart';
 import 'package:my_time/config/theme/mighty_theme.dart';
 import 'package:my_time/core/modals/mighty_modal_bottom_sheet.dart';
-import 'package:my_time/core/modals/mighty_ok_alert_dialog.dart';
+import 'package:my_time/core/modals/ok_alert_dialog.dart';
 import 'package:my_time/core/widgets/mighty_labeled_list.dart';
 import 'package:open_mail_app/open_mail_app.dart';
 
@@ -49,7 +49,7 @@ class EmailAppsUI extends EmailApps {
     if (!context.mounted) return;
 
     if (emailApps.isEmpty) {
-      await showMightyOkAlertDialog(
+      await showOkAlertDialog(
         context,
         context.loc.emailOpenerNoAppsTitle,
         context.loc.emailOpenerNoAppsDescription,

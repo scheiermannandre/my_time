@@ -49,7 +49,6 @@ class AuthActionCodeHandlerPageController
     var isEmailVerified = false;
 
     state = const AsyncLoading();
-
     isOobCodeValid = await ref
         .read(authRepositoryProvider)
         .checkActionCode(oobCode: oobCode);

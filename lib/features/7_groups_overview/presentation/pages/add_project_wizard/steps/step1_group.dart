@@ -5,7 +5,7 @@ import 'package:my_time/config/theme/mighty_theme.dart';
 import 'package:my_time/config/theme/tokens/space_tokens.dart';
 import 'package:my_time/core/util/extentions/widget_ref_extension.dart';
 import 'package:my_time/core/widgets/async_value_widget.dart';
-import 'package:my_time/core/widgets/mighty_circular_progress_indicator.dart';
+import 'package:my_time/core/widgets/loading_indicator.dart';
 import 'package:my_time/core/widgets/mighty_loading_error_widget.dart';
 import 'package:my_time/core/widgets/mighty_splash_list_tile.dart';
 import 'package:my_time/core/widgets/wizard/wizard_step/wizard_step_event_listener.dart';
@@ -107,9 +107,7 @@ class _GroupSelectionStepState extends ConsumerState<_GroupSelectionStep> {
             ),
           );
         },
-        loading: () => MightyCircularProgressIndicator(
-          themeController: mightyTheme.controller,
-        ),
+        loading: LoadingIndicator.new,
         error: (error, stackTrace) => MightyLoadingErrorWidget(
           onRefresh: () {
             ref.invalidate(groupsStreamProvider);

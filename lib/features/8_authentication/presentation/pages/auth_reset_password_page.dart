@@ -5,7 +5,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_time/common/extensions/build_context_extension.dart';
 import 'package:my_time/config/theme/tokens/space_tokens.dart';
 import 'package:my_time/config/theme/tokens/text_style_tokens.dart';
-import 'package:my_time/core/modals/mighty_ok_alert_dialog.dart';
+import 'package:my_time/core/modals/ok_alert_dialog.dart';
 import 'package:my_time/core/util/extentions/widget_ref_extension.dart';
 import 'package:my_time/core/widgets/action_button.dart';
 import 'package:my_time/core/widgets/spaced_column.dart';
@@ -48,7 +48,7 @@ class AuthEmailHandlerPageState extends ConsumerState<AuthRestPasswordPage> {
       title = context.loc.authActionCodeHandlerPasswordResetTitle;
       content = context.loc.authActionCodeHandlerPasswordResetContent;
     }
-    await showMightyOkAlertDialog(context, title, content);
+    await showOkAlertDialog(context, title, content);
     if (!context.mounted) return;
     context.goNamed(AppRoute.signIn);
   }

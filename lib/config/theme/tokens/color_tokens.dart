@@ -249,4 +249,18 @@ class ThemeColorBuilder {
         return DarkThemeColorTokens.lightestColor;
     }
   }
+
+  /// Returns the color for actions depending on the [Brightness].
+  /// Can be referred to as the primary color.
+  ///
+  /// For [Brightness.light], returns [LightThemeColorTokens.primaryColor].
+  /// For [Brightness.dark], returns [DarkThemeColorTokens.primaryColor].
+  Color getActionsColor() {
+    switch (Theme.of(_context).brightness) {
+      case Brightness.light:
+        return LightThemeColorTokens.primaryColor;
+      case Brightness.dark:
+        return DarkThemeColorTokens.primaryColor;
+    }
+  }
 }

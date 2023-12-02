@@ -1,24 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:my_time/config/theme/mighty_theme.dart';
 import 'package:my_time/config/theme/tokens/space_tokens.dart';
-import 'package:my_time/core/util/extentions/widget_ref_extension.dart';
 import 'package:my_time/core/widgets/action_button.dart';
 
 /// Shows a mighty styled Ok Alert Dialog.
-Future<void> showMightyOkAlertDialog(
+Future<void> showOkAlertDialog(
   BuildContext context,
   String title,
   String content,
 ) async {
   return showDialog<void>(
     context: context,
-    builder: (context) => MightyOkAlertDialog(title: title, content: content),
+    builder: (context) => OkAlertDialog(title: title, content: content),
   );
 }
 
 /// Shows a mighty styled Ok Alert Dialog.
-Future<void> showMightyOkAlertDialogCustomContent(
+Future<void> showOkAlertDialogCustomContent(
   BuildContext context,
   String title,
   Widget content,
@@ -26,14 +24,14 @@ Future<void> showMightyOkAlertDialogCustomContent(
   return showDialog<void>(
     context: context,
     builder: (context) =>
-        MightyOkAlertDialogCustomContent(title: title, content: content),
+        OkAlertDialogCustomContent(title: title, content: content),
   );
 }
 
 /// A simple alert dialog widget with an 'Ok' button.
-class MightyOkAlertDialog extends ConsumerWidget {
-  /// Constructs a [MightyOkAlertDialog] with specified [title] and [content].
-  const MightyOkAlertDialog({
+class OkAlertDialog extends ConsumerWidget {
+  /// Constructs a [OkAlertDialog] with specified [title] and [content].
+  const OkAlertDialog({
     required this.content,
     required this.title,
     super.key,
@@ -47,15 +45,9 @@ class MightyOkAlertDialog extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watchStateProvider(
-      context,
-      mightyThemeControllerProvider,
-      mightyThemeControllerProvider.notifier,
-    );
-
     return AlertDialog(
-      title: Text(title, style: theme.controller.headline4),
-      content: Text(content, style: theme.controller.body),
+      title: Text(title),
+      content: Text(content),
       actions: [
         ActionButton.text(
           child: const Text('Ok'),
@@ -65,7 +57,6 @@ class MightyOkAlertDialog extends ConsumerWidget {
         ),
       ],
       actionsAlignment: MainAxisAlignment.end,
-      backgroundColor: Colors.white,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(
           SpaceTokens.mediumSmall,
@@ -84,10 +75,10 @@ class MightyOkAlertDialog extends ConsumerWidget {
 }
 
 /// A simple alert dialog widget with an 'Ok' button.
-class MightyOkAlertDialogCustomContent extends ConsumerWidget {
-  /// Constructs a [MightyOkAlertDialogCustomContent] with specified
+class OkAlertDialogCustomContent extends ConsumerWidget {
+  /// Constructs a [OkAlertDialogCustomContent] with specified
   /// [title] and [content].
-  const MightyOkAlertDialogCustomContent({
+  const OkAlertDialogCustomContent({
     required this.content,
     required this.title,
     super.key,
@@ -112,7 +103,6 @@ class MightyOkAlertDialogCustomContent extends ConsumerWidget {
           },
         ),
       ],
-      //backgroundColor: Colors.red,
       actionsAlignment: MainAxisAlignment.end,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(
