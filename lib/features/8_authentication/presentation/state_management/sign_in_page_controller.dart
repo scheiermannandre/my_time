@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_time/core/widgets/password_checker/password_checker.dart';
+import 'package:my_time/features/8_authentication/data/repositories/auth_repository_impl.dart';
 import 'package:my_time/features/8_authentication/presentation/pages/util/email_validation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -67,18 +68,14 @@ class SignInPageController extends _$SignInPageController with EmailValidator {
     if (!validate()) return;
 
     state = const AsyncLoading();
-    // final authRepo = ref.read(authRepositoryProvider);
+    final authRepo = ref.read(authRepositoryProvider);
 
-    // state = await AsyncValue.guard(() async {
-    //   await authRepo.signInWithEmailAndPassword(
-    //     email,
-    //     password,
-    //   );
-    //   return state.value!;
-    // });
-
-    Future.delayed(const Duration(seconds: 2), () {
-      state = AsyncData(state.value!.copyWith());
+    state = await AsyncValue.guard(() async {
+      await authRepo.signInWithEmailAndPassword(
+        email,
+        password,
+      );
+      return state.value!;
     });
   }
 
