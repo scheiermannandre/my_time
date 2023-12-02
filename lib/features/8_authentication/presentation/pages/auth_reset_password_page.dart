@@ -3,14 +3,13 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_time/common/extensions/build_context_extension.dart';
-import 'package:my_time/config/theme/mighty_theme.dart';
-import 'package:my_time/config/theme/tokens/corner_radius_tokens.dart';
 import 'package:my_time/config/theme/tokens/space_tokens.dart';
+import 'package:my_time/config/theme/tokens/text_style_tokens.dart';
 import 'package:my_time/core/modals/mighty_ok_alert_dialog.dart';
 import 'package:my_time/core/util/extentions/widget_ref_extension.dart';
-import 'package:my_time/core/widgets/mighty_action_button.dart';
-import 'package:my_time/core/widgets/mighty_text_form_field.dart';
-import 'package:my_time/core/widgets/password_checker/password_checker.dart';
+import 'package:my_time/core/widgets/action_button.dart';
+import 'package:my_time/core/widgets/spaced_column.dart';
+import 'package:my_time/features/8_authentication/presentation/pages/widgets/auth_password_field.dart';
 import 'package:my_time/features/8_authentication/presentation/state_management/auth_reset_password_page_controller.dart';
 import 'package:my_time/router/app_route.dart';
 
@@ -31,9 +30,6 @@ class AuthRestPasswordPage extends StatefulHookConsumerWidget {
 
 /// The state of the [AuthRestPasswordPage].
 class AuthEmailHandlerPageState extends ConsumerState<AuthRestPasswordPage> {
-  /// The key to uniquely identify the form in the widget tree.
-  final _passNotifier = ValueNotifier<PasswordStrength?>(null);
-
   Future<void> _handleStateChange(
     BuildContext context,
     AsyncValue<AuthResetPasswordPageState>? previous,
@@ -59,13 +55,6 @@ class AuthEmailHandlerPageState extends ConsumerState<AuthRestPasswordPage> {
 
   @override
   Widget build(BuildContext context) {
-    // Obtain the theme and authentication page state
-    final theme = ref.watchStateProvider(
-      context,
-      mightyThemeControllerProvider,
-      mightyThemeControllerProvider.notifier,
-    );
-
     final authPasswordResetPage = ref.watchStateProvider(
       context,
       authResetPasswordPageControllerProvider,
@@ -80,71 +69,35 @@ class AuthEmailHandlerPageState extends ConsumerState<AuthRestPasswordPage> {
 
     // Controllers for email and password text fields with initial values
     final passwordController = useTextEditingController(text: '');
-    _passNotifier.value =
-        PasswordStrengthExtension.calculate(text: passwordController.text);
     return Scaffold(
-      backgroundColor: theme.controller.mainBackgroundColor,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: SpaceTokens.medium),
           child: Center(
             child: SingleChildScrollView(
-              child: Column(
+              child: SpacedColumn(
+                spacing: SpaceTokens.medium,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   // Display the title of the authentication page
                   Text(
                     context.loc.authResetPasswordPageHeader,
-                    style: theme.controller.headline1.copyWith(
-                      wordSpacing: 10,
-                    ),
+                    style: TextStyleTokens.getHeadline1(null),
                   ),
-                  const SizedBox(height: SpaceTokens.medium),
-                  MightyTextFormField(
-                    controller: passwordController,
-                    labelText: context.loc.passwordFieldLabel,
-                    hintText: context.loc.passwordFieldHint,
-                    textInputType: TextInputType.visiblePassword,
-                    obscureText: state.obscurePassword,
-                    suffixIcon: GestureDetector(
-                      onTap: authPasswordResetPage
-                          .controller.toggleObscurePassword,
-                      child: Icon(
-                        state.obscurePassword
-                            ? Icons.visibility
-                            : Icons.visibility_off,
-                        color: theme.controller.secondaryTextColor,
-                      ),
-                    ),
-                    onChanged: (value, isValid) {
-                      _passNotifier.value =
-                          PasswordStrengthExtension.calculate(text: value);
+                  // Password text field for sign-up
+                  AuthCheckedPasswordField(
+                    passwordController: passwordController,
+                    obscurePassword: state.obscurePassword,
+                    toggleObscurePassword:
+                        authPasswordResetPage.controller.toggleObscurePassword,
+                    onChanged: (value, isValid, strength) {
                       authPasswordResetPage.controller.setPasswordStrength(
-                        _passNotifier.value,
+                        strength,
                       );
                     },
                   ),
-                  const SizedBox(height: SpaceTokens.medium),
-                  PasswordStrengthChecker(
-                    strength: _passNotifier,
-                    configuration: PasswordStrengthCheckerConfiguration(
-                      borderWidth: 1,
-                      borderColor: theme.controller.nonDecorativeBorderColor,
-                      externalBorderRadius: const BorderRadius.all(
-                        Radius.circular(
-                          CornerRadiusTokens.slightySmall,
-                        ),
-                      ),
-                      internalBorderRadius: const BorderRadius.all(
-                        Radius.circular(CornerRadiusTokens.verySmall),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: SpaceTokens.medium),
-                  MightyActionButton.primary(
-                    themeController: theme.controller,
-                    label: context.loc.authResetPasswordPageSubmitButtonLabel,
+                  ActionButton.primary(
                     onPressed: !state.isSubmitEnabled
                         ? null
                         : () async {
@@ -155,14 +108,15 @@ class AuthEmailHandlerPageState extends ConsumerState<AuthRestPasswordPage> {
                             );
                           },
                     isLoading: authPasswordResetPage.state.isLoading,
+                    child: Text(
+                      context.loc.authResetPasswordPageSubmitButtonLabel,
+                    ),
                   ),
-                  const SizedBox(height: SpaceTokens.medium),
-                  MightyActionButton.secondary(
-                    themeController: theme.controller,
-                    label: context.loc.deleteEntryCancelBtnLabel,
+                  ActionButton.secondary(
                     onPressed: () async {
                       context.goNamed(AppRoute.signIn);
                     },
+                    child: Text(context.loc.deleteEntryCancelBtnLabel),
                   ),
                 ],
               ),

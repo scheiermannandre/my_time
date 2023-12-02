@@ -52,7 +52,7 @@ PODS:
     - Flutter
     - FlutterMacOS
   - PromisesObjC (2.3.1)
-  - realm (1.6.0):
+  - realm (1.6.1):
     - Flutter
   - RecaptchaInterop (100.0.0)
   - url_launcher_ios (0.0.1):
@@ -117,7 +117,7 @@ SPEC CHECKSUMS:
   open_mail_app: 794172f6a22cd16319d3ddaf45e945b2f74952b0
   path_provider_foundation: 29f094ae23ebbca9d3d0cec13889cd9060c0e943
   PromisesObjC: c50d2056b5253dadbd6c2bea79b0674bd5a52fa4
-  realm: 7179ac83ce20591f4e26052d2a635c0cd14d639c
+  realm: cfee8729c1f5317ebc28e238c0600d5f2aa18ea1
   RecaptchaInterop: 7d1a4a01a6b2cb1610a47ef3f85f0c411434cb21
   url_launcher_ios: bf5ce03e0e2088bad9cc378ea97fa0ed5b49673b
 
