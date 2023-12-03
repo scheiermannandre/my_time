@@ -7,4 +7,6 @@ TextTheme get textTheme => TextTheme(
           TextStyleTokens.bodyMedium(null), // necessary for snackbar TextButton
       bodyLarge: TextStyleTokens.body(null),
       bodyMedium: TextStyleTokens.bodyMedium(null),
+
+      titleLarge: TextStyleTokens.getHeadline4(null), // used for appbar title
     );

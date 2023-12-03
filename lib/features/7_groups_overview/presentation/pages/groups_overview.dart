@@ -10,7 +10,6 @@ import 'package:my_time/core/util/extentions/widget_ref_extension.dart';
 import 'package:my_time/core/widgets/async_value_widget.dart';
 import 'package:my_time/core/widgets/loading_indicator.dart';
 import 'package:my_time/core/widgets/mighty_action_button.dart';
-import 'package:my_time/core/widgets/mighty_app_bar.dart';
 import 'package:my_time/core/widgets/mighty_expandable_tile.dart';
 import 'package:my_time/core/widgets/mighty_labeled_list.dart';
 import 'package:my_time/core/widgets/mighty_loading_error_widget.dart';
@@ -95,9 +94,8 @@ class GroupsOverview extends HookConsumerWidget {
         themeController: mightyTheme.controller,
         minChildSize: .1,
         maxChildSize: .9,
-        appBar: MightyAppBar(
-          themeMode: mightyTheme.state,
-          title: context.loc.groups,
+        appBar: AppBar(
+          title: Text(context.loc.groups),
           actions: [
             IconButton(
               onPressed: () {

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_time/config/theme/app_bar_theme.dart';
 import 'package:my_time/config/theme/input_decoration_theme.dart';
 import 'package:my_time/config/theme/primary_button_theme.dart';
 import 'package:my_time/config/theme/secondary_button_theme.dart';
@@ -42,6 +43,7 @@ ThemeData darkTheme = ThemeData(
   ),
   textButtonTheme: TertiaryButtonThemeData.dark(),
   snackBarTheme: SnackBarTheme.dark(),
+  appBarTheme: AppBarThemeData.dark(),
 
   progressIndicatorTheme: const ProgressIndicatorThemeData(
     color: DarkThemeColorTokens.mediumColor,

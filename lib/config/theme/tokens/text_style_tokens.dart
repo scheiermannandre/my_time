@@ -41,6 +41,14 @@ class TextStyleTokens {
   }
 
   /// Returns a text style for body text with the specified [fontColor].
+  static TextStyle title(Color? fontColor) {
+    return GoogleFonts.montserrat(
+      fontSize: 20,
+      fontWeight: _bold,
+    );
+  }
+
+  /// Returns a text style for body text with the specified [fontColor].
   static TextStyle body(Color? fontColor) {
     return GoogleFonts.montserrat(
       fontSize: 18,
