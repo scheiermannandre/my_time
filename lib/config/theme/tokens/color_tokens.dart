@@ -263,4 +263,19 @@ class ThemeColorBuilder {
         return DarkThemeColorTokens.primaryColor;
     }
   }
+
+  /// Returns the color for icon that are displayed on list tile
+  /// depending on the [Brightness].
+  /// Can be referred to as the primary color.
+  ///
+  /// For [Brightness.light], returns [LightThemeColorTokens.darkColor].
+  /// For [Brightness.dark], returns [DarkThemeColorTokens.primaryColor].
+  Color getGuidingIconColor() {
+    switch (Theme.of(_context).brightness) {
+      case Brightness.light:
+        return LightThemeColorTokens.darkColor;
+      case Brightness.dark:
+        return DarkThemeColorTokens.primaryColor;
+    }
+  }
 }

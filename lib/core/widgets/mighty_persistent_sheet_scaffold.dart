@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:my_time/config/theme/mighty_theme.dart';
 import 'package:my_time/config/theme/tokens/space_tokens.dart';
-import 'package:my_time/core/widgets/mighty_bottom_sheet.dart';
+import 'package:my_time/core/widgets/persistent_bottom_sheet.dart';
 
 /// A scaffold with a persistent bottom sheet that can be dragged to
 /// reveal more content.
-class MightyPersistentSheetScaffold extends StatelessWidget {
-  /// Constructs a [MightyPersistentSheetScaffold] with the required parameters.
-  MightyPersistentSheetScaffold({
-    required this.themeController,
+class PersistentSheetScaffold extends StatelessWidget {
+  /// Constructs a [PersistentSheetScaffold] with the required parameters.
+  PersistentSheetScaffold({
     required this.bottomSheetWidgetBuilder,
     required this.minChildSize,
     required this.maxChildSize,
@@ -25,9 +23,6 @@ class MightyPersistentSheetScaffold extends StatelessWidget {
                 minChildSize <= 1,
             'minChildSize must be '
             'between 0 and 1 and smaller than or equal to maxChildSize');
-
-  /// The theme controller for adapting the scaffold's appearance.
-  final MightyThemeController themeController;
 
   /// The app bar displayed at the top of the scaffold.
   final PreferredSizeWidget? appBar;
@@ -61,7 +56,6 @@ class MightyPersistentSheetScaffold extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: themeController.mainBackgroundColor,
       appBar: appBar,
       body: Listener(
         onPointerDown: (event) {
@@ -98,9 +92,8 @@ class MightyPersistentSheetScaffold extends StatelessWidget {
         ),
       ),
       bottomSheet: bottomSheetWidgetBuilder != null
-          ? MightyBottomSheet(
+          ? PersistentBottomSheet(
               draggableScrollableController: draggableScrollableController,
-              themeController: themeController,
               maxChildSize: maxChildSize,
               minChildSize: minChildSize,
               builder: bottomSheetWidgetBuilder!,

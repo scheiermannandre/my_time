@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_time/config/theme/tokens/color_tokens.dart';
 import 'package:my_time/config/theme/tokens/space_tokens.dart';
 import 'package:my_time/config/theme/tokens/text_style_tokens.dart';
 
@@ -62,13 +63,16 @@ class LabeledListTiles extends StatelessWidget {
                 return ListTile(
                   contentPadding: EdgeInsets.zero,
                   title: Text(items[index]),
-                  onTap: () => Navigator.of(context).pop(index),
+                  onTap: () {
+                    Navigator.of(context).pop(index);
+                  },
                   trailing: showIcons
                       ? RotatedBox(
                           quarterTurns: 3,
                           child: Icon(
                             Icons.expand_more,
-                            color: Theme.of(context).colorScheme.primary,
+                            color: ThemeColorBuilder(context)
+                                .getGuidingIconColor(),
                           ),
                         )
                       : null,

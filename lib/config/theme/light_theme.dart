@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:my_time/config/theme/app_bar_theme.dart';
 import 'package:my_time/config/theme/buttom_sheet_theme.dart';
+import 'package:my_time/config/theme/card_theme.dart';
 import 'package:my_time/config/theme/input_decoration_theme.dart';
+import 'package:my_time/config/theme/list_tile_theme.dart';
 import 'package:my_time/config/theme/primary_button_theme.dart';
 import 'package:my_time/config/theme/secondary_button_theme.dart';
 import 'package:my_time/config/theme/snackbar_theme.dart';
@@ -24,9 +26,10 @@ ThemeData lightTheme = ThemeData(
     onError: Colors.white, //TBD
     background: LightThemeColorTokens.lightestColor,
     onBackground: LightThemeColorTokens.black,
-    surface: LightThemeColorTokens.lightestColor,
+    surface: LightThemeColorTokens.white,
     onSurface: LightThemeColorTokens.black,
     surfaceTint: Colors.transparent, // removes color blur on dialog background
+    shadow: LightThemeColorTokens.mediumColor,
   ),
   inputDecorationTheme: getInputDecorationTheme(
     LightThemeColorTokens.mediumColor,
@@ -54,4 +57,6 @@ ThemeData lightTheme = ThemeData(
     cursorColor: LightThemeColorTokens.mediumColor,
   ),
   bottomSheetTheme: ButtomSheetTheme.light(),
+  listTileTheme: TileTheme.light(),
+  cardTheme: CardThemeData.light(),
 );

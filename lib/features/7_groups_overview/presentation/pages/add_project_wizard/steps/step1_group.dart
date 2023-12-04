@@ -112,7 +112,6 @@ class _GroupSelectionStepState extends ConsumerState<_GroupSelectionStep> {
           onRefresh: () {
             ref.invalidate(groupsStreamProvider);
           },
-          themeController: mightyTheme.controller,
         ),
       ),
     );

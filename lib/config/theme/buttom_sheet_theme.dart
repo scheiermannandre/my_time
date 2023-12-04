@@ -11,12 +11,14 @@ class ButtomSheetTheme extends BottomSheetThemeData {
     super.dragHandleSize,
     super.modalBarrierColor,
     super.shadowColor,
+    super.backgroundColor,
   });
 
   /// Constructs a light-themed [ButtomSheetTheme].
   factory ButtomSheetTheme.light() {
     return ButtomSheetTheme._getButtomSheetTheme(
       LightThemeColorTokens.darkestColor,
+      LightThemeColorTokens.lightestColor,
     );
   }
 
@@ -24,14 +26,17 @@ class ButtomSheetTheme extends BottomSheetThemeData {
   factory ButtomSheetTheme.dark() {
     return ButtomSheetTheme._getButtomSheetTheme(
       DarkThemeColorTokens.lightestColor,
+      DarkThemeColorTokens.darkestColor,
     );
   }
 
   /// Internal method for generating a [ButtomSheetTheme] with specified colors.
   factory ButtomSheetTheme._getButtomSheetTheme(
     Color modalBarrierColor,
+    Color backgroundColor,
   ) {
     return ButtomSheetTheme(
+      backgroundColor: backgroundColor,
       showDragHandle: true,
       dragHandleSize: const Size(56, 6),
       modalBarrierColor: modalBarrierColor.withOpacity(.1),

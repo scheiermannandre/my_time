@@ -3,16 +3,16 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_time/common/common.dart';
-import 'package:my_time/config/theme/mighty_theme.dart';
+import 'package:my_time/config/theme/tokens/color_tokens.dart';
 import 'package:my_time/config/theme/tokens/space_tokens.dart';
 import 'package:my_time/core/modals/modal_bottom_sheet_ui.dart';
 import 'package:my_time/core/modals/modal_dialog_ui.dart';
 import 'package:my_time/core/util/extentions/widget_ref_extension.dart';
 import 'package:my_time/core/widgets/action_button.dart';
 import 'package:my_time/core/widgets/async_value_widget.dart';
+import 'package:my_time/core/widgets/expandable_tile.dart';
 import 'package:my_time/core/widgets/labeled_list_tiles.dart';
 import 'package:my_time/core/widgets/loading_indicator.dart';
-import 'package:my_time/core/widgets/mighty_expandable_tile.dart';
 import 'package:my_time/core/widgets/mighty_loading_error_widget.dart';
 import 'package:my_time/core/widgets/mighty_persistent_sheet_scaffold.dart';
 import 'package:my_time/core/widgets/mighty_text_form_field.dart';
@@ -66,13 +66,6 @@ class GroupsOverview extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final mightyTheme =
-        ref.watchStateProvider<MightyThemeController, SystemThemeMode>(
-      context,
-      mightyThemeControllerProvider,
-      mightyThemeControllerProvider.notifier,
-    );
-
     final groups = ref.watchAndListenAsyncValueErrors<List<GroupEntity>>(
       context,
       groupsStreamProvider,
@@ -87,8 +80,7 @@ class GroupsOverview extends HookConsumerWidget {
       groups: groups,
       groupsOverviewController: page.controller,
       state: page.state,
-      child: MightyPersistentSheetScaffold(
-        themeController: mightyTheme.controller,
+      child: PersistentSheetScaffold(
         minChildSize: .1,
         maxChildSize: .9,
         appBar: AppBar(
@@ -105,31 +97,35 @@ class GroupsOverview extends HookConsumerWidget {
         body: AsyncValueWidget(
           value: groups,
           data: (groups) {
-            return Column(
-              children: [
-                ListView.separated(
-                  padding: const EdgeInsets.symmetric(
-                    vertical: SpaceTokens.medium,
-                  ),
-                  shrinkWrap: true,
-                  itemCount: groups.length,
-                  separatorBuilder: (BuildContext context, int index) {
-                    return const SizedBox(height: SpaceTokens.mediumSmall);
-                  },
-                  itemBuilder: (BuildContext context, int index) {
-                    return MightyExpandableTile(
-                      themeController: mightyTheme.controller,
-                      title: groups[index].name,
-                      items: groups[index].projects.map((project) {
-                        return MightyExpandableTileItem(
-                          title: project.name,
-                          onPressed: () {},
-                        );
-                      }).toList(),
+            return ListView.separated(
+              padding: const EdgeInsets.symmetric(
+                vertical: SpaceTokens.medium,
+              ),
+              shrinkWrap: true,
+              itemCount: groups.length,
+              addAutomaticKeepAlives: false,
+              separatorBuilder: (BuildContext context, int index) {
+                return const SizedBox(height: SpaceTokens.small);
+              },
+              itemBuilder: (BuildContext context, int index) {
+                return ExpandableTile(
+                  title: groups[index].name,
+                  items: groups[index].projects.map((project) {
+                    return ExpandableTileItem(
+                      title: project.name,
+                      onPressed: () {},
+                      trailingIcon: RotatedBox(
+                        quarterTurns: 3,
+                        child: Icon(
+                          Icons.expand_more,
+                          color:
+                              ThemeColorBuilder(context).getGuidingIconColor(),
+                        ),
+                      ),
                     );
-                  },
-                ),
-              ],
+                  }).toList(),
+                );
+              },
             );
           },
           loading: LoadingIndicator.new,
@@ -137,7 +133,6 @@ class GroupsOverview extends HookConsumerWidget {
             onRefresh: () {
               ref.invalidate(groupsStreamProvider);
             },
-            themeController: mightyTheme.controller,
           ),
         ),
         bottomSheetWidgetBuilder: groups.when(
