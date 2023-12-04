@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:my_time/common/common.dart';
-import 'package:my_time/config/theme/mighty_theme.dart';
-import 'package:my_time/core/modals/mighty_modal_bottom_sheet.dart';
-import 'package:my_time/core/modals/ok_alert_dialog.dart';
-import 'package:my_time/core/widgets/mighty_labeled_list.dart';
+import 'package:my_time/core/modals/modal_bottom_sheet_ui.dart';
+import 'package:my_time/core/modals/modal_dialog_ui.dart';
+import 'package:my_time/core/widgets/labeled_list_tiles.dart';
 import 'package:open_mail_app/open_mail_app.dart';
 
 /// A utility class to fetch and work with email apps available on the device.
@@ -49,7 +47,7 @@ class EmailAppsUI extends EmailApps {
     if (!context.mounted) return;
 
     if (emailApps.isEmpty) {
-      await showOkAlertDialog(
+      await ModalDialogUI.showOk(
         context,
         context.loc.emailOpenerNoAppsTitle,
         context.loc.emailOpenerNoAppsDescription,
@@ -62,22 +60,14 @@ class EmailAppsUI extends EmailApps {
       return;
     }
 
-    final clickedIndex = await showMightyModalBottomSheet<int>(
+    final clickedIndex = await ModalBottomSheetUI.show<int>(
       heightFactor: .5,
       context: context,
       bottomSheetController: animationController,
-      widget: Consumer(
-        builder: (_, WidgetRef ref, __) {
-          ref.watch(mightyThemeControllerProvider);
-          final themeController =
-              ref.watch(mightyThemeControllerProvider.notifier);
-          return MightyLabeledList(
-            showIcons: false,
-            themeController: themeController,
-            label: context.loc.pickGroup,
-            items: emailApps.map((emailApp) => emailApp.name).toList(),
-          );
-        },
+      widget: LabeledListTiles(
+        showIcons: false,
+        label: context.loc.pickGroup,
+        items: emailApps.map((emailApp) => emailApp.name).toList(),
       ),
     );
 

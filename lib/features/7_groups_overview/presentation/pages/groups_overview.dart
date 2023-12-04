@@ -5,17 +5,18 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_time/common/common.dart';
 import 'package:my_time/config/theme/mighty_theme.dart';
 import 'package:my_time/config/theme/tokens/space_tokens.dart';
-import 'package:my_time/core/modals/mighty_modal_bottom_sheet.dart';
+import 'package:my_time/core/modals/modal_bottom_sheet_ui.dart';
+import 'package:my_time/core/modals/modal_dialog_ui.dart';
 import 'package:my_time/core/util/extentions/widget_ref_extension.dart';
+import 'package:my_time/core/widgets/action_button.dart';
 import 'package:my_time/core/widgets/async_value_widget.dart';
+import 'package:my_time/core/widgets/labeled_list_tiles.dart';
 import 'package:my_time/core/widgets/loading_indicator.dart';
-import 'package:my_time/core/widgets/mighty_action_button.dart';
 import 'package:my_time/core/widgets/mighty_expandable_tile.dart';
-import 'package:my_time/core/widgets/mighty_labeled_list.dart';
 import 'package:my_time/core/widgets/mighty_loading_error_widget.dart';
 import 'package:my_time/core/widgets/mighty_persistent_sheet_scaffold.dart';
 import 'package:my_time/core/widgets/mighty_text_form_field.dart';
-import 'package:my_time/core/widgets/spaced_row.dart';
+import 'package:my_time/core/widgets/spaced_column.dart';
 import 'package:my_time/features/7_groups_overview/data/repositories/group_repository_impl.dart';
 import 'package:my_time/features/7_groups_overview/domain/entities/group_entity.dart';
 import 'package:my_time/features/7_groups_overview/presentation/state_management/groups_overview_controller.dart';
@@ -26,7 +27,6 @@ import 'package:my_time/router/app_route.dart';
 class GroupsOverviewInheritedWidget extends InheritedWidget {
   /// Constructor for the GroupsOverviewInheritedWidget widget.
   const GroupsOverviewInheritedWidget({
-    required this.themeController,
     required this.groups,
     required this.groupsOverviewController,
     required this.state,
@@ -35,7 +35,6 @@ class GroupsOverviewInheritedWidget extends InheritedWidget {
   });
 
   /// The theme controller.
-  final MightyThemeController themeController;
 
   /// The groups.
   final AsyncValue<List<GroupEntity>> groups;
@@ -54,8 +53,7 @@ class GroupsOverviewInheritedWidget extends InheritedWidget {
 
   @override
   bool updateShouldNotify(GroupsOverviewInheritedWidget oldWidget) {
-    return themeController != oldWidget.themeController ||
-        groups != oldWidget.groups ||
+    return groups != oldWidget.groups ||
         groupsOverviewController != oldWidget.groupsOverviewController ||
         state != oldWidget.state;
   }
@@ -86,7 +84,6 @@ class GroupsOverview extends HookConsumerWidget {
       groupsOverviewControllerProvider.notifier,
     );
     return GroupsOverviewInheritedWidget(
-      themeController: mightyTheme.controller,
       groups: groups,
       groupsOverviewController: page.controller,
       state: page.state,
@@ -152,10 +149,9 @@ class GroupsOverview extends HookConsumerWidget {
                   groups: groups.value!,
                 ),
                 const SizedBox(height: SpaceTokens.medium),
-                MightyLabeledList(
+                LabeledListTiles(
                   label: context.loc.favourites,
                   emptyListLabel: context.loc.noFavouritesLabel,
-                  themeController: mightyTheme.controller,
                   items: data
                       .expand((group) => group.projects)
                       .where((project) => project.isFavorite)
@@ -182,8 +178,6 @@ class _LabeledIconButtons extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final hasGroups = groups.isNotEmpty;
-    final themeController =
-        GroupsOverviewInheritedWidget.of(context).themeController;
 
     final groupsOverviewController =
         GroupsOverviewInheritedWidget.of(context).groupsOverviewController;
@@ -198,56 +192,54 @@ class _LabeledIconButtons extends HookWidget {
       padding: const EdgeInsets.symmetric(horizontal: SpaceTokens.medium),
       child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
-        child: SpacedRow(
+        child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
-          spacing: SpaceTokens.verySmall,
           children: [
-            MightyActionButton.roundedLabeledIcon(
-              themeController: themeController,
-              iconData: Icons.category,
-              label: context.loc.addGroup,
+            ActionButton.iconWithBackgroundAndLabel(
+              context: context,
               onPressed: () => _onAddGroupPressed(
                 context,
                 groupsOverviewController,
               ),
               isLoading: state.isLoading,
+              label: context.loc.addGroup,
+              child: const Icon(Icons.category),
             ),
-            MightyActionButton.roundedLabeledIcon(
-              themeController: themeController,
-              iconData: Icons.work,
-              label: context.loc.addProject,
+            ActionButton.iconWithBackgroundAndLabel(
+              context: context,
               onPressed:
                   !hasGroups ? null : () => _onAddProjectPressed(context),
               isLoading: state.isLoading,
+              label: context.loc.addProject,
+              child: const Icon(Icons.work),
             ),
-            MightyActionButton.roundedLabeledIcon(
-              themeController: themeController,
-              iconData: Icons.delete_outline,
-              label: context.loc.deleteGroup,
+            ActionButton.iconWithBackgroundAndLabel(
+              context: context,
               onPressed: !hasGroups
                   ? null
                   : () => _onDeleteGroupPressed(
                         context,
                         groupsOverviewController,
-                        themeController,
                         animationController,
                       ),
               isLoading: state.isLoading,
+              label: context.loc.deleteGroup,
+              child: const Icon(Icons.delete_outline),
             ),
-            MightyActionButton.roundedLabeledIcon(
-              themeController: themeController,
-              iconData: Icons.insert_chart_outlined_rounded,
+            ActionButton.iconWithBackgroundAndLabel(
+              context: context,
+              onPressed: !hasGroups ? null : () async {},
+              isLoading: state.isLoading,
               label: context.loc.showStatistics,
-              onPressed: !hasGroups ? null : () {},
-              isLoading: state.isLoading,
+              child: const Icon(Icons.insert_chart_outlined_rounded),
             ),
-            MightyActionButton.roundedLabeledIcon(
-              themeController: themeController,
-              iconData: Icons.settings,
-              label: context.loc.openSettings,
-              onPressed: () {},
+            ActionButton.iconWithBackgroundAndLabel(
+              context: context,
+              onPressed: !hasGroups ? null : () async {},
               isLoading: state.isLoading,
+              label: context.loc.openSettings,
+              child: const Icon(Icons.settings),
             ),
           ],
         ),
@@ -259,57 +251,40 @@ class _LabeledIconButtons extends HookWidget {
     BuildContext context,
     GroupsOverviewController controller,
   ) async {
-    final result = await showDialog<String?>(
-      context: context,
-      builder: (context) {
-        final controller = TextEditingController();
-        return Consumer(
-          builder: (context, ref, child) {
-            final theme = ref.watchStateProvider(
-              context,
-              mightyThemeControllerProvider,
-              mightyThemeControllerProvider.notifier,
-            );
-            return AlertDialog(
-              backgroundColor: theme.controller.mainBackgroundColor,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(
-                  SpaceTokens.mediumSmall,
-                ),
-              ),
-              contentPadding: const EdgeInsets.symmetric(
-                horizontal: SpaceTokens.medium,
-              ),
-              titlePadding: const EdgeInsets.all(
-                SpaceTokens.medium,
-              ),
-              actionsPadding: const EdgeInsets.all(SpaceTokens.medium),
-              actionsAlignment: MainAxisAlignment.center,
-              actionsOverflowButtonSpacing: SpaceTokens.small,
-              title:
-                  Text(context.loc.addGroup, style: theme.controller.headline5),
-              content: MightyTextFormField(
-                controller: controller,
-                autofocus: true,
-              ),
-              actions: [
-                MightyActionButton.secondary(
-                  themeController: theme.controller,
-                  label: context.loc.deleteGroupCancelBtnLabel,
-                  onPressed: () => Navigator.of(context).pop(),
-                ),
-                MightyActionButton.primary(
-                  themeController: theme.controller,
-                  label: context.loc.deleteGroupConfirmBtnLabel,
-                  onPressed: () => Navigator.of(context).pop(controller.text),
-                ),
-              ],
-            );
-          },
-        );
-      },
-    );
+    final textController = TextEditingController();
 
+    final result = await ModalDialogUI.show<String?>(
+      context: context,
+      title: context.loc.addGroup,
+      content: MightyTextFormField(
+        controller: textController,
+        autofocus: true,
+      ),
+      actions: [
+        SpacedColumn(
+          spacing: SpaceTokens.small,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            ActionButton.text(
+              onPressed: () async {
+                Navigator.of(context).pop();
+              },
+              child: Text(
+                context.loc.deleteGroupCancelBtnLabel,
+              ),
+            ),
+            ActionButton.primary(
+              onPressed: () async {
+                Navigator.of(context).pop(textController.text);
+              },
+              child: Text(
+                context.loc.deleteGroupConfirmBtnLabel,
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
     if (result == null) return;
     await controller.addGroup(result);
   }
@@ -317,12 +292,10 @@ class _LabeledIconButtons extends HookWidget {
   Future<void> _onDeleteGroupPressed(
     BuildContext context,
     GroupsOverviewController controller,
-    MightyThemeController themeController,
     AnimationController animationController,
   ) async {
     final index = await _showGroupBottomSheet(
       context,
-      themeController,
       animationController,
     );
 
@@ -331,7 +304,6 @@ class _LabeledIconButtons extends HookWidget {
 
     final shouldDelete = await _showDeleteGroupBottomSheet(
       context,
-      themeController,
       animationController,
       groups[index].name,
     );
@@ -342,58 +314,50 @@ class _LabeledIconButtons extends HookWidget {
 
   Future<bool?> _showDeleteGroupBottomSheet(
     BuildContext context,
-    MightyThemeController themeController,
     AnimationController animationController,
     String groupName,
   ) async {
-    final shouldDelete = await showMightyModalBottomSheet<bool>(
+    final shouldDelete = await ModalBottomSheetUI.show<bool>(
       context: context,
       bottomSheetController: animationController,
-      widget: Consumer(
-        builder: (_, WidgetRef ref, __) {
-          final theme = ref.watchStateProvider(
-            context,
-            mightyThemeControllerProvider,
-            mightyThemeControllerProvider.notifier,
-          );
-          return Padding(
-            padding: const EdgeInsets.symmetric(horizontal: SpaceTokens.medium),
-            child: Wrap(
-              alignment: WrapAlignment.center,
-              runSpacing: SpaceTokens.small,
-              children: [
-                Text(
-                  context.loc.deleteGroupTitle(groupName),
-                  style: theme.controller.headline5,
-                  textAlign: TextAlign.center,
-                ),
-                Text(
-                  context.loc.deleteGroupMessage,
-                  style: theme.controller.small,
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(
-                  height: SpaceTokens.veryLarge,
-                ),
-                MightyActionButton.secondary(
-                  themeController: theme.controller,
-                  label: context.loc.deleteGroupCancelBtnLabel,
-                  onPressed: () => Navigator.of(context).pop(false),
-                ),
-                MightyActionButton.primary(
-                  themeController: theme.controller,
-                  label: context.loc.deleteGroupConfirmBtnLabel,
-                  onPressed: () {
-                    Navigator.of(context).pop(true);
-                  },
-                ),
-                const SizedBox(
-                  height: SpaceTokens.veryGigantic,
-                ),
-              ],
+      widget: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: SpaceTokens.medium),
+        child: SpacedColumn(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          spacing: SpaceTokens.medium,
+          children: [
+            Text(
+              context.loc.deleteGroupTitle(groupName),
+              textAlign: TextAlign.center,
             ),
-          );
-        },
+            Text(
+              context.loc.deleteGroupMessage,
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(
+              height: SpaceTokens.veryLarge,
+            ),
+            ActionButton.text(
+              onPressed: () async {
+                Navigator.of(context).pop(false);
+              },
+              child: Text(
+                context.loc.deleteGroupCancelBtnLabel,
+              ),
+            ),
+            ActionButton.primary(
+              onPressed: () async {
+                Navigator.of(context).pop(true);
+              },
+              child: Text(
+                context.loc.deleteGroupConfirmBtnLabel,
+              ),
+            ),
+            const SizedBox(
+              height: SpaceTokens.veryGigantic,
+            ),
+          ],
+        ),
       ),
     );
     return shouldDelete;
@@ -401,30 +365,21 @@ class _LabeledIconButtons extends HookWidget {
 
   Future<int?> _showGroupBottomSheet(
     BuildContext context,
-    MightyThemeController themeController,
     AnimationController animationController,
   ) async {
-    final clickedIndex = await showMightyModalBottomSheet<int>(
+    final clickedIndex = await ModalBottomSheetUI.show<int>(
       heightFactor: .5,
       context: context,
       bottomSheetController: animationController,
-      widget: Consumer(
-        builder: (_, WidgetRef ref, __) {
-          ref.watch(mightyThemeControllerProvider);
-          final themeController =
-              ref.watch(mightyThemeControllerProvider.notifier);
-          return MightyLabeledList(
-            showIcons: false,
-            themeController: themeController,
-            label: context.loc.pickGroup,
-            items: groups.map((group) => group.name).toList(),
-          );
-        },
+      widget: LabeledListTiles(
+        showIcons: false,
+        label: context.loc.pickGroup,
+        items: groups.map((group) => group.name).toList(),
       ),
     );
     return clickedIndex;
   }
 
-  void _onAddProjectPressed(BuildContext context) =>
+  Future<void> _onAddProjectPressed(BuildContext context) =>
       context.pushNamed(AppRoute.addProjectWizard);
 }

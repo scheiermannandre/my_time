@@ -1,40 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:my_time/config/theme/mighty_theme.dart';
 import 'package:my_time/config/theme/tokens/space_tokens.dart';
 import 'package:my_time/config/theme/tokens/text_style_tokens.dart';
-import 'package:my_time/core/widgets/mighty_splash_list_tile.dart';
 
 /// A widget that displays a labeled list of items.
 ///
-/// The [MightyLabeledList] widget is used to display a list of items with
+/// The [LabeledListTiles] widget is used to display a list of items with
 /// a label.
 /// It provides options to show icons for each item and handle empty lists.
-///
-/// Example usage:
-///
-/// ```dart
-/// MightyLabeledList(
-///   themeController: MightyThemeController(),
-///   label: 'Fruits',
-///   items: ['Apple', 'Banana', 'Orange'],
-///   emptyListLabel: 'No fruits available',
-///   showIcons: true,
-/// )
-/// ```
-class MightyLabeledList extends StatelessWidget {
-  /// Constructor to build the [MightyLabeledList] widget.
-  const MightyLabeledList({
-    required this.themeController,
+
+class LabeledListTiles extends StatelessWidget {
+  /// Constructor to build the [LabeledListTiles] widget.
+  const LabeledListTiles({
     required this.label,
     required this.items,
     super.key,
     this.emptyListLabel = '',
     this.showIcons = true,
   });
-
-  /// The [themeController] is used to customize the appearance of the list.
-
-  final MightyThemeController themeController;
 
   /// The [label] is the text to display as the label for the list.
   final String label;
@@ -61,30 +43,42 @@ class MightyLabeledList extends StatelessWidget {
             label,
             style: TextStyleTokens.getHeadline5(null),
           ),
-          if (items.isEmpty)
-            Padding(
+          Visibility(
+            visible: items.isEmpty,
+            child: Padding(
               padding: const EdgeInsets.only(top: SpaceTokens.mediumSmall),
               child: Text(
                 emptyListLabel,
               ),
-            )
-          else
-            ListView.separated(
+            ),
+          ),
+          Visibility(
+            visible: items.isNotEmpty,
+            child: ListView.separated(
               physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
               itemCount: items.length,
               itemBuilder: (context, index) {
-                return MightySplashListTile(
-                  themeController: themeController,
-                  text: items[index],
-                  showIcon: showIcons,
-                  onPressed: () => Navigator.of(context).pop(index),
+                return ListTile(
+                  contentPadding: EdgeInsets.zero,
+                  title: Text(items[index]),
+                  onTap: () => Navigator.of(context).pop(index),
+                  trailing: showIcons
+                      ? RotatedBox(
+                          quarterTurns: 3,
+                          child: Icon(
+                            Icons.expand_more,
+                            color: Theme.of(context).colorScheme.primary,
+                          ),
+                        )
+                      : null,
                 );
               },
               separatorBuilder: (context, index) => const SizedBox(
                 height: SpaceTokens.verySmall,
               ),
             ),
+          ),
         ],
       ),
     );

@@ -8,7 +8,7 @@ import 'package:my_time/common/extensions/int_extensions.dart';
 import 'package:my_time/config/theme/tokens/color_tokens.dart';
 import 'package:my_time/config/theme/tokens/space_tokens.dart';
 import 'package:my_time/config/theme/tokens/text_style_tokens.dart';
-import 'package:my_time/core/modals/ok_alert_dialog.dart';
+import 'package:my_time/core/modals/modal_dialog_ui.dart';
 import 'package:my_time/core/widgets/action_button.dart';
 import 'package:my_time/core/widgets/password_checker/dict/common_passwords.dart';
 import 'package:my_time/core/widgets/spaced_column.dart';
@@ -369,7 +369,7 @@ class PasswordMessageState extends ConsumerState<PasswordMessage>
           ActionButton.icon(
             child: const Icon(Icons.info),
             onPressed: () async {
-              await showOkAlertDialogCustomContent(
+              await ModalDialogUI.showOkWithCustomContent(
                 context,
                 context.loc.authPasswordInstructionsTitle,
                 PasswordInstructions(

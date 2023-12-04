@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_time/config/theme/app_bar_theme.dart';
+import 'package:my_time/config/theme/buttom_sheet_theme.dart';
 import 'package:my_time/config/theme/input_decoration_theme.dart';
 import 'package:my_time/config/theme/primary_button_theme.dart';
 import 'package:my_time/config/theme/secondary_button_theme.dart';
@@ -16,13 +17,13 @@ ThemeData darkTheme = ThemeData(
   colorScheme: const ColorScheme(
     brightness: Brightness.dark,
     primary: DarkThemeColorTokens.primaryColor,
-    onPrimary: Colors.white, //TBD
+    onPrimary: DarkThemeColorTokens.darkestColor,
     secondary: Colors.white, //TBD
     onSecondary: Colors.white, //TBD
     error: DarkThemeColorTokens.errorColor,
     onError: Colors.white, //TBD
     background: DarkThemeColorTokens.darkestColor,
-    onBackground: DarkThemeColorTokens.primaryColor, //TBD
+    onBackground: DarkThemeColorTokens.lightestColor,
     surface: DarkThemeColorTokens.darkestColor,
     onSurface: DarkThemeColorTokens.white,
     surfaceTint: Colors.transparent, // removes color blur on dialog background
@@ -31,7 +32,6 @@ ThemeData darkTheme = ThemeData(
     DarkThemeColorTokens.mediumColor,
     DarkThemeColorTokens.errorColor,
   ),
-
   elevatedButtonTheme: PrimaryButtonThemeData.dark(),
   outlinedButtonTheme: SecondaryButtonThemeData.dark(),
   iconButtonTheme: IconButtonThemeData(
@@ -44,17 +44,11 @@ ThemeData darkTheme = ThemeData(
   textButtonTheme: TertiaryButtonThemeData.dark(),
   snackBarTheme: SnackBarTheme.dark(),
   appBarTheme: AppBarThemeData.dark(),
-
   progressIndicatorTheme: const ProgressIndicatorThemeData(
     color: DarkThemeColorTokens.mediumColor,
   ),
-
   textSelectionTheme: const TextSelectionThemeData(
     cursorColor: DarkThemeColorTokens.primaryColor,
   ),
-
-  // This is needed
-  bottomSheetTheme: const BottomSheetThemeData(
-    backgroundColor: Colors.transparent,
-  ),
+  bottomSheetTheme: ButtomSheetTheme.dark(),
 );

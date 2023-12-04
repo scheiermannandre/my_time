@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:my_time/common/extensions/build_context_extension.dart';
-import 'package:my_time/core/modals/ok_alert_dialog.dart';
+import 'package:my_time/core/modals/modal_dialog_ui.dart';
 import 'package:my_time/core/widgets/loading_indicator.dart';
 import 'package:my_time/features/8_authentication/presentation/pages/util/email_handle_mode.dart';
 import 'package:my_time/features/8_authentication/presentation/state_management/auth_actioncode_handler_page_controller.dart';
@@ -98,7 +98,7 @@ class _AuthActionCodeHandlerPageState
     String title,
     String content,
   ) async {
-    await showOkAlertDialog(context, title, content);
+    await ModalDialogUI.showOk(context, title, content);
 
     if (!context.mounted) return;
 

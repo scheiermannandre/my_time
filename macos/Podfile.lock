@@ -4,12 +4,12 @@ PODS:
     - FirebaseAuth (~> 10.18.0)
   - Firebase/CoreOnly (10.18.0):
     - FirebaseCore (= 10.18.0)
-  - firebase_auth (4.14.1):
+  - firebase_auth (4.15.0):
     - Firebase/Auth (~> 10.18.0)
     - Firebase/CoreOnly (~> 10.18.0)
     - firebase_core
     - FlutterMacOS
-  - firebase_core (2.23.0):
+  - firebase_core (2.24.0):
     - Firebase/CoreOnly (~> 10.18.0)
     - FlutterMacOS
   - FirebaseAppCheckInterop (10.18.0)
@@ -43,8 +43,11 @@ PODS:
   - GoogleUtilities/Reachability (7.12.0):
     - GoogleUtilities/Logger
   - GTMSessionFetcher/Core (3.1.1)
+  - path_provider_foundation (0.0.1):
+    - Flutter
+    - FlutterMacOS
   - PromisesObjC (2.3.1)
-  - realm (1.6.0):
+  - realm (1.6.1):
     - FlutterMacOS
   - url_launcher_macos (0.0.1):
     - FlutterMacOS
@@ -53,6 +56,7 @@ DEPENDENCIES:
   - firebase_auth (from `Flutter/ephemeral/.symlinks/plugins/firebase_auth/macos`)
   - firebase_core (from `Flutter/ephemeral/.symlinks/plugins/firebase_core/macos`)
   - FlutterMacOS (from `Flutter/ephemeral`)
+  - path_provider_foundation (from `Flutter/ephemeral/.symlinks/plugins/path_provider_foundation/darwin`)
   - realm (from `Flutter/ephemeral/.symlinks/plugins/realm/macos`)
   - url_launcher_macos (from `Flutter/ephemeral/.symlinks/plugins/url_launcher_macos/macos`)
 
@@ -74,6 +78,8 @@ EXTERNAL SOURCES:
     :path: Flutter/ephemeral/.symlinks/plugins/firebase_core/macos
   FlutterMacOS:
     :path: Flutter/ephemeral
+  path_provider_foundation:
+    :path: Flutter/ephemeral/.symlinks/plugins/path_provider_foundation/darwin
   realm:
     :path: Flutter/ephemeral/.symlinks/plugins/realm/macos
   url_launcher_macos:
@@ -81,8 +87,8 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Firebase: 414ad272f8d02dfbf12662a9d43f4bba9bec2a06
-  firebase_auth: 7e6f4e07f913c109967660eec8b4236007d0624c
-  firebase_core: b57f52ccb63d2700bf22bc65ca0b08c66135ae6e
+  firebase_auth: a403926db1dd7734c02f354e03b5d8b70b7dcc7d
+  firebase_core: 8852b730fc6843e99c390e97fde4318d58218fa0
   FirebaseAppCheckInterop: 3cd914842ba46f4304050874cd284de82f154ffd
   FirebaseAuth: 12314b438fa76048540c8fb86d6cfc9e08595176
   FirebaseCore: 2322423314d92f946219c8791674d2f3345b598f
@@ -90,8 +96,9 @@ SPEC CHECKSUMS:
   FlutterMacOS: 8f6f14fa908a6fb3fba0cd85dbd81ec4b251fb24
   GoogleUtilities: 0759d1a57ebb953965c2dfe0ba4c82e95ccc2e34
   GTMSessionFetcher: e8647203b65cee28c5f73d0f473d096653945e72
+  path_provider_foundation: 29f094ae23ebbca9d3d0cec13889cd9060c0e943
   PromisesObjC: c50d2056b5253dadbd6c2bea79b0674bd5a52fa4
-  realm: b1f7c3c318b4f01100a8588e17531214bbbdcfdb
+  realm: e424ab264ea2473997fd802974b50cfd0a6b6391
   url_launcher_macos: d2691c7dd33ed713bf3544850a623080ec693d95
 
 PODFILE CHECKSUM: 353c8bcc5d5b0994e508d035b5431cfe18c1dea7

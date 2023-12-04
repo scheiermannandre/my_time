@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:my_time/config/theme/tokens/color_tokens.dart';
 import 'package:my_time/config/theme/tokens/size_tokens.dart';
+import 'package:my_time/config/theme/tokens/space_tokens.dart';
+import 'package:my_time/config/theme/tokens/text_style_tokens.dart';
+import 'package:my_time/core/widgets/spaced_column.dart';
 
 /// A customizable action button widget that can display
 /// buttons with or without loading indicators.
@@ -23,8 +27,8 @@ class ActionButton extends StatelessWidget {
       key: key,
       isLoading: isLoading,
       child: child,
-      buttonBuilder: (child) => ElevatedButton(
-        onPressed: onPressed,
+      buttonBuilder: (child, isLoading) => ElevatedButton(
+        onPressed: !isLoading ? onPressed : null,
         child: child,
       ),
     );
@@ -41,8 +45,8 @@ class ActionButton extends StatelessWidget {
       key: key,
       isLoading: isLoading,
       child: child,
-      buttonBuilder: (child) => OutlinedButton(
-        onPressed: onPressed,
+      buttonBuilder: (child, isLoading) => OutlinedButton(
+        onPressed: !isLoading ? onPressed : null,
         child: child,
       ),
     );
@@ -60,9 +64,9 @@ class ActionButton extends StatelessWidget {
       key: key,
       isLoading: isLoading,
       child: child,
-      buttonBuilder: (child) => TextButton(
+      buttonBuilder: (child, isLoading) => TextButton(
         style: style,
-        onPressed: onPressed,
+        onPressed: !isLoading ? onPressed : null,
         child: child,
       ),
     );
@@ -79,9 +83,87 @@ class ActionButton extends StatelessWidget {
       key: key,
       isLoading: isLoading,
       child: child,
-      buttonBuilder: (child) => IconButton(
-        onPressed: onPressed,
+      buttonBuilder: (child, isLoading) => IconButton(
+        onPressed: !isLoading ? onPressed : null,
         icon: child,
+      ),
+    );
+  }
+
+  /// Constructs an icon [ActionButton] with loading capability.
+  factory ActionButton.iconWithBackground({
+    required Widget child,
+    required BuildContext context,
+    required Future<void> Function()? onPressed,
+    bool isLoading = false,
+    Key? key,
+  }) {
+    return ActionButton(
+      key: key,
+      isLoading: isLoading,
+      child: child,
+      buttonBuilder: (child, isLoading) => Container(
+        decoration: ShapeDecoration(
+          color: ThemeColorBuilder(context).getActionsColor(),
+          shape: const CircleBorder(),
+        ),
+        child: IconButton(
+          padding: const EdgeInsets.all(SpaceTokens.medium),
+          color: Theme.of(context).colorScheme.onPrimary,
+          onPressed: !isLoading ? onPressed : null,
+          icon: child,
+        ),
+      ),
+    );
+  }
+
+  /// Constructs an icon [ActionButton] with loading capability.
+  factory ActionButton.iconWithBackgroundAndLabel({
+    required Widget child,
+    required String label,
+    required BuildContext context,
+    required Future<void> Function()? onPressed,
+    bool isLoading = false,
+    Key? key,
+  }) {
+    final colorScheme = Theme.of(context).colorScheme;
+    return ActionButton(
+      key: key,
+      isLoading: isLoading,
+      child: child,
+      buttonBuilder: (child, isLoading) => TextButton(
+        style: Theme.of(context).textButtonTheme.style?.copyWith(
+              padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+                const EdgeInsets.all(SpaceTokens.verySmall),
+              ),
+              iconColor:
+                  MaterialStateProperty.all<Color>(colorScheme.onPrimary),
+              foregroundColor:
+                  MaterialStateProperty.all<Color>(colorScheme.onBackground),
+            ),
+        onPressed: !isLoading ? onPressed : null,
+        child: SizedBox(
+          width: SizeTokens.x72,
+          child: SpacedColumn(
+            spacing: SpaceTokens.verySmall,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                padding: const EdgeInsets.all(SpaceTokens.medium),
+                decoration: ShapeDecoration(
+                  color: ThemeColorBuilder(context).getActionsColor(),
+                  shape: const CircleBorder(),
+                ),
+                child: child,
+              ),
+              Text(
+                label,
+                textAlign: TextAlign.center,
+                style: TextStyleTokens.bodyMedium(null),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -90,14 +172,18 @@ class ActionButton extends StatelessWidget {
   final Widget child;
 
   /// The builder function to create the button widget based on child content.
-  final Widget Function(Widget child) buttonBuilder;
+  // ignore: avoid_positional_boolean_parameters
+  final Widget Function(Widget child, bool isLoading) buttonBuilder;
 
   /// A flag to determine whether the button is in a loading state.
   final bool isLoading;
 
   @override
   Widget build(BuildContext context) {
-    return buttonBuilder(_ButtonChild(isLoading: isLoading, child: child));
+    return buttonBuilder(
+      _ButtonChild(isLoading: isLoading, child: child),
+      isLoading,
+    );
   }
 }
 

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:my_time/config/theme/tokens/color_tokens.dart';
 import 'package:my_time/config/theme/tokens/corner_radius_tokens.dart';
 import 'package:my_time/config/theme/tokens/space_tokens.dart';
+import 'package:my_time/config/theme/tokens/text_style_tokens.dart';
 
 /// ThemeData to define the styling for tertiary buttons across the app.
 class TertiaryButtonThemeData extends TextButtonThemeData {
@@ -30,6 +31,9 @@ class TertiaryButtonThemeData extends TextButtonThemeData {
   }) {
     return TertiaryButtonThemeData._(
       style: ButtonStyle(
+        textStyle: MaterialStateProperty.all<TextStyle>(
+          TextStyleTokens.body(null),
+        ),
         minimumSize: MaterialStateProperty.all<Size>(Size.zero),
         padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
           const EdgeInsets.symmetric(
