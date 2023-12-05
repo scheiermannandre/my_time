@@ -3,7 +3,7 @@ import 'package:my_time/config/theme/tertiary_button_theme.dart';
 import 'package:my_time/core/widgets/action_button.dart';
 
 /// A custom SnackBar for the Mighty App.
-class MightySnackBar {
+class SnackBarPopUp {
   /// Shows a custom SnackBar.
   static void show(
     BuildContext context,

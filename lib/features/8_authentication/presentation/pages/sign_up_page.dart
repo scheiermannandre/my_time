@@ -93,7 +93,7 @@ class SignUpPageState extends ConsumerState<SignUpPage>
         if (!context.mounted) return;
         final snackbarMessage = context.loc.authSignUpSnackbarMessage;
         if (snackbarMessage.isEmpty) return;
-        MightySnackBar.show(
+        SnackBarPopUp.show(
           context,
           snackbarMessage,
           actionLabel: context.loc.authSnackbarActionLabel,

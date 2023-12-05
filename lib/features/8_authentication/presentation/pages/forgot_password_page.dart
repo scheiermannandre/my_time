@@ -48,7 +48,7 @@ class ForgotPasswordPage extends HookConsumerWidget with EmailValidator {
         if (!context.mounted) return;
         final snackbarMessage = context.loc.authForgotPasswordSnackbarMessage;
         if (snackbarMessage.isEmpty) return;
-        MightySnackBar.show(
+        SnackBarPopUp.show(
           context,
           snackbarMessage,
           actionLabel: context.loc.authSnackbarActionLabel,
