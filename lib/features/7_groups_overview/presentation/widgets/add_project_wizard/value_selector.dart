@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:my_time/config/theme/mighty_theme.dart';
+import 'package:my_time/config/theme/tokens/color_tokens.dart';
 import 'package:my_time/config/theme/tokens/space_tokens.dart';
 
 /// A widget for selecting a value from a list of options.
@@ -7,14 +7,12 @@ class ValueSelector extends StatefulWidget {
   /// Constructs a `ValueSelector` widget.
   ///
   /// - Parameters:
-  ///   - `themeController`: The controller managing the theme of the widget.
   ///   - `data`: The currently selected value.
   ///   - `onChoose`: A callback function triggered when a value is chosen.
   ///   - `options`: The list of available options.
   ///   - `horizontalPadding`: The horizontal padding around the widget.
   ///   - `labelText`: The optional label text displayed above the selector.
   const ValueSelector({
-    required this.themeController,
     required this.data,
     required this.onChoose,
     required this.options,
@@ -22,9 +20,6 @@ class ValueSelector extends StatefulWidget {
     super.key,
     this.labelText,
   });
-
-  /// The controller managing the theme of the widget.
-  final MightyThemeController themeController;
 
   /// The currently selected value.
   final String? data;
@@ -58,35 +53,34 @@ class _ValueSelectorState extends State<ValueSelector> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: widget.horizontalPadding),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          if (widget.labelText != null)
-            Text(
-              widget.labelText!,
-              style: widget.themeController.small,
-            ),
-          if (widget.labelText != null)
-            const SizedBox(
-              height: SpaceTokens.verySmall,
-            ),
-          ListView.builder(
-            physics: const NeverScrollableScrollPhysics(),
-            shrinkWrap: true,
-            itemCount: widget.options.length,
-            itemBuilder: (context, index) {
-              final option = widget.options[index];
-              return ListTile(
-                title: Text(option),
-                trailing: chosenOption == option ? Icon(_iconData) : null,
-                onTap: () => _onPressed(option),
-              );
-            },
+    final iconColor = ThemeColorBuilder(context).getGuidingIconColor();
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        if (widget.labelText != null)
+          Text(
+            widget.labelText!,
           ),
-        ],
-      ),
+        if (widget.labelText != null)
+          const SizedBox(
+            height: SpaceTokens.verySmall,
+          ),
+        ListView.builder(
+          physics: const NeverScrollableScrollPhysics(),
+          shrinkWrap: true,
+          itemCount: widget.options.length,
+          itemBuilder: (context, index) {
+            final option = widget.options[index];
+            return ListTile(
+              title: Text(option),
+              trailing: chosenOption == option
+                  ? Icon(_iconData, color: iconColor)
+                  : null,
+              onTap: () => _onPressed(option),
+            );
+          },
+        ),
+      ],
     );
   }
 

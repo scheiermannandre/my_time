@@ -32,12 +32,14 @@ class WizardReviewStepWrapper<T> extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(wizardStepControllerProvider(stepToJumpTo));
 
-    return GestureDetector(
-      onTap: () {
-        ref.read(wizardControllerProvider.notifier).jumpPage(stepToJumpTo);
-      },
-      child: AbsorbPointer(
-        child: builder(state.data as T?),
+    return Card(
+      child: ListTile(
+        onTap: () {
+          ref.read(wizardControllerProvider.notifier).jumpPage(stepToJumpTo);
+        },
+        title: AbsorbPointer(
+          child: builder(state.data as T?),
+        ),
       ),
     );
   }

@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_time/common/extensions/build_context_extension.dart';
-import 'package:my_time/config/theme/mighty_theme.dart';
 import 'package:my_time/config/theme/tokens/space_tokens.dart';
 import 'package:my_time/core/util/extentions/string_extension.dart';
 import 'package:my_time/core/widgets/dropdown.dart';
@@ -16,16 +14,14 @@ import 'package:my_time/features/7_groups_overview/domain/entities/project_money
 import 'package:my_time/features/7_groups_overview/presentation/widgets/add_project_wizard/value_selector.dart';
 
 /// Step 7: Money Management Step in a wizard.
-class Step7MoneyManagement extends ConsumerWidget {
+class Step7MoneyManagement extends StatelessWidget {
   /// Constructor for the Step7MoneyManagement widget.
   const Step7MoneyManagement({
     super.key,
   });
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final themeController = ref.watch(mightyThemeControllerProvider.notifier);
-    ref.watch(mightyThemeControllerProvider);
+  Widget build(BuildContext context) {
     return WizardStepWrapper<ProjectMoneyManagementEntity?>(
       title: context.loc.step7Title,
       stepNumber: 6,
@@ -41,7 +37,6 @@ class Step7MoneyManagement extends ConsumerWidget {
           controller: controller,
           onNextEvent: (event) {},
           child: _MoneyManagementStep(
-            themeController: themeController,
             data: data,
             saveProjectTimeManagement: controller.saveData,
             enableNext: controller.enableNext,
@@ -58,10 +53,8 @@ class _MoneyManagementStep extends StatefulHookWidget {
     required this.saveProjectTimeManagement,
     required this.enableNext,
     required this.disableNext,
-    required this.themeController,
     required this.data,
   });
-  final MightyThemeController themeController;
   final ProjectMoneyManagementEntity? data;
 
   final void Function(ProjectMoneyManagementEntity) saveProjectTimeManagement;
@@ -126,7 +119,6 @@ class _MoneyManagementStepState extends State<_MoneyManagementStep> {
           children: [
             ValueSelector(
               labelText: context.loc.step7PaymentIntervalInputLabel,
-              themeController: widget.themeController,
               data: widget.data?.paymentInterval?.label(context) ?? '',
               onChoose: (option) {
                 setState(() {
@@ -158,7 +150,6 @@ class _MoneyManagementStepState extends State<_MoneyManagementStep> {
                 children: [
                   Text(
                     context.loc.step7CurrencyInputLabel,
-                    style: widget.themeController.small,
                   ),
                   const SizedBox(
                     height: SpaceTokens.verySmall,

@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_time/common/extensions/build_context_extension.dart';
-import 'package:my_time/config/theme/mighty_theme.dart';
 import 'package:my_time/config/theme/tokens/space_tokens.dart';
 import 'package:my_time/core/util/extentions/string_extension.dart';
 import 'package:my_time/core/widgets/text_input_field.dart';
@@ -14,16 +12,14 @@ import 'package:my_time/features/7_groups_overview/domain/entities/project_time_
 import 'package:my_time/features/7_groups_overview/presentation/widgets/add_project_wizard/value_selector.dart';
 
 /// Step 6: Project Time Management Step in a wizard.
-class Step6ProjectTimeManagement extends ConsumerWidget {
+class Step6ProjectTimeManagement extends StatelessWidget {
   /// Constructor for the Step6ProjectTimeManagement widget.
   const Step6ProjectTimeManagement({
     super.key,
   });
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final themeController = ref.watch(mightyThemeControllerProvider.notifier);
-    ref.watch(mightyThemeControllerProvider);
+  Widget build(BuildContext context) {
     return WizardStepWrapper<ProjectTimeManagementEntity?>(
       title: context.loc.step6Title,
       stepNumber: 5,
@@ -39,7 +35,6 @@ class Step6ProjectTimeManagement extends ConsumerWidget {
           controller: controller,
           onNextEvent: (event) {},
           child: _TimeManagementStep(
-            themeController: themeController,
             data: data,
             saveProjectTimeManagement: controller.saveData,
             enableNext: controller.enableNext,
@@ -56,10 +51,8 @@ class _TimeManagementStep extends StatefulHookWidget {
     required this.saveProjectTimeManagement,
     required this.enableNext,
     required this.disableNext,
-    required this.themeController,
     required this.data,
   });
-  final MightyThemeController themeController;
   final ProjectTimeManagementEntity? data;
 
   final void Function(ProjectTimeManagementEntity) saveProjectTimeManagement;
@@ -107,7 +100,6 @@ class _TimeManagementStepState extends State<_TimeManagementStep> {
         children: [
           ValueSelector(
             labelText: context.loc.step6ReferencePeriodInputLabel,
-            themeController: widget.themeController,
             data: widget.data?.referencePeriod?.label(context) ?? '',
             onChoose: (option) {
               setState(() {
