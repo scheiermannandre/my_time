@@ -103,7 +103,7 @@ class Wizard extends ConsumerWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       StepIndicatorRow(
-                        steps: steps.length + 1,
+                        steps: steps.length,
                         currentStep: state.currentPage,
                         stepStyle: stepStyle,
                       ),

@@ -326,7 +326,7 @@ class _ReviewBlock<T> extends StatefulWidget {
 }
 
 class _ReviewBlockState<T> extends State<_ReviewBlock<T>> {
-  bool _isVisible = true;
+  bool _isVisible = false;
 
   void postFrameCallback(T? data) {
     if (data == null) return;
