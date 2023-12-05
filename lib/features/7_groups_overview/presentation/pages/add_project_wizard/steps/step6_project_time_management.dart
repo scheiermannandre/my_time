@@ -6,7 +6,7 @@ import 'package:my_time/common/extensions/build_context_extension.dart';
 import 'package:my_time/config/theme/mighty_theme.dart';
 import 'package:my_time/config/theme/tokens/space_tokens.dart';
 import 'package:my_time/core/util/extentions/string_extension.dart';
-import 'package:my_time/core/widgets/mighty_text_form_field.dart';
+import 'package:my_time/core/widgets/text_input_field.dart';
 import 'package:my_time/core/widgets/wizard/wizard_step/wizard_step_event_listener.dart';
 import 'package:my_time/core/widgets/wizard/wizard_step/wizard_step_wrapper.dart';
 import 'package:my_time/features/7_groups_overview/domain/entities/enums/reference_period.dart';
@@ -140,7 +140,7 @@ class _TimeManagementStepState extends State<_TimeManagementStep> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                MightyTextFormField(
+                TextInputField(
                   labelText: context.loc.step6WorkingHoursInputLabel(
                     period?.label(context) ?? '',
                   ),

@@ -106,7 +106,7 @@ class GroupProjectsShellPage extends ShellPage {
                   ),
                 ),
               ),
-        error: (ex, st) => LoadingErrorWidget(
+        error: (ex, st) => LoadingErrorWidgetDeprecated(
           onRefresh: () =>
               state.value!.refreshIndicatorKey.currentState?.show(),
         ),

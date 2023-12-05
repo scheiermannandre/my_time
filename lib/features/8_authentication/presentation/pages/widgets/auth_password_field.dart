@@ -3,9 +3,9 @@ import 'package:my_time/common/extensions/build_context_extension.dart';
 import 'package:my_time/config/theme/tokens/color_tokens.dart';
 import 'package:my_time/config/theme/tokens/corner_radius_tokens.dart';
 import 'package:my_time/config/theme/tokens/space_tokens.dart';
-import 'package:my_time/core/widgets/mighty_text_form_field.dart';
 import 'package:my_time/core/widgets/password_checker/password_checker.dart';
 import 'package:my_time/core/widgets/spaced_column.dart';
+import 'package:my_time/core/widgets/text_input_field.dart';
 
 /// A widget representing the password field for authentication.
 class AuthPasswordField extends StatelessWidget {
@@ -35,7 +35,7 @@ class AuthPasswordField extends StatelessWidget {
   Widget build(BuildContext context) {
     // Builds a MightyTextFormField for password input.
     // Includes a suffix icon to toggle password visibility.
-    return MightyTextFormField(
+    return TextInputField(
       controller: passwordController,
       labelText: context.loc.passwordFieldLabel,
       hintText: context.loc.passwordFieldHint,

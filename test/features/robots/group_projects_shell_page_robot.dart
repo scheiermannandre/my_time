@@ -90,7 +90,7 @@ class GroupProjectsShellPageRobot {
 
   Future<void> expectLoadingErrorWidget() async {
     expect(
-      $!(LoadingErrorWidget),
+      $!(LoadingErrorWidgetDeprecated),
       findsOneWidget,
     );
   }

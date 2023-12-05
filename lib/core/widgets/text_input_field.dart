@@ -3,9 +3,9 @@ import 'package:my_time/config/theme/tokens/color_tokens.dart';
 import 'package:my_time/config/theme/tokens/space_tokens.dart';
 
 /// A customizable text form field with theming support.
-class MightyTextFormField extends StatefulWidget {
-  /// Constructs a [MightyTextFormField] with the required parameters.
-  const MightyTextFormField({
+class TextInputField extends StatefulWidget {
+  /// Constructs a [TextInputField] with the required parameters.
+  const TextInputField({
     this.labelText,
     this.hintText,
     this.controller,
@@ -13,7 +13,6 @@ class MightyTextFormField extends StatefulWidget {
     this.obscureText = false,
     this.keyboardType = TextInputType.text,
     this.validator,
-    // ignore: avoid_positional_boolean_parameters
     this.onChanged,
     this.autofocus = false,
     this.onEditingComplete,
@@ -81,10 +80,10 @@ class MightyTextFormField extends StatefulWidget {
   /// Callback function triggered when the field loses focus.
   final VoidCallback? onFocusLost;
   @override
-  State<MightyTextFormField> createState() => _MightyTextFormFieldState();
+  State<TextInputField> createState() => _TextInputFieldState();
 }
 
-class _MightyTextFormFieldState extends State<MightyTextFormField> {
+class _TextInputFieldState extends State<TextInputField> {
   late final GlobalKey<FormFieldState<String>> _fieldKey;
   @override
   void initState() {
@@ -96,11 +95,6 @@ class _MightyTextFormFieldState extends State<MightyTextFormField> {
 
   @override
   Widget build(BuildContext context) {
-    // final errorColor = widget.mightyThemeController.errorColor;
-    // final cursorColor =
-    //     widget.mightyThemeController.themeMode == SystemThemeMode.light
-    //         ? widget.mightyThemeController.nonDecorativeBorderColor
-    //         : widget.mightyThemeController.actionsColor;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
@@ -108,7 +102,6 @@ class _MightyTextFormFieldState extends State<MightyTextFormField> {
         if (widget.labelText != null)
           Text(
             widget.labelText!,
-            // style: widget.mightyThemeController.small,
           ),
         if (widget.labelText != null)
           const SizedBox(
@@ -141,7 +134,6 @@ class _MightyTextFormFieldState extends State<MightyTextFormField> {
               });
             },
             focusNode: widget.focusNode,
-            //cursorColor: cursorColor,
             controller: widget.controller,
             autofocus: widget.autofocus,
             decoration: InputDecoration(

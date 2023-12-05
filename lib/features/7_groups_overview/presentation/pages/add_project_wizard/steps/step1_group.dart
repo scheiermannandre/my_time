@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:my_time/common/extensions/build_context_extension.dart';
-import 'package:my_time/config/theme/mighty_theme.dart';
+import 'package:my_time/config/theme/tokens/color_tokens.dart';
 import 'package:my_time/config/theme/tokens/space_tokens.dart';
-import 'package:my_time/core/util/extentions/widget_ref_extension.dart';
 import 'package:my_time/core/widgets/async_value_widget.dart';
+import 'package:my_time/core/widgets/loading_error_widget.dart';
 import 'package:my_time/core/widgets/loading_indicator.dart';
-import 'package:my_time/core/widgets/mighty_loading_error_widget.dart';
-import 'package:my_time/core/widgets/mighty_splash_list_tile.dart';
 import 'package:my_time/core/widgets/wizard/wizard_step/wizard_step_event_listener.dart';
 import 'package:my_time/core/widgets/wizard/wizard_step/wizard_step_wrapper.dart';
 import 'package:my_time/features/7_groups_overview/data/repositories/group_repository_impl.dart';
@@ -69,13 +67,6 @@ class _GroupSelectionStepState extends ConsumerState<_GroupSelectionStep> {
 
   @override
   Widget build(BuildContext context) {
-    final mightyTheme =
-        ref.watchStateProvider<MightyThemeController, SystemThemeMode>(
-      context,
-      mightyThemeControllerProvider,
-      mightyThemeControllerProvider.notifier,
-    );
-
     final groups = ref.watch(groupsStreamProvider);
 
     return Padding(
@@ -83,17 +74,21 @@ class _GroupSelectionStepState extends ConsumerState<_GroupSelectionStep> {
       child: AsyncValueWidget(
         value: groups,
         data: (groups) {
+          final iconColor = ThemeColorBuilder(context).getGuidingIconColor();
           return ListView.separated(
             physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
             itemCount: groups.length,
             itemBuilder: (context, index) {
-              return MightySplashListTile(
-                themeController: mightyTheme.controller,
-                text: groups[index].name,
-                showIcon: pickedGroup?.name == groups[index].name,
-                iconData: Icons.check,
-                onPressed: () {
+              return ListTile(
+                title: Text(groups[index].name),
+                trailing: pickedGroup?.name == groups[index].name
+                    ? Icon(
+                        Icons.check,
+                        color: iconColor,
+                      )
+                    : null,
+                onTap: () {
                   setState(() {
                     pickedGroup = groups[index];
                   });
@@ -108,7 +103,7 @@ class _GroupSelectionStepState extends ConsumerState<_GroupSelectionStep> {
           );
         },
         loading: LoadingIndicator.new,
-        error: (error, stackTrace) => MightyLoadingErrorWidget(
+        error: (error, stackTrace) => LoadingErrorWidget(
           onRefresh: () {
             ref.invalidate(groupsStreamProvider);
           },

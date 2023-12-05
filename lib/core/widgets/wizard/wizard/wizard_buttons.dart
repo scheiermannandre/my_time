@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:my_time/config/theme/tokens/corner_radius_tokens.dart';
 import 'package:my_time/config/theme/tokens/space_tokens.dart';
-import 'package:my_time/core/widgets/mighty_action_button.dart';
+import 'package:my_time/core/widgets/action_button.dart';
 
 /// A set of customizable buttons for a wizard-like interface.
 ///
@@ -12,8 +11,6 @@ import 'package:my_time/core/widgets/mighty_action_button.dart';
 class WizardButtons extends StatefulHookWidget {
   /// Creates a `WizardButtons` widget.
   ///
-  /// The [primary] and [secondary] parameters define the visual styles for
-  /// the buttons.
   /// The [previousButtonContent], [nextButtonContentPrimary],
   /// [nextButtonContentSecondary], [goToLastPageButtonContent],
   /// [finishButtonContent], and [skipButtonContent] are the contents of the
@@ -25,8 +22,6 @@ class WizardButtons extends StatefulHookWidget {
   /// Additional configurations such as spacing, skipability, and button
   /// enabling can be adjusted using various boolean flags and values.
   const WizardButtons({
-    required this.primary,
-    required this.secondary,
     required this.previousButtonContent,
     required this.nextButtonContentPrimary,
     required this.nextButtonContentSecondary,
@@ -48,12 +43,6 @@ class WizardButtons extends StatefulHookWidget {
     super.key,
     this.spacing = SpaceTokens.small,
   });
-
-  /// The visual style for the primary buttons.
-  final WizardButtonStyle primary;
-
-  /// The visual style for the secondary buttons.
-  final WizardButtonStyle secondary;
 
   /// The callback function to be invoked when the previous button is pressed.
   final VoidCallback onPrevious;
@@ -121,16 +110,13 @@ class _WizardButtonsState extends State<WizardButtons> {
   Widget build(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.end,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         AnimatedButtonShell(
           axisAlignment: -1,
-          button: ActionButton.regular(
-            title: widget.skipButtonContent,
+          button: ActionButton.secondary(
             onPressed: widget.onSkip,
-            backgroundColor: widget.secondary.backgroundColor,
-            borderColor: widget.secondary.borderColor,
-            splashColor: widget.secondary.splashColor,
-            borderRadius: BorderRadius.circular(widget.secondary.borderRadius),
+            child: widget.skipButtonContent,
           ),
           showBtn: widget.isSkipable && !widget.isInReview,
         ),
@@ -150,19 +136,6 @@ class _WizardButtonsState extends State<WizardButtons> {
             leftBtnTitle: widget.previousButtonContent,
             onRightBtn: widget.isNextBtnEnabled ? widget.onNext : null,
             onLeftBtn: widget.onPrevious,
-            rightBtnBackgroundColor: !widget.isInReview
-                ? widget.primary.backgroundColor
-                : widget.secondary.backgroundColor,
-            rightBtnBorderColor: !widget.isInReview
-                ? widget.primary.borderColor
-                : widget.secondary.borderColor,
-            rightBtnSplashColor: !widget.isInReview
-                ? widget.primary.splashColor
-                : widget.secondary.splashColor,
-            leftBtnBackgroundColor: widget.secondary.backgroundColor,
-            leftBtnBorderColor: widget.secondary.borderColor,
-            leftBtnSplashColor: widget.secondary.splashColor,
-            borderRadius: widget.secondary.borderRadius,
             gap: widget.spacing,
           ),
         ),
@@ -173,21 +146,14 @@ class _WizardButtonsState extends State<WizardButtons> {
         LayoutBuilder(
           builder: (context, constraints) => AnimatedBtnRow(
             constraints: constraints,
-            borderRadius: widget.secondary.borderRadius,
             gap: widget.spacing,
             showrightBtn: widget.isLastStep,
             rightBtnTitle: widget.finishButtonContent,
             rightBtnIsLoading: widget.isLoading,
             onRightBtn: widget.onFinish,
-            rightBtnBackgroundColor: widget.primary.backgroundColor,
-            rightBtnBorderColor: widget.primary.borderColor,
-            rightBtnSplashColor: widget.primary.splashColor,
             showLeftBtn: !widget.isLastStep && widget.isInReview,
             leftBtnTitle: widget.goToLastPageButtonContent,
             onLeftBtn: widget.onLastPage,
-            leftBtnBackgroundColor: widget.primary.backgroundColor,
-            leftBtnBorderColor: widget.primary.borderColor,
-            leftBtnSplashColor: widget.primary.splashColor,
           ),
         ),
       ],
@@ -215,17 +181,6 @@ class AnimatedBtnRow extends StatefulWidget {
   /// The [showrightBtn] and [showLeftBtn] properties control the visibility
   /// of the right and left buttons, respectively. The [constraints]
   /// specify the box constraints for the row.
-  ///
-  /// The properties like [rightBtnTitle], [onRightBtn],
-  /// [rightBtnBackgroundColor],[rightBtnBorderColor], [rightBtnSplashColor],
-  /// and [rightBtnIsLoading] are associated with the right button.
-  ///
-  /// Similarly, the properties for the left button include [leftBtnTitle],
-  /// [onLeftBtn], [leftBtnBackgroundColor], [leftBtnBorderColor],
-  /// [leftBtnSplashColor], and [leftBtnIsLoading].
-  ///
-  /// The [borderRadius] determines the rounded corners of the buttons,
-  /// and [gap] specifies the space between the right and left buttons.
   const AnimatedBtnRow({
     required this.showrightBtn,
     required this.showLeftBtn,
@@ -234,13 +189,6 @@ class AnimatedBtnRow extends StatefulWidget {
     required this.leftBtnTitle,
     required this.onRightBtn,
     required this.onLeftBtn,
-    required this.rightBtnBackgroundColor,
-    required this.rightBtnBorderColor,
-    required this.rightBtnSplashColor,
-    required this.leftBtnBackgroundColor,
-    required this.leftBtnBorderColor,
-    required this.leftBtnSplashColor,
-    required this.borderRadius,
     required this.gap,
     this.rightBtnIsLoading = false,
     this.leftBtnIsLoading = false,
@@ -262,15 +210,6 @@ class AnimatedBtnRow extends StatefulWidget {
   /// The callback function to be invoked when the right button is pressed.
   final VoidCallback? onRightBtn;
 
-  /// The background color of the right button.
-  final Color rightBtnBackgroundColor;
-
-  /// The border color of the right button.
-  final Color? rightBtnBorderColor;
-
-  /// The splash color of the right button.
-  final Color? rightBtnSplashColor;
-
   /// Whether the right button is in a loading state.
   final bool rightBtnIsLoading;
 
@@ -280,20 +219,8 @@ class AnimatedBtnRow extends StatefulWidget {
   /// The callback function to be invoked when the left button is pressed.
   final VoidCallback? onLeftBtn;
 
-  /// The background color of the left button.
-  final Color leftBtnBackgroundColor;
-
-  /// The border color of the left button.
-  final Color? leftBtnBorderColor;
-
-  /// The splash color of the left button.
-  final Color? leftBtnSplashColor;
-
   /// Whether the left button is in a loading state.
   final bool leftBtnIsLoading;
-
-  /// The border radius of the buttons.
-  final double borderRadius;
 
   /// The space between the right and left buttons.
   final double gap;
@@ -479,14 +406,10 @@ class _AnimatedBtnRowState extends State<AnimatedBtnRow>
                 child: SizedBox(
                   height: prevBtnSizeAnimation.value.height,
                   width: prevBtnSizeAnimation.value.width,
-                  child: ActionButton.regular(
+                  child: ActionButton.secondary(
                     isLoading: widget.leftBtnIsLoading,
-                    title: widget.leftBtnTitle,
                     onPressed: widget.onLeftBtn,
-                    backgroundColor: widget.leftBtnBackgroundColor,
-                    borderColor: widget.leftBtnBorderColor,
-                    splashColor: widget.leftBtnSplashColor,
-                    borderRadius: BorderRadius.circular(widget.borderRadius),
+                    child: widget.leftBtnTitle,
                   ),
                 ),
               );
@@ -504,14 +427,10 @@ class _AnimatedBtnRowState extends State<AnimatedBtnRow>
                 child: SizedBox(
                   height: nextBtnSizeAnimation.value.height,
                   width: nextBtnSizeAnimation.value.width,
-                  child: ActionButton.regular(
+                  child: ActionButton.primary(
                     isLoading: widget.rightBtnIsLoading,
-                    title: widget.rightBtnTitle,
                     onPressed: widget.onRightBtn,
-                    backgroundColor: widget.rightBtnBackgroundColor,
-                    borderColor: widget.rightBtnBorderColor,
-                    splashColor: widget.rightBtnSplashColor,
-                    borderRadius: BorderRadius.circular(widget.borderRadius),
+                    child: widget.rightBtnTitle,
                   ),
                 ),
               );
@@ -587,34 +506,12 @@ class _AnimatedButtonShellState extends State<AnimatedButtonShell>
     return SizeTransition(
       axisAlignment: widget.axisAlignment,
       sizeFactor: animationController,
-      child: widget.button,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          widget.button,
+        ],
+      ),
     );
   }
-}
-
-/// A styled button used within the `WizardButtons` widget.
-///
-/// The `WizardButtonStyle` class defines the visual style properties of the
-/// buttons used in the `WizardButtons` widget. It includes background color,
-/// splash color, border color, and border radius.
-class WizardButtonStyle {
-  /// Creates a `WizardButtonStyle` with the specified parameters.
-  const WizardButtonStyle({
-    required this.backgroundColor,
-    this.splashColor,
-    this.borderRadius = CornerRadiusTokens.small,
-    this.borderColor,
-  });
-
-  /// The background color of the button.
-  final Color backgroundColor;
-
-  /// The splash color displayed when the button is pressed.
-  final Color? splashColor;
-
-  /// The color of the button border.
-  final Color? borderColor;
-
-  /// The border radius of the button.
-  final double borderRadius;
 }

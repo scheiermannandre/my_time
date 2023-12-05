@@ -8,9 +8,9 @@ import 'package:my_time/config/theme/tokens/text_style_tokens.dart';
 import 'package:my_time/core/modals/mighty_snack_bar.dart';
 import 'package:my_time/core/util/extentions/widget_ref_extension.dart';
 import 'package:my_time/core/widgets/action_button.dart';
-import 'package:my_time/core/widgets/mighty_text_form_field.dart';
 import 'package:my_time/core/widgets/password_checker/password_checker.dart';
 import 'package:my_time/core/widgets/spaced_column.dart';
+import 'package:my_time/core/widgets/text_input_field.dart';
 import 'package:my_time/features/8_authentication/presentation/pages/util/email_app_opener.dart';
 import 'package:my_time/features/8_authentication/presentation/pages/util/email_validation.dart';
 import 'package:my_time/features/8_authentication/presentation/pages/widgets/auth_action_footer.dart';
@@ -157,7 +157,7 @@ class SignUpPageState extends ConsumerState<SignUpPage>
                     ),
 
                     // Email text field for sign-up
-                    MightyTextFormField(
+                    TextInputField(
                       onFocusLost: signUpPage.controller.setShouldValidateEmail,
                       validator: (value) =>
                           signUpPage.controller.emailValidator(context, value),

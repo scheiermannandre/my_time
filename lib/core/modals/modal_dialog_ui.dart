@@ -5,11 +5,11 @@ import 'package:my_time/core/widgets/action_button.dart';
 /// Exposes methods to show modal dialogs.
 class ModalDialogUI {
   /// Shows a mighty styled Ok Alert Dialog.
-  static Future<void> showOk(
-    BuildContext context,
-    String title,
-    String content,
-  ) async {
+  static Future<void> showOk({
+    required BuildContext context,
+    required String title,
+    required String content,
+  }) async {
     return showDialog<void>(
       context: context,
       builder: (context) => _ModalDialog._ok(
@@ -130,7 +130,7 @@ class _ModalDialog extends StatelessWidget {
         SpaceTokens.medium,
       ),
       actionsPadding: const EdgeInsets.all(SpaceTokens.medium),
-      actionsAlignment: MainAxisAlignment.center,
+      actionsAlignment: MainAxisAlignment.end,
       actionsOverflowButtonSpacing: SpaceTokens.small,
       actionsOverflowDirection: VerticalDirection.down,
       actionsOverflowAlignment: OverflowBarAlignment.center,

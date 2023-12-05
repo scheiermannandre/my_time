@@ -8,8 +8,8 @@ import 'package:my_time/config/theme/tokens/space_tokens.dart';
 import 'package:my_time/config/theme/tokens/text_style_tokens.dart';
 import 'package:my_time/core/util/extentions/widget_ref_extension.dart';
 import 'package:my_time/core/widgets/action_button.dart';
-import 'package:my_time/core/widgets/mighty_text_form_field.dart';
 import 'package:my_time/core/widgets/spaced_column.dart';
+import 'package:my_time/core/widgets/text_input_field.dart';
 import 'package:my_time/features/8_authentication/presentation/pages/widgets/auth_action_footer.dart';
 import 'package:my_time/features/8_authentication/presentation/pages/widgets/auth_social_buttons.dart';
 import 'package:my_time/features/8_authentication/presentation/state_management/sign_in_page_controller.dart';
@@ -99,7 +99,7 @@ class SignInPageState extends ConsumerState<SignInPage> {
                       style: TextStyleTokens.getHeadline1(null),
                     ),
                     // Email text field for sign-in
-                    MightyTextFormField(
+                    TextInputField(
                       onFocusLost: signIn.controller.setShouldValidateEmail,
                       validator: (value) =>
                           signIn.controller.emailValidator(context, value),
@@ -115,7 +115,7 @@ class SignInPageState extends ConsumerState<SignInPage> {
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        MightyTextFormField(
+                        TextInputField(
                           controller: passwordController,
                           //mightyThemeController: theme.controller,
                           labelText: context.loc.passwordFieldLabel,

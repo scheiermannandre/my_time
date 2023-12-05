@@ -87,7 +87,7 @@ class ProjectHistoryShellPage extends ProjectShellPage {
                 ),
               ),
         error: (error, stackTrace) {
-          return LoadingErrorWidget(
+          return LoadingErrorWidgetDeprecated(
             onRefresh: () =>
                 state.value!.refreshIndicatorKey.currentState!.show(),
           );

@@ -1,73 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:my_time/config/theme/mighty_theme.dart';
-import 'package:my_time/config/theme/tokens/space_tokens.dart';
-import 'package:my_time/core/util/extentions/widget_ref_extension.dart';
-import 'package:my_time/core/widgets/mighty_splash_list_tile.dart';
+import 'package:my_time/config/theme/tokens/color_tokens.dart';
 
 const Duration _kExpand = Duration(milliseconds: 200);
-
-/// A customizable dropdown widget with theme-adaptive styling.
-class MightyDropDown extends ConsumerWidget {
-  /// Constructs a [MightyDropDown] with the required parameters.
-  const MightyDropDown({
-    required this.items,
-    required this.onValueChanged,
-    this.initialValue,
-    super.key,
-  });
-
-  /// The initial value of the dropdown.
-  final String? initialValue;
-
-  /// The list of items in the dropdown.
-  final List<String> items;
-
-  /// Callback function called when the dropdown value changes.
-  final void Function(String newValue)? onValueChanged;
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    // Obtain theme information from the state provider
-    final theme = ref.watchStateProvider(
-      context,
-      mightyThemeControllerProvider,
-      mightyThemeControllerProvider.notifier,
-    );
-
-    return DropDownTile(
-      horizontalPadding: SpaceTokens.medium,
-      textStyle: theme.controller.alternateBody,
-      decoration: BoxDecoration(
-        border: Border.all(
-          color: theme.controller.nonDecorativeBorderColor,
-          strokeAlign: BorderSide.strokeAlignCenter,
-        ),
-        borderRadius: const BorderRadius.all(
-          Radius.circular(5),
-        ),
-      ),
-      iconColor: theme.controller.themeMode == SystemThemeMode.light
-          ? theme.controller.secondaryTextColor
-          : theme.controller.actionsColor,
-      initialValue: initialValue ?? '',
-      values: items,
-      onValueChanged: onValueChanged,
-    );
-  }
-}
 
 /// A custom expansion tile with dropdown functionality.
 class DropDownTile extends StatefulWidget {
   /// Constructs a [DropDownTile] with the required parameters.
   const DropDownTile({
     required this.initialValue,
-    required this.decoration,
-    required this.horizontalPadding,
-    required this.iconColor,
-    required this.textStyle,
     super.key,
-    this.backgroundColor,
     this.values = const <String>[],
     this.isExpandable = true,
     this.onValueChanged,
@@ -82,23 +23,8 @@ class DropDownTile extends StatefulWidget {
   /// List of values in the dropdown.
   final List<String>? values;
 
-  /// Background color of the dropdown tile.
-  final Color? backgroundColor;
-
-  /// Icon color of the dropdown.
-  final Color? iconColor;
-
   /// Whether the tile is expandable.
   final bool isExpandable;
-
-  /// Decoration of the tile.
-  final BoxDecoration decoration;
-
-  /// Content padding of the tile.
-  final double horizontalPadding;
-
-  /// Text style for the dropdown.
-  final TextStyle? textStyle;
 
   /// Callback function called when the dropdown value changes.
   final void Function(String newValue)? onValueChanged;
@@ -169,27 +95,22 @@ class DropDownTileState extends State<DropDownTile>
   }
 
   Widget _buildChildren(BuildContext context, Widget? child) {
-    return Container(
-      decoration: widget.decoration,
+    final iconColor = ThemeColorBuilder(context).getGuidingIconColor();
+    return Card(
       child: Column(
         children: <Widget>[
-          SplashListTile(
+          ListTile(
             title: Text(
               _chosenValue,
-              style: widget.textStyle,
             ),
-            contentPadding: EdgeInsets.symmetric(
-              horizontal: widget.horizontalPadding,
-            ),
-            onPressed: toggle,
-            trailingIcon: widget.isExpandable
+            onTap: toggle,
+            trailing: widget.isExpandable
                 ? RotationTransition(
                     turns: _iconTurns,
                     child: Icon(
                       key: DropDownTile.dropDownIconKey,
                       Icons.expand_more,
-                      size: 24,
-                      color: widget.iconColor,
+                      color: iconColor,
                     ),
                   )
                 : const SizedBox.shrink(),
@@ -218,15 +139,11 @@ class DropDownTileState extends State<DropDownTile>
               padding: EdgeInsets.zero,
               physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
-              itemBuilder: (context, index) => SplashListTile(
-                contentPadding: EdgeInsets.symmetric(
-                  horizontal: widget.horizontalPadding,
-                ),
+              itemBuilder: (context, index) => ListTile(
                 title: Text(
                   widget.values![index],
-                  style: widget.textStyle,
                 ),
-                onPressed: () {
+                onTap: () {
                   toggle();
                   setState(() {
                     _chosenValue = widget.values![index];

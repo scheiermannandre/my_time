@@ -13,7 +13,7 @@ class CardThemeData extends CardTheme {
 
   /// Constructs a light-themed [CardThemeData].
   factory CardThemeData.light() {
-    return CardThemeData._get(LightThemeColorTokens.lightColor);
+    return CardThemeData._get(LightThemeColorTokens.mediumColor);
   }
 
   /// Constructs a dark-themed [CardThemeData].

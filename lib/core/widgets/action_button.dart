@@ -19,7 +19,7 @@ class ActionButton extends StatelessWidget {
   /// Constructs a primary [ActionButton] with loading capability.
   factory ActionButton.primary({
     required Widget child,
-    required Future<void> Function()? onPressed,
+    required void Function()? onPressed,
     bool isLoading = false,
     Key? key,
   }) {
@@ -37,7 +37,7 @@ class ActionButton extends StatelessWidget {
   /// Constructs a secondary [ActionButton] with loading capability.
   factory ActionButton.secondary({
     required Widget child,
-    required Future<void> Function()? onPressed,
+    required void Function()? onPressed,
     bool isLoading = false,
     Key? key,
   }) {
@@ -55,7 +55,7 @@ class ActionButton extends StatelessWidget {
   /// Constructs a text [ActionButton] with loading capability.
   factory ActionButton.text({
     required Widget child,
-    required Future<void> Function()? onPressed,
+    required void Function()? onPressed,
     bool isLoading = false,
     ButtonStyle? style,
     Key? key,

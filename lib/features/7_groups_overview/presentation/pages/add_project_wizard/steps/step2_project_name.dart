@@ -4,7 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_time/common/extensions/build_context_extension.dart';
 import 'package:my_time/config/theme/tokens/space_tokens.dart';
 import 'package:my_time/core/util/extentions/string_extension.dart';
-import 'package:my_time/core/widgets/mighty_text_form_field.dart';
+import 'package:my_time/core/widgets/text_input_field.dart';
 import 'package:my_time/core/widgets/wizard/wizard_step/wizard_step_event_listener.dart';
 import 'package:my_time/core/widgets/wizard/wizard_step/wizard_step_wrapper.dart';
 
@@ -67,7 +67,7 @@ class _ProjectNameStep extends HookConsumerWidget {
     final textController = useTextEditingController(text: name ?? '');
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: SpaceTokens.medium),
-      child: MightyTextFormField(
+      child: TextInputField(
         onChanged: (value, isValid) {
           if (!isValid) {
             disableNext();

@@ -6,9 +6,9 @@ import 'package:my_time/core/widgets/action_button.dart';
 import 'package:my_time/core/widgets/spaced_column.dart';
 
 /// Widget that is displayed when the loading of the data fails.
-class MightyLoadingErrorWidget extends StatelessWidget {
-  /// Constructor for the [MightyLoadingErrorWidget].
-  const MightyLoadingErrorWidget({
+class LoadingErrorWidget extends StatelessWidget {
+  /// Constructor for the [LoadingErrorWidget].
+  const LoadingErrorWidget({
     required this.onRefresh,
     super.key,
   });
@@ -38,10 +38,8 @@ class MightyLoadingErrorWidget extends StatelessWidget {
             style: TextStyleTokens.bodySmall(null),
           ),
           ActionButton.primary(
+            onPressed: onRefresh,
             child: Text(context.loc.loadingErrorWidgetBtnLabel),
-            onPressed: () async {
-              onRefresh();
-            },
           ),
         ],
       ),

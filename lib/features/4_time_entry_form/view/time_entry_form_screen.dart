@@ -91,7 +91,7 @@ class TimeEntryFormScreen extends HookConsumerWidget {
                   state: state.value,
                   onBtnTap: () => controller.saveEntry(context, isEdit: isEdit),
                 ),
-                error: (error, stackTrace) => LoadingErrorWidget(
+                error: (error, stackTrace) => LoadingErrorWidgetDeprecated(
                   onRefresh: () =>
                       state.value!.refreshIndicatorKey.currentState?.show(),
                 ),

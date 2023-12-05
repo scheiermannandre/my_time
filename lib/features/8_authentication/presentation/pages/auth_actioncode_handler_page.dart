@@ -98,7 +98,11 @@ class _AuthActionCodeHandlerPageState
     String title,
     String content,
   ) async {
-    await ModalDialogUI.showOk(context, title, content);
+    await ModalDialogUI.showOk(
+      context: context,
+      title: title,
+      content: content,
+    );
 
     if (!context.mounted) return;
 

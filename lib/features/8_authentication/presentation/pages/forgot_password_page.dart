@@ -8,7 +8,7 @@ import 'package:my_time/config/theme/tokens/text_style_tokens.dart';
 import 'package:my_time/core/modals/mighty_snack_bar.dart';
 import 'package:my_time/core/util/extentions/widget_ref_extension.dart';
 import 'package:my_time/core/widgets/action_button.dart';
-import 'package:my_time/core/widgets/mighty_text_form_field.dart';
+import 'package:my_time/core/widgets/text_input_field.dart';
 import 'package:my_time/features/8_authentication/presentation/pages/util/email_app_opener.dart';
 import 'package:my_time/features/8_authentication/presentation/pages/util/email_validation.dart';
 import 'package:my_time/features/8_authentication/presentation/state_management/forgot_password_page_controller.dart';
@@ -121,7 +121,7 @@ class ForgotPasswordPage extends HookConsumerWidget with EmailValidator {
                     const SizedBox(height: SpaceTokens.medium),
 
                     // Email text field for resetting password
-                    MightyTextFormField(
+                    TextInputField(
                       validator: (value) =>
                           authPage.controller.emailValidator(context, value),
                       onChanged: (value, isValid) => _formKey.currentState!

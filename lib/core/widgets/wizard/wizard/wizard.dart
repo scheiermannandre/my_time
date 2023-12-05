@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_time/common/extensions/build_context_extension.dart';
 import 'package:my_time/config/theme/tokens/space_tokens.dart';
-import 'package:my_time/core/widgets/mighty_action_button.dart';
+import 'package:my_time/config/theme/tokens/text_style_tokens.dart';
+import 'package:my_time/core/modals/modal_dialog_ui.dart';
+import 'package:my_time/core/widgets/action_button.dart';
 import 'package:my_time/core/widgets/wizard/wizard/wizard_buttons.dart';
 import 'package:my_time/core/widgets/wizard/wizard/wizard_controller.dart';
 import 'package:my_time/core/widgets/wizard/wizard/wizard_event_listener.dart';
@@ -13,54 +15,29 @@ import 'package:preload_page_view/preload_page_view.dart';
 class Wizard extends ConsumerWidget {
   /// Creates a [Wizard] widget.
   const Wizard({
-    required this.backgroundColor,
-    required this.appBarTitleStyle,
-    required this.appBarBackgroundColor,
-    required this.appBarIconColor,
     required this.onFinish,
     required this.steps,
     required this.reviewStep,
     required this.stepStyle,
-    required this.titleStyle,
-    required this.primary,
-    required this.secondary,
     required this.skipBtnTitle,
     required this.nextBtnTitlePrimary,
     required this.nextBtnTitleSecondary,
     required this.previousBtnTitle,
     required this.lastPageBtnTitle,
     required this.finishBtnTitle,
-    required this.infoIconColor,
     this.indicatorPadding = const EdgeInsets.symmetric(
       horizontal: SpaceTokens.medium,
       vertical: SpaceTokens.small,
     ),
     this.btnsPadding = const EdgeInsets.all(SpaceTokens.medium),
-    this.infoDialogBuilder,
     super.key,
   });
 
   /// Callback function invoked when the wizard finishes.
   final void Function() onFinish;
 
-  /// Callback function that is called to show description for a step.
-  final Widget Function(BuildContext context, String title, String description)?
-      infoDialogBuilder;
-
   /// List of widgets representing individual steps in the wizard.
   final List<Widget> steps;
-
-  /// Background color of the wizard.
-  final Color backgroundColor;
-
-  /// Background color of the app bar.
-  final Color appBarBackgroundColor;
-
-  /// Icon color of the app bar.
-  final Color appBarIconColor;
-
-  /// Text style for the app bar title.
-  final TextStyle appBarTitleStyle;
 
   /// Padding for the step indicator.
   final EdgeInsets indicatorPadding;
@@ -71,20 +48,8 @@ class Wizard extends ConsumerWidget {
   /// Widget representing the review step.
   final Widget reviewStep;
 
-  /// Text style for the step title.
-  final TextStyle titleStyle;
-
-  /// Color of the information icon.
-  final Color infoIconColor;
-
   /// Padding for the wizard buttons.
   final EdgeInsets btnsPadding;
-
-  /// Style for the primary wizard button.
-  final WizardButtonStyle primary;
-
-  /// Style for the secondary wizard button.
-  final WizardButtonStyle secondary;
 
   /// Widget representing the title of the skip button.
   final Widget skipBtnTitle;
@@ -114,19 +79,13 @@ class Wizard extends ConsumerWidget {
         onFinish(); // Call the onFinish callback from the outside.
       },
       child: Scaffold(
-        backgroundColor: backgroundColor,
         appBar: AppBar(
-          elevation: !state.isLastPage ? 0 : 3,
-          backgroundColor: appBarBackgroundColor,
+          elevation: !state.isLastPage ? 0 : 1,
           title: Text(
             !state.isLastPage
                 ? context.loc
                     .stepIndicatorText(state.currentPage + 1, steps.length)
                 : context.loc.stepIndicatorReviewText,
-            style: appBarTitleStyle,
-          ),
-          iconTheme: IconThemeData(
-            color: appBarIconColor,
           ),
         ),
         body: SafeArea(
@@ -155,29 +114,23 @@ class Wizard extends ConsumerWidget {
                           Expanded(
                             child: Text(
                               !state.isLastPage ? state.stepTitle : '',
-                              style: titleStyle,
+                              style: TextStyleTokens.getHeadline4(null),
                               textAlign: TextAlign.start,
                             ),
                           ),
-                          if (state.userInfo != null)
-                            ActionButton.roundedIcon(
-                              iconData: Icons.info_outline,
+                          Visibility(
+                            visible: state.userInfo != null,
+                            child: ActionButton.icon(
+                              child: const Icon(Icons.info_outline),
                               onPressed: () async {
-                                if (infoDialogBuilder == null) return;
-                                await showDialog<void>(
+                                await ModalDialogUI.showOk(
                                   context: context,
-                                  builder: (BuildContext context) =>
-                                      infoDialogBuilder!(
-                                    context,
-                                    state.userInfo!.title,
-                                    state.userInfo!.description,
-                                  ),
+                                  title: state.userInfo!.title,
+                                  content: state.userInfo!.description,
                                 );
                               },
-                              backgroundColor: Colors.transparent,
-                              isLoading: false,
-                              iconColor: infoIconColor,
                             ),
+                          ),
                         ],
                       ),
                     ],
@@ -205,8 +158,6 @@ class Wizard extends ConsumerWidget {
                   isFirstStep: state.isFirstPage,
                   isLastStep: state.isLastPage,
                   isInReview: state.isInReview,
-                  primary: primary,
-                  secondary: secondary,
                   previousButtonContent: previousBtnTitle,
                   onPrevious: controller.previous,
                   nextButtonContentPrimary: nextBtnTitlePrimary,

@@ -89,7 +89,7 @@ class AddProjectScreen extends HookConsumerWidget {
                   onListTileTap: controller.onGroupDropDownListTileTap,
                   controller: projectNameController,
                 ),
-                error: (ex, st) => LoadingErrorWidget(
+                error: (ex, st) => LoadingErrorWidgetDeprecated(
                   onRefresh: () =>
                       state.refreshIndicatorKey.currentState?.show(),
                 ),

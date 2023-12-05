@@ -12,11 +12,11 @@ import 'package:my_time/core/widgets/action_button.dart';
 import 'package:my_time/core/widgets/async_value_widget.dart';
 import 'package:my_time/core/widgets/expandable_tile.dart';
 import 'package:my_time/core/widgets/labeled_list_tiles.dart';
+import 'package:my_time/core/widgets/loading_error_widget.dart';
 import 'package:my_time/core/widgets/loading_indicator.dart';
-import 'package:my_time/core/widgets/mighty_loading_error_widget.dart';
-import 'package:my_time/core/widgets/mighty_persistent_sheet_scaffold.dart';
-import 'package:my_time/core/widgets/mighty_text_form_field.dart';
+import 'package:my_time/core/widgets/persistent_sheet_scaffold.dart';
 import 'package:my_time/core/widgets/spaced_column.dart';
+import 'package:my_time/core/widgets/text_input_field.dart';
 import 'package:my_time/features/7_groups_overview/data/repositories/group_repository_impl.dart';
 import 'package:my_time/features/7_groups_overview/domain/entities/group_entity.dart';
 import 'package:my_time/features/7_groups_overview/presentation/state_management/groups_overview_controller.dart';
@@ -129,7 +129,7 @@ class GroupsOverview extends HookConsumerWidget {
             );
           },
           loading: LoadingIndicator.new,
-          error: (error, stackTrace) => MightyLoadingErrorWidget(
+          error: (error, stackTrace) => LoadingErrorWidget(
             onRefresh: () {
               ref.invalidate(groupsStreamProvider);
             },
@@ -251,7 +251,7 @@ class _LabeledIconButtons extends HookWidget {
     final result = await ModalDialogUI.show<String?>(
       context: context,
       title: context.loc.addGroup,
-      content: MightyTextFormField(
+      content: TextInputField(
         controller: textController,
         autofocus: true,
       ),

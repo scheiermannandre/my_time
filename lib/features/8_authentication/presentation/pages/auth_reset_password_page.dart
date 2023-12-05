@@ -48,7 +48,11 @@ class AuthEmailHandlerPageState extends ConsumerState<AuthRestPasswordPage> {
       title = context.loc.authActionCodeHandlerPasswordResetTitle;
       content = context.loc.authActionCodeHandlerPasswordResetContent;
     }
-    await ModalDialogUI.showOk(context, title, content);
+    await ModalDialogUI.showOk(
+      context: context,
+      title: title,
+      content: content,
+    );
     if (!context.mounted) return;
     context.goNamed(AppRoute.signIn);
   }

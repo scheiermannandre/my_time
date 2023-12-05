@@ -33,7 +33,9 @@ class StepIndicator extends StatelessWidget {
         duration: const Duration(milliseconds: 300),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(style.borderRadius),
-          color: isActive ? style.activeColor : style.inactiveColor,
+          color: isActive
+              ? Theme.of(context).colorScheme.primary
+              : Theme.of(context).colorScheme.secondary,
         ),
         height: style.height,
         width: style.width,
@@ -50,25 +52,15 @@ class StepIndicator extends StatelessWidget {
 class StepIndicatorStyle {
   /// Creates a `StepIndicatorStyle`.
   ///
-  /// The [activeColor] is the color used for an active step indicator.
-  /// The [inactiveColor] is the color used for an inactive step indicator.
   /// The [borderRadius] specifies the border radius of the step indicator.
   /// The [height] is the height of the step indicator.
   /// The [width] is the width of the step indicator, which can be null for
   /// a default width.
   const StepIndicatorStyle({
-    required this.activeColor,
-    required this.inactiveColor,
     this.borderRadius = CornerRadiusTokens.small,
     this.height = SizeTokens.x8,
     this.width,
   });
-
-  /// The color used for an active step indicator.
-  final Color activeColor;
-
-  /// The color used for an inactive step indicator.
-  final Color inactiveColor;
 
   /// The border radius of the step indicator.
   final double borderRadius;

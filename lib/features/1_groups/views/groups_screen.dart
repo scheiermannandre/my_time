@@ -67,7 +67,7 @@ class GroupsScreen extends HookConsumerWidget {
                 padding: padding,
                 child: data.when(
                   error: (error, stackTrace) {
-                    return LoadingErrorWidget(
+                    return LoadingErrorWidgetDeprecated(
                       onRefresh: () =>
                           state.value!.refreshIndicatorKey.currentState?.show(),
                     );

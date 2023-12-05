@@ -48,10 +48,11 @@ class EmailAppsUI extends EmailApps {
 
     if (emailApps.isEmpty) {
       await ModalDialogUI.showOk(
-        context,
-        context.loc.emailOpenerNoAppsTitle,
-        context.loc.emailOpenerNoAppsDescription,
+        context: context,
+        title: context.loc.emailOpenerNoAppsTitle,
+        content: context.loc.emailOpenerNoAppsDescription,
       );
+
       return;
     }
 

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_time/config/theme/mighty_theme.dart';
 import 'package:my_time/config/theme/tokens/space_tokens.dart';
-import 'package:my_time/core/widgets/mighty_splash_list_tile.dart';
 
 /// A widget for selecting a value from a list of options.
 class ValueSelector extends StatefulWidget {
@@ -79,12 +78,10 @@ class _ValueSelectorState extends State<ValueSelector> {
             itemCount: widget.options.length,
             itemBuilder: (context, index) {
               final option = widget.options[index];
-              return MightySplashListTile(
-                themeController: widget.themeController,
-                text: option,
-                showIcon: chosenOption == option,
-                iconData: _iconData,
-                onPressed: () => _onPressed(option),
+              return ListTile(
+                title: Text(option),
+                trailing: chosenOption == option ? Icon(_iconData) : null,
+                onTap: () => _onPressed(option),
               );
             },
           ),

@@ -4,9 +4,9 @@ import 'package:my_time/common/widgets/responsive_center.dart';
 import 'package:my_time/constants/breakpoints.dart';
 
 /// Widget that is displayed when the loading of the data fails.
-class LoadingErrorWidget extends StatelessWidget {
-  /// Constructor for the [LoadingErrorWidget].
-  const LoadingErrorWidget({required this.onRefresh, super.key});
+class LoadingErrorWidgetDeprecated extends StatelessWidget {
+  /// Constructor for the [LoadingErrorWidgetDeprecated].
+  const LoadingErrorWidgetDeprecated({required this.onRefresh, super.key});
 
   /// Callback that is called when the refresh button is tapped.
   final VoidCallback onRefresh;

@@ -83,7 +83,7 @@ class ProjectTimerShellPage extends ProjectShellPage {
             ],
           ),
         ),
-        error: (ex, st) => LoadingErrorWidget(
+        error: (ex, st) => LoadingErrorWidgetDeprecated(
           onRefresh: () =>
               state.value!.refreshIndicatorKey.currentState?.show(),
         ),

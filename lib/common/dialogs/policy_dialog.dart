@@ -3,13 +3,11 @@ import 'package:flutter/services.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:my_time/common/extensions/build_context_extension.dart';
-import 'package:my_time/config/theme/mighty_theme.dart';
 import 'package:my_time/config/theme/tokens/color_tokens.dart';
 import 'package:my_time/config/theme/tokens/corner_radius_tokens.dart';
 import 'package:my_time/config/theme/tokens/space_tokens.dart';
 import 'package:my_time/config/theme/tokens/text_style_tokens.dart';
-import 'package:my_time/core/util/extentions/widget_ref_extension.dart';
-import 'package:my_time/core/widgets/mighty_action_button.dart';
+import 'package:my_time/core/widgets/action_button.dart';
 
 /// Utility class to display a dialog with a markdown file content.
 class MightyMarkDownDialog {
@@ -51,14 +49,6 @@ class MarkDownDialog extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watchStateProvider(
-      context,
-      mightyThemeControllerProvider,
-      mightyThemeControllerProvider.notifier,
-    );
-    final splashColor = theme.controller.themeMode == SystemThemeMode.light
-        ? LightThemeColorTokens.primaryColor
-        : DarkThemeColorTokens.primaryColor;
     return Dialog(
       insetPadding: const EdgeInsets.all(25),
       shape: RoundedRectangleBorder(
@@ -84,20 +74,13 @@ class MarkDownDialog extends ConsumerWidget {
           // Close button
           Padding(
             padding: const EdgeInsets.all(SpaceTokens.small),
-            child: ActionButton.regular(
-              title: Text(
+            child: ActionButton.text(
+              child: Text(
                 context.loc.closePolicyDialog,
                 style: TextStyleTokens.body(LightThemeColorTokens.black),
                 textAlign: TextAlign.center,
               ),
               onPressed: () => Navigator.of(context).pop(),
-              backgroundColor: Colors.transparent,
-              borderRadius: BorderRadius.circular(CornerRadiusTokens.small),
-              splashColor: splashColor,
-              contentPadding: const EdgeInsets.symmetric(
-                vertical: SpaceTokens.verySmall,
-                horizontal: SpaceTokens.mediumSmall,
-              ),
             ),
           ),
         ],

@@ -237,7 +237,7 @@ class GroupScreenRobot {
   }
 
   Future<void> expectLoadingErrorWidget() async {
-    final loadingErrorWidget = find.byType(LoadingErrorWidget);
+    final loadingErrorWidget = find.byType(LoadingErrorWidgetDeprecated);
     expect(
       loadingErrorWidget,
       findsOneWidget,
