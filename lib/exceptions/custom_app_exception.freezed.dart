@@ -29,6 +29,7 @@ mixin _$CustomAppException {
     required TResult Function() invalidCredentials,
     required TResult Function() userDisabled,
     required TResult Function() networkRequestFailed,
+    required TResult Function() emailNotVerified,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -44,6 +45,7 @@ mixin _$CustomAppException {
     TResult? Function()? invalidCredentials,
     TResult? Function()? userDisabled,
     TResult? Function()? networkRequestFailed,
+    TResult? Function()? emailNotVerified,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -59,6 +61,7 @@ mixin _$CustomAppException {
     TResult Function()? invalidCredentials,
     TResult Function()? userDisabled,
     TResult Function()? networkRequestFailed,
+    TResult Function()? emailNotVerified,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -75,6 +78,7 @@ mixin _$CustomAppException {
     required TResult Function(InvalidCredentials value) invalidCredentials,
     required TResult Function(UserDisabled value) userDisabled,
     required TResult Function(NetworkRequestFailed value) networkRequestFailed,
+    required TResult Function(EmailNotVerified value) emailNotVerified,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -90,6 +94,7 @@ mixin _$CustomAppException {
     TResult? Function(InvalidCredentials value)? invalidCredentials,
     TResult? Function(UserDisabled value)? userDisabled,
     TResult? Function(NetworkRequestFailed value)? networkRequestFailed,
+    TResult? Function(EmailNotVerified value)? emailNotVerified,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -105,6 +110,7 @@ mixin _$CustomAppException {
     TResult Function(InvalidCredentials value)? invalidCredentials,
     TResult Function(UserDisabled value)? userDisabled,
     TResult Function(NetworkRequestFailed value)? networkRequestFailed,
+    TResult Function(EmailNotVerified value)? emailNotVerified,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -177,6 +183,7 @@ class _$EntryNotFoundImpl implements EntryNotFound {
     required TResult Function() invalidCredentials,
     required TResult Function() userDisabled,
     required TResult Function() networkRequestFailed,
+    required TResult Function() emailNotVerified,
   }) {
     return entryNotFound();
   }
@@ -195,6 +202,7 @@ class _$EntryNotFoundImpl implements EntryNotFound {
     TResult? Function()? invalidCredentials,
     TResult? Function()? userDisabled,
     TResult? Function()? networkRequestFailed,
+    TResult? Function()? emailNotVerified,
   }) {
     return entryNotFound?.call();
   }
@@ -213,6 +221,7 @@ class _$EntryNotFoundImpl implements EntryNotFound {
     TResult Function()? invalidCredentials,
     TResult Function()? userDisabled,
     TResult Function()? networkRequestFailed,
+    TResult Function()? emailNotVerified,
     required TResult orElse(),
   }) {
     if (entryNotFound != null) {
@@ -235,6 +244,7 @@ class _$EntryNotFoundImpl implements EntryNotFound {
     required TResult Function(InvalidCredentials value) invalidCredentials,
     required TResult Function(UserDisabled value) userDisabled,
     required TResult Function(NetworkRequestFailed value) networkRequestFailed,
+    required TResult Function(EmailNotVerified value) emailNotVerified,
   }) {
     return entryNotFound(this);
   }
@@ -253,6 +263,7 @@ class _$EntryNotFoundImpl implements EntryNotFound {
     TResult? Function(InvalidCredentials value)? invalidCredentials,
     TResult? Function(UserDisabled value)? userDisabled,
     TResult? Function(NetworkRequestFailed value)? networkRequestFailed,
+    TResult? Function(EmailNotVerified value)? emailNotVerified,
   }) {
     return entryNotFound?.call(this);
   }
@@ -271,6 +282,7 @@ class _$EntryNotFoundImpl implements EntryNotFound {
     TResult Function(InvalidCredentials value)? invalidCredentials,
     TResult Function(UserDisabled value)? userDisabled,
     TResult Function(NetworkRequestFailed value)? networkRequestFailed,
+    TResult Function(EmailNotVerified value)? emailNotVerified,
     required TResult orElse(),
   }) {
     if (entryNotFound != null) {
@@ -333,6 +345,7 @@ class _$TimeRangesOverlapImpl implements TimeRangesOverlap {
     required TResult Function() invalidCredentials,
     required TResult Function() userDisabled,
     required TResult Function() networkRequestFailed,
+    required TResult Function() emailNotVerified,
   }) {
     return timeRangesOverlap();
   }
@@ -351,6 +364,7 @@ class _$TimeRangesOverlapImpl implements TimeRangesOverlap {
     TResult? Function()? invalidCredentials,
     TResult? Function()? userDisabled,
     TResult? Function()? networkRequestFailed,
+    TResult? Function()? emailNotVerified,
   }) {
     return timeRangesOverlap?.call();
   }
@@ -369,6 +383,7 @@ class _$TimeRangesOverlapImpl implements TimeRangesOverlap {
     TResult Function()? invalidCredentials,
     TResult Function()? userDisabled,
     TResult Function()? networkRequestFailed,
+    TResult Function()? emailNotVerified,
     required TResult orElse(),
   }) {
     if (timeRangesOverlap != null) {
@@ -391,6 +406,7 @@ class _$TimeRangesOverlapImpl implements TimeRangesOverlap {
     required TResult Function(InvalidCredentials value) invalidCredentials,
     required TResult Function(UserDisabled value) userDisabled,
     required TResult Function(NetworkRequestFailed value) networkRequestFailed,
+    required TResult Function(EmailNotVerified value) emailNotVerified,
   }) {
     return timeRangesOverlap(this);
   }
@@ -409,6 +425,7 @@ class _$TimeRangesOverlapImpl implements TimeRangesOverlap {
     TResult? Function(InvalidCredentials value)? invalidCredentials,
     TResult? Function(UserDisabled value)? userDisabled,
     TResult? Function(NetworkRequestFailed value)? networkRequestFailed,
+    TResult? Function(EmailNotVerified value)? emailNotVerified,
   }) {
     return timeRangesOverlap?.call(this);
   }
@@ -427,6 +444,7 @@ class _$TimeRangesOverlapImpl implements TimeRangesOverlap {
     TResult Function(InvalidCredentials value)? invalidCredentials,
     TResult Function(UserDisabled value)? userDisabled,
     TResult Function(NetworkRequestFailed value)? networkRequestFailed,
+    TResult Function(EmailNotVerified value)? emailNotVerified,
     required TResult orElse(),
   }) {
     if (timeRangesOverlap != null) {
@@ -489,6 +507,7 @@ class _$ProjectNotFoundImpl implements ProjectNotFound {
     required TResult Function() invalidCredentials,
     required TResult Function() userDisabled,
     required TResult Function() networkRequestFailed,
+    required TResult Function() emailNotVerified,
   }) {
     return projectNotFound();
   }
@@ -507,6 +526,7 @@ class _$ProjectNotFoundImpl implements ProjectNotFound {
     TResult? Function()? invalidCredentials,
     TResult? Function()? userDisabled,
     TResult? Function()? networkRequestFailed,
+    TResult? Function()? emailNotVerified,
   }) {
     return projectNotFound?.call();
   }
@@ -525,6 +545,7 @@ class _$ProjectNotFoundImpl implements ProjectNotFound {
     TResult Function()? invalidCredentials,
     TResult Function()? userDisabled,
     TResult Function()? networkRequestFailed,
+    TResult Function()? emailNotVerified,
     required TResult orElse(),
   }) {
     if (projectNotFound != null) {
@@ -547,6 +568,7 @@ class _$ProjectNotFoundImpl implements ProjectNotFound {
     required TResult Function(InvalidCredentials value) invalidCredentials,
     required TResult Function(UserDisabled value) userDisabled,
     required TResult Function(NetworkRequestFailed value) networkRequestFailed,
+    required TResult Function(EmailNotVerified value) emailNotVerified,
   }) {
     return projectNotFound(this);
   }
@@ -565,6 +587,7 @@ class _$ProjectNotFoundImpl implements ProjectNotFound {
     TResult? Function(InvalidCredentials value)? invalidCredentials,
     TResult? Function(UserDisabled value)? userDisabled,
     TResult? Function(NetworkRequestFailed value)? networkRequestFailed,
+    TResult? Function(EmailNotVerified value)? emailNotVerified,
   }) {
     return projectNotFound?.call(this);
   }
@@ -583,6 +606,7 @@ class _$ProjectNotFoundImpl implements ProjectNotFound {
     TResult Function(InvalidCredentials value)? invalidCredentials,
     TResult Function(UserDisabled value)? userDisabled,
     TResult Function(NetworkRequestFailed value)? networkRequestFailed,
+    TResult Function(EmailNotVerified value)? emailNotVerified,
     required TResult orElse(),
   }) {
     if (projectNotFound != null) {
@@ -645,6 +669,7 @@ class _$GroupNotFoundImpl implements GroupNotFound {
     required TResult Function() invalidCredentials,
     required TResult Function() userDisabled,
     required TResult Function() networkRequestFailed,
+    required TResult Function() emailNotVerified,
   }) {
     return groupNotFound();
   }
@@ -663,6 +688,7 @@ class _$GroupNotFoundImpl implements GroupNotFound {
     TResult? Function()? invalidCredentials,
     TResult? Function()? userDisabled,
     TResult? Function()? networkRequestFailed,
+    TResult? Function()? emailNotVerified,
   }) {
     return groupNotFound?.call();
   }
@@ -681,6 +707,7 @@ class _$GroupNotFoundImpl implements GroupNotFound {
     TResult Function()? invalidCredentials,
     TResult Function()? userDisabled,
     TResult Function()? networkRequestFailed,
+    TResult Function()? emailNotVerified,
     required TResult orElse(),
   }) {
     if (groupNotFound != null) {
@@ -703,6 +730,7 @@ class _$GroupNotFoundImpl implements GroupNotFound {
     required TResult Function(InvalidCredentials value) invalidCredentials,
     required TResult Function(UserDisabled value) userDisabled,
     required TResult Function(NetworkRequestFailed value) networkRequestFailed,
+    required TResult Function(EmailNotVerified value) emailNotVerified,
   }) {
     return groupNotFound(this);
   }
@@ -721,6 +749,7 @@ class _$GroupNotFoundImpl implements GroupNotFound {
     TResult? Function(InvalidCredentials value)? invalidCredentials,
     TResult? Function(UserDisabled value)? userDisabled,
     TResult? Function(NetworkRequestFailed value)? networkRequestFailed,
+    TResult? Function(EmailNotVerified value)? emailNotVerified,
   }) {
     return groupNotFound?.call(this);
   }
@@ -739,6 +768,7 @@ class _$GroupNotFoundImpl implements GroupNotFound {
     TResult Function(InvalidCredentials value)? invalidCredentials,
     TResult Function(UserDisabled value)? userDisabled,
     TResult Function(NetworkRequestFailed value)? networkRequestFailed,
+    TResult Function(EmailNotVerified value)? emailNotVerified,
     required TResult orElse(),
   }) {
     if (groupNotFound != null) {
@@ -802,6 +832,7 @@ class _$MultipleTimerStartsImpl implements MultipleTimerStarts {
     required TResult Function() invalidCredentials,
     required TResult Function() userDisabled,
     required TResult Function() networkRequestFailed,
+    required TResult Function() emailNotVerified,
   }) {
     return multipleTimerStarts();
   }
@@ -820,6 +851,7 @@ class _$MultipleTimerStartsImpl implements MultipleTimerStarts {
     TResult? Function()? invalidCredentials,
     TResult? Function()? userDisabled,
     TResult? Function()? networkRequestFailed,
+    TResult? Function()? emailNotVerified,
   }) {
     return multipleTimerStarts?.call();
   }
@@ -838,6 +870,7 @@ class _$MultipleTimerStartsImpl implements MultipleTimerStarts {
     TResult Function()? invalidCredentials,
     TResult Function()? userDisabled,
     TResult Function()? networkRequestFailed,
+    TResult Function()? emailNotVerified,
     required TResult orElse(),
   }) {
     if (multipleTimerStarts != null) {
@@ -860,6 +893,7 @@ class _$MultipleTimerStartsImpl implements MultipleTimerStarts {
     required TResult Function(InvalidCredentials value) invalidCredentials,
     required TResult Function(UserDisabled value) userDisabled,
     required TResult Function(NetworkRequestFailed value) networkRequestFailed,
+    required TResult Function(EmailNotVerified value) emailNotVerified,
   }) {
     return multipleTimerStarts(this);
   }
@@ -878,6 +912,7 @@ class _$MultipleTimerStartsImpl implements MultipleTimerStarts {
     TResult? Function(InvalidCredentials value)? invalidCredentials,
     TResult? Function(UserDisabled value)? userDisabled,
     TResult? Function(NetworkRequestFailed value)? networkRequestFailed,
+    TResult? Function(EmailNotVerified value)? emailNotVerified,
   }) {
     return multipleTimerStarts?.call(this);
   }
@@ -896,6 +931,7 @@ class _$MultipleTimerStartsImpl implements MultipleTimerStarts {
     TResult Function(InvalidCredentials value)? invalidCredentials,
     TResult Function(UserDisabled value)? userDisabled,
     TResult Function(NetworkRequestFailed value)? networkRequestFailed,
+    TResult Function(EmailNotVerified value)? emailNotVerified,
     required TResult orElse(),
   }) {
     if (multipleTimerStarts != null) {
@@ -958,6 +994,7 @@ class _$TimerDataNotFoundImpl implements TimerDataNotFound {
     required TResult Function() invalidCredentials,
     required TResult Function() userDisabled,
     required TResult Function() networkRequestFailed,
+    required TResult Function() emailNotVerified,
   }) {
     return timerDataNotFound();
   }
@@ -976,6 +1013,7 @@ class _$TimerDataNotFoundImpl implements TimerDataNotFound {
     TResult? Function()? invalidCredentials,
     TResult? Function()? userDisabled,
     TResult? Function()? networkRequestFailed,
+    TResult? Function()? emailNotVerified,
   }) {
     return timerDataNotFound?.call();
   }
@@ -994,6 +1032,7 @@ class _$TimerDataNotFoundImpl implements TimerDataNotFound {
     TResult Function()? invalidCredentials,
     TResult Function()? userDisabled,
     TResult Function()? networkRequestFailed,
+    TResult Function()? emailNotVerified,
     required TResult orElse(),
   }) {
     if (timerDataNotFound != null) {
@@ -1016,6 +1055,7 @@ class _$TimerDataNotFoundImpl implements TimerDataNotFound {
     required TResult Function(InvalidCredentials value) invalidCredentials,
     required TResult Function(UserDisabled value) userDisabled,
     required TResult Function(NetworkRequestFailed value) networkRequestFailed,
+    required TResult Function(EmailNotVerified value) emailNotVerified,
   }) {
     return timerDataNotFound(this);
   }
@@ -1034,6 +1074,7 @@ class _$TimerDataNotFoundImpl implements TimerDataNotFound {
     TResult? Function(InvalidCredentials value)? invalidCredentials,
     TResult? Function(UserDisabled value)? userDisabled,
     TResult? Function(NetworkRequestFailed value)? networkRequestFailed,
+    TResult? Function(EmailNotVerified value)? emailNotVerified,
   }) {
     return timerDataNotFound?.call(this);
   }
@@ -1052,6 +1093,7 @@ class _$TimerDataNotFoundImpl implements TimerDataNotFound {
     TResult Function(InvalidCredentials value)? invalidCredentials,
     TResult Function(UserDisabled value)? userDisabled,
     TResult Function(NetworkRequestFailed value)? networkRequestFailed,
+    TResult Function(EmailNotVerified value)? emailNotVerified,
     required TResult orElse(),
   }) {
     if (timerDataNotFound != null) {
@@ -1140,6 +1182,7 @@ class _$UnexpectedImpl implements Unexpected {
     required TResult Function() invalidCredentials,
     required TResult Function() userDisabled,
     required TResult Function() networkRequestFailed,
+    required TResult Function() emailNotVerified,
   }) {
     return unexpected(status);
   }
@@ -1158,6 +1201,7 @@ class _$UnexpectedImpl implements Unexpected {
     TResult? Function()? invalidCredentials,
     TResult? Function()? userDisabled,
     TResult? Function()? networkRequestFailed,
+    TResult? Function()? emailNotVerified,
   }) {
     return unexpected?.call(status);
   }
@@ -1176,6 +1220,7 @@ class _$UnexpectedImpl implements Unexpected {
     TResult Function()? invalidCredentials,
     TResult Function()? userDisabled,
     TResult Function()? networkRequestFailed,
+    TResult Function()? emailNotVerified,
     required TResult orElse(),
   }) {
     if (unexpected != null) {
@@ -1198,6 +1243,7 @@ class _$UnexpectedImpl implements Unexpected {
     required TResult Function(InvalidCredentials value) invalidCredentials,
     required TResult Function(UserDisabled value) userDisabled,
     required TResult Function(NetworkRequestFailed value) networkRequestFailed,
+    required TResult Function(EmailNotVerified value) emailNotVerified,
   }) {
     return unexpected(this);
   }
@@ -1216,6 +1262,7 @@ class _$UnexpectedImpl implements Unexpected {
     TResult? Function(InvalidCredentials value)? invalidCredentials,
     TResult? Function(UserDisabled value)? userDisabled,
     TResult? Function(NetworkRequestFailed value)? networkRequestFailed,
+    TResult? Function(EmailNotVerified value)? emailNotVerified,
   }) {
     return unexpected?.call(this);
   }
@@ -1234,6 +1281,7 @@ class _$UnexpectedImpl implements Unexpected {
     TResult Function(InvalidCredentials value)? invalidCredentials,
     TResult Function(UserDisabled value)? userDisabled,
     TResult Function(NetworkRequestFailed value)? networkRequestFailed,
+    TResult Function(EmailNotVerified value)? emailNotVerified,
     required TResult orElse(),
   }) {
     if (unexpected != null) {
@@ -1301,6 +1349,7 @@ class _$UserAlreadyExistsImpl implements UserAlreadyExists {
     required TResult Function() invalidCredentials,
     required TResult Function() userDisabled,
     required TResult Function() networkRequestFailed,
+    required TResult Function() emailNotVerified,
   }) {
     return userAlreadyExists();
   }
@@ -1319,6 +1368,7 @@ class _$UserAlreadyExistsImpl implements UserAlreadyExists {
     TResult? Function()? invalidCredentials,
     TResult? Function()? userDisabled,
     TResult? Function()? networkRequestFailed,
+    TResult? Function()? emailNotVerified,
   }) {
     return userAlreadyExists?.call();
   }
@@ -1337,6 +1387,7 @@ class _$UserAlreadyExistsImpl implements UserAlreadyExists {
     TResult Function()? invalidCredentials,
     TResult Function()? userDisabled,
     TResult Function()? networkRequestFailed,
+    TResult Function()? emailNotVerified,
     required TResult orElse(),
   }) {
     if (userAlreadyExists != null) {
@@ -1359,6 +1410,7 @@ class _$UserAlreadyExistsImpl implements UserAlreadyExists {
     required TResult Function(InvalidCredentials value) invalidCredentials,
     required TResult Function(UserDisabled value) userDisabled,
     required TResult Function(NetworkRequestFailed value) networkRequestFailed,
+    required TResult Function(EmailNotVerified value) emailNotVerified,
   }) {
     return userAlreadyExists(this);
   }
@@ -1377,6 +1429,7 @@ class _$UserAlreadyExistsImpl implements UserAlreadyExists {
     TResult? Function(InvalidCredentials value)? invalidCredentials,
     TResult? Function(UserDisabled value)? userDisabled,
     TResult? Function(NetworkRequestFailed value)? networkRequestFailed,
+    TResult? Function(EmailNotVerified value)? emailNotVerified,
   }) {
     return userAlreadyExists?.call(this);
   }
@@ -1395,6 +1448,7 @@ class _$UserAlreadyExistsImpl implements UserAlreadyExists {
     TResult Function(InvalidCredentials value)? invalidCredentials,
     TResult Function(UserDisabled value)? userDisabled,
     TResult Function(NetworkRequestFailed value)? networkRequestFailed,
+    TResult Function(EmailNotVerified value)? emailNotVerified,
     required TResult orElse(),
   }) {
     if (userAlreadyExists != null) {
@@ -1457,6 +1511,7 @@ class _$InvalidCredentialsImpl implements InvalidCredentials {
     required TResult Function() invalidCredentials,
     required TResult Function() userDisabled,
     required TResult Function() networkRequestFailed,
+    required TResult Function() emailNotVerified,
   }) {
     return invalidCredentials();
   }
@@ -1475,6 +1530,7 @@ class _$InvalidCredentialsImpl implements InvalidCredentials {
     TResult? Function()? invalidCredentials,
     TResult? Function()? userDisabled,
     TResult? Function()? networkRequestFailed,
+    TResult? Function()? emailNotVerified,
   }) {
     return invalidCredentials?.call();
   }
@@ -1493,6 +1549,7 @@ class _$InvalidCredentialsImpl implements InvalidCredentials {
     TResult Function()? invalidCredentials,
     TResult Function()? userDisabled,
     TResult Function()? networkRequestFailed,
+    TResult Function()? emailNotVerified,
     required TResult orElse(),
   }) {
     if (invalidCredentials != null) {
@@ -1515,6 +1572,7 @@ class _$InvalidCredentialsImpl implements InvalidCredentials {
     required TResult Function(InvalidCredentials value) invalidCredentials,
     required TResult Function(UserDisabled value) userDisabled,
     required TResult Function(NetworkRequestFailed value) networkRequestFailed,
+    required TResult Function(EmailNotVerified value) emailNotVerified,
   }) {
     return invalidCredentials(this);
   }
@@ -1533,6 +1591,7 @@ class _$InvalidCredentialsImpl implements InvalidCredentials {
     TResult? Function(InvalidCredentials value)? invalidCredentials,
     TResult? Function(UserDisabled value)? userDisabled,
     TResult? Function(NetworkRequestFailed value)? networkRequestFailed,
+    TResult? Function(EmailNotVerified value)? emailNotVerified,
   }) {
     return invalidCredentials?.call(this);
   }
@@ -1551,6 +1610,7 @@ class _$InvalidCredentialsImpl implements InvalidCredentials {
     TResult Function(InvalidCredentials value)? invalidCredentials,
     TResult Function(UserDisabled value)? userDisabled,
     TResult Function(NetworkRequestFailed value)? networkRequestFailed,
+    TResult Function(EmailNotVerified value)? emailNotVerified,
     required TResult orElse(),
   }) {
     if (invalidCredentials != null) {
@@ -1613,6 +1673,7 @@ class _$UserDisabledImpl implements UserDisabled {
     required TResult Function() invalidCredentials,
     required TResult Function() userDisabled,
     required TResult Function() networkRequestFailed,
+    required TResult Function() emailNotVerified,
   }) {
     return userDisabled();
   }
@@ -1631,6 +1692,7 @@ class _$UserDisabledImpl implements UserDisabled {
     TResult? Function()? invalidCredentials,
     TResult? Function()? userDisabled,
     TResult? Function()? networkRequestFailed,
+    TResult? Function()? emailNotVerified,
   }) {
     return userDisabled?.call();
   }
@@ -1649,6 +1711,7 @@ class _$UserDisabledImpl implements UserDisabled {
     TResult Function()? invalidCredentials,
     TResult Function()? userDisabled,
     TResult Function()? networkRequestFailed,
+    TResult Function()? emailNotVerified,
     required TResult orElse(),
   }) {
     if (userDisabled != null) {
@@ -1671,6 +1734,7 @@ class _$UserDisabledImpl implements UserDisabled {
     required TResult Function(InvalidCredentials value) invalidCredentials,
     required TResult Function(UserDisabled value) userDisabled,
     required TResult Function(NetworkRequestFailed value) networkRequestFailed,
+    required TResult Function(EmailNotVerified value) emailNotVerified,
   }) {
     return userDisabled(this);
   }
@@ -1689,6 +1753,7 @@ class _$UserDisabledImpl implements UserDisabled {
     TResult? Function(InvalidCredentials value)? invalidCredentials,
     TResult? Function(UserDisabled value)? userDisabled,
     TResult? Function(NetworkRequestFailed value)? networkRequestFailed,
+    TResult? Function(EmailNotVerified value)? emailNotVerified,
   }) {
     return userDisabled?.call(this);
   }
@@ -1707,6 +1772,7 @@ class _$UserDisabledImpl implements UserDisabled {
     TResult Function(InvalidCredentials value)? invalidCredentials,
     TResult Function(UserDisabled value)? userDisabled,
     TResult Function(NetworkRequestFailed value)? networkRequestFailed,
+    TResult Function(EmailNotVerified value)? emailNotVerified,
     required TResult orElse(),
   }) {
     if (userDisabled != null) {
@@ -1770,6 +1836,7 @@ class _$NetworkRequestFailedImpl implements NetworkRequestFailed {
     required TResult Function() invalidCredentials,
     required TResult Function() userDisabled,
     required TResult Function() networkRequestFailed,
+    required TResult Function() emailNotVerified,
   }) {
     return networkRequestFailed();
   }
@@ -1788,6 +1855,7 @@ class _$NetworkRequestFailedImpl implements NetworkRequestFailed {
     TResult? Function()? invalidCredentials,
     TResult? Function()? userDisabled,
     TResult? Function()? networkRequestFailed,
+    TResult? Function()? emailNotVerified,
   }) {
     return networkRequestFailed?.call();
   }
@@ -1806,6 +1874,7 @@ class _$NetworkRequestFailedImpl implements NetworkRequestFailed {
     TResult Function()? invalidCredentials,
     TResult Function()? userDisabled,
     TResult Function()? networkRequestFailed,
+    TResult Function()? emailNotVerified,
     required TResult orElse(),
   }) {
     if (networkRequestFailed != null) {
@@ -1828,6 +1897,7 @@ class _$NetworkRequestFailedImpl implements NetworkRequestFailed {
     required TResult Function(InvalidCredentials value) invalidCredentials,
     required TResult Function(UserDisabled value) userDisabled,
     required TResult Function(NetworkRequestFailed value) networkRequestFailed,
+    required TResult Function(EmailNotVerified value) emailNotVerified,
   }) {
     return networkRequestFailed(this);
   }
@@ -1846,6 +1916,7 @@ class _$NetworkRequestFailedImpl implements NetworkRequestFailed {
     TResult? Function(InvalidCredentials value)? invalidCredentials,
     TResult? Function(UserDisabled value)? userDisabled,
     TResult? Function(NetworkRequestFailed value)? networkRequestFailed,
+    TResult? Function(EmailNotVerified value)? emailNotVerified,
   }) {
     return networkRequestFailed?.call(this);
   }
@@ -1864,6 +1935,7 @@ class _$NetworkRequestFailedImpl implements NetworkRequestFailed {
     TResult Function(InvalidCredentials value)? invalidCredentials,
     TResult Function(UserDisabled value)? userDisabled,
     TResult Function(NetworkRequestFailed value)? networkRequestFailed,
+    TResult Function(EmailNotVerified value)? emailNotVerified,
     required TResult orElse(),
   }) {
     if (networkRequestFailed != null) {
@@ -1875,4 +1947,166 @@ class _$NetworkRequestFailedImpl implements NetworkRequestFailed {
 
 abstract class NetworkRequestFailed implements CustomAppException {
   const factory NetworkRequestFailed() = _$NetworkRequestFailedImpl;
+}
+
+/// @nodoc
+abstract class _$$EmailNotVerifiedImplCopyWith<$Res> {
+  factory _$$EmailNotVerifiedImplCopyWith(_$EmailNotVerifiedImpl value,
+          $Res Function(_$EmailNotVerifiedImpl) then) =
+      __$$EmailNotVerifiedImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$EmailNotVerifiedImplCopyWithImpl<$Res>
+    extends _$CustomAppExceptionCopyWithImpl<$Res, _$EmailNotVerifiedImpl>
+    implements _$$EmailNotVerifiedImplCopyWith<$Res> {
+  __$$EmailNotVerifiedImplCopyWithImpl(_$EmailNotVerifiedImpl _value,
+      $Res Function(_$EmailNotVerifiedImpl) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$EmailNotVerifiedImpl implements EmailNotVerified {
+  const _$EmailNotVerifiedImpl();
+
+  @override
+  String toString() {
+    return 'CustomAppException.emailNotVerified()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$EmailNotVerifiedImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() entryNotFound,
+    required TResult Function() timeRangesOverlap,
+    required TResult Function() projectNotFound,
+    required TResult Function() groupNotFound,
+    required TResult Function() multipleTimerStarts,
+    required TResult Function() timerDataNotFound,
+    required TResult Function(String status) unexpected,
+    required TResult Function() userAlreadyExists,
+    required TResult Function() invalidCredentials,
+    required TResult Function() userDisabled,
+    required TResult Function() networkRequestFailed,
+    required TResult Function() emailNotVerified,
+  }) {
+    return emailNotVerified();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? entryNotFound,
+    TResult? Function()? timeRangesOverlap,
+    TResult? Function()? projectNotFound,
+    TResult? Function()? groupNotFound,
+    TResult? Function()? multipleTimerStarts,
+    TResult? Function()? timerDataNotFound,
+    TResult? Function(String status)? unexpected,
+    TResult? Function()? userAlreadyExists,
+    TResult? Function()? invalidCredentials,
+    TResult? Function()? userDisabled,
+    TResult? Function()? networkRequestFailed,
+    TResult? Function()? emailNotVerified,
+  }) {
+    return emailNotVerified?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? entryNotFound,
+    TResult Function()? timeRangesOverlap,
+    TResult Function()? projectNotFound,
+    TResult Function()? groupNotFound,
+    TResult Function()? multipleTimerStarts,
+    TResult Function()? timerDataNotFound,
+    TResult Function(String status)? unexpected,
+    TResult Function()? userAlreadyExists,
+    TResult Function()? invalidCredentials,
+    TResult Function()? userDisabled,
+    TResult Function()? networkRequestFailed,
+    TResult Function()? emailNotVerified,
+    required TResult orElse(),
+  }) {
+    if (emailNotVerified != null) {
+      return emailNotVerified();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(EntryNotFound value) entryNotFound,
+    required TResult Function(TimeRangesOverlap value) timeRangesOverlap,
+    required TResult Function(ProjectNotFound value) projectNotFound,
+    required TResult Function(GroupNotFound value) groupNotFound,
+    required TResult Function(MultipleTimerStarts value) multipleTimerStarts,
+    required TResult Function(TimerDataNotFound value) timerDataNotFound,
+    required TResult Function(Unexpected value) unexpected,
+    required TResult Function(UserAlreadyExists value) userAlreadyExists,
+    required TResult Function(InvalidCredentials value) invalidCredentials,
+    required TResult Function(UserDisabled value) userDisabled,
+    required TResult Function(NetworkRequestFailed value) networkRequestFailed,
+    required TResult Function(EmailNotVerified value) emailNotVerified,
+  }) {
+    return emailNotVerified(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(EntryNotFound value)? entryNotFound,
+    TResult? Function(TimeRangesOverlap value)? timeRangesOverlap,
+    TResult? Function(ProjectNotFound value)? projectNotFound,
+    TResult? Function(GroupNotFound value)? groupNotFound,
+    TResult? Function(MultipleTimerStarts value)? multipleTimerStarts,
+    TResult? Function(TimerDataNotFound value)? timerDataNotFound,
+    TResult? Function(Unexpected value)? unexpected,
+    TResult? Function(UserAlreadyExists value)? userAlreadyExists,
+    TResult? Function(InvalidCredentials value)? invalidCredentials,
+    TResult? Function(UserDisabled value)? userDisabled,
+    TResult? Function(NetworkRequestFailed value)? networkRequestFailed,
+    TResult? Function(EmailNotVerified value)? emailNotVerified,
+  }) {
+    return emailNotVerified?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(EntryNotFound value)? entryNotFound,
+    TResult Function(TimeRangesOverlap value)? timeRangesOverlap,
+    TResult Function(ProjectNotFound value)? projectNotFound,
+    TResult Function(GroupNotFound value)? groupNotFound,
+    TResult Function(MultipleTimerStarts value)? multipleTimerStarts,
+    TResult Function(TimerDataNotFound value)? timerDataNotFound,
+    TResult Function(Unexpected value)? unexpected,
+    TResult Function(UserAlreadyExists value)? userAlreadyExists,
+    TResult Function(InvalidCredentials value)? invalidCredentials,
+    TResult Function(UserDisabled value)? userDisabled,
+    TResult Function(NetworkRequestFailed value)? networkRequestFailed,
+    TResult Function(EmailNotVerified value)? emailNotVerified,
+    required TResult orElse(),
+  }) {
+    if (emailNotVerified != null) {
+      return emailNotVerified(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class EmailNotVerified implements CustomAppException {
+  const factory EmailNotVerified() = _$EmailNotVerifiedImpl;
 }

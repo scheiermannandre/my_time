@@ -25,6 +25,10 @@ class FirebaseDataSource {
 
     if (!userCredentials.user!.emailVerified) {
       await signOut();
+      throw FirebaseAuthException(
+        code: 'email-not-verified',
+        message: 'Email not verified',
+      );
     }
   }
 

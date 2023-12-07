@@ -40,6 +40,9 @@ class CustomAppException with _$CustomAppException implements Exception {
   /// Thrown when there are some issues with the network.
   const factory CustomAppException.networkRequestFailed() =
       NetworkRequestFailed;
+
+  /// Thrown when the user's email is not verified.
+  const factory CustomAppException.emailNotVerified() = EmailNotVerified;
 }
 
 /// Exception data for the custom exception
@@ -104,6 +107,10 @@ extension CustomAppExceptioDetails on CustomAppException {
       networkRequestFailed: () => CustomAppExceptionData(
         code: '010',
         message: loc.networkRequestFailedException,
+      ),
+      emailNotVerified: () => CustomAppExceptionData(
+        code: '011',
+        message: loc.emailNotVerifiedException,
       ),
       unexpected: (status) => CustomAppExceptionData(
         code: '500',

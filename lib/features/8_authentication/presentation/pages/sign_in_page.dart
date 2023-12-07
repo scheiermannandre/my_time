@@ -85,86 +85,80 @@ class SignInPageState extends ConsumerState<SignInPage> {
             padding: const EdgeInsets.symmetric(horizontal: SpaceTokens.medium),
             child: Form(
               key: _formKey, // Associates the form key with the Form widget
-              child: CustomScrollView(
-                slivers: [
-                  SliverFillRemaining(
-                    child: SpacedColumn(
-                      spacing: SpaceTokens.medium,
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Expanded(child: SizedBox.shrink()),
-                        AuthenticationWidget(
-                          title: context.loc.authSignInPageHeader,
-                          emailTextController: emailTextController,
-                          onFocusLost: signIn.controller.setShouldValidateEmail,
-                          validator: signIn.controller.emailValidator,
-                          passwordController: passwordController,
-                          obscurePassword: state.obscurePassword,
-                          toggleObscurePassword:
-                              signIn.controller.toggleObscurePassword,
-                          onChanged: (value, isValid, strength) {},
-                          isSubmitEnabled: state.isSubmitEnabled,
-                          onSubmit: () async {
-                            await signIn.controller.signIn(
-                              email: emailTextController.text,
-                              password: passwordController.text,
-                              validate: _formKey.currentState!.validate,
-                            );
-                          },
-                          submitButtonLabel:
-                              context.loc.authSignInPageSubmitButtonLabel,
-                          isLoading: signIn.state.isLoading,
-                          forgotPasswordWidget: Text.rich(
-                            TextSpan(
-                              text: context
-                                  .loc.authSignInPageForgotPasswordButtonLabel,
-                              style:
-                                  TextStyleTokens.bodyMedium(null).underline(),
-                              recognizer: TapGestureRecognizer()
-                                ..onTap = () => _changePage(
-                                      context,
-                                      AppRoute.forgotPassword,
-                                      emailTextController.text,
-                                      passwordController.text,
-                                    ),
-                            ),
-                            textAlign: TextAlign.end,
-                          ),
+              child: SingleChildScrollView(
+                child: SpacedColumn(
+                  spacing: SpaceTokens.medium,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    AuthenticationWidget(
+                      title: context.loc.authSignInPageHeader,
+                      emailTextController: emailTextController,
+                      onFocusLost: signIn.controller.setShouldValidateEmail,
+                      validator: signIn.controller.emailValidator,
+                      passwordController: passwordController,
+                      obscurePassword: state.obscurePassword,
+                      toggleObscurePassword:
+                          signIn.controller.toggleObscurePassword,
+                      onChanged: (value, isValid, strength) {},
+                      isSubmitEnabled: state.isSubmitEnabled,
+                      onSubmit: () async {
+                        await signIn.controller.signIn(
+                          email: emailTextController.text,
+                          password: passwordController.text,
+                          validate: _formKey.currentState!.validate,
+                        );
+                      },
+                      submitButtonLabel:
+                          context.loc.authSignInPageSubmitButtonLabel,
+                      isLoading: signIn.state.isLoading,
+                      forgotPasswordWidget: Text.rich(
+                        TextSpan(
+                          text: context
+                              .loc.authSignInPageForgotPasswordButtonLabel,
+                          style: TextStyleTokens.bodyMedium(null).underline(),
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () => _changePage(
+                                  context,
+                                  AppRoute.forgotPassword,
+                                  emailTextController.text,
+                                  passwordController.text,
+                                ),
                         ),
-                        // Social login buttons
-                        // AuthSocialButtons(
-                        // ignore: lines_longer_than_80_chars,
-                        //   googleBtnText: context.loc.authSignInGoogleButtonLabel,
-                        //   googleBtnAction: () {},
-                        // ignore: lines_longer_than_80_chars,
-                        //   appleBtnText: context.loc.authSignInAppleButtonLabel,
-                        //   appleBtnAction: () {},
-                        // ),
-
-                        // Footer action for navigation and agreements
-                        Padding(
-                          padding:
-                              const EdgeInsets.only(top: SpaceTokens.large),
-                          child: AuthActionFooter(
-                            pageSwitchAction: () => _changePage(
-                              context,
-                              AppRoute.signUp,
-                              emailTextController.text,
-                              passwordController.text,
-                            ),
-                            pageSwitchQuestion:
-                                context.loc.authSignInFooterNoAccount,
-                            pageSwitchActionText:
-                                context.loc.authSignInFooterSignUp,
-                            agreementOnActionText:
-                                context.loc.authSignInFooterAgreementOn,
-                          ),
-                        ),
-                      ],
+                        textAlign: TextAlign.end,
+                      ),
                     ),
-                  ),
-                ],
+                    // Social login buttons
+                    // AuthSocialButtons(
+                    // ignore: lines_longer_than_80_chars,
+                    //   googleBtnText: context.loc.authSignInGoogleButtonLabel,
+                    //   googleBtnAction: () {},
+                    // ignore: lines_longer_than_80_chars,
+                    //   appleBtnText: context.loc.authSignInAppleButtonLabel,
+                    //   appleBtnAction: () {},
+                    // ),
+
+                    // Footer action for navigation and agreements
+                    Padding(
+                      padding:
+                          const EdgeInsets.only(top: SpaceTokens.veryLarge),
+                      child: AuthActionFooter(
+                        pageSwitchAction: () => _changePage(
+                          context,
+                          AppRoute.signUp,
+                          emailTextController.text,
+                          passwordController.text,
+                        ),
+                        pageSwitchQuestion:
+                            context.loc.authSignInFooterNoAccount,
+                        pageSwitchActionText:
+                            context.loc.authSignInFooterSignUp,
+                        agreementOnActionText:
+                            context.loc.authSignInFooterAgreementOn,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

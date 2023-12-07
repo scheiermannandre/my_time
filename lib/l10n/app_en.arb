@@ -12,6 +12,7 @@
     "invalidCredentialsException": "The entered credentials are invalid. Please check your input and try again.",
     "userDisabledException": "Your account has been disabled. Please contact support for further assistance.",
     "networkRequestFailedException": "Network error (such as timeout, interrupted connection or unreachable host) has occurred. Please try again later.",
+    "emailNotVerifiedException": "Your email address has not been verified yet. Please check your inbox for the verification email.",
     "unexpectedException": "Unexpected error: {message}",
     "@unexpectedException": {
             "placeholders": {
@@ -22,7 +23,8 @@
         },
 
     "@Auth":{},
-
+    
+    "emailOpenerPickAppTitle": "Choose an email app",
     "emailOpenerNoAppsTitle": "No email apps found",
     "emailOpenerNoAppsDescription": "Please install your provider's email app to proceed.\n\nAlternatively, you can open your email provider's website in the browser and click on the link we have sent to you.",
     "emailValidationEmptyEmail": "Email can't be empty",
@@ -57,7 +59,7 @@
     "authSnackbarActionLabel": "Open\nInbox",
 
     "authSignInPageHeader": "Welcome\nBack!",
-    "authSignInPageSubmitButtonLabel": "Sign me In",
+    "authSignInPageSubmitButtonLabel": "Sign me In!",
     "authSignInPageForgotPasswordButtonLabel": "Forgot your Password?",
 
     "authSignInGoogleButtonLabel": "Sign in with Google",
@@ -109,6 +111,7 @@
     "profileDeleteAccountDialogHeader": "Delete your account?",
     "profileDeleteAccountDialogContent": "All your data will be lost and can't be restored! Are you sure you want to delete your account?",
     "profileReauthenticateDialogHeader": "Please Reauthenticate",
+    "profileReauthenticateSubmitBtnLabel": "Reauthenticate me!",
 
 
     "@HomePage": {},

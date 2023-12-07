@@ -67,7 +67,7 @@ class ReauthenticationPage extends HookConsumerWidget {
                         Navigator.of(context).pop(true);
                       },
                       submitButtonLabel:
-                          context.loc.authSignInPageSubmitButtonLabel,
+                          context.loc.profileReauthenticateSubmitBtnLabel,
                       isLoading: signIn.state.isLoading,
                     ),
                   ],

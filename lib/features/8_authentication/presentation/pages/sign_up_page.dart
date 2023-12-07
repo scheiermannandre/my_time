@@ -143,97 +143,89 @@ class SignUpPageState extends ConsumerState<SignUpPage>
             padding: const EdgeInsets.symmetric(horizontal: SpaceTokens.medium),
             child: Form(
               key: _formKey, // Associates the form key with the Form widget
-              child: CustomScrollView(
-                slivers: [
-                  SliverFillRemaining(
-                    child: SpacedColumn(
-                      spacing: SpaceTokens.medium,
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Expanded(child: SizedBox()),
-
-                        // Displays the title of the authentication page
-                        Text(
-                          context.loc.authSignUpPageHeader,
-                          style: TextStyleTokens.getHeadline1(null),
-                        ),
-
-                        // Email text field for sign-up
-                        TextInputField(
-                          onFocusLost:
-                              signUpPage.controller.setShouldValidateEmail,
-                          validator: (value) => signUpPage.controller
-                              .emailValidator(context, value),
-                          controller: emailTextController,
-                          labelText: context.loc.authPagesEmailFieldLabel,
-                          hintText: context.loc.authPagesEmailFieldHint,
-                          textInputType: TextInputType.emailAddress,
-                        ),
-
-                        // Password text field for sign-up
-                        AuthCheckedPasswordField(
-                          passwordController: passwordController,
-                          obscurePassword: state.obscurePassword,
-                          toggleObscurePassword:
-                              signUpPage.controller.toggleObscurePassword,
-                          onChanged: (value, isValid, strength) {
-                            signUpPage.controller.setPasswordStrength(
-                              strength,
-                            );
-                          },
-                        ),
-
-                        // Button to sign up
-                        ActionButton.primary(
-                          onPressed: !state.isSubmitEnabled
-                              ? null
-                              : () async {
-                                  // Trigger the form submission
-                                  await _submit(
-                                    context,
-                                    signUpPage.controller,
-                                    emailTextController.text,
-                                    passwordController.text,
-                                  );
-                                },
-                          isLoading: signUpPage.state.isLoading,
-                          child:
-                              Text(context.loc.authSignInPageSubmitButtonLabel),
-                        ),
-
-                        // Social sign-up buttons
-                        // AuthSocialButtons(
-                        //   googleBtnText:
-                        //       context.loc.authSignUpPageGoogleButtonLabel,
-                        //   googleBtnAction: () async {},
-                        // ignore: lines_longer_than_80_chars
-                        //   appleBtnText: context.loc.authSignUpPageAppleButtonLabel,
-                        //   appleBtnAction: () {},
-                        // ),
-                        // Footer action for navigation and agreements
-                        Padding(
-                          padding:
-                              const EdgeInsets.only(top: SpaceTokens.large),
-                          child: AuthActionFooter(
-                            pageSwitchActionText:
-                                context.loc.authSignUpFooterSignIp,
-                            pageSwitchQuestion:
-                                context.loc.authSignUpFooterHaveAccount,
-                            pageSwitchAction: () => _changePage(
-                              context,
-                              AppRoute.signIn,
-                              emailTextController.text,
-                              passwordController.text,
-                            ),
-                            agreementOnActionText:
-                                context.loc.authSignUpFooterAgreementOn,
-                          ),
-                        ),
-                      ],
+              child: SingleChildScrollView(
+                child: SpacedColumn(
+                  spacing: SpaceTokens.medium,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    // Displays the title of the authentication page
+                    Text(
+                      context.loc.authSignUpPageHeader,
+                      style: TextStyleTokens.getHeadline1(null),
                     ),
-                  ),
-                ],
+
+                    // Email text field for sign-up
+                    TextInputField(
+                      onFocusLost: signUpPage.controller.setShouldValidateEmail,
+                      validator: (value) =>
+                          signUpPage.controller.emailValidator(context, value),
+                      controller: emailTextController,
+                      labelText: context.loc.authPagesEmailFieldLabel,
+                      hintText: context.loc.authPagesEmailFieldHint,
+                      textInputType: TextInputType.emailAddress,
+                    ),
+
+                    // Password text field for sign-up
+                    AuthCheckedPasswordField(
+                      passwordController: passwordController,
+                      obscurePassword: state.obscurePassword,
+                      toggleObscurePassword:
+                          signUpPage.controller.toggleObscurePassword,
+                      onChanged: (value, isValid, strength) {
+                        signUpPage.controller.setPasswordStrength(
+                          strength,
+                        );
+                      },
+                    ),
+
+                    // Button to sign up
+                    ActionButton.primary(
+                      onPressed: !state.isSubmitEnabled
+                          ? null
+                          : () async {
+                              // Trigger the form submission
+                              await _submit(
+                                context,
+                                signUpPage.controller,
+                                emailTextController.text,
+                                passwordController.text,
+                              );
+                            },
+                      isLoading: signUpPage.state.isLoading,
+                      child: Text(context.loc.authSignUpPageSubmitButtonLabel),
+                    ),
+
+                    // Social sign-up buttons
+                    // AuthSocialButtons(
+                    //   googleBtnText:
+                    //       context.loc.authSignUpPageGoogleButtonLabel,
+                    //   googleBtnAction: () async {},
+                    // ignore: lines_longer_than_80_chars
+                    //   appleBtnText: context.loc.authSignUpPageAppleButtonLabel,
+                    //   appleBtnAction: () {},
+                    // ),
+                    // Footer action for navigation and agreements
+                    Padding(
+                      padding:
+                          const EdgeInsets.only(top: SpaceTokens.veryLarge),
+                      child: AuthActionFooter(
+                        pageSwitchActionText:
+                            context.loc.authSignUpFooterSignIp,
+                        pageSwitchQuestion:
+                            context.loc.authSignUpFooterHaveAccount,
+                        pageSwitchAction: () => _changePage(
+                          context,
+                          AppRoute.signIn,
+                          emailTextController.text,
+                          passwordController.text,
+                        ),
+                        agreementOnActionText:
+                            context.loc.authSignUpFooterAgreementOn,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

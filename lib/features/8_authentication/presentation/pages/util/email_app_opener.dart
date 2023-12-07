@@ -67,7 +67,7 @@ class EmailAppsUI extends EmailApps {
       bottomSheetController: animationController,
       widget: LabeledListTiles(
         showIcons: false,
-        label: context.loc.pickGroup,
+        label: context.loc.emailOpenerPickAppTitle,
         items: emailApps.map((emailApp) => emailApp.name).toList(),
       ),
     );

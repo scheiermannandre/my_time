@@ -65,6 +65,8 @@ class AuthRepositoryImpl implements AuthRepository {
         throw const CustomAppException.userDisabled();
       } else if (e.code == 'network-request-failed') {
         throw const CustomAppException.networkRequestFailed();
+      } else if (e.code == 'email-not-verified') {
+        throw const CustomAppException.emailNotVerified();
       }
       throw CustomAppException.unexpected(e.message ?? '');
     } on Exception catch (e) {

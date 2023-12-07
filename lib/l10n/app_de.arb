@@ -12,6 +12,7 @@
     "invalidCredentialsException": "Die eingegebenen Anmeldedaten sind ungültig. Bitte überprüfe deine Eingaben und versuche es erneut",
     "userDisabledException": "Dein Konto wurde deaktiviert. Bitte kontaktiere den Support für weitere Unterstützung.",
     "networkRequestFailedException": "Ein Netzwerkfehler (wie Zeitüberschreitung, unterbrochene Verbindung oder nicht erreichbarer Host) ist aufgetreten. Bitte versuche es später erneut.",
+    "emailNotVerifiedException": "Deine E-Mail-Adresse wurde noch nicht verifiziert. Bitte überprüfe deinen Posteingang und klicke auf den Link, den wir dir geschickt haben.",
     "unexpectedException": "Unerwarteter Fehler: {message}",
     "@unexpectedException": {
             "placeholders": {
@@ -22,7 +23,8 @@
         },
 
     "@Auth":{},
-
+    
+    "emailOpenerPickAppTitle": "Wähle eine Email App",
     "emailOpenerNoAppsTitle": "Keine Email App gefunden",
     "emailOpenerNoAppsDescription": "Bitte installiere die E-Mail-App deines Anbieters, um fortzufahren.\n\nAlternativ kannst du die Website deines E-Mail-Anbieters im Browser öffnen und auf den Link klicken, den wir dir geschickt haben.",
     "emailValidationEmptyEmail": "Email darf nicht leer sein",
@@ -110,6 +112,7 @@
     "profileDeleteAccountDialogHeader": "Konto löschen?",
     "profileDeleteAccountDialogContent": "Dein Konto wird unwiderruflich gelöscht! Alle deine Daten werden gelöscht und können nicht wiederhergestellt werden!\nBist du dir sicher, dass du fortfahren möchtest?", 
     "profileReauthenticateDialogHeader": "Erneut Anmelden",
+    "profileReauthenticateSubmitBtnLabel": "Verifiziere mich!",
 
     "@HomePage": {},
 
