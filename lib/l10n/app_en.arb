@@ -99,6 +99,17 @@
     "authPasswordInstructionsTitle": "Password Policies",
     "authPasswordInstructionsHint": "Please choose a password that is at least classified as strong.",
 
+    "@Profile": {},
+
+    "profilePageTitle": "Profile",
+    "profileSingOutBtnLabel": "Sign me out",
+    "profileDeleteAccountBtnLabel": "Delete my account",
+    "profileChangePasswordBtnLabel": "Change my password",
+    "profilePasswordChangedSnackbarMessage": "Your password has been changed successfully!",
+    "profileDeleteAccountDialogHeader": "Delete your account?",
+    "profileDeleteAccountDialogContent": "All your data will be lost and can't be restored! Are you sure you want to delete your account?",
+    "profileReauthenticateDialogHeader": "Please Reauthenticate",
+
 
     "@HomePage": {},
 

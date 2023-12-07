@@ -36,6 +36,18 @@ abstract class AuthRepository {
     required String oobCode,
   });
 
+  /// Updates the password of the current user.
+  Future<void> updatePassword({required String newPassword});
+
+  /// Deletes the current user.
+  Future<void> deleteUser();
+
+  /// Reauthenticates the current user.
+  Future<void> reauthenticate({
+    required String email,
+    required String password,
+  });
+
   /// Returns a stream of [UserEntity] objects representing the current user,
   /// when changes on the AuthState occur.
   Stream<UserEntity?> get authStateChanges;

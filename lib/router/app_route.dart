@@ -15,6 +15,7 @@ import 'package:my_time/features/8_authentication/data/repositories/auth_reposit
 import 'package:my_time/features/8_authentication/presentation/pages/auth_actioncode_handler_page.dart';
 import 'package:my_time/features/8_authentication/presentation/pages/auth_reset_password_page.dart';
 import 'package:my_time/features/8_authentication/presentation/pages/forgot_password_page.dart';
+import 'package:my_time/features/8_authentication/presentation/pages/profile_page.dart';
 import 'package:my_time/features/8_authentication/presentation/pages/sign_in_page.dart';
 import 'package:my_time/features/8_authentication/presentation/pages/sign_up_page.dart';
 import 'package:my_time/router/go_router_refresh_stream.dart';
@@ -35,7 +36,8 @@ enum _AppRoute {
   authHandler,
   resetPassword,
   signUp,
-  forgotPassword
+  forgotPassword,
+  profile,
 }
 
 /// The routes of the app.
@@ -51,6 +53,9 @@ class AppRoute {
 
   /// The fast access to the forgotPassword route.
   static String get forgotPassword => _AppRoute.forgotPassword.name;
+
+  /// The fast access to the forgotPassword route.
+  static String get profile => _AppRoute.profile.name;
 
   /// The fast access to the authHandler route.
   static String get authHandler => _AppRoute.authHandler.name;
@@ -213,11 +218,26 @@ GoRouter goRouter(GoRouterRef ref) {
         path: '/',
         name: AppRoute.home,
         builder: (context, state) => const GroupsOverview(),
+        routes: [
+          GoRoute(
+            path: 'profile',
+            name: AppRoute.profile,
+            pageBuilder: (context, state) => MaterialPage<void>(
+              fullscreenDialog: true,
+              key: state.pageKey,
+              child: const ProfilePage(),
+            ),
+          ),
+        ],
       ),
       GoRoute(
         path: '/addProjectWizard',
         name: AppRoute.addProjectWizard,
-        builder: (context, state) => const AddProjectWizard(),
+        pageBuilder: (context, state) => MaterialPage<void>(
+          fullscreenDialog: true,
+          key: state.pageKey,
+          child: const AddProjectWizard(),
+        ),
       ),
 
       // GoRoute(

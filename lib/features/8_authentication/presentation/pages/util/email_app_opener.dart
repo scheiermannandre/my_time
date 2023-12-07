@@ -61,7 +61,7 @@ class EmailAppsUI extends EmailApps {
       return;
     }
 
-    final clickedIndex = await ModalBottomSheetUI.show<int>(
+    final clickedIndex = await ModalBottomSheetUI.showPage<int>(
       heightFactor: .5,
       context: context,
       bottomSheetController: animationController,

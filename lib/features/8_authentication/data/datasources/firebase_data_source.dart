@@ -79,6 +79,30 @@ class FirebaseDataSource {
     await _firebaseAuth.applyActionCode(oobCode);
   }
 
+  /// Reauthenticates the current user with the given [email] and [password].
+  Future<void> reauthenticate({
+    required String email,
+    required String password,
+  }) async {
+    final credential = EmailAuthProvider.credential(
+      email: email,
+      password: password,
+    );
+    await _firebaseAuth.currentUser!.reauthenticateWithCredential(
+      credential,
+    );
+  }
+
+  /// Deletes the current user.
+  Future<void> deleteUser() async {
+    await _firebaseAuth.currentUser!.delete();
+  }
+
+  /// Updates the password of the current user.
+  Future<void> updatePassword(String password) async {
+    await _firebaseAuth.currentUser!.updatePassword(password);
+  }
+
   /// Returns a stream of [UserModel] objects representing the current user,
   /// when changes on the AuthState occur.
   Stream<UserModel?> get authStateChanges {

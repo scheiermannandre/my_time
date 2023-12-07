@@ -7,11 +7,9 @@ import 'package:my_time/common/extensions/build_context_extension.dart';
 import 'package:my_time/config/theme/tokens/space_tokens.dart';
 import 'package:my_time/config/theme/tokens/text_style_tokens.dart';
 import 'package:my_time/core/util/extentions/widget_ref_extension.dart';
-import 'package:my_time/core/widgets/action_button.dart';
 import 'package:my_time/core/widgets/spaced_column.dart';
-import 'package:my_time/core/widgets/text_input_field.dart';
 import 'package:my_time/features/8_authentication/presentation/pages/widgets/auth_action_footer.dart';
-import 'package:my_time/features/8_authentication/presentation/pages/widgets/auth_social_buttons.dart';
+import 'package:my_time/features/8_authentication/presentation/pages/widgets/authentication_widget.dart';
 import 'package:my_time/features/8_authentication/presentation/state_management/sign_in_page_controller.dart';
 import 'package:my_time/router/app_route.dart';
 
@@ -75,10 +73,10 @@ class SignInPageState extends ConsumerState<SignInPage> {
 
     // Controllers for email and password text fields with initial values
     final emailTextController = useTextEditingController(
-      text: widget.email ?? 'test@test.com',
+      text: widget.email ?? '',
     );
     final passwordController =
-        useTextEditingController(text: widget.password ?? '123123');
+        useTextEditingController(text: widget.password ?? '');
 
     return Scaffold(
       body: SafeArea(
@@ -87,56 +85,37 @@ class SignInPageState extends ConsumerState<SignInPage> {
             padding: const EdgeInsets.symmetric(horizontal: SpaceTokens.medium),
             child: Form(
               key: _formKey, // Associates the form key with the Form widget
-              child: SingleChildScrollView(
-                child: SpacedColumn(
-                  spacing: SpaceTokens.medium,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    // Displays the title of the authentication page
-                    Text(
-                      context.loc.authSignInPageHeader,
-                      style: TextStyleTokens.getHeadline1(null),
-                    ),
-                    // Email text field for sign-in
-                    TextInputField(
-                      onFocusLost: signIn.controller.setShouldValidateEmail,
-                      validator: (value) =>
-                          signIn.controller.emailValidator(context, value),
-                      controller: emailTextController,
-                      // mightyThemeController: theme.controller,
-                      labelText: context.loc.authPagesEmailFieldLabel,
-                      hintText: context.loc.authPagesEmailFieldHint,
-                      textInputType: TextInputType.emailAddress,
-                    ),
-
-                    // Password text field for sign-in
-                    Column(
+              child: CustomScrollView(
+                slivers: [
+                  SliverFillRemaining(
+                    child: SpacedColumn(
+                      spacing: SpaceTokens.medium,
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        TextInputField(
-                          controller: passwordController,
-                          //mightyThemeController: theme.controller,
-                          labelText: context.loc.passwordFieldLabel,
-                          hintText: context.loc.signInPasswordFieldHint,
-                          textInputType: TextInputType.visiblePassword,
-                          obscureText: state.obscurePassword,
-                          suffixIcon: GestureDetector(
-                            onTap: signIn.controller.toggleObscurePassword,
-                            child: Icon(
-                              state.obscurePassword
-                                  ? Icons.visibility
-                                  : Icons.visibility_off,
-                              // color: theme.controller.secondaryTextColor,
-                            ),
-                          ),
-                          onChanged: (value, isValid) {},
-                        ),
-                        Padding(
-                          padding:
-                              const EdgeInsets.only(top: SpaceTokens.small),
-                          child: Text.rich(
+                        const Expanded(child: SizedBox.shrink()),
+                        AuthenticationWidget(
+                          title: context.loc.authSignInPageHeader,
+                          emailTextController: emailTextController,
+                          onFocusLost: signIn.controller.setShouldValidateEmail,
+                          validator: signIn.controller.emailValidator,
+                          passwordController: passwordController,
+                          obscurePassword: state.obscurePassword,
+                          toggleObscurePassword:
+                              signIn.controller.toggleObscurePassword,
+                          onChanged: (value, isValid, strength) {},
+                          isSubmitEnabled: state.isSubmitEnabled,
+                          onSubmit: () async {
+                            await signIn.controller.signIn(
+                              email: emailTextController.text,
+                              password: passwordController.text,
+                              validate: _formKey.currentState!.validate,
+                            );
+                          },
+                          submitButtonLabel:
+                              context.loc.authSignInPageSubmitButtonLabel,
+                          isLoading: signIn.state.isLoading,
+                          forgotPasswordWidget: Text.rich(
                             TextSpan(
                               text: context
                                   .loc.authSignInPageForgotPasswordButtonLabel,
@@ -153,44 +132,39 @@ class SignInPageState extends ConsumerState<SignInPage> {
                             textAlign: TextAlign.end,
                           ),
                         ),
+                        // Social login buttons
+                        // AuthSocialButtons(
+                        // ignore: lines_longer_than_80_chars,
+                        //   googleBtnText: context.loc.authSignInGoogleButtonLabel,
+                        //   googleBtnAction: () {},
+                        // ignore: lines_longer_than_80_chars,
+                        //   appleBtnText: context.loc.authSignInAppleButtonLabel,
+                        //   appleBtnAction: () {},
+                        // ),
+
+                        // Footer action for navigation and agreements
+                        Padding(
+                          padding:
+                              const EdgeInsets.only(top: SpaceTokens.large),
+                          child: AuthActionFooter(
+                            pageSwitchAction: () => _changePage(
+                              context,
+                              AppRoute.signUp,
+                              emailTextController.text,
+                              passwordController.text,
+                            ),
+                            pageSwitchQuestion:
+                                context.loc.authSignInFooterNoAccount,
+                            pageSwitchActionText:
+                                context.loc.authSignInFooterSignUp,
+                            agreementOnActionText:
+                                context.loc.authSignInFooterAgreementOn,
+                          ),
+                        ),
                       ],
                     ),
-                    ActionButton.primary(
-                      onPressed: !state.isSubmitEnabled
-                          ? null
-                          : () async {
-                              await signIn.controller.signIn(
-                                email: emailTextController.text,
-                                password: passwordController.text,
-                                validate: _formKey.currentState!.validate,
-                              );
-                            },
-                      isLoading: signIn.state.isLoading,
-                      child: Text(context.loc.authSignInPageSubmitButtonLabel),
-                    ),
-                    // Social login buttons
-                    AuthSocialButtons(
-                      googleBtnText: context.loc.authSignInGoogleButtonLabel,
-                      googleBtnAction: () {},
-                      appleBtnText: context.loc.authSignInAppleButtonLabel,
-                      appleBtnAction: () {},
-                    ),
-
-                    // Footer action for navigation and agreements
-                    AuthActionFooter(
-                      pageSwitchAction: () => _changePage(
-                        context,
-                        AppRoute.signUp,
-                        emailTextController.text,
-                        passwordController.text,
-                      ),
-                      pageSwitchQuestion: context.loc.authSignInFooterNoAccount,
-                      pageSwitchActionText: context.loc.authSignInFooterSignUp,
-                      agreementOnActionText:
-                          context.loc.authSignInFooterAgreementOn,
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           ),

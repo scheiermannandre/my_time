@@ -151,6 +151,57 @@ class AuthRepositoryImpl implements AuthRepository {
       throw CustomAppException.unexpected(e.toString());
     }
   }
+
+  @override
+  Future<void> reauthenticate({
+    required String email,
+    required String password,
+  }) async {
+    try {
+      await ref
+          .read(firebaseDataSourceProvider)
+          .reauthenticate(email: email, password: password);
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found' ||
+          e.code == 'wrong-password' ||
+          e.code == 'INVALID_LOGIN_CREDENTIALS') {
+        throw const CustomAppException.invalidCredentials();
+      } else if (e.code == 'user-disabled') {
+        throw const CustomAppException.userDisabled();
+      } else if (e.code == 'network-request-failed') {
+        throw const CustomAppException.networkRequestFailed();
+      }
+      throw CustomAppException.unexpected(e.message ?? '');
+    } on Exception catch (e) {
+      throw CustomAppException.unexpected(e.toString());
+    }
+  }
+
+  @override
+  Future<void> updatePassword({required String newPassword}) async {
+    try {
+      await ref.read(firebaseDataSourceProvider).updatePassword(newPassword);
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'network-request-failed') {
+        throw const CustomAppException.networkRequestFailed();
+      }
+    } on Exception catch (e) {
+      throw CustomAppException.unexpected(e.toString());
+    }
+  }
+
+  @override
+  Future<void> deleteUser() async {
+    try {
+      await ref.read(firebaseDataSourceProvider).deleteUser();
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'network-request-failed') {
+        throw const CustomAppException.networkRequestFailed();
+      }
+    } on Exception catch (e) {
+      throw CustomAppException.unexpected(e.toString());
+    }
+  }
 }
 
 /// Riverpod provider for [AuthRepositoryImpl].

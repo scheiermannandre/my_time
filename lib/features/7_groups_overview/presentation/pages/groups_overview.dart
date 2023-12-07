@@ -20,7 +20,6 @@ import 'package:my_time/core/widgets/text_input_field.dart';
 import 'package:my_time/features/7_groups_overview/data/repositories/group_repository_impl.dart';
 import 'package:my_time/features/7_groups_overview/domain/entities/group_entity.dart';
 import 'package:my_time/features/7_groups_overview/presentation/state_management/groups_overview_controller.dart';
-import 'package:my_time/features/8_authentication/data/repositories/auth_repository_impl.dart';
 import 'package:my_time/router/app_route.dart';
 
 /// GroupsOverviewInheritedWidget.
@@ -86,11 +85,14 @@ class GroupsOverview extends HookConsumerWidget {
         appBar: AppBar(
           title: Text(context.loc.groups),
           actions: [
-            IconButton(
-              onPressed: () {
-                ref.read(authRepositoryProvider).signOut();
-              },
-              icon: const Icon(Icons.logout),
+            Padding(
+              padding: const EdgeInsets.only(right: SpaceTokens.verySmall),
+              child: ActionButton.icon(
+                child: const Icon(Icons.account_circle_outlined),
+                onPressed: () {
+                  context.pushNamed(AppRoute.profile);
+                },
+              ),
             ),
           ],
         ),
@@ -312,7 +314,7 @@ class _LabeledIconButtons extends HookWidget {
     AnimationController animationController,
     String groupName,
   ) async {
-    final shouldDelete = await ModalBottomSheetUI.show<bool>(
+    final shouldDelete = await ModalBottomSheetUI.showPage<bool>(
       context: context,
       bottomSheetController: animationController,
       widget: Padding(
@@ -362,7 +364,7 @@ class _LabeledIconButtons extends HookWidget {
     BuildContext context,
     AnimationController animationController,
   ) async {
-    final clickedIndex = await ModalBottomSheetUI.show<int>(
+    final clickedIndex = await ModalBottomSheetUI.showPage<int>(
       heightFactor: .5,
       context: context,
       bottomSheetController: animationController,

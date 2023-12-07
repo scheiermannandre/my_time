@@ -100,6 +100,16 @@
     "authPasswordInstructionsTitle": "Passwortrichtlinien",
     "authPasswordInstructionsHint": "Bitte wähle ein Passwort, das mindestens als stark eingestuft wird.",
 
+    "@Profile": {},
+
+    "profilePageTitle": "Profil",
+    "profileSingOutBtnLabel": "Abmelden",
+    "profileDeleteAccountBtnLabel": "Lösche mein Konto",
+    "profileChangePasswordBtnLabel": "Ändere mein Passwort",
+    "profilePasswordChangedSnackbarMessage": "Wir haben dein Passwort erfolgreich geändert!",
+    "profileDeleteAccountDialogHeader": "Konto löschen?",
+    "profileDeleteAccountDialogContent": "Dein Konto wird unwiderruflich gelöscht! Alle deine Daten werden gelöscht und können nicht wiederhergestellt werden!\nBist du dir sicher, dass du fortfahren möchtest?", 
+    "profileReauthenticateDialogHeader": "Erneut Anmelden",
 
     "@HomePage": {},
 

@@ -75,7 +75,7 @@ class ActionButton extends StatelessWidget {
   /// Constructs an icon [ActionButton] with loading capability.
   factory ActionButton.icon({
     required Widget child,
-    required Future<void> Function()? onPressed,
+    required void Function()? onPressed,
     bool isLoading = false,
     Key? key,
   }) {
