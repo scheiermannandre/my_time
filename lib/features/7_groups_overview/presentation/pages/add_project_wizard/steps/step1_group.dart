@@ -67,8 +67,7 @@ class _GroupSelectionStepState extends ConsumerState<_GroupSelectionStep> {
 
   @override
   Widget build(BuildContext context) {
-    final groups = ref.watch(groupsStreamProvider);
-
+    final groups = ref.watch(groupsFutureProvider);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: SpaceTokens.medium),
       child: AsyncValueWidget(

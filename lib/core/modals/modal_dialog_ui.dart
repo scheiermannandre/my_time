@@ -118,6 +118,8 @@ class _ModalDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
+      insetPadding:
+          const EdgeInsets.symmetric(horizontal: SpaceTokens.veryLarge),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(
           SpaceTokens.mediumSmall,
@@ -135,7 +137,10 @@ class _ModalDialog extends StatelessWidget {
       actionsOverflowDirection: VerticalDirection.down,
       actionsOverflowAlignment: OverflowBarAlignment.center,
       title: Text(title),
-      content: content,
+      content: SizedBox(
+        width: MediaQuery.of(context).size.width,
+        child: content,
+      ),
       actions: actions,
     );
   }

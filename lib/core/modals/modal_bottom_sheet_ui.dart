@@ -53,6 +53,31 @@ class ModalBottomSheetUI {
       },
     );
   }
+
+  /// Shows a bottom sheet with widgets that sizes it self depending
+  /// on the height of the content.
+  static Future<T?> showDynamic<T>({
+    required BuildContext context,
+    required Widget widget,
+    AnimationController? bottomSheetController,
+    VoidCallback? whenComplete,
+    double? heightFactor,
+  }) async {
+    return showModalBottomSheet<T>(
+      transitionAnimationController: bottomSheetController,
+      isScrollControlled: true,
+      useSafeArea: true,
+      context: context,
+      builder: (context) => _ModalBottomSheet._dynamic(
+        heightFactor: heightFactor,
+        child: widget,
+      ),
+    ).whenComplete(
+      () {
+        whenComplete?.call();
+      },
+    );
+  }
 }
 
 class _ModalBottomSheet extends StatelessWidget {
@@ -66,8 +91,10 @@ class _ModalBottomSheet extends StatelessWidget {
     required BuildContext context,
     required String title,
     required String message,
+    double? heightFactor,
   }) {
     return _ModalBottomSheet._dynamic(
+      heightFactor: heightFactor,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: SpaceTokens.medium),
         child: SpacedColumn(
@@ -115,9 +142,13 @@ class _ModalBottomSheet extends StatelessWidget {
       ),
     );
   }
-  factory _ModalBottomSheet._dynamic({required Widget child}) {
+  factory _ModalBottomSheet._dynamic({
+    required Widget child,
+    double? heightFactor,
+  }) {
     return _ModalBottomSheet(
       isFullPage: false,
+      heightFactor: heightFactor,
       child: child,
     );
   }

@@ -16,7 +16,8 @@ class GroupModel {
     //required this.id,
     required this.name,
     required this.projects,
-  }) : id = const uuid.Uuid().v1();
+  })  : id = const uuid.Uuid().v1(),
+        createdAt = DateTime.now();
 
   /// Internal constructor for creating a `GroupModel` instance with
   /// specified `id`, `name`, and `projects`.
@@ -24,6 +25,7 @@ class GroupModel {
     required this.id,
     required this.name,
     required this.projects,
+    required this.createdAt,
   });
 
   /// Factory method to create a `GroupModel` instance
@@ -32,8 +34,9 @@ class GroupModel {
     return GroupModel._internal(
       id: map['id'] as String,
       name: map['name'] as String,
+      createdAt: DateTime.parse(map['createdAt'] as String),
       projects: List<ProjectModel>.from(
-        (map['projects'] as List<int>).map<ProjectModel>(
+        (map['projects'] as List<dynamic>).map<ProjectModel>(
           (x) => ProjectModel.fromMap(x as Map<String, dynamic>),
         ),
       ),
@@ -54,17 +57,23 @@ class GroupModel {
   /// with this group.
   final List<ProjectModel> projects;
 
+  /// The time at which the group was created so that groups are displayed
+  /// in the order they were created.
+  final DateTime createdAt;
+
   /// Returns a new `GroupModel` instance with updated values
   /// for `id`, `name`, or `projects`.
   GroupModel copyWith({
     String? id,
     String? name,
     List<ProjectModel>? projects,
+    DateTime? createdAt,
   }) {
     return GroupModel._internal(
       id: id ?? this.id,
       name: name ?? this.name,
       projects: projects ?? this.projects,
+      createdAt: createdAt ?? this.createdAt,
     );
   }
 
@@ -83,6 +92,7 @@ class GroupModel {
     return <String, dynamic>{
       'id': id,
       'name': name,
+      'createdAt': createdAt.toIso8601String(),
       'projects': projects.map((x) => x.toMap()).toList(),
     };
   }

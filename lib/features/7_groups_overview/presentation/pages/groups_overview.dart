@@ -80,7 +80,7 @@ class GroupsOverview extends HookConsumerWidget {
       groupsOverviewController: page.controller,
       state: page.state,
       child: PersistentSheetScaffold(
-        minChildSize: .1,
+        minChildSize: .2,
         maxChildSize: .9,
         appBar: AppBar(
           title: Text(context.loc.groups),
@@ -314,48 +314,11 @@ class _LabeledIconButtons extends HookWidget {
     AnimationController animationController,
     String groupName,
   ) async {
-    final shouldDelete = await ModalBottomSheetUI.showPage<bool>(
+    final shouldDelete = await ModalBottomSheetUI.showConfirmationSheet(
       context: context,
       bottomSheetController: animationController,
-      widget: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: SpaceTokens.medium),
-        child: SpacedColumn(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          spacing: SpaceTokens.medium,
-          children: [
-            Text(
-              context.loc.deleteGroupTitle(groupName),
-              textAlign: TextAlign.center,
-            ),
-            Text(
-              context.loc.deleteGroupMessage,
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(
-              height: SpaceTokens.veryLarge,
-            ),
-            ActionButton.text(
-              onPressed: () async {
-                Navigator.of(context).pop(false);
-              },
-              child: Text(
-                context.loc.deleteGroupCancelBtnLabel,
-              ),
-            ),
-            ActionButton.primary(
-              onPressed: () async {
-                Navigator.of(context).pop(true);
-              },
-              child: Text(
-                context.loc.deleteGroupConfirmBtnLabel,
-              ),
-            ),
-            const SizedBox(
-              height: SpaceTokens.veryGigantic,
-            ),
-          ],
-        ),
-      ),
+      title: context.loc.deleteGroupTitle(groupName),
+      message: context.loc.deleteGroupMessage,
     );
     return shouldDelete;
   }
@@ -364,8 +327,7 @@ class _LabeledIconButtons extends HookWidget {
     BuildContext context,
     AnimationController animationController,
   ) async {
-    final clickedIndex = await ModalBottomSheetUI.showPage<int>(
-      heightFactor: .5,
+    final clickedIndex = await ModalBottomSheetUI.showDynamic<int>(
       context: context,
       bottomSheetController: animationController,
       widget: LabeledListTiles(

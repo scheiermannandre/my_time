@@ -11,7 +11,7 @@ part 'local_data_source.g.dart';
 /// groups and projects.
 abstract class LocalDataSource {
   /// Observes changes to the list of groups.
-  Stream<List<GroupModel>> watchGroups();
+  Stream<List<GroupModel>> watchGroups(String uid);
 
   /// Deletes a group identified by its [groupId].
   Future<void> deleteGroup(String groupId);
@@ -55,7 +55,7 @@ class LocalDataSourceImpl implements LocalDataSource {
   List<GroupModel> _groups = [];
 
   @override
-  Stream<List<GroupModel>> watchGroups() {
+  Stream<List<GroupModel>> watchGroups(String uid) {
     return _groupsController.stream;
   }
 
