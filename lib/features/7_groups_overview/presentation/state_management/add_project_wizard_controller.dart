@@ -1,19 +1,13 @@
-import 'package:my_time/features/7_groups_overview/domain/entities/enums/payment_status.dart';
-import 'package:my_time/features/7_groups_overview/domain/entities/enums/wokrplace.dart';
-import 'package:my_time/features/7_groups_overview/domain/entities/group_entity.dart';
 import 'package:my_time/features/7_groups_overview/domain/entities/project_entity.dart';
-import 'package:my_time/features/7_groups_overview/domain/entities/project_money_management_entity.dart';
-import 'package:my_time/features/7_groups_overview/domain/entities/project_time_management_entity.dart';
-import 'package:my_time/features/7_groups_overview/domain/entities/vacation_entity.dart';
 import 'package:my_time/features/7_groups_overview/domain/usecase_services/project_service.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-part 'review_step_controller.g.dart';
+part 'add_project_wizard_controller.g.dart';
 
 @riverpod
 
 /// Controller for managing the review step state and actions.
-class ReviewStepController extends _$ReviewStepController {
+class AddProjectWizardController extends _$AddProjectWizardController {
   /// Override the build method to handle the widget's build lifecycle.
   @override
   FutureOr<void> build() {}
@@ -41,20 +35,11 @@ class ReviewStepController extends _$ReviewStepController {
     state = const AsyncLoading();
 
     // Create a ProjectWithSettingsEntity using the provided projectMap.
-    final data = ProjectWithSettingsEntity(
-      groupId: (projectMap[0] as GroupEntity).id,
-      name: projectMap[1] as String,
-      sickDaysPayment: projectMap[2] as PaymentStatus?,
-      publicHolidaysPayment: projectMap[3] as PaymentStatus?,
-      vacationInfo: projectMap[4] as VacationEntity?,
-      timeManagement: projectMap[5] as ProjectTimeManagementEntity?,
-      moneyManagement: projectMap[6] as ProjectMoneyManagementEntity?,
-      workplace: projectMap[7] as Workplace?,
-    );
-
+    final data = ProjectWithSettingsEntity.fromAddProjectWizard(projectMap);
+    final projectService = ref.read(projectServiceProvider);
     // Use AsyncValue.guard to handle errors during the operation.
     state = await AsyncValue.guard(
-      () => ref.read(projectServiceProvider).addProject(data),
+      () => projectService.addProject(data.groupId, data.id, data.toMap()),
     );
 
     // Return a boolean indicating the success of the project addition.

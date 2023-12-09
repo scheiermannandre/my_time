@@ -1,8 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:my_time/features/7_groups_overview/data/datasources/firebase_data_source.dart';
-import 'package:my_time/features/7_groups_overview/data/datasources/local_data_source.dart';
+import 'package:my_time/features/7_groups_overview/data/datasources/firestore_groups_data_source.dart';
 import 'package:my_time/features/7_groups_overview/data/models/group_model.dart';
-import 'package:my_time/features/7_groups_overview/data/models/project_with_settings_model.dart';
 import 'package:my_time/features/7_groups_overview/domain/entities/group_entity.dart';
 import 'package:my_time/features/7_groups_overview/domain/entities/project_entity.dart';
 import 'package:my_time/features/7_groups_overview/domain/repositories/group_repository.dart';
@@ -33,14 +31,6 @@ class GroupRepositoryImpl extends GroupRepository {
     return ref
         .read(groupFirestoreDataSourceProvider)
         .createGroup(uid, GroupModel(name: name, projects: const []));
-  }
-
-  /// Adds a new project with settings using the provided [project].
-  @override
-  Future<void> addProject(ProjectWithSettingsEntity project) async {
-    return ref
-        .read(groupLocalDataSourceProvider)
-        .addProject(ProjectWithSettingsModel.fromEntity(project));
   }
 
   @override

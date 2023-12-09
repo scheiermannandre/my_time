@@ -36,9 +36,9 @@ class GroupModel {
       name: map['name'] as String,
       createdAt: DateTime.parse(map['createdAt'] as String),
       projects: List<ProjectModel>.from(
-        (map['projects'] as List<dynamic>).map<ProjectModel>(
-          (x) => ProjectModel.fromMap(x as Map<String, dynamic>),
-        ),
+        (map['projects'] as Map<String, dynamic>).values.map<ProjectModel>(
+              (x) => ProjectModel.fromMap(x as Map<String, dynamic>),
+            ),
       ),
     );
   }
@@ -93,7 +93,10 @@ class GroupModel {
       'id': id,
       'name': name,
       'createdAt': createdAt.toIso8601String(),
-      'projects': projects.map((x) => x.toMap()).toList(),
+      'projects': projects.fold(<String, dynamic>{}, (projects, project) {
+        projects[project.id] = project.toMap();
+        return projects;
+      }),
     };
   }
 

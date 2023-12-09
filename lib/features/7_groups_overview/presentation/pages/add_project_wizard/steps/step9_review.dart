@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_time/common/extensions/build_context_extension.dart';
 import 'package:my_time/config/theme/tokens/space_tokens.dart';
 import 'package:my_time/config/theme/tokens/text_style_tokens.dart';
-import 'package:my_time/core/util/extentions/widget_ref_extension.dart';
 import 'package:my_time/core/widgets/spaced_column.dart';
 import 'package:my_time/core/widgets/wizard/wizard_review_step/wizard_review_step.dart';
 import 'package:my_time/core/widgets/wizard/wizard_review_step/wizard_review_step_event_listener.dart';
@@ -18,7 +16,6 @@ import 'package:my_time/features/7_groups_overview/domain/entities/group_entity.
 import 'package:my_time/features/7_groups_overview/domain/entities/project_money_management_entity.dart';
 import 'package:my_time/features/7_groups_overview/domain/entities/project_time_management_entity.dart';
 import 'package:my_time/features/7_groups_overview/domain/entities/vacation_entity.dart';
-import 'package:my_time/features/7_groups_overview/presentation/state_management/review_step_controller.dart';
 
 /// Review Step in the add project wizard.
 class ReviewStep extends ConsumerWidget {
@@ -27,22 +24,9 @@ class ReviewStep extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final reviewStep = ref.watchAndListenStateProviderError(
-      context,
-      reviewStepControllerProvider,
-      reviewStepControllerProvider.notifier,
-    );
-
     return WizardReviewStep(
       stepsLength: 8,
       builder: (controller) => WizardReviewStepEventListener(
-        onFinishEvent: (event) async {
-          final success = await reviewStep.controller.addProject(event.data);
-
-          if (success && context.mounted) {
-            context.pop();
-          }
-        },
         controller: controller,
         child: const SingleChildScrollView(
           child: Padding(

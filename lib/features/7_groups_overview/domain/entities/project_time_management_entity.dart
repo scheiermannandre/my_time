@@ -13,4 +13,13 @@ class ProjectTimeManagementEntity {
 
   /// The number of working hours for the project.
   final int? workingHours;
+
+  /// Converts a `ProjectTimeManagementEntity` instance
+  /// to a `Map<String, dynamic>`.
+  Map<String, dynamic> toMap() {
+    return {
+      'referencePeriod': referencePeriod?.index,
+      'workingHours': workingHours,
+    };
+  }
 }

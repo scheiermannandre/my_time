@@ -1,5 +1,6 @@
 import 'package:my_time/features/7_groups_overview/domain/entities/enums/payment_status.dart';
 import 'package:my_time/features/7_groups_overview/domain/entities/enums/wokrplace.dart';
+import 'package:my_time/features/7_groups_overview/domain/entities/group_entity.dart';
 import 'package:my_time/features/7_groups_overview/domain/entities/project_money_management_entity.dart';
 import 'package:my_time/features/7_groups_overview/domain/entities/project_time_management_entity.dart';
 import 'package:my_time/features/7_groups_overview/domain/entities/vacation_entity.dart';
@@ -45,6 +46,23 @@ class ProjectWithSettingsEntity extends ProjectEntity {
     required this.workplace,
   }) : super(isFavorite: false);
 
+  /// Factory method to create a `ProjectWithSettingsEntity` instance from
+  /// the add project wizard.
+  factory ProjectWithSettingsEntity.fromAddProjectWizard(
+    Map<int, dynamic> projectMap,
+  ) {
+    return ProjectWithSettingsEntity(
+      groupId: (projectMap[0] as GroupEntity).id,
+      name: projectMap[1] as String,
+      sickDaysPayment: projectMap[2] as PaymentStatus?,
+      publicHolidaysPayment: projectMap[3] as PaymentStatus?,
+      vacationInfo: projectMap[4] as VacationEntity?,
+      timeManagement: projectMap[5] as ProjectTimeManagementEntity?,
+      moneyManagement: projectMap[6] as ProjectMoneyManagementEntity?,
+      workplace: projectMap[7] as Workplace?,
+    );
+  }
+
   /// Represents the payment status for sick days.
   final PaymentStatus? sickDaysPayment;
 
@@ -68,5 +86,22 @@ class ProjectWithSettingsEntity extends ProjectEntity {
   @override
   String toString() {
     return '''ProjectWithSettingsEntity(sickDaysPayment: $sickDaysPayment, publicHolidaysPayment: $publicHolidaysPayment, vacationInfo: $vacationInfo, timeManagement: $timeManagement, moneyManagement: $moneyManagement, workplace: $workplace)''';
+  }
+
+  /// Converts the `ProjectWithSettingsEntity` object to a
+  /// `Map<String, dynamic>`
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'id': id,
+      'name': name,
+      'groupId': groupId,
+      'isFavorite': isFavorite,
+      'sickDaysPayment': sickDaysPayment?.index,
+      'publicHolidaysPayment': publicHolidaysPayment?.index,
+      'vacationInfo': vacationInfo?.toMap(),
+      'timeManagement': timeManagement?.toMap(),
+      'moneyManagement': moneyManagement?.toMap(),
+      'workplace': workplace?.index,
+    };
   }
 }

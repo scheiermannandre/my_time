@@ -18,4 +18,14 @@ class ProjectMoneyManagementEntity {
 
   /// The currency used for payments in the project.
   final Currency? currency;
+
+  /// Converts a `ProjectMoneyManagementEntity` instance
+  /// to a `Map<String, dynamic>`.
+  Map<String, dynamic> toMap() {
+    return {
+      'paymentInterval': paymentInterval?.index,
+      'payment': payment,
+      'currency': currency?.index,
+    };
+  }
 }

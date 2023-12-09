@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:my_time/core/util/classes/event_stream.dart';
 import 'package:my_time/core/widgets/wizard/contracts/step_to_wizard_contract.dart';
+import 'package:my_time/core/widgets/wizard/events/on_finish_event.dart';
 import 'package:my_time/core/widgets/wizard/wizard/wizard_state.dart';
-import 'package:my_time/core/widgets/wizard/wizard_review_step/wizard_review_step_controller.dart';
 import 'package:my_time/core/widgets/wizard/wizard_step/wizard_step_controller.dart';
 import 'package:my_time/core/widgets/wizard/wizard_step/wizard_step_state.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -13,7 +12,9 @@ part 'wizard_controller.g.dart';
 @riverpod
 class WizardController extends _$WizardController with StepToWizardContract {
   /// Event stream for wizard-related events.
-  final EventStream<int> wizardEventStream = EventStream<int>();
+
+  /// Callback function for the "onFinish" event.
+  Future<void> Function(OnFinishEvent)? onFinishEvent;
 
   /// Map to store wizard step controllers for each step.
   final Map<int, WizardStepController<dynamic>> stepControllers = {};
@@ -22,6 +23,7 @@ class WizardController extends _$WizardController with StepToWizardContract {
   WizardState build() {
     ref.onDispose(() {
       state.pageController.dispose();
+      onFinishEvent = null;
     });
     return WizardState();
   }
@@ -139,15 +141,19 @@ class WizardController extends _$WizardController with StepToWizardContract {
   /// and updates the state.
   Future<void> finish() async {
     state = state.copyWith(isLoading: true);
-
-    await ref
-        .read(
-          wizardReviewStepControllerProvider(state.wizardStepStates.length)
-              .notifier,
-        )
-        .invokeOnFinish(
-          state.wizardStepStates.map((key, value) => MapEntry(key, value.data)),
-        );
+    final data = stepControllers.values.fold<Map<int, dynamic>>(
+      {},
+      (data, controller) {
+        data[controller.stepNumber] =
+            ref.read(wizardStepControllerProvider(controller.stepNumber)).data;
+        return data;
+      },
+    );
+    await onFinishEvent?.call(
+      OnFinishEvent(
+        data: data,
+      ),
+    );
     state = state.copyWith(isLoading: false);
   }
 }

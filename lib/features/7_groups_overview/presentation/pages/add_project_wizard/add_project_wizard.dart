@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_time/common/extensions/build_context_extension.dart';
 import 'package:my_time/config/theme/tokens/space_tokens.dart';
 import 'package:my_time/config/theme/tokens/text_style_tokens.dart';
+import 'package:my_time/core/util/extentions/widget_ref_extension.dart';
 import 'package:my_time/core/widgets/wizard/wizard/wizard.dart';
 import 'package:my_time/core/widgets/wizard/wizard/wizard_step_indicator.dart';
 import 'package:my_time/features/7_groups_overview/presentation/pages/add_project_wizard/steps/step1_group.dart';
@@ -13,21 +16,49 @@ import 'package:my_time/features/7_groups_overview/presentation/pages/add_projec
 import 'package:my_time/features/7_groups_overview/presentation/pages/add_project_wizard/steps/step7_money_management.dart';
 import 'package:my_time/features/7_groups_overview/presentation/pages/add_project_wizard/steps/step8_workplace.dart';
 import 'package:my_time/features/7_groups_overview/presentation/pages/add_project_wizard/steps/step9_review.dart';
+import 'package:my_time/features/7_groups_overview/presentation/state_management/add_project_wizard_controller.dart';
 
 /// A widget representing the add project wizard.
-class AddProjectWizard extends StatelessWidget {
+class AddProjectWizard extends ConsumerWidget {
   /// Constructs an [AddProjectWizard] with required parameters.
   const AddProjectWizard({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return _Wizard(
-      previousBtnTitle: context.loc.previousBtn,
-      nextBtnTitle: context.loc.nextBtn,
-      skipBtnTitle: context.loc.skipBtn,
-      lastPageBtnTitle: context.loc.backToReviewBtn,
-      finishBtnTitle: context.loc.finishBtn,
-      reviewStep: const ReviewStep(),
+  Widget build(BuildContext context, WidgetRef ref) {
+    ref.watchAndListenAsyncValueErrors(
+      context,
+      addProjectWizardControllerProvider,
+    );
+
+    return Wizard(
+      onFinish: (event) async {
+        final isSuccess = await ref
+            .read(addProjectWizardControllerProvider.notifier)
+            .addProject(event.data);
+
+        if (!isSuccess) return;
+        if (!context.mounted) return;
+
+        context.pop();
+      },
+      previousBtnTitle: _Button(
+        title: context.loc.previousBtn,
+        type: _BtnType.previous,
+      ),
+      nextBtnTitle: _Button(
+        title: context.loc.nextBtn,
+        type: _BtnType.forward,
+      ),
+      skipBtnTitle: _Button(
+        title: context.loc.skipBtn,
+      ),
+      lastPageBtnTitle: _Button(
+        title: context.loc.backToReviewBtn,
+      ),
+      finishBtnTitle: _Button(
+        title: context.loc.finishBtn,
+      ),
+      stepStyle: const StepIndicatorStyle(),
       steps: const [
         Step1Group(),
         Step2ProjectName(),
@@ -38,81 +69,7 @@ class AddProjectWizard extends StatelessWidget {
         Step7MoneyManagement(),
         Step8Workplace(),
       ],
-    );
-  }
-}
-
-/// A customizable wizard widget that guides the user through a series of steps.
-
-class _Wizard extends StatelessWidget {
-  /// Creates a MightyWizard widget.
-  ///
-  /// The [steps] parameter is a list of widgets representing the steps
-  /// in the wizard.
-  /// The [reviewStep] parameter is the widget to be displayed on the
-  /// review step.
-  /// The [skipBtnTitle], [nextBtnTitle], [previousBtnTitle],
-  /// [lastPageBtnTitle], and [finishBtnTitle] parameters are titles for
-  /// different buttons in the wizard.
-
-  const _Wizard({
-    required this.steps,
-    required this.reviewStep,
-    required this.skipBtnTitle,
-    required this.nextBtnTitle,
-    required this.previousBtnTitle,
-    required this.lastPageBtnTitle,
-    required this.finishBtnTitle,
-  });
-
-  /// A list of widgets representing the steps in the wizard.
-  final List<Widget> steps;
-
-  /// The widget to be displayed on the review step.
-  final Widget reviewStep;
-
-  /// The title for the skip button.
-  final String skipBtnTitle;
-
-  /// The title for the next button.
-  final String nextBtnTitle;
-
-  /// The title for the previous button.
-  final String previousBtnTitle;
-
-  /// The title for the last page button.
-  final String lastPageBtnTitle;
-
-  /// The title for the finish button.
-  final String finishBtnTitle;
-  @override
-  Widget build(BuildContext context) {
-    return Wizard(
-      onFinish: () {},
-      previousBtnTitle: _Button(
-        title: previousBtnTitle,
-        type: _BtnType.previous,
-      ),
-      nextBtnTitlePrimary: _Button(
-        title: nextBtnTitle,
-        type: _BtnType.forward,
-      ),
-      nextBtnTitleSecondary: _Button(
-        title: nextBtnTitle,
-        type: _BtnType.forward,
-      ),
-      skipBtnTitle: _Button(
-        title: skipBtnTitle,
-      ),
-      lastPageBtnTitle: _Button(
-        title: lastPageBtnTitle,
-      ),
-      finishBtnTitle: _Button(
-        title: finishBtnTitle,
-      ),
-      reviewStep: reviewStep,
-      steps: steps,
-      stepStyle: const StepIndicatorStyle(),
+      reviewStep: const ReviewStep(),
     );
   }
 }

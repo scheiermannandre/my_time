@@ -11,8 +11,8 @@ import 'package:my_time/core/widgets/action_button.dart';
 class WizardButtons extends StatefulHookWidget {
   /// Creates a `WizardButtons` widget.
   ///
-  /// The [previousButtonContent], [nextButtonContentPrimary],
-  /// [nextButtonContentSecondary], [goToLastPageButtonContent],
+  /// The [previousButtonContent], [nextButtonContent],
+  ///  [goToLastPageButtonContent],
   /// [finishButtonContent], and [skipButtonContent] are the contents of the
   /// respective buttons.
   ///
@@ -23,8 +23,7 @@ class WizardButtons extends StatefulHookWidget {
   /// enabling can be adjusted using various boolean flags and values.
   const WizardButtons({
     required this.previousButtonContent,
-    required this.nextButtonContentPrimary,
-    required this.nextButtonContentSecondary,
+    required this.nextButtonContent,
     required this.goToLastPageButtonContent,
     required this.onFinish,
     required this.onPrevious,
@@ -63,10 +62,7 @@ class WizardButtons extends StatefulHookWidget {
   final Widget previousButtonContent;
 
   /// The content of the next button when it is in a primary state.
-  final Widget nextButtonContentPrimary;
-
-  /// The content of the next button when it is in a secondary state.
-  final Widget nextButtonContentSecondary;
+  final Widget nextButtonContent;
 
   /// The content of the last page button.
   final Widget goToLastPageButtonContent;
@@ -130,10 +126,10 @@ class _WizardButtonsState extends State<WizardButtons> {
                 (widget.showNextBtn || widget.isInReview) && !widget.isLastStep,
             showLeftBtn: !widget.isFirstStep,
             constraints: constraints,
-            rightBtnTitle: !widget.isInReview
-                ? widget.nextButtonContentPrimary
-                : widget.nextButtonContentSecondary,
+            rightBtnTitle: widget.nextButtonContent,
+            rightBtnIsPrimary: !widget.isInReview,
             leftBtnTitle: widget.previousButtonContent,
+            leftBtnIsPrimary: false,
             onRightBtn: widget.isNextBtnEnabled ? widget.onNext : null,
             onLeftBtn: widget.onPrevious,
             gap: widget.spacing,
@@ -190,6 +186,8 @@ class AnimatedBtnRow extends StatefulWidget {
     required this.onRightBtn,
     required this.onLeftBtn,
     required this.gap,
+    this.rightBtnIsPrimary = true,
+    this.leftBtnIsPrimary = true,
     this.rightBtnIsLoading = false,
     this.leftBtnIsLoading = false,
     super.key,
@@ -213,6 +211,9 @@ class AnimatedBtnRow extends StatefulWidget {
   /// Whether the right button is in a loading state.
   final bool rightBtnIsLoading;
 
+  /// Whether the right button is in a primary or secondary.
+  final bool rightBtnIsPrimary;
+
   /// The actual button widget for the left widget.
   final Widget leftBtnTitle;
 
@@ -221,6 +222,9 @@ class AnimatedBtnRow extends StatefulWidget {
 
   /// Whether the left button is in a loading state.
   final bool leftBtnIsLoading;
+
+  /// Whether the left button is in a primary or secondary.
+  final bool leftBtnIsPrimary;
 
   /// The space between the right and left buttons.
   final double gap;
@@ -406,11 +410,17 @@ class _AnimatedBtnRowState extends State<AnimatedBtnRow>
                 child: SizedBox(
                   height: prevBtnSizeAnimation.value.height,
                   width: prevBtnSizeAnimation.value.width,
-                  child: ActionButton.secondary(
-                    isLoading: widget.leftBtnIsLoading,
-                    onPressed: widget.onLeftBtn,
-                    child: widget.leftBtnTitle,
-                  ),
+                  child: widget.leftBtnIsPrimary
+                      ? ActionButton.primary(
+                          isLoading: widget.leftBtnIsLoading,
+                          onPressed: widget.onLeftBtn,
+                          child: widget.leftBtnTitle,
+                        )
+                      : ActionButton.secondary(
+                          isLoading: widget.leftBtnIsLoading,
+                          onPressed: widget.onLeftBtn,
+                          child: widget.leftBtnTitle,
+                        ),
                 ),
               );
             },
@@ -427,11 +437,17 @@ class _AnimatedBtnRowState extends State<AnimatedBtnRow>
                 child: SizedBox(
                   height: nextBtnSizeAnimation.value.height,
                   width: nextBtnSizeAnimation.value.width,
-                  child: ActionButton.primary(
-                    isLoading: widget.rightBtnIsLoading,
-                    onPressed: widget.onRightBtn,
-                    child: widget.rightBtnTitle,
-                  ),
+                  child: widget.rightBtnIsPrimary
+                      ? ActionButton.primary(
+                          isLoading: widget.rightBtnIsLoading,
+                          onPressed: widget.onRightBtn,
+                          child: widget.rightBtnTitle,
+                        )
+                      : ActionButton.secondary(
+                          isLoading: widget.rightBtnIsLoading,
+                          onPressed: widget.onRightBtn,
+                          child: widget.rightBtnTitle,
+                        ),
                 ),
               );
             },

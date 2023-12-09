@@ -1,6 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:my_time/features/7_groups_overview/data/repositories/group_repository_impl.dart';
-import 'package:my_time/features/7_groups_overview/domain/entities/project_entity.dart';
+import 'package:my_time/features/7_groups_overview/data/repositories/project_repository_impl.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'project_service.g.dart';
@@ -14,8 +13,14 @@ class ProjectService {
   final Ref ref;
 
   /// Adds a new project with the given [project] settings.
-  Future<void> addProject(ProjectWithSettingsEntity project) {
-    return ref.read(groupRepositoryImplProvider).addProject(project);
+  Future<void> addProject(
+    String groupId,
+    String projectId,
+    Map<String, dynamic> project,
+  ) async {
+    return ref
+        .read(projectRepositoryImplProvider)
+        .addProject(groupId, projectId, project);
   }
 }
 

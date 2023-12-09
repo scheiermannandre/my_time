@@ -10,4 +10,12 @@ class VacationEntity {
 
   /// The number of days for the vacation.
   final int? days;
+
+  /// Converts a `VacationEntity` instance to a `Map<String, dynamic>`.
+  Map<String, dynamic> toMap() {
+    return {
+      'paymentStatus': paymentStatus?.index,
+      'days': days,
+    };
+  }
 }

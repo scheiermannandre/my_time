@@ -5,6 +5,7 @@ import 'package:my_time/config/theme/tokens/space_tokens.dart';
 import 'package:my_time/config/theme/tokens/text_style_tokens.dart';
 import 'package:my_time/core/modals/modal_dialog_ui.dart';
 import 'package:my_time/core/widgets/action_button.dart';
+import 'package:my_time/core/widgets/wizard/events/on_finish_event.dart';
 import 'package:my_time/core/widgets/wizard/wizard/wizard_buttons.dart';
 import 'package:my_time/core/widgets/wizard/wizard/wizard_controller.dart';
 import 'package:my_time/core/widgets/wizard/wizard/wizard_event_listener.dart';
@@ -20,8 +21,7 @@ class Wizard extends ConsumerWidget {
     required this.reviewStep,
     required this.stepStyle,
     required this.skipBtnTitle,
-    required this.nextBtnTitlePrimary,
-    required this.nextBtnTitleSecondary,
+    required this.nextBtnTitle,
     required this.previousBtnTitle,
     required this.lastPageBtnTitle,
     required this.finishBtnTitle,
@@ -34,7 +34,7 @@ class Wizard extends ConsumerWidget {
   });
 
   /// Callback function invoked when the wizard finishes.
-  final void Function() onFinish;
+  final Future<void> Function(OnFinishEvent event) onFinish;
 
   /// List of widgets representing individual steps in the wizard.
   final List<Widget> steps;
@@ -55,10 +55,7 @@ class Wizard extends ConsumerWidget {
   final Widget skipBtnTitle;
 
   /// Widget representing the title of the primary next button.
-  final Widget nextBtnTitlePrimary;
-
-  /// Widget representing the title of the secondary next button.
-  final Widget nextBtnTitleSecondary;
+  final Widget nextBtnTitle;
 
   /// Widget representing the title of the previous button.
   final Widget previousBtnTitle;
@@ -75,9 +72,7 @@ class Wizard extends ConsumerWidget {
     final state = ref.watch(wizardControllerProvider);
     return WizardEventListener(
       controller: controller,
-      onFinish: (value) {
-        onFinish(); // Call the onFinish callback from the outside.
-      },
+      onFinish: onFinish,
       child: Scaffold(
         appBar: AppBar(
           elevation: !state.isLastPage ? 0 : 1,
@@ -160,8 +155,7 @@ class Wizard extends ConsumerWidget {
                   isInReview: state.isInReview,
                   previousButtonContent: previousBtnTitle,
                   onPrevious: controller.previous,
-                  nextButtonContentPrimary: nextBtnTitlePrimary,
-                  nextButtonContentSecondary: nextBtnTitleSecondary,
+                  nextButtonContent: nextBtnTitle,
                   onNext: controller.next,
                   goToLastPageButtonContent: lastPageBtnTitle,
                   onLastPage: controller.last,
