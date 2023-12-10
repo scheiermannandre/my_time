@@ -94,7 +94,7 @@ class ActionButton extends StatelessWidget {
   factory ActionButton.iconWithBackground({
     required Widget child,
     required BuildContext context,
-    required Future<void> Function()? onPressed,
+    required void Function()? onPressed,
     bool isLoading = false,
     Key? key,
   }) {
@@ -122,7 +122,7 @@ class ActionButton extends StatelessWidget {
     required Widget child,
     required String label,
     required BuildContext context,
-    required Future<void> Function()? onPressed,
+    required void Function()? onPressed,
     bool isLoading = false,
     Key? key,
   }) {

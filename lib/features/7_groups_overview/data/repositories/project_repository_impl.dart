@@ -1,5 +1,7 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_time/features/7_groups_overview/data/datasources/firestore_projects_data_source.dart';
+import 'package:my_time/features/7_groups_overview/data/models/project_model.dart';
+import 'package:my_time/features/7_groups_overview/domain/entities/project_entity.dart';
 import 'package:my_time/features/7_groups_overview/domain/repositories/project_repository.dart';
 import 'package:my_time/features/8_authentication/data/repositories/auth_repository_impl.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -17,14 +19,24 @@ class ProjectRepositoryImpl extends ProjectRepository {
   /// Adds a new project with settings using the provided [project].
   @override
   Future<void> addProject(
-    String groupId,
-    String projectId,
-    Map<String, dynamic> project,
+    ProjectEntity project,
   ) async {
     final uid = ref.read(authRepositoryProvider).currentUser!.uid;
     return ref
         .read(projectsFirestoreDataSourceProvider)
-        .addProject(uid, groupId, projectId, project);
+        .addProject(uid, ProjectModel.fromEntity(project));
+  }
+
+  @override
+  Future<ProjectEntity> fetchProject(
+    String groupId,
+    String projectId,
+  ) async {
+    final uid = ref.read(authRepositoryProvider).currentUser!.uid;
+    return ref
+        .read(projectsFirestoreDataSourceProvider)
+        .fetchProject(uid, groupId, projectId)
+        .then((value) => value.toEntity());
   }
 }
 

@@ -15,7 +15,32 @@ class ProjectEntity {
     required this.name,
     required this.groupId,
     required this.isFavorite,
-  }) : id = const uuid.Uuid().v1();
+    required this.sickDaysPayment,
+    required this.publicHolidaysPayment,
+    required this.vacationInfo,
+    required this.timeManagement,
+    required this.moneyManagement,
+    required this.workplace,
+    String? projectId,
+  }) : id = projectId ?? const uuid.Uuid().v1();
+
+  /// Factory method to create a `ProjectWithSettingsEntity` instance from
+  /// the add project wizard.
+  factory ProjectEntity.fromMap(
+    Map<int, dynamic> projectMap,
+  ) {
+    return ProjectEntity(
+      groupId: (projectMap[0] as GroupEntity).id,
+      name: projectMap[1] as String,
+      sickDaysPayment: projectMap[2] as PaymentStatus?,
+      publicHolidaysPayment: projectMap[3] as PaymentStatus?,
+      vacationInfo: projectMap[4] as VacationEntity?,
+      timeManagement: projectMap[5] as ProjectTimeManagementEntity?,
+      moneyManagement: projectMap[6] as ProjectMoneyManagementEntity?,
+      workplace: projectMap[7] as Workplace?,
+      isFavorite: false,
+    );
+  }
 
   /// A unique identifier for the project entity.
   final String id;
@@ -28,40 +53,6 @@ class ProjectEntity {
 
   /// Represents whether the project entity is marked as a favorite or not.
   final bool isFavorite;
-}
-
-/// Represents an extension of `ProjectEntity` with additional settings
-/// for a project.
-class ProjectWithSettingsEntity extends ProjectEntity {
-  /// Constructs a `ProjectWithSettingsEntity` instance with additional
-  /// settings and inherits properties from `ProjectEntity`.
-  ProjectWithSettingsEntity({
-    required super.name,
-    required super.groupId,
-    required this.sickDaysPayment,
-    required this.publicHolidaysPayment,
-    required this.vacationInfo,
-    required this.timeManagement,
-    required this.moneyManagement,
-    required this.workplace,
-  }) : super(isFavorite: false);
-
-  /// Factory method to create a `ProjectWithSettingsEntity` instance from
-  /// the add project wizard.
-  factory ProjectWithSettingsEntity.fromAddProjectWizard(
-    Map<int, dynamic> projectMap,
-  ) {
-    return ProjectWithSettingsEntity(
-      groupId: (projectMap[0] as GroupEntity).id,
-      name: projectMap[1] as String,
-      sickDaysPayment: projectMap[2] as PaymentStatus?,
-      publicHolidaysPayment: projectMap[3] as PaymentStatus?,
-      vacationInfo: projectMap[4] as VacationEntity?,
-      timeManagement: projectMap[5] as ProjectTimeManagementEntity?,
-      moneyManagement: projectMap[6] as ProjectMoneyManagementEntity?,
-      workplace: projectMap[7] as Workplace?,
-    );
-  }
 
   /// Represents the payment status for sick days.
   final PaymentStatus? sickDaysPayment;
@@ -80,28 +71,4 @@ class ProjectWithSettingsEntity extends ProjectEntity {
 
   /// Represents the workplace settings for the project.
   final Workplace? workplace;
-
-  /// Provides a string representation of the
-  /// `ProjectWithSettingsEntity` instance.
-  @override
-  String toString() {
-    return '''ProjectWithSettingsEntity(sickDaysPayment: $sickDaysPayment, publicHolidaysPayment: $publicHolidaysPayment, vacationInfo: $vacationInfo, timeManagement: $timeManagement, moneyManagement: $moneyManagement, workplace: $workplace)''';
-  }
-
-  /// Converts the `ProjectWithSettingsEntity` object to a
-  /// `Map<String, dynamic>`
-  Map<String, dynamic> toMap() {
-    return <String, dynamic>{
-      'id': id,
-      'name': name,
-      'groupId': groupId,
-      'isFavorite': isFavorite,
-      'sickDaysPayment': sickDaysPayment?.index,
-      'publicHolidaysPayment': publicHolidaysPayment?.index,
-      'vacationInfo': vacationInfo?.toMap(),
-      'timeManagement': timeManagement?.toMap(),
-      'moneyManagement': moneyManagement?.toMap(),
-      'workplace': workplace?.index,
-    };
-  }
 }

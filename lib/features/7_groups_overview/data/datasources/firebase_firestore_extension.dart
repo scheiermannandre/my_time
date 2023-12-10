@@ -15,11 +15,14 @@ extension FirebaseFirestoreExtension on FirebaseFirestore {
       collection(_usersGroupsPath(uid));
 
   /// Document reference for a group of a user.
-  DocumentReference<Map<String, dynamic>> groupDocument(
+  DocumentReference<GroupModel> groupDocument(
     String uid,
     String groupId,
   ) =>
-      doc(_groupPath(uid, groupId));
+      doc(_groupPath(uid, groupId)).withConverter(
+        fromFirestore: (doc, _) => GroupModel.fromMap(doc.data()!),
+        toFirestore: (GroupModel group, options) => group.toMap(),
+      );
 
   /// Query for a group of a user.
   Query<GroupModel> groupsQuery(String uid) {

@@ -83,14 +83,17 @@ class _PersistentBottomSheetState extends State<PersistentBottomSheet> {
     final maxChildSize =
         childHeight < widget.maxChildSize ? childHeight : widget.maxChildSize;
 
+    final minHeight =
+        childHeight < widget.minChildSize ? childHeight : widget.minChildSize;
+
     return DraggableScrollableSheet(
       controller: widget.draggableScrollableController,
       expand: false,
       snap: true,
       snapAnimationDuration: const Duration(milliseconds: 250),
-      minChildSize: widget.minChildSize,
+      minChildSize: minHeight,
       maxChildSize: maxChildSize,
-      initialChildSize: widget.minChildSize,
+      initialChildSize: minHeight,
       builder: (context, scrollController) => Container(
         decoration: BoxDecoration(
           color: Theme.of(context).colorScheme.background,

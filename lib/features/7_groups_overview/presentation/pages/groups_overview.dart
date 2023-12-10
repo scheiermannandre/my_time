@@ -115,7 +115,15 @@ class GroupsOverview extends HookConsumerWidget {
                   items: groups[index].projects.map((project) {
                     return ExpandableTileItem(
                       title: project.name,
-                      onPressed: () {},
+                      onPressed: () {
+                        context.goNamed(
+                          AppRoute.timer,
+                          queryParameters: {
+                            'groupId': project.groupId,
+                            'projectId': project.id,
+                          },
+                        );
+                      },
                       trailingIcon: RotatedBox(
                         quarterTurns: 3,
                         child: Icon(

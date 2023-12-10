@@ -18,6 +18,7 @@ import 'package:my_time/features/8_authentication/presentation/pages/forgot_pass
 import 'package:my_time/features/8_authentication/presentation/pages/profile_page.dart';
 import 'package:my_time/features/8_authentication/presentation/pages/sign_in_page.dart';
 import 'package:my_time/features/8_authentication/presentation/pages/sign_up_page.dart';
+import 'package:my_time/features/9_timer/presentation/pages/timer_page.dart';
 import 'package:my_time/router/go_router_refresh_stream.dart';
 import 'package:my_time/router/not_found_screen.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -38,6 +39,7 @@ enum _AppRoute {
   signUp,
   forgotPassword,
   profile,
+  timer,
 }
 
 /// The routes of the app.
@@ -80,6 +82,9 @@ class AppRoute {
 
   /// The fast access to the add project wizard route.
   static String get addProjectWizard => _AppRoute.addProjectWizard.name;
+
+  /// The fast access to the timer route.
+  static String get timer => _AppRoute.timer.name;
 }
 
 /// Gorouter for the app.
@@ -226,6 +231,26 @@ GoRouter goRouter(GoRouterRef ref) {
               fullscreenDialog: true,
               key: state.pageKey,
               child: const ProfilePage(),
+            ),
+          ),
+          GoRoute(
+            path: 'timer',
+            name: AppRoute.timer,
+            redirect: (context, state) {
+              final groupId = state.uri.queryParameters['groupId'] ?? '';
+              final projectId = state.uri.queryParameters['projectId'] ?? '';
+              if (groupId.isEmpty || projectId.isEmpty) {
+                return '/';
+              }
+              return null;
+            },
+            pageBuilder: (context, state) => MaterialPage<void>(
+              fullscreenDialog: true,
+              key: state.pageKey,
+              child: TimerPage(
+                groupId: state.uri.queryParameters['groupId']!,
+                projectId: state.uri.queryParameters['projectId']!,
+              ),
             ),
           ),
         ],

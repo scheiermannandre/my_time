@@ -35,11 +35,11 @@ class AddProjectWizardController extends _$AddProjectWizardController {
     state = const AsyncLoading();
 
     // Create a ProjectWithSettingsEntity using the provided projectMap.
-    final data = ProjectWithSettingsEntity.fromAddProjectWizard(projectMap);
+    final data = ProjectEntity.fromMap(projectMap);
     final projectService = ref.read(projectServiceProvider);
     // Use AsyncValue.guard to handle errors during the operation.
     state = await AsyncValue.guard(
-      () => projectService.addProject(data.groupId, data.id, data.toMap()),
+      () => projectService.addProject(data),
     );
 
     // Return a boolean indicating the success of the project addition.
