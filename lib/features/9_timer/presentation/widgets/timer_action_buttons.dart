@@ -3,43 +3,82 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:my_time/config/theme/tokens/space_tokens.dart';
 import 'package:my_time/core/widgets/action_button.dart';
+import 'package:my_time/features/9_timer/domain/entities/timer_state.dart';
 
 /// A widget that displays the timer action buttons.
 class TimerActionButtons extends StatefulHookWidget {
   /// Creates a [TimerActionButtons].
-  const TimerActionButtons({super.key});
+  const TimerActionButtons({
+    required this.start,
+    required this.stop,
+    required this.pause,
+    required this.resume,
+    required this.initialState,
+    super.key,
+  });
 
+  /// The initial state of the timer.
+  final TimerState initialState;
+
+  /// The callback that is called to start the timer.
+  final VoidCallback start;
+
+  /// The callback that is called to stop the timer.
+  final VoidCallback stop;
+
+  /// The callback that is called to pause the timer.
+  final VoidCallback pause;
+
+  /// The callback that is called to resume the timer.
+  final VoidCallback resume;
   @override
   State<TimerActionButtons> createState() => _TimerActionsState();
 }
 
-class _TimerActionsState extends State<TimerActionButtons> {
-  bool isPlaying = false;
-  bool isOff = true;
+class _TimerActionsState extends State<TimerActionButtons>
+    with SingleTickerProviderStateMixin {
+  late TimerState state;
+  late final AnimationController controller;
   @override
-  Widget build(BuildContext context) {
-    final controller = useAnimationController(
+  void initState() {
+    controller = AnimationController(
+      vsync: this,
       duration: const Duration(milliseconds: 150),
       reverseDuration: const Duration(milliseconds: 100),
     );
+    state = widget.initialState;
+
+    if (state != TimerState.off) {
+      controller.forward();
+    }
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         ActionButton.iconWithBackground(
           context: context,
           child: Icon(
-            !isPlaying ? Icons.play_arrow_outlined : Icons.pause_outlined,
+            state != TimerState.running
+                ? Icons.play_arrow_outlined
+                : Icons.pause_outlined,
           ),
           onPressed: () {
             setState(() {
-              if (!isPlaying && isOff) {
-                isPlaying = true;
-                isOff = false;
-                controller.forward();
-              } else if (isPlaying) {
-                isPlaying = false;
-              } else if (!isPlaying) {
-                isPlaying = true;
+              switch (state) {
+                case TimerState.off:
+                  state = TimerState.running;
+                  controller.forward();
+                  widget.start.call();
+                case TimerState.running:
+                  state = TimerState.paused;
+                  widget.pause.call();
+                case TimerState.paused:
+                  state = TimerState.running;
+                  widget.resume.call();
               }
             });
           },
@@ -60,9 +99,9 @@ class _TimerActionsState extends State<TimerActionButtons> {
           child: const Icon(Icons.stop_outlined),
           onPressed: () {
             setState(() {
-              isPlaying = false;
-              isOff = true;
+              state = TimerState.off;
               controller.reverse();
+              widget.stop.call();
             });
           },
         ).animate().custom(

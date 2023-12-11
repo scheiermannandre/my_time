@@ -121,6 +121,7 @@ class GroupsOverview extends HookConsumerWidget {
                           queryParameters: {
                             'groupId': project.groupId,
                             'projectId': project.id,
+                            'projectName': project.name,
                           },
                         );
                       },

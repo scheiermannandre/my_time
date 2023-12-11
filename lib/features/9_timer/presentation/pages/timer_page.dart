@@ -2,11 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_time/config/theme/tokens/space_tokens.dart';
+import 'package:my_time/core/util/extentions/widget_ref_extension.dart';
 import 'package:my_time/core/widgets/action_button.dart';
 import 'package:my_time/core/widgets/persistent_sheet_scaffold.dart';
 import 'package:my_time/core/widgets/spaced_column.dart';
-import 'package:my_time/features/7_groups_overview/domain/entities/project_entity.dart';
-import 'package:my_time/features/7_groups_overview/domain/usecase_services/project_service.dart';
+import 'package:my_time/features/9_timer/data/repositories/timer_data_repository.dart';
+import 'package:my_time/features/9_timer/domain/entities/timer_state.dart';
+import 'package:my_time/features/9_timer/domain/services/timer_service.dart';
+import 'package:my_time/features/9_timer/presentation/state_management/timer_page_controller.dart';
 import 'package:my_time/features/9_timer/presentation/widgets/time_display.dart';
 import 'package:my_time/features/9_timer/presentation/widgets/timer_action_buttons.dart';
 
@@ -17,49 +20,97 @@ class TimerPage extends ConsumerWidget {
   const TimerPage({
     required String groupId,
     required String projectId,
+    required String projectName,
     super.key,
   })  : _projectId = projectId,
-        _groupId = groupId;
+        _groupId = groupId,
+        _projectName = projectName;
 
+  // ignore: unused_field
   final String _groupId;
   final String _projectId;
+  final String _projectName;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final data = ref.watch(
-      fetchProjectProvider(
-        groupId: _groupId,
-        projectId: _projectId,
-      ),
+    final timerPage = ref.watchAndListenStateProviderError(
+      context,
+      timerPageControllerProvider,
+      timerPageControllerProvider.notifier,
     );
 
     return PersistentSheetScaffold(
       appBar: AppBar(
-        title: Text(data.valueOrNull?.name ?? 'Timer'),
+        title: Text(_projectName),
       ),
-      body: const SpacedColumn(
+      body: SpacedColumn(
         spacing: SpaceTokens.veryVeryLarge,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          TimeDisplay(
-            duration: Duration.zero,
+          Consumer(
+            builder: (context, ref, child) {
+              final timerDuration = ref.watch(timerStreamProvider(_projectId));
+              return TimeDisplay(
+                duration: timerDuration.valueOrNull ?? Duration.zero,
+              );
+            },
           ),
-          TimerActionButtons(),
+          Consumer(
+            builder: (context, ref, child) {
+              final timerData = ref.watch(timerDataFutureProvider(_projectId));
+              final timerService = ref.watch(timerServiceProvider(_projectId));
+
+              if (timerData.hasValue && timerService.timerServiceData == null) {
+                timerService.init(timerData: timerData.valueOrNull);
+                if (timerData.valueOrNull?.state == TimerState.running) {
+                  timerService.start();
+                }
+              }
+              return timerData
+                      .whenData(
+                        (data) => TimerActionButtons(
+                          initialState:
+                              timerData.valueOrNull?.state ?? TimerState.off,
+                          start: () {
+                            final timerData = timerService.start();
+                            timerPage.controller.saveTimerData(
+                              _projectId,
+                              timerData,
+                            );
+                          },
+                          pause: () {
+                            final timerData = timerService.pauseResumeTimer();
+                            timerPage.controller.saveTimerData(
+                              _projectId,
+                              timerData,
+                            );
+                          },
+                          resume: () {
+                            final timerData = timerService.pauseResumeTimer();
+                            timerPage.controller.saveTimerData(
+                              _projectId,
+                              timerData,
+                            );
+                          },
+                          stop: () {
+                            timerService.cancelTimer();
+                            timerPage.controller.deleteTimerData(_projectId);
+                          },
+                        ),
+                      )
+                      .valueOrNull ??
+                  const SizedBox.shrink();
+            },
+          ),
         ],
       ),
-      bottomSheetWidgetBuilder: data.when(
-        data: (data) => (context, scrollController) {
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _LabeledIconButtons(
-                project: data,
-              ),
-            ],
-          );
-        },
-        loading: () => null,
-        error: (error, stackTrace) => null,
-      ),
+      bottomSheetWidgetBuilder: (context, scrollController) {
+        return const Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _LabeledIconButtons(),
+          ],
+        );
+      },
       minChildSize: .2,
       maxChildSize: .2,
     );
@@ -68,11 +119,9 @@ class TimerPage extends ConsumerWidget {
 
 class _LabeledIconButtons extends HookWidget {
   const _LabeledIconButtons({
-    required this.project,
     // ignore: unused_element
     this.isLoading = false,
   });
-  final ProjectEntity project;
   final bool isLoading;
 
   @override

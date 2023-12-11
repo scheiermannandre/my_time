@@ -239,7 +239,9 @@ GoRouter goRouter(GoRouterRef ref) {
             redirect: (context, state) {
               final groupId = state.uri.queryParameters['groupId'] ?? '';
               final projectId = state.uri.queryParameters['projectId'] ?? '';
-              if (groupId.isEmpty || projectId.isEmpty) {
+              final projectName =
+                  state.uri.queryParameters['projectName'] ?? '';
+              if (groupId.isEmpty || projectId.isEmpty || projectName.isEmpty) {
                 return '/';
               }
               return null;
@@ -250,6 +252,7 @@ GoRouter goRouter(GoRouterRef ref) {
               child: TimerPage(
                 groupId: state.uri.queryParameters['groupId']!,
                 projectId: state.uri.queryParameters['projectId']!,
+                projectName: state.uri.queryParameters['projectName']!,
               ),
             ),
           ),
