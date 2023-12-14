@@ -18,4 +18,15 @@ class VacationEntity {
       'days': days,
     };
   }
+
+  /// Returns a copy of the `VacationEntity` instance
+  VacationEntity copyWith({
+    PaymentStatus? paymentStatus,
+    int? days,
+  }) {
+    return VacationEntity(
+      paymentStatus: paymentStatus ?? this.paymentStatus,
+      days: days ?? this.days,
+    );
+  }
 }

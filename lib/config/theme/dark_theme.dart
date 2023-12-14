@@ -20,8 +20,9 @@ ThemeData darkTheme = ThemeData(
     brightness: Brightness.dark,
     primary: DarkThemeColorTokens.primaryColor,
     onPrimary: DarkThemeColorTokens.darkestColor,
-    secondary: DarkThemeColorTokens.mediumColor,
+    secondary: DarkThemeColorTokens.primaryColor,
     onSecondary: Colors.white, //TBD
+    tertiary: DarkThemeColorTokens.mediumColor,
     error: DarkThemeColorTokens.errorColor,
     onError: Colors.white, //TBD
     background: DarkThemeColorTokens.darkestColor,

@@ -3,13 +3,13 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:my_time/common/extensions/build_context_extension.dart';
 import 'package:my_time/config/theme/tokens/space_tokens.dart';
-import 'package:my_time/core/util/extentions/string_extension.dart';
 import 'package:my_time/core/widgets/text_input_field.dart';
+import 'package:my_time/core/widgets/wizard/labeled_widgets.dart';
 import 'package:my_time/core/widgets/wizard/wizard_step/wizard_step_event_listener.dart';
 import 'package:my_time/core/widgets/wizard/wizard_step/wizard_step_wrapper.dart';
 import 'package:my_time/features/7_groups_overview/domain/entities/enums/reference_period.dart';
 import 'package:my_time/features/7_groups_overview/domain/entities/project_time_management_entity.dart';
-import 'package:my_time/features/7_groups_overview/presentation/widgets/add_project_wizard/value_selector.dart';
+import 'package:my_time/features/7_groups_overview/presentation/widgets/reference_period_selector.dart';
 
 /// Step 6: Project Time Management Step in a wizard.
 class Step6ProjectTimeManagement extends StatelessWidget {
@@ -64,6 +64,7 @@ class _TimeManagementStep extends StatefulHookWidget {
 }
 
 class _TimeManagementStepState extends State<_TimeManagementStep> {
+  final _fieldKey = GlobalKey<FormFieldState<String>>();
   ReferencePeriod? period;
   int? workingHours;
   bool isReferencePeriodSet = false;
@@ -75,14 +76,31 @@ class _TimeManagementStepState extends State<_TimeManagementStep> {
     super.initState();
   }
 
-  String? validate(String? value) {
+  String? validate(String? value, BuildContext context) {
     if (value == null || value.isEmpty) {
       return context.loc.step6ValidationEmpty;
     }
-    final result = value.isNumeric();
 
-    if (!result.result || result.number.isNegative) {
-      return context.loc.step6ValidationInvalidChars;
+    final workingHours = int.tryParse(value);
+
+    if (period == ReferencePeriod.daily && workingHours! > 24) {
+      return context.loc
+          .step6workingHourValidation(24, ReferencePeriod.daily.label(context));
+    } else if (period == ReferencePeriod.weekly && workingHours! > 168) {
+      return context.loc.step6workingHourValidation(
+        168,
+        ReferencePeriod.weekly.label(context),
+      );
+    } else if (period == ReferencePeriod.monthly && workingHours! > 744) {
+      return context.loc.step6workingHourValidation(
+        744,
+        ReferencePeriod.monthly.label(context),
+      );
+    } else if (period == ReferencePeriod.annually && workingHours! > 8760) {
+      return context.loc.step6workingHourValidation(
+        8760,
+        ReferencePeriod.annually.label(context),
+      );
     }
 
     return null;
@@ -98,33 +116,28 @@ class _TimeManagementStepState extends State<_TimeManagementStep> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          ValueSelector(
-            labelText: context.loc.step6ReferencePeriodInputLabel,
-            data: widget.data?.referencePeriod?.label(context) ?? '',
-            onChoose: (option) {
-              setState(() {
-                isReferencePeriodSet = true;
-                if (option == ReferencePeriod.annually.label(context)) {
-                  period = ReferencePeriod.annually;
-                } else if (option == ReferencePeriod.monthly.label(context)) {
-                  period = ReferencePeriod.monthly;
-                } else if (option == ReferencePeriod.weekly.label(context)) {
-                  period = ReferencePeriod.weekly;
-                } else //if (option == ReferencePeriod.daily.label(context))
-                {
-                  period = ReferencePeriod.daily;
-                }
-              });
-              widget.saveProjectTimeManagement(
-                ProjectTimeManagementEntity(
-                  referencePeriod: period,
-                  workingHours: workingHours,
-                ),
-              );
-            },
-            options:
-                ReferencePeriod.values.map((e) => e.label(context)).toList(),
-            horizontalPadding: 0,
+          LabeledWidgets(
+            label: context.loc.step6ReferencePeriodInputLabel,
+            children: [
+              ReferencePeriodSelector(
+                referencePeriod: period,
+                onChoose: (value) {
+                  setState(() {
+                    isReferencePeriodSet = true;
+                    period = value;
+                  });
+                  if (textController.text.isNotEmpty) {
+                    _fieldKey.currentState?.validate();
+                  }
+                  widget.saveProjectTimeManagement(
+                    ProjectTimeManagementEntity(
+                      referencePeriod: period,
+                      workingHours: workingHours,
+                    ),
+                  );
+                },
+              ),
+            ],
           ),
           const SizedBox(height: SpaceTokens.large),
           Visibility(
@@ -133,6 +146,9 @@ class _TimeManagementStepState extends State<_TimeManagementStep> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 TextInputField(
+                  fieldKey: _fieldKey,
+                  textInputType: TextInputField.number,
+                  keyboardType: TextInputType.number,
                   labelText: context.loc.step6WorkingHoursInputLabel(
                     period?.label(context) ?? '',
                   ),
@@ -149,7 +165,7 @@ class _TimeManagementStepState extends State<_TimeManagementStep> {
                       ),
                     );
                   },
-                  validator: validate,
+                  validator: (value) => validate(value, context),
                   controller: textController,
                   autofocus: widget.data == null,
                   onEditingComplete: () {

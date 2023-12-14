@@ -34,6 +34,16 @@ class FirestoreProjectsDataSource {
     });
   }
 
+  /// Updates a group with the specified [project].
+  Future<void> updateProject(
+    String uid,
+    ProjectModel project,
+  ) async {
+    return _firestore.groupsCollection(uid).doc(project.groupId).update({
+      'projects.${project.id}': project.toMap(),
+    });
+  }
+
   /// Fetch a project with the specified [projectId].
   Future<ProjectModel> fetchProject(
     String uid,
@@ -45,6 +55,22 @@ class FirestoreProjectsDataSource {
         .get()
         .then((value) => value.data()!)
         .then(
+          (group) =>
+              group.projects.firstWhere((project) => project.id == projectId),
+        );
+  }
+
+  /// Streams a project with the specified [projectId].
+  Stream<ProjectModel> streamProject(
+    String uid,
+    String groupId,
+    String projectId,
+  ) {
+    return _firestore
+        .groupDocument(uid, groupId)
+        .snapshots()
+        .map((snapshot) => snapshot.data()!)
+        .map(
           (group) =>
               group.projects.firstWhere((project) => project.id == projectId),
         );

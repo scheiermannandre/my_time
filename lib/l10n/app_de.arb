@@ -114,6 +114,55 @@
     "profileReauthenticateDialogHeader": "Erneut Anmelden",
     "profileReauthenticateSubmitBtnLabel": "Verifiziere mich!",
 
+    "@TimerPage": {},
+    "timerPageProjectSettingsBtnLabel": "Einstellungen",
+    "timerPageFavoriteBtnLabel": "Schnellzugriff",
+    "timerPageNewEntryBtnLabel": "Neuer Eintrag",
+    "timerPageAddDaysOffBtnLabel": "Arbeitsfreie Tage",
+    "timerPageHistoryBtnLabel": "Verlauf",
+
+    "@Misc": {},
+    "saveBtnLabel": "Speichern",
+    "cancelBtnLabel": "Abbrechen",
+    "numberSelectorValueLabel": "Aktueller Wert: {value}",
+    "@numberSelectorValueLabel": {
+        "placeholders": {
+            "value": {
+                "type": "int"
+            }
+        }
+    },
+    "numberSelectorValidatorMessage": "Bitte wähle einen Wert zwischen {min} und {max}",
+    "@numberSelectorValidatorMessage": {
+        "placeholders": {
+            "min": {
+                "type": "int"
+            },
+            "max": {
+                "type": "int"
+            }
+        }
+    },
+
+    "@ProjectSettings": {},
+    "notWorkingDaysPaymentLabel": "Bezahlung an arbeitsfreien Tagen",
+    "notWorkingDaysPaymentSickLabel": "Krankheitstage",
+    "notWorkingDaysPaymentPublicHolidaysLabel": "Feiertage",
+    "vacationLabel": "Urlaub",
+    "vacationDaysLabel": "Urlaubstage",
+    "vacationPaymentLabel": "Bezahlung",
+    "timeManagementLabel": "Zeitmanagement",
+    "timeManagementReferencePeriodLabel": "Referenzzeitraum",
+    "timeManagementWorkingHoursLabel": "Arbeitsstunden",
+    "moneyManagementLabel": "Geldmanagement",
+    "moneyManagementPaymentIntervalLabel": "Zahlungsintervall",
+    "moneyManagementCurrencyLabel": "Währung",
+    "moneyManagementPaymentLabel": "Bezahlung",
+    "workplaceLabel": "Arbeitsort",
+    "setPublicHolidaysPaymentDialogHeader": "Bezahlung an Feiertagen",
+    "setSickDaysPaymentDialogHeader": "Bezahlung bei Krankheitstagen",
+    
+
     "@HomePage": {},
 
     "groups": "Gruppen",
@@ -183,6 +232,17 @@
           "type": "String"
         }
       }
+    },
+    "step6workingHourValidation": "Du behauptest mehr als {hours} Stunden pro {period} zu arbeiten. Bist du sicher?",
+    "@step6workingHourDayValidation": {
+        "placeholders": {
+            "hours": {
+                "type": "int"
+            },
+            "period": {
+                "type": "String"
+            }
+        }
     },
 
     "step7Title": "Geldmanagement",

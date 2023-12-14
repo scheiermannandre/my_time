@@ -3,15 +3,15 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:my_time/common/extensions/build_context_extension.dart';
 import 'package:my_time/config/theme/tokens/space_tokens.dart';
-import 'package:my_time/core/util/extentions/string_extension.dart';
 import 'package:my_time/core/widgets/dropdown.dart';
 import 'package:my_time/core/widgets/text_input_field.dart';
+import 'package:my_time/core/widgets/wizard/labeled_widgets.dart';
 import 'package:my_time/core/widgets/wizard/wizard_step/wizard_step_event_listener.dart';
 import 'package:my_time/core/widgets/wizard/wizard_step/wizard_step_wrapper.dart';
 import 'package:my_time/features/7_groups_overview/domain/entities/enums/currency.dart';
 import 'package:my_time/features/7_groups_overview/domain/entities/enums/payment_interval.dart';
 import 'package:my_time/features/7_groups_overview/domain/entities/project_money_management_entity.dart';
-import 'package:my_time/features/7_groups_overview/presentation/widgets/add_project_wizard/value_selector.dart';
+import 'package:my_time/features/7_groups_overview/presentation/widgets/payment_interval_selector.dart';
 
 /// Step 7: Money Management Step in a wizard.
 class Step7MoneyManagement extends StatelessWidget {
@@ -85,12 +85,6 @@ class _MoneyManagementStepState extends State<_MoneyManagementStep> {
     if (value == null || value.isEmpty) {
       return context.loc.step7ValidationEmpty;
     }
-    final result = value.isNumeric();
-
-    if (!result.result || result.number.isNegative) {
-      return context.loc.step7ValidationInvalidChars;
-    }
-
     return null;
   }
 
@@ -117,30 +111,20 @@ class _MoneyManagementStepState extends State<_MoneyManagementStep> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            ValueSelector(
-              labelText: context.loc.step7PaymentIntervalInputLabel,
-              data: widget.data?.paymentInterval?.label(context) ?? '',
-              onChoose: (option) {
-                setState(() {
-                  isPaymentIntervalSet = true;
-
-                  if (option == PaymentInterval.hourly.label(context)) {
-                    paymentInterval = PaymentInterval.hourly;
-                  } else if (option == PaymentInterval.daily.label(context)) {
-                    paymentInterval = PaymentInterval.daily;
-                  } else if (option == PaymentInterval.weekly.label(context)) {
-                    paymentInterval = PaymentInterval.weekly;
-                  } else //if(option == PaymentInterval.monthly.label(context))
-                  {
-                    paymentInterval = PaymentInterval.monthly;
-                  }
-                });
-
-                saveData();
-              },
-              options:
-                  PaymentInterval.values.map((e) => e.label(context)).toList(),
-              horizontalPadding: 0,
+            LabeledWidgets(
+              label: context.loc.step7PaymentIntervalInputLabel,
+              children: [
+                PaymentIntervalSelector(
+                  paymentInterval: paymentInterval,
+                  onChoose: (value) {
+                    setState(() {
+                      isPaymentIntervalSet = true;
+                      paymentInterval = value;
+                    });
+                    saveData();
+                  },
+                ),
+              ],
             ),
             const SizedBox(height: SpaceTokens.medium),
             Visibility(
@@ -178,6 +162,8 @@ class _MoneyManagementStepState extends State<_MoneyManagementStep> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   TextInputField(
+                    textInputType: TextInputField.number,
+                    keyboardType: TextInputType.number,
                     labelText: context.loc.step7PaymentInputLabel(
                       paymentInterval?.label(context) ?? '',
                       currency?.label ?? '',

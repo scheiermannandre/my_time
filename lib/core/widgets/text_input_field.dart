@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:my_time/config/theme/tokens/color_tokens.dart';
 import 'package:my_time/config/theme/tokens/space_tokens.dart';
 
@@ -24,7 +25,11 @@ class TextInputField extends StatefulWidget {
     this.fieldKey,
     this.onFocus,
     this.onFocusLost,
+    this.initialValue,
   });
+
+  /// The type of keyboard to display for text input.
+  static TextInputType get number => TextInputType.number;
 
   /// The theme controller for adapting the field's appearance.
 
@@ -79,19 +84,37 @@ class TextInputField extends StatefulWidget {
 
   /// Callback function triggered when the field loses focus.
   final VoidCallback? onFocusLost;
+
+  /// The initial value of the text field.
+  final String? initialValue;
   @override
   State<TextInputField> createState() => _TextInputFieldState();
 }
 
 class _TextInputFieldState extends State<TextInputField> {
   late final GlobalKey<FormFieldState<String>> _fieldKey;
+  late final TextEditingController _controller;
   @override
   void initState() {
     super.initState();
     _fieldKey = widget.fieldKey ?? GlobalKey<FormFieldState<String>>();
+    _controller = widget.controller ?? TextEditingController();
+    _controller.text = widget.initialValue ?? '';
   }
 
   bool hasError = false;
+
+  List<TextInputFormatter>? _getInputFormatters() {
+    if (widget.textInputType == null) {
+      return null;
+    }
+    if (widget.textInputType == TextInputField.number) {
+      return [
+        FilteringTextInputFormatter.digitsOnly,
+      ];
+    }
+    return null;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -122,6 +145,7 @@ class _TextInputFieldState extends State<TextInputField> {
             }
           },
           child: TextFormField(
+            inputFormatters: _getInputFormatters(),
             onTap: widget.onTap,
             key: _fieldKey,
             keyboardType: widget.keyboardType,
@@ -138,6 +162,7 @@ class _TextInputFieldState extends State<TextInputField> {
             autofocus: widget.autofocus,
             decoration: InputDecoration(
               hintText: widget.hintText,
+              errorMaxLines: 3,
               suffixIcon: Padding(
                 padding: const EdgeInsets.symmetric(
                   horizontal: SpaceTokens.mediumSmall,
@@ -157,7 +182,7 @@ class _TextInputFieldState extends State<TextInputField> {
             ),
             onEditingComplete: widget.onEditingComplete,
             validator: (value) {
-              return widget.validator?.call(widget.controller?.text);
+              return widget.validator?.call(value);
             },
           ),
         ),

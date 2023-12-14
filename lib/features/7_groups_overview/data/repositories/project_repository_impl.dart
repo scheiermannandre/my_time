@@ -16,7 +16,6 @@ class ProjectRepositoryImpl extends ProjectRepository {
   /// Reference to Riverpod.
   final Ref ref;
 
-  /// Adds a new project with settings using the provided [project].
   @override
   Future<void> addProject(
     ProjectEntity project,
@@ -25,6 +24,16 @@ class ProjectRepositoryImpl extends ProjectRepository {
     return ref
         .read(projectsFirestoreDataSourceProvider)
         .addProject(uid, ProjectModel.fromEntity(project));
+  }
+
+  @override
+  Future<void> updateProject(
+    ProjectEntity project,
+  ) async {
+    final uid = ref.read(authRepositoryProvider).currentUser!.uid;
+    return ref
+        .read(projectsFirestoreDataSourceProvider)
+        .updateProject(uid, ProjectModel.fromEntity(project));
   }
 
   @override
@@ -37,6 +46,18 @@ class ProjectRepositoryImpl extends ProjectRepository {
         .read(projectsFirestoreDataSourceProvider)
         .fetchProject(uid, groupId, projectId)
         .then((value) => value.toEntity());
+  }
+
+  @override
+  Stream<ProjectEntity> streamProject(
+    String groupId,
+    String projectId,
+  ) {
+    final uid = ref.read(authRepositoryProvider).currentUser!.uid;
+    return ref
+        .read(projectsFirestoreDataSourceProvider)
+        .streamProject(uid, groupId, projectId)
+        .map((value) => value.toEntity());
   }
 }
 

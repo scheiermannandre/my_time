@@ -4,6 +4,7 @@ import 'package:my_time/common/extensions/build_context_extension.dart';
 import 'package:my_time/config/theme/tokens/space_tokens.dart';
 import 'package:my_time/config/theme/tokens/text_style_tokens.dart';
 import 'package:my_time/core/widgets/spaced_column.dart';
+import 'package:my_time/core/widgets/wizard/labeled_widgets.dart';
 import 'package:my_time/core/widgets/wizard/wizard_review_step/wizard_review_step.dart';
 import 'package:my_time/core/widgets/wizard/wizard_review_step/wizard_review_step_event_listener.dart';
 import 'package:my_time/core/widgets/wizard/wizard_review_step/wizard_review_step_wrapper.dart';
@@ -329,7 +330,7 @@ class _ReviewBlockState<T> extends State<_ReviewBlock<T>> {
       height: _isVisible ? null : 0,
       child: Padding(
         padding: const EdgeInsets.only(bottom: SpaceTokens.mediumSmall),
-        child: _LabeledWidgets(
+        child: LabeledWidgets(
           label: widget.label,
           children: [
             WizardReviewStepWrapper<T?>(
@@ -351,31 +352,6 @@ class _ReviewBlockState<T> extends State<_ReviewBlock<T>> {
           ],
         ),
       ),
-    );
-  }
-}
-
-class _LabeledWidgets extends StatelessWidget {
-  const _LabeledWidgets({
-    required this.label,
-    required this.children,
-  });
-
-  final String label;
-  final List<Widget> children;
-
-  @override
-  Widget build(BuildContext context) {
-    return SpacedColumn(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      spacing: SpaceTokens.small,
-      children: [
-        Text(
-          label,
-          style: TextStyleTokens.bodyMedium(null),
-        ),
-        ...children,
-      ],
     );
   }
 }

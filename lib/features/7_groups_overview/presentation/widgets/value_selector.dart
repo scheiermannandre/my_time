@@ -55,6 +55,7 @@ class _ValueSelectorState extends State<ValueSelector> {
   Widget build(BuildContext context) {
     final iconColor = ThemeColorBuilder(context).getGuidingIconColor();
     return Column(
+      mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         if (widget.labelText != null)

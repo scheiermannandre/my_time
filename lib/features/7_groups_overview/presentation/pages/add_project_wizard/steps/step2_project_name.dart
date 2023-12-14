@@ -3,7 +3,6 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_time/common/extensions/build_context_extension.dart';
 import 'package:my_time/config/theme/tokens/space_tokens.dart';
-import 'package:my_time/core/util/extentions/string_extension.dart';
 import 'package:my_time/core/widgets/text_input_field.dart';
 import 'package:my_time/core/widgets/wizard/wizard_step/wizard_step_event_listener.dart';
 import 'package:my_time/core/widgets/wizard/wizard_step/wizard_step_wrapper.dart';
@@ -55,9 +54,6 @@ class _ProjectNameStep extends HookConsumerWidget {
   String? validate(BuildContext context, String? value) {
     if (value == null || value.isEmpty) {
       return context.loc.step2ValidationEmpty;
-    }
-    if (!value.containsOnlyLetters()) {
-      return context.loc.step2ValidationInvalidChars;
     }
     return null;
   }

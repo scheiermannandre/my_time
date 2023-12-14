@@ -22,6 +22,7 @@ ThemeData lightTheme = ThemeData(
     onPrimary: LightThemeColorTokens.darkColor,
     secondary: LightThemeColorTokens.mediumColor,
     onSecondary: Colors.white, //TBD
+    tertiary: LightThemeColorTokens.mediumColor,
     error: LightThemeColorTokens.errorColor,
     onError: Colors.white, //TBD
     background: LightThemeColorTokens.lightestColor,

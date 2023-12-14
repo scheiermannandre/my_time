@@ -4,7 +4,7 @@ import 'package:my_time/config/theme/tokens/space_tokens.dart';
 import 'package:my_time/core/widgets/wizard/wizard_step/wizard_step_event_listener.dart';
 import 'package:my_time/core/widgets/wizard/wizard_step/wizard_step_wrapper.dart';
 import 'package:my_time/features/7_groups_overview/domain/entities/enums/payment_status.dart';
-import 'package:my_time/features/7_groups_overview/presentation/widgets/add_project_wizard/value_selector.dart';
+import 'package:my_time/features/7_groups_overview/presentation/widgets/payment_status_selector.dart';
 
 /// Step 3: Sick Days Selection Step in a wizard.
 class Step3SickDays extends StatelessWidget {
@@ -31,20 +31,12 @@ class Step3SickDays extends StatelessWidget {
           onNextEvent: (event) {},
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: SpaceTokens.medium),
-            child: ValueSelector(
-              options:
-                  PaymentStatus.values.map((e) => e.label(context)).toList(),
-              data: data?.label(context),
+            child: PaymentStatusSelector(
+              paymentStatus: data,
               onChoose: (value) {
-                var paymentStatus = PaymentStatus.paid;
-                if (value == PaymentStatus.paid.label(context)) {
-                  paymentStatus = PaymentStatus.paid;
-                } else {
-                  paymentStatus = PaymentStatus.unpaid;
-                }
                 controller
                   ..next()
-                  ..saveData(paymentStatus)
+                  ..saveData(value)
                   ..showNextBtn()
                   ..hideSkipBtn();
               },

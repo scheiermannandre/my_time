@@ -71,4 +71,32 @@ class ProjectEntity {
 
   /// Represents the workplace settings for the project.
   final Workplace? workplace;
+
+  /// Returns a copy of the current instance with the specified fields
+  ProjectEntity copyWith({
+    String? id,
+    String? name,
+    String? groupId,
+    bool? isFavorite,
+    PaymentStatus? sickDaysPayment,
+    PaymentStatus? publicHolidaysPayment,
+    VacationEntity? vacationInfo,
+    ProjectTimeManagementEntity? timeManagement,
+    ProjectMoneyManagementEntity? moneyManagement,
+    Workplace? workplace,
+  }) {
+    return ProjectEntity(
+      projectId: id ?? this.id,
+      name: name ?? this.name,
+      groupId: groupId ?? this.groupId,
+      isFavorite: isFavorite ?? this.isFavorite,
+      sickDaysPayment: sickDaysPayment ?? this.sickDaysPayment,
+      publicHolidaysPayment:
+          publicHolidaysPayment ?? this.publicHolidaysPayment,
+      vacationInfo: vacationInfo ?? this.vacationInfo,
+      timeManagement: timeManagement ?? this.timeManagement,
+      moneyManagement: moneyManagement ?? this.moneyManagement,
+      workplace: workplace ?? this.workplace,
+    );
+  }
 }

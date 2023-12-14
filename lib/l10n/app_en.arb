@@ -114,6 +114,60 @@
     "profileReauthenticateSubmitBtnLabel": "Reauthenticate me!",
 
 
+    "@TimerPage": {},
+    "timerPageProjectSettingsBtnLabel": "Project Settings",
+    "timerPageFavoriteBtnLabel": "Mark as Favorite",
+    "timerPageNewEntryBtnLabel": "New Entry",
+    "timerPageAddDaysOffBtnLabel": "Add Days Off",
+    "timerPageHistoryBtnLabel": "History",
+
+    "@Misc": {},
+    "saveBtnLabel": "Save",
+    "cancelBtnLabel": "Cancel",
+    "numberSelectorValueLabel": "Current value: {value}",
+    "@numberSelectorValueLabel": {
+        "placeholders": {
+            "value": {
+                "type": "int"
+            }
+        }
+    },
+    "numberSelectorValidatorMessage": "Please enter a value between {min} and {max}",
+    "@numberSelectorValidatorMessage": {
+        "placeholders": {
+            "min": {
+                "type": "int"
+            },
+            "max": {
+                "type": "int"
+            }
+        }
+    },
+
+    "@ProjectSettings": {},
+
+    "notWorkingDaysPaymentLabel": "Payment on not working days",
+    "notWorkingDaysPaymentSickLabel": "Sick days",
+    "notWorkingDaysPaymentPublicHolidaysLabel": "Public holidays",
+    "vacationLabel": "Vacation",
+    "vacationDaysLabel": "Vacation days",
+    "vacationPaymentLabel": "Payment",
+    "timeManagementLabel": "Time Management",
+    "timeManagementReferencePeriodLabel": "Reference period",
+    "timeManagementWorkingHoursLabel": "Working hours",
+    "moneyManagementLabel": "Money Management",
+    "moneyManagementPaymentIntervalLabel": "Payment interval",
+    "moneyManagementCurrencyLabel": "Currency",
+    "moneyManagementPaymentLabel": "Payment",
+    "workplaceLabel": "Workplace",
+
+    "setPublicHolidaysPaymentDialogHeader": "Payment on public holidays",
+    "setSickDaysPaymentDialogHeader": "Payment on sick days",
+    
+
+
+
+
     "@HomePage": {},
 
     "groups": "Groups",
@@ -180,6 +234,17 @@
     "step6WorkingHoursInputLabel": "Working hours per {period}",
     "@step6WorkingHoursInputLabel": {
         "placeholders": {
+            "period": {
+                "type": "String"
+            }
+        }
+    },
+    "step6workingHourValidation": "You claim to work more than {hours} hours a {period}. Are you sure?",
+    "@step6workingHourDayValidation": {
+        "placeholders": {
+            "hours": {
+                "type": "int"
+            },
             "period": {
                 "type": "String"
             }

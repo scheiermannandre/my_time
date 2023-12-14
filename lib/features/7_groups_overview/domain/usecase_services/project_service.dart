@@ -20,6 +20,13 @@ class ProjectService {
     return ref.read(projectRepositoryImplProvider).addProject(project);
   }
 
+  /// Updates a project with the given [project] settings.
+  Future<void> updateProject(
+    ProjectEntity project,
+  ) async {
+    return ref.read(projectRepositoryImplProvider).updateProject(project);
+  }
+
   /// Fetches a project with the specified [groupId] and [projectId].
   Future<ProjectEntity> fetchProject(
     String groupId,
@@ -29,6 +36,16 @@ class ProjectService {
         .read(projectRepositoryImplProvider)
         .fetchProject(groupId, projectId);
   }
+
+  /// Streams a project with the specified [groupId] and [projectId].
+  Stream<ProjectEntity> streamProject(
+    String groupId,
+    String projectId,
+  ) {
+    return ref
+        .read(projectRepositoryImplProvider)
+        .streamProject(groupId, projectId);
+  }
 }
 
 /// Riverpod provider for the [ProjectService] class.
@@ -37,7 +54,7 @@ ProjectService projectService(ProjectServiceRef ref) {
   return ProjectService(ref: ref);
 }
 
-/// Riverpod provider for the [ProjectService] class.
+/// Riverpod provider for fetching a Project class.
 @riverpod
 FutureOr<ProjectEntity> fetchProject(
   Ref ref, {
@@ -45,4 +62,14 @@ FutureOr<ProjectEntity> fetchProject(
   required String projectId,
 }) {
   return ref.read(projectServiceProvider).fetchProject(groupId, projectId);
+}
+
+/// Riverpod provider for streaming a Project class.
+@riverpod
+Stream<ProjectEntity> streamProject(
+  StreamProjectRef ref, {
+  required String groupId,
+  required String projectId,
+}) {
+  return ref.read(projectServiceProvider).streamProject(groupId, projectId);
 }

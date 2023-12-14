@@ -28,4 +28,17 @@ class ProjectMoneyManagementEntity {
       'currency': currency?.index,
     };
   }
+
+  /// Returns a copy of the `ProjectMoneyManagementEntity` instance
+  ProjectMoneyManagementEntity copyWith({
+    PaymentInterval? paymentInterval,
+    double? payment,
+    Currency? currency,
+  }) {
+    return ProjectMoneyManagementEntity(
+      paymentInterval: paymentInterval ?? this.paymentInterval,
+      payment: payment ?? this.payment,
+      currency: currency ?? this.currency,
+    );
+  }
 }

@@ -11,6 +11,7 @@ import 'package:my_time/features/5_project_history/view/proejct_history_shell_pa
 import 'package:my_time/features/6_group_analytics/view/group_analytics_shell_page.dart';
 import 'package:my_time/features/7_groups_overview/presentation/pages/add_project_wizard/add_project_wizard.dart';
 import 'package:my_time/features/7_groups_overview/presentation/pages/groups_overview.dart';
+import 'package:my_time/features/7_groups_overview/presentation/pages/project_settings_page.dart';
 import 'package:my_time/features/8_authentication/data/repositories/auth_repository_impl.dart';
 import 'package:my_time/features/8_authentication/presentation/pages/auth_actioncode_handler_page.dart';
 import 'package:my_time/features/8_authentication/presentation/pages/auth_reset_password_page.dart';
@@ -40,6 +41,7 @@ enum _AppRoute {
   forgotPassword,
   profile,
   timer,
+  projectSettings,
 }
 
 /// The routes of the app.
@@ -85,6 +87,9 @@ class AppRoute {
 
   /// The fast access to the timer route.
   static String get timer => _AppRoute.timer.name;
+
+  /// The fast access to the timer route.
+  static String get projectSettings => _AppRoute.projectSettings.name;
 }
 
 /// Gorouter for the app.
@@ -236,25 +241,26 @@ GoRouter goRouter(GoRouterRef ref) {
           GoRoute(
             path: 'timer',
             name: AppRoute.timer,
-            redirect: (context, state) {
-              final groupId = state.uri.queryParameters['groupId'] ?? '';
-              final projectId = state.uri.queryParameters['projectId'] ?? '';
-              final projectName =
-                  state.uri.queryParameters['projectName'] ?? '';
-              if (groupId.isEmpty || projectId.isEmpty || projectName.isEmpty) {
-                return '/';
-              }
-              return null;
-            },
             pageBuilder: (context, state) => MaterialPage<void>(
               fullscreenDialog: true,
               key: state.pageKey,
               child: TimerPage(
-                groupId: state.uri.queryParameters['groupId']!,
-                projectId: state.uri.queryParameters['projectId']!,
-                projectName: state.uri.queryParameters['projectName']!,
+                groupId: state.uri.queryParameters['groupId'] ?? '',
+                projectId: state.uri.queryParameters['projectId'] ?? '',
+                projectName: state.uri.queryParameters['projectName'] ?? '',
               ),
             ),
+            routes: [
+              GoRoute(
+                path: 'projectsettings',
+                name: AppRoute.projectSettings,
+                builder: (context, state) => ProjectSettingsPage(
+                  groupId: state.uri.queryParameters['groupId'] ?? '',
+                  projectId: state.uri.queryParameters['projectId'] ?? '',
+                  projectName: state.uri.queryParameters['projectName'] ?? '',
+                ),
+              ),
+            ],
           ),
         ],
       ),

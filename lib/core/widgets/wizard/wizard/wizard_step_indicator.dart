@@ -35,7 +35,7 @@ class StepIndicator extends StatelessWidget {
           borderRadius: BorderRadius.circular(style.borderRadius),
           color: isActive
               ? Theme.of(context).colorScheme.primary
-              : Theme.of(context).colorScheme.secondary,
+              : Theme.of(context).colorScheme.tertiary,
         ),
         height: style.height,
         width: style.width,

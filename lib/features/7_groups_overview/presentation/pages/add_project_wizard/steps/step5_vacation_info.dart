@@ -3,13 +3,13 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:my_time/common/extensions/build_context_extension.dart';
 import 'package:my_time/config/theme/tokens/space_tokens.dart';
-import 'package:my_time/core/util/extentions/string_extension.dart';
-import 'package:my_time/core/widgets/text_input_field.dart';
+import 'package:my_time/core/widgets/number_picker.dart';
+import 'package:my_time/core/widgets/wizard/labeled_widgets.dart';
 import 'package:my_time/core/widgets/wizard/wizard_step/wizard_step_event_listener.dart';
 import 'package:my_time/core/widgets/wizard/wizard_step/wizard_step_wrapper.dart';
 import 'package:my_time/features/7_groups_overview/domain/entities/enums/payment_status.dart';
 import 'package:my_time/features/7_groups_overview/domain/entities/vacation_entity.dart';
-import 'package:my_time/features/7_groups_overview/presentation/widgets/add_project_wizard/value_selector.dart';
+import 'package:my_time/features/7_groups_overview/presentation/widgets/payment_status_selector.dart';
 
 /// Step 5: Vacation Days Selection Step in a wizard.
 class Step5VacationInfo extends StatelessWidget {
@@ -67,6 +67,7 @@ class _VacationDaysStepState extends State<_VacationDaysStep> {
   PaymentStatus? paymentStatus;
   bool _areVacationDaysSet = false;
   bool _finishedEditingVacationDays = false;
+  int days = 1;
   @override
   void initState() {
     _areVacationDaysSet = widget.data?.days != null;
@@ -77,91 +78,72 @@ class _VacationDaysStepState extends State<_VacationDaysStep> {
     if (value == null || value.isEmpty) {
       return context.loc.step5ValidationEmpty;
     }
-    final result = value.isNumeric();
-
-    if (!result.result || result.number.isNegative) {
-      return context.loc.step5ValidationInvalidChars;
-    }
-
     return null;
   }
 
   @override
   Widget build(BuildContext context) {
-    final textController =
-        useTextEditingController(text: widget.data?.days.toString() ?? '');
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: SpaceTokens.medium),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           const SizedBox(height: SpaceTokens.small),
-          TextInputField(
-            labelText: context.loc.step5HolidaysInputLabel,
-            onChanged: (value, isValid) {
-              setState(() {
-                _areVacationDaysSet = isValid;
-              });
-              if (!isValid) {
-                widget.disableNext();
-                return;
-              }
-
-              if (paymentStatus != null) {
-                widget.enableNext();
-              }
-              widget.saveVacationInfo(VacationEntity(days: int.parse(value)));
-            },
-            validator: (value) => validate(context, value),
-            controller: textController,
-            autofocus: widget.data == null,
-            onEditingComplete: () {
-              if (validate(context, textController.text) != null) return;
-              setState(() {
-                _finishedEditingVacationDays = true;
-              });
-              FocusScope.of(context).unfocus();
-            },
-          ),
-          const SizedBox(height: SpaceTokens.large),
-          Visibility(
-            visible: _finishedEditingVacationDays,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                ValueSelector(
-                  labelText: context.loc.step5PaymentStatusLabel,
-                  options: PaymentStatus.values
-                      .map((e) => e.label(context))
-                      .toList(),
-                  horizontalPadding: 0,
-                  data: widget.data?.paymentStatus?.label(context) ?? '',
-                  onChoose: (value) {
+          LabeledWidgets(
+            label: context.loc.step5HolidaysInputLabel,
+            children: [
+              Center(
+                child: NumberPicker(
+                  axis: Axis.horizontal,
+                  minValue: 0,
+                  maxValue: 120,
+                  value: days,
+                  onChanged: (value) {
                     setState(() {
-                      if (value == PaymentStatus.paid.label(context)) {
-                        paymentStatus = PaymentStatus.paid;
-                      } else //if (value == PaymentStatus.unpaid.label(context))
-                      {
-                        paymentStatus = PaymentStatus.unpaid;
-                      }
+                      days = value;
+                      _areVacationDaysSet = true;
                     });
-
-                    if (!_areVacationDaysSet || !_finishedEditingVacationDays) {
-                      widget.disableNext();
-                      return;
+                    if (paymentStatus != null) {
+                      widget.enableNext();
                     }
-                    widget.enableNext();
-
-                    widget.saveVacationInfo(
-                      VacationEntity(
-                        paymentStatus: paymentStatus,
-                        days: int.parse(textController.text),
-                      ),
-                    );
+                    widget.saveVacationInfo(VacationEntity(days: value));
+                    _finishedEditingVacationDays = true;
                   },
                 ),
-              ],
-            ).animate().fadeIn(),
+              ),
+            ],
+          ),
+          Visibility(
+            visible: _finishedEditingVacationDays,
+            child: Padding(
+              padding: const EdgeInsets.only(top: SpaceTokens.medium),
+              child: LabeledWidgets(
+                label: context.loc.step5PaymentStatusLabel,
+                children: [
+                  PaymentStatusSelector(
+                    paymentStatus: widget.data?.paymentStatus,
+                    onChoose: (value) {
+                      setState(() {
+                        paymentStatus = value;
+                      });
+                      if (!_areVacationDaysSet ||
+                          !_finishedEditingVacationDays) {
+                        widget.disableNext();
+                        return;
+                      }
+                      widget.enableNext();
+
+                      widget.saveVacationInfo(
+                        VacationEntity(
+                          paymentStatus: paymentStatus,
+                          days: days,
+                        ),
+                      );
+                    },
+                  ),
+                ],
+              ).animate().fadeIn(),
+            ),
           ),
         ],
       ),

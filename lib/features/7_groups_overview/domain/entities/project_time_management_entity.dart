@@ -22,4 +22,15 @@ class ProjectTimeManagementEntity {
       'workingHours': workingHours,
     };
   }
+
+  /// Returns a copy of the `ProjectTimeManagementEntity` instance
+  ProjectTimeManagementEntity copyWith({
+    ReferencePeriod? referencePeriod,
+    int? workingHours,
+  }) {
+    return ProjectTimeManagementEntity(
+      referencePeriod: referencePeriod ?? this.referencePeriod,
+      workingHours: workingHours ?? this.workingHours,
+    );
+  }
 }
