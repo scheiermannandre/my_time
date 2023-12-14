@@ -14,6 +14,7 @@ class NumberSelector extends StatefulWidget {
     required this.initialValue,
     required this.onSave,
     required this.onCancel,
+    this.bigValues = false,
     this.minValue = 1,
     this.maxValue = 100,
     this.step = 1,
@@ -37,6 +38,9 @@ class NumberSelector extends StatefulWidget {
 
   /// The step between values.
   final int step;
+
+  /// Whether to use a text input field or a number picker.
+  final bool bigValues;
   @override
   State<NumberSelector> createState() => _NumberSelectorState();
 }
@@ -48,6 +52,7 @@ class _NumberSelectorState extends State<NumberSelector> {
   @override
   void initState() {
     _currentValue = widget.initialValue;
+    isNumberPicker = !widget.bigValues;
     super.initState();
   }
 

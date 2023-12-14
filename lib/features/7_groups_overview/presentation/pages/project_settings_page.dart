@@ -71,12 +71,14 @@ class ProjectSettingsPage extends ConsumerWidget {
     required int minValue,
     required int maxValue,
     required int step,
+    required bool bigValues,
   }) async {
     return ModalDialogUI.show<int>(
       context: context,
       title: title,
       content: SingleChildScrollView(
         child: NumberSelector(
+          bigValues: bigValues,
           initialValue: value,
           minValue: minValue,
           maxValue: maxValue,
@@ -414,6 +416,7 @@ class ProjectSettingsPage extends ConsumerWidget {
       minValue: 1,
       maxValue: 2000000000,
       step: 1,
+      bigValues: true,
     );
     return payment;
   }
@@ -489,11 +492,14 @@ class ProjectSettingsPage extends ConsumerWidget {
     BuildContext context,
   ) async {
     var maxValue = 8760;
+    var bigValues = true;
     if (project.timeManagement?.referencePeriod == ReferencePeriod.daily) {
       maxValue = 24;
+      bigValues = false;
     } else if (project.timeManagement?.referencePeriod ==
         ReferencePeriod.weekly) {
       maxValue = 168;
+      bigValues = false;
     } else if (project.timeManagement?.referencePeriod ==
         ReferencePeriod.monthly) {
       maxValue = 744;
@@ -508,6 +514,7 @@ class ProjectSettingsPage extends ConsumerWidget {
       minValue: 1,
       maxValue: maxValue,
       step: 1,
+      bigValues: bigValues,
     );
   }
 
@@ -532,6 +539,7 @@ class ProjectSettingsPage extends ConsumerWidget {
         minValue: 1,
         maxValue: 100,
         step: 1,
+        bigValues: false,
       );
 }
 

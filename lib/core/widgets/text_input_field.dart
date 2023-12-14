@@ -158,7 +158,7 @@ class _TextInputFieldState extends State<TextInputField> {
               });
             },
             focusNode: widget.focusNode,
-            controller: widget.controller,
+            controller: _controller,
             autofocus: widget.autofocus,
             decoration: InputDecoration(
               hintText: widget.hintText,
