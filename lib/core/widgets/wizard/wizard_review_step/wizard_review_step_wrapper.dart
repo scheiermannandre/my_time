@@ -44,3 +44,61 @@ class WizardReviewStepWrapper<T> extends ConsumerWidget {
     );
   }
 }
+
+/// Wrapper widget for a wizard review step for showing data that is
+/// accumulated over multiple steps.
+class WizardReviewStepAccumulatedWrapper extends ConsumerWidget {
+  /// Creates a [WizardReviewStepAccumulatedWrapper] widget.
+  const WizardReviewStepAccumulatedWrapper({
+    required this.steps,
+    required this.builder,
+    super.key,
+  });
+
+  /// The step number to jump to.
+  final List<int> steps;
+
+  /// Function that builds the UI based on the data of the wizard step.
+  final Widget Function(Map<int, dynamic> data) builder;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final data = <int, dynamic>{};
+
+    for (final step in steps) {
+      final state = ref.watch(wizardStepControllerProvider(step));
+      data[step] = state.data;
+    }
+    return Card(
+      child: ListTile(
+        title: AbsorbPointer(
+          child: builder(data),
+        ),
+      ),
+    );
+  }
+}
+
+/// Wrapper widget for a wizard review step for showing data that is not
+/// gathered via the wizard.
+class WizardReviewStepDataWrapper extends StatelessWidget {
+  /// Creates a [WizardReviewStepDataWrapper] widget.
+  const WizardReviewStepDataWrapper({
+    required this.builder,
+    super.key,
+  });
+
+  /// Function that builds the UI based on the data of the wizard step.
+  final Widget Function() builder;
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: ListTile(
+        title: AbsorbPointer(
+          child: builder(),
+        ),
+      ),
+    );
+  }
+}

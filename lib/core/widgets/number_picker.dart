@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:infinite_listview/infinite_listview.dart';
+import 'package:my_time/config/theme/tokens/color_tokens.dart';
 
 /// Function that builds a text from a number.
 typedef TextMapper = String Function(String numberText);
@@ -26,7 +27,50 @@ class NumberPicker extends StatefulWidget {
     this.zeroPad = false,
     this.textMapper,
     this.infiniteLoop = false,
+    this.selectedColor,
   }) : value = value.clamp(minValue, maxValue);
+
+  /// Constructor for the NumberPicker widget, that presets the selected color
+  /// according to the theme.
+  factory NumberPicker.styled({
+    required BuildContext context,
+    required int minValue,
+    required int maxValue,
+    required int value,
+    required ValueChanged<int> onChanged,
+    int itemCount = 3,
+    int step = 1,
+    double itemHeight = 50,
+    double itemWidth = 100,
+    Axis axis = Axis.vertical,
+    TextStyle? textStyle,
+    TextStyle? selectedTextStyle,
+    bool haptics = false,
+    Decoration? decoration,
+    bool zeroPad = false,
+    TextMapper? textMapper,
+    bool infiniteLoop = false,
+  }) {
+    return NumberPicker(
+      minValue: minValue,
+      maxValue: maxValue,
+      value: value,
+      onChanged: onChanged,
+      itemCount: itemCount,
+      step: step,
+      itemHeight: itemHeight,
+      itemWidth: itemWidth,
+      axis: axis,
+      textStyle: textStyle,
+      selectedTextStyle: selectedTextStyle,
+      haptics: haptics,
+      decoration: decoration,
+      zeroPad: zeroPad,
+      textMapper: textMapper,
+      infiniteLoop: infiniteLoop,
+      selectedColor: ThemeColorBuilder(context).getGuidingIconColor(),
+    );
+  }
 
   /// Min value user can pick
   final int minValue;
@@ -65,6 +109,9 @@ class NumberPicker extends StatefulWidget {
   /// Style of non-selected numbers. If null, it uses
   /// Theme's headline5 with accentColor
   final TextStyle? selectedTextStyle;
+
+  /// Color of selected number.
+  final Color? selectedColor;
 
   /// Whether to trigger haptic pulses or not
   final bool haptics;
@@ -201,7 +248,7 @@ class NumberPickerState extends State<NumberPicker> {
     final defaultStyle = widget.textStyle ?? themeData.textTheme.bodyMedium;
     final selectedStyle = widget.selectedTextStyle ??
         themeData.textTheme.headlineSmall
-            ?.copyWith(color: themeData.colorScheme.secondary);
+            ?.copyWith(color: widget.selectedColor);
 
     final value = _intValueFromIndex(index % _itemCount);
     final isExtra = !widget.infiniteLoop &&

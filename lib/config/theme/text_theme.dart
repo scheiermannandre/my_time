@@ -9,4 +9,5 @@ TextTheme get textTheme => TextTheme(
       bodyMedium: TextStyleTokens.bodyMedium(null),
 
       titleLarge: TextStyleTokens.getHeadline4(null), // used for appbar title
+      headlineSmall: TextStyleTokens.getHeadline3(null),
     );

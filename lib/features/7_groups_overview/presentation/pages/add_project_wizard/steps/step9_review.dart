@@ -2,12 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_time/common/extensions/build_context_extension.dart';
 import 'package:my_time/config/theme/tokens/space_tokens.dart';
-import 'package:my_time/config/theme/tokens/text_style_tokens.dart';
-import 'package:my_time/core/widgets/spaced_column.dart';
-import 'package:my_time/core/widgets/wizard/labeled_widgets.dart';
+import 'package:my_time/core/widgets/wizard/wizard_review_step/review_card.dart';
+import 'package:my_time/core/widgets/wizard/wizard_review_step/show_review_value.dart';
 import 'package:my_time/core/widgets/wizard/wizard_review_step/wizard_review_step.dart';
 import 'package:my_time/core/widgets/wizard/wizard_review_step/wizard_review_step_event_listener.dart';
-import 'package:my_time/core/widgets/wizard/wizard_review_step/wizard_review_step_wrapper.dart';
 import 'package:my_time/features/7_groups_overview/domain/entities/enums/currency.dart';
 import 'package:my_time/features/7_groups_overview/domain/entities/enums/payment_interval.dart';
 import 'package:my_time/features/7_groups_overview/domain/entities/enums/payment_status.dart';
@@ -60,7 +58,7 @@ class _GroupReview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _ReviewBlock<GroupEntity?>(
+    return ReviewDataCard<GroupEntity?>(
       label: context.loc.reviewStepGroupLabel,
       stepToJumpTo: 0,
       evaluateVisibility: (data) {
@@ -68,7 +66,7 @@ class _GroupReview extends StatelessWidget {
         return true;
       },
       builder: (data) => [
-        _ShowValue(
+        ReviewLabeldDataValue(
           label: data?.name ?? '',
           data: '',
         ),
@@ -82,7 +80,7 @@ class _ProjectNameReview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _ReviewBlock<String?>(
+    return ReviewDataCard<String?>(
       label: context.loc.reviewStepProjectNameLabel,
       stepToJumpTo: 1,
       evaluateVisibility: (data) {
@@ -90,7 +88,7 @@ class _ProjectNameReview extends StatelessWidget {
         return true;
       },
       builder: (data) => [
-        _ShowValue(
+        ReviewLabeldDataValue(
           label: data ?? '',
           data: '',
         ),
@@ -104,7 +102,7 @@ class _SickDaysReview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _ReviewBlock<PaymentStatus?>(
+    return ReviewDataCard<PaymentStatus?>(
       label: context.loc.reviewStepSickDaysPaymentLabel,
       stepToJumpTo: 2,
       evaluateVisibility: (data) {
@@ -112,7 +110,7 @@ class _SickDaysReview extends StatelessWidget {
         return true;
       },
       builder: (data) => [
-        _ShowValue(
+        ReviewLabeldDataValue(
           label: data?.label(context) ?? '',
           data: '',
         ),
@@ -126,7 +124,7 @@ class _PublicHolidaysReview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _ReviewBlock<PaymentStatus?>(
+    return ReviewDataCard<PaymentStatus?>(
       label: context.loc.reviewStepPublicHolidaysPaymentLabel,
       stepToJumpTo: 3,
       evaluateVisibility: (data) {
@@ -134,7 +132,7 @@ class _PublicHolidaysReview extends StatelessWidget {
         return true;
       },
       builder: (data) => [
-        _ShowValue(
+        ReviewLabeldDataValue(
           label: data?.label(context) ?? '',
           data: '',
         ),
@@ -148,7 +146,7 @@ class _VacationInfoReview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _ReviewBlock<VacationEntity?>(
+    return ReviewDataCard<VacationEntity?>(
       label: context.loc.reviewStepVacationLabel,
       stepToJumpTo: 4,
       evaluateVisibility: (data) {
@@ -160,11 +158,11 @@ class _VacationInfoReview extends StatelessWidget {
         return true;
       },
       builder: (data) => [
-        _ShowValue(
+        ReviewLabeldDataValue(
           label: context.loc.reviewStepVacationDaysLabel,
           data: data?.days?.toString() ?? '',
         ),
-        _ShowValue(
+        ReviewLabeldDataValue(
           label: context.loc.reviewStepVacationPaymentLabel,
           data: data?.paymentStatus?.label(context) ?? '',
         ),
@@ -178,7 +176,7 @@ class _TimeManagementReview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _ReviewBlock<ProjectTimeManagementEntity?>(
+    return ReviewDataCard<ProjectTimeManagementEntity?>(
       label: context.loc.reviewStepTimeManagementLabel,
       stepToJumpTo: 5,
       evaluateVisibility: (data) {
@@ -190,11 +188,11 @@ class _TimeManagementReview extends StatelessWidget {
         return true;
       },
       builder: (data) => [
-        _ShowValue(
+        ReviewLabeldDataValue(
           label: context.loc.reviewStepTimeManagementReferencePeriodLabel,
           data: data?.referencePeriod?.label(context) ?? '',
         ),
-        _ShowValue(
+        ReviewLabeldDataValue(
           label: context.loc.reviewStepTimeManagementWorkingHoursLabel(
             data?.referencePeriod?.label(context) ?? '',
           ),
@@ -210,7 +208,7 @@ class _MoneyManagementReview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _ReviewBlock<ProjectMoneyManagementEntity?>(
+    return ReviewDataCard<ProjectMoneyManagementEntity?>(
       label: context.loc.reviewStepMoneyManagementLabel,
       stepToJumpTo: 6,
       evaluateVisibility: (data) {
@@ -224,15 +222,15 @@ class _MoneyManagementReview extends StatelessWidget {
         return true;
       },
       builder: (data) => [
-        _ShowValue(
+        ReviewLabeldDataValue(
           label: context.loc.reviewStepMoneyManagementPaymentIntervalLabel,
           data: data?.paymentInterval?.label(context) ?? '',
         ),
-        _ShowValue(
+        ReviewLabeldDataValue(
           label: context.loc.reviewStepMoneyManagementCurrencyLabel,
           data: data?.currency?.label ?? '',
         ),
-        _ShowValue(
+        ReviewLabeldDataValue(
           label: context.loc.reviewStepMoneyManagementPaymentLabel(
             data?.paymentInterval?.label(context) ?? '',
             data?.currency?.label ?? '',
@@ -249,7 +247,7 @@ class _WorkplaceReview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _ReviewBlock<Workplace?>(
+    return ReviewDataCard<Workplace?>(
       label: context.loc.reviewStepWorkplaceLabel,
       stepToJumpTo: 7,
       evaluateVisibility: (data) {
@@ -257,101 +255,11 @@ class _WorkplaceReview extends StatelessWidget {
         return true;
       },
       builder: (data) => [
-        _ShowValue(
+        ReviewLabeldDataValue(
           label: data?.label(context) ?? '',
           data: '',
         ),
       ],
-    );
-  }
-}
-
-class _ShowValue extends StatelessWidget {
-  const _ShowValue({
-    required this.label,
-    required this.data,
-  });
-
-  final String label;
-  final String data;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text(
-          label,
-        ),
-        Text(
-          data,
-          style: TextStyleTokens.bodyMedium(null),
-        ),
-      ],
-    );
-  }
-}
-
-class _ReviewBlock<T> extends StatefulWidget {
-  const _ReviewBlock({
-    required this.stepToJumpTo,
-    required this.builder,
-    required this.label,
-    required this.evaluateVisibility,
-    super.key,
-  });
-
-  final int stepToJumpTo;
-  final List<Widget> Function(T?) builder;
-  final String label;
-  final bool Function(T? data) evaluateVisibility;
-
-  @override
-  State<_ReviewBlock<T>> createState() => _ReviewBlockState<T>();
-}
-
-class _ReviewBlockState<T> extends State<_ReviewBlock<T>> {
-  bool _isVisible = false;
-
-  void postFrameCallback(T? data) {
-    if (data == null) return;
-    if (!mounted) return;
-    final isVisible = widget.evaluateVisibility(data);
-    if (_isVisible == isVisible) return;
-    setState(() {
-      _isVisible = isVisible;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: _isVisible ? null : 0,
-      height: _isVisible ? null : 0,
-      child: Padding(
-        padding: const EdgeInsets.only(bottom: SpaceTokens.mediumSmall),
-        child: LabeledWidgets(
-          label: widget.label,
-          children: [
-            WizardReviewStepWrapper<T?>(
-              stepToJumpTo: widget.stepToJumpTo,
-              builder: (data) {
-                WidgetsBinding.instance
-                    .addPostFrameCallback((_) => postFrameCallback(data));
-                return Visibility(
-                  visible: data != null,
-                  child: SingleChildScrollView(
-                    child: SpacedColumn(
-                      spacing: SpaceTokens.mediumSmall,
-                      children: widget.builder(data),
-                    ),
-                  ),
-                );
-              },
-            ),
-          ],
-        ),
-      ),
     );
   }
 }

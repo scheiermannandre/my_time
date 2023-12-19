@@ -30,6 +30,7 @@ class WizardButtons extends StatefulHookWidget {
     required this.onNext,
     required this.onLastPage,
     required this.finishButtonContent,
+    required this.finishBtnEnabled,
     required this.onSkip,
     required this.skipButtonContent,
     required this.isSkipable,
@@ -69,6 +70,9 @@ class WizardButtons extends StatefulHookWidget {
 
   /// The content of the finish button.
   final Widget finishButtonContent;
+
+  /// Whether the finish button should be enabled or disabled.
+  final bool finishBtnEnabled;
 
   /// The content of the skip button.
   final Widget skipButtonContent;
@@ -146,7 +150,7 @@ class _WizardButtonsState extends State<WizardButtons> {
             showrightBtn: widget.isLastStep,
             rightBtnTitle: widget.finishButtonContent,
             rightBtnIsLoading: widget.isLoading,
-            onRightBtn: widget.onFinish,
+            onRightBtn: widget.finishBtnEnabled ? widget.onFinish : null,
             showLeftBtn: !widget.isLastStep && widget.isInReview,
             leftBtnTitle: widget.goToLastPageButtonContent,
             onLeftBtn: widget.onLastPage,

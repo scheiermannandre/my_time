@@ -1,3 +1,4 @@
+import 'package:my_time/core/widgets/wizard/wizard/wizard_controller.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'wizard_review_step_controller.g.dart';
@@ -23,6 +24,20 @@ class WizardReviewStepController extends _$WizardReviewStepController
     // ref.onDispose(() {
     //   onFinishEvent = null;
     // });
+  }
+
+  /// Sets the finish button to enabled.
+  void enableFinish() {
+    ref
+        .read(wizardControllerProvider.notifier)
+        .setReviewPageFinishEnabled(true);
+  }
+
+  /// Sets the finish button to disabled.
+  void disableFinish() {
+    ref
+        .read(wizardControllerProvider.notifier)
+        .setReviewPageFinishEnabled(false);
   }
 
   /// Invokes the "onFinish" event with the provided [data].

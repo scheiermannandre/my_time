@@ -93,7 +93,8 @@ class _VacationDaysStepState extends State<_VacationDaysStep> {
             label: context.loc.step5HolidaysInputLabel,
             children: [
               Center(
-                child: NumberPicker(
+                child: NumberPicker.styled(
+                  context: context,
                   axis: Axis.horizontal,
                   minValue: 0,
                   maxValue: 120,

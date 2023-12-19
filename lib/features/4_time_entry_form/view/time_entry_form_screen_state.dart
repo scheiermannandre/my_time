@@ -64,9 +64,8 @@ class TimeEntryFormScreenState {
 
   void _setEntry(TimeEntryModel value) {
     timeEntry = value;
-    startDateController.text =
-        value.startTime.toFormattedDateString(languageCode);
-    endDateController.text = value.endTime.toFormattedDateString(languageCode);
+    startDateController.text = value.startTime.toFormattedDateString();
+    endDateController.text = value.endTime.toFormattedDateString();
     startTimeController.text = value.startTime.toFormattedTimeOfDayString();
     endTimeController.text = value.endTime.toFormattedTimeOfDayString();
 

@@ -4,13 +4,17 @@ import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_time/common/extensions/async_value_extensions.dart';
 import 'package:my_time/common/extensions/build_context_extension.dart';
+import 'package:my_time/config/theme/tokens/color_tokens.dart';
 import 'package:my_time/config/theme/tokens/space_tokens.dart';
+import 'package:my_time/core/modals/modal_bottom_sheet_ui.dart';
 import 'package:my_time/core/util/extentions/widget_ref_extension.dart';
 import 'package:my_time/core/widgets/action_button.dart';
 import 'package:my_time/core/widgets/persistent_sheet_scaffold.dart';
 import 'package:my_time/core/widgets/spaced_column.dart';
+import 'package:my_time/features/7_groups_overview/domain/entities/project_entity.dart';
 import 'package:my_time/features/7_groups_overview/domain/usecase_services/project_service.dart';
 import 'package:my_time/features/9_timer/data/repositories/timer_data_repository.dart';
+import 'package:my_time/features/9_timer/domain/entities/entry_type.dart';
 import 'package:my_time/features/9_timer/domain/entities/timer_state.dart';
 import 'package:my_time/features/9_timer/domain/services/timer_service.dart';
 import 'package:my_time/features/9_timer/presentation/state_management/timer_page_controller.dart';
@@ -118,19 +122,29 @@ class TimerPage extends ConsumerWidget {
         ],
       ),
       bottomSheetWidgetBuilder: (context, scrollController) {
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _LabeledIconButtons(
-              groupId: _groupId,
-              projectId: _projectId,
-              projectName: _projectName,
-            ),
-          ],
-        );
+        return project
+                .whenData(
+                  (data) => Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      _LabeledIconButtons(
+                        groupId: _groupId,
+                        projectId: _projectId,
+                        projectName: _projectName,
+                        project: project.value!,
+                        quickAccess: () {
+                          timerPage.controller
+                              .updateQuickAccessStatus(project.value!);
+                        },
+                      ),
+                    ],
+                  ),
+                )
+                .valueOrNull ??
+            const SizedBox.shrink();
       },
-      minChildSize: .2,
-      maxChildSize: .2,
+      minChildSize: .25,
+      maxChildSize: .25,
     );
   }
 }
@@ -140,6 +154,8 @@ class _LabeledIconButtons extends HookWidget {
     required this.groupId,
     required this.projectId,
     required this.projectName,
+    required this.project,
+    required this.quickAccess,
     // ignore: unused_element
     this.isLoading = false,
   });
@@ -147,6 +163,8 @@ class _LabeledIconButtons extends HookWidget {
   final String groupId;
   final String projectId;
   final String projectName;
+  final ProjectEntity project;
+  final VoidCallback quickAccess;
 
   @override
   Widget build(BuildContext context) {
@@ -176,21 +194,46 @@ class _LabeledIconButtons extends HookWidget {
             ),
             ActionButton.iconWithBackgroundAndLabel(
               context: context,
-              onPressed: () {},
+              onPressed: quickAccess,
               isLoading: isLoading,
-              label: context.loc.timerPageFavoriteBtnLabel,
-              child: const Icon(Icons.star_border),
+              label: project.isFavorite
+                  ? context.loc.timerPageFavoriteOffBtnLabel
+                  : context.loc.timerPageFavoriteBtnLabel,
+              child: Icon(project.isFavorite ? Icons.star : Icons.star_border),
             ),
             ActionButton.iconWithBackgroundAndLabel(
               context: context,
-              onPressed: () {},
+              onPressed: () {
+                context.goNamed(
+                  AppRoute.addEntryWizard,
+                  queryParameters: {
+                    'groupId': groupId,
+                    'projectId': projectId,
+                    'projectName': projectName,
+                  },
+                );
+              },
               isLoading: isLoading,
               label: context.loc.timerPageNewEntryBtnLabel,
               child: const Icon(Icons.add),
             ),
             ActionButton.iconWithBackgroundAndLabel(
               context: context,
-              onPressed: () {},
+              onPressed: () async {
+                final entryType = await _getEntryType(context);
+
+                if (entryType == null) return;
+                if (!context.mounted) return;
+
+                context.goNamed(
+                  AppRoute.addDaysOffWizard,
+                  queryParameters: {
+                    'groupId': groupId,
+                    'projectId': projectId,
+                    'entryType': entryType.index.toString(),
+                  },
+                );
+              },
               isLoading: isLoading,
               label: context.loc.timerPageAddDaysOffBtnLabel,
               child: const Icon(Icons.playlist_add),
@@ -203,6 +246,44 @@ class _LabeledIconButtons extends HookWidget {
               child: const Icon(Icons.history),
             ),
           ],
+        ),
+      ),
+    );
+  }
+
+  Future<EntryType?> _getEntryType(BuildContext context) async {
+    final iconColor = ThemeColorBuilder(context).getGuidingIconColor();
+    return ModalBottomSheetUI.showDynamic<EntryType>(
+      context: context,
+      widget: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: SpaceTokens.medium),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              ListTile(
+                leading: Icon(Icons.sick, color: iconColor),
+                title: Text(context.loc.entryTypeLabelSickLeave),
+                onTap: () {
+                  Navigator.of(context).pop(EntryType.sick);
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.beach_access, color: iconColor),
+                title: Text(context.loc.entryTypeLabelVacation),
+                onTap: () {
+                  Navigator.of(context).pop(EntryType.vacation);
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.work_off_outlined, color: iconColor),
+                title: Text(context.loc.entryTypeLabelPublicHoliday),
+                onTap: () {
+                  Navigator.of(context).pop(EntryType.publicHoliday);
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -6,8 +6,8 @@ abstract class ITimerDataRepository {
   Future<TimerDataEntity?> fetchTimerData(String projectId);
 
   /// Saves the timer data to the database.
-  void saveTimerData(String projectId, TimerDataEntity timerData);
+  Future<void> saveTimerData(String projectId, TimerDataEntity timerData);
 
   /// Clears the timer data from the database.
-  void deleteTimerData(String projectId);
+  Future<void> deleteTimerData(String projectId);
 }

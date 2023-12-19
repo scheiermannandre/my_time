@@ -26,17 +26,17 @@ class TimerDataRepository extends ITimerDataRepository {
   }
 
   @override
-  void saveTimerData(String projectId, TimerDataEntity timerData) {
+  Future<void> saveTimerData(String projectId, TimerDataEntity timerData) {
     final uid = _ref.read(authRepositoryProvider).currentUser!.uid;
-    _ref
+    return _ref
         .read(timerDataFirestoreDataSourceProvider)
         .saveTimerData(uid, projectId, TimerDataModel.fromEntity(timerData));
   }
 
   @override
-  void deleteTimerData(String projectId) {
+  Future<void> deleteTimerData(String projectId) {
     final uid = _ref.read(authRepositoryProvider).currentUser!.uid;
-    _ref
+    return _ref
         .read(timerDataFirestoreDataSourceProvider)
         .deleteTimerData(uid, projectId);
   }

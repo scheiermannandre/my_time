@@ -4,7 +4,7 @@ import 'package:intl/intl.dart';
 /// Extension for the [DateTime] class.
 extension DateTimeExtension on DateTime {
   /// Returns the date as a formatted string using the yMMMMEEEEd pattern.
-  String toFormattedDateString(String languageCode) {
+  String toFormattedDateString({String? languageCode}) {
     final locale = Platform.localeName;
     return DateFormat.yMMMMEEEEd(locale).format(this);
   }

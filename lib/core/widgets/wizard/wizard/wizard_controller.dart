@@ -85,6 +85,13 @@ class WizardController extends _$WizardController with StepToWizardContract {
     );
   }
 
+  /// Sets the enabled state of the finish button in the review step.
+  void setReviewPageFinishEnabled(bool isFinishBtnEnabled) {
+    state = state.copyWith(
+      isFinishBtnEnabled: isFinishBtnEnabled,
+    );
+  }
+
   /// Moves to the previous page in the wizard.
   void previous() {
     stepControllers[state.currentPage]?.invokeOnPrevious();

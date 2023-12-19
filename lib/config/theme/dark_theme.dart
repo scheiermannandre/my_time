@@ -7,6 +7,7 @@ import 'package:my_time/config/theme/list_tile_theme.dart';
 import 'package:my_time/config/theme/primary_button_theme.dart';
 import 'package:my_time/config/theme/secondary_button_theme.dart';
 import 'package:my_time/config/theme/snackbar_theme.dart';
+import 'package:my_time/config/theme/switch_theme_data.dart';
 import 'package:my_time/config/theme/tertiary_button_theme.dart';
 import 'package:my_time/config/theme/text_theme.dart';
 import 'package:my_time/config/theme/tokens/color_tokens.dart';
@@ -57,4 +58,5 @@ ThemeData darkTheme = ThemeData(
   bottomSheetTheme: ButtomSheetTheme.dark(),
   listTileTheme: TileTheme.dark(),
   cardTheme: CardThemeData.dark(),
+  switchTheme: AppSwitchTheme.dark(),
 );

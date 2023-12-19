@@ -83,7 +83,8 @@ class _NumberSelectorState extends State<NumberSelector> {
         AnimatedSwitcher(
           duration: const Duration(milliseconds: 150),
           child: isNumberPicker
-              ? NumberPicker(
+              ? NumberPicker.styled(
+                  context: context,
                   axis: Axis.horizontal,
                   value: _currentValue,
                   minValue: widget.minValue,

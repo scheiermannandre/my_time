@@ -12,6 +12,7 @@ class WizardState {
           isInReview: false,
           wizardStepStates: {},
           isLoading: false,
+          isFinishBtnEnabled: true,
         );
 
   /// Creates an instance of [WizardState] with internal parameters.
@@ -21,6 +22,7 @@ class WizardState {
     required this.isInReview,
     required this.wizardStepStates,
     required this.isLoading,
+    required this.isFinishBtnEnabled,
   });
 
   /// The page controller for the wizard.
@@ -37,6 +39,9 @@ class WizardState {
 
   /// The state of each wizard step identified by its step number.
   final Map<int, WizardStepState<dynamic>> wizardStepStates;
+
+  /// Returns whether the finish button is enabled.
+  final bool isFinishBtnEnabled;
 
   /// Returns whether the next button is enabled.
   bool get isNextBtnEnabled => getWizardStepState()?.isNextBtnEnabled ?? false;
@@ -79,6 +84,7 @@ class WizardState {
     bool? isInReview,
     Map<int, WizardStepState<dynamic>>? wizardStepStates,
     bool? isLoading,
+    bool? isFinishBtnEnabled,
   }) {
     return WizardState._internal(
       pageController: pageController ?? this.pageController,
@@ -86,6 +92,7 @@ class WizardState {
       isInReview: isInReview ?? this.isInReview,
       wizardStepStates: wizardStepStates ?? this.wizardStepStates,
       isLoading: isLoading ?? this.isLoading,
+      isFinishBtnEnabled: isFinishBtnEnabled ?? this.isFinishBtnEnabled,
     );
   }
 }

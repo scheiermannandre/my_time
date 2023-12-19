@@ -116,10 +116,41 @@
 
     "@TimerPage": {},
     "timerPageProjectSettingsBtnLabel": "Project Settings",
-    "timerPageFavoriteBtnLabel": "Mark as Favorite",
+    "timerPageFavoriteBtnLabel": "Quick Access",
+    "timerPageFavoriteOffBtnLabel": "Remove Quick Access",
     "timerPageNewEntryBtnLabel": "New Entry",
     "timerPageAddDaysOffBtnLabel": "Add Days Off",
     "timerPageHistoryBtnLabel": "History",
+
+    "@EntryPages": {},
+    "entryTypeLabelWork": "Work",
+    "entryTypeLabelSickLeave": "Sick Leave",
+    "entryTypeLabelVacation": "Vacation",
+    "entryTypeLabelPublicHoliday": "Public Holiday",
+    "entryTypeLabel": "Entry Type",
+    "entryDateRangeLabel": "Dates",
+    "entryPaymentStatusLabel": "Payment while away",
+    "entryDateRangeSelectHeader": "Select Dates",
+    "entryCompensationLabel": "Will your absence be paid?",
+    "entryDescriptionLabel": "Description of your absence",
+    "entryDateLabel": "Date",
+    "entryStartTimeLabel": "Start",
+    "entryEndTimeLabel": "End",
+    "entryBreakTimeLabel": "Break",
+    "entryTotalTimeLabel": "Total",
+    "entryTotalTimeErrorMessage": "Total Time needs to be positive!",
+    "entrySelectDateLabel": "Select Date",
+    "entryWorkDescriptionLabel": "What did you do?",
+    "entryAmountDates": "Selected Dates: {value}",
+    "@entryAmountDates": {
+        "placeholders": {
+            "value": {
+                "type": "int"
+            }
+        }
+    },
+    "entryDateRangeExcludeWeekends": "Exclude Weekends",
+
 
     "@Misc": {},
     "saveBtnLabel": "Save",

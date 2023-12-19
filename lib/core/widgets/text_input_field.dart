@@ -26,6 +26,7 @@ class TextInputField extends StatefulWidget {
     this.onFocus,
     this.onFocusLost,
     this.initialValue,
+    this.maxLines,
   });
 
   /// The type of keyboard to display for text input.
@@ -87,6 +88,9 @@ class TextInputField extends StatefulWidget {
 
   /// The initial value of the text field.
   final String? initialValue;
+
+  /// The maximum number of lines to display in the text field.
+  final int? maxLines;
   @override
   State<TextInputField> createState() => _TextInputFieldState();
 }
@@ -145,6 +149,7 @@ class _TextInputFieldState extends State<TextInputField> {
             }
           },
           child: TextFormField(
+            maxLines: widget.maxLines,
             inputFormatters: _getInputFormatters(),
             onTap: widget.onTap,
             key: _fieldKey,

@@ -163,6 +163,7 @@ class Wizard extends ConsumerWidget {
                   skipButtonContent: skipBtnTitle,
                   onFinish: controller.finish,
                   finishButtonContent: finishBtnTitle,
+                  finishBtnEnabled: state.isFinishBtnEnabled,
                 ),
               ),
             ],

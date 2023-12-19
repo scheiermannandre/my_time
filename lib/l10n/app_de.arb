@@ -117,9 +117,42 @@
     "@TimerPage": {},
     "timerPageProjectSettingsBtnLabel": "Einstellungen",
     "timerPageFavoriteBtnLabel": "Schnellzugriff",
+    "timerPageFavoriteOffBtnLabel": "Schnellzugriff löschen",
+
     "timerPageNewEntryBtnLabel": "Neuer Eintrag",
     "timerPageAddDaysOffBtnLabel": "Arbeitsfreie Tage",
     "timerPageHistoryBtnLabel": "Verlauf",
+
+
+    "@EntryPages": {},
+    "entryTypeLabelWork": "Arbeit",
+    "entryTypeLabelSickLeave": "Krank",
+    "entryTypeLabelVacation": "Urlaub",
+    "entryTypeLabelPublicHoliday": "Feiertag",
+    "entryTypeLabel": "Art des Eintrags",
+    "entryDateRangeLabel": "Daten",
+    "entryPaymentStatusLabel": "Bezahlung während Abwesenheit",
+    "entryDateRangeSelectHeader": "Zeitraum wählen",
+    "entryCompensationLabel": "Wird deine Abwesenheit bezahlt?",
+    "entryDescriptionLabel": "Beschreibung deiner Abwesenheit",
+    "entryDateLabel": "Datum",
+    "entryStartTimeLabel": "Beginn",
+    "entryEndTimeLabel": "Ende",
+    "entryBreakTimeLabel": "Pause",
+    "entryTotalTimeLabel": "Gesamt",
+    "entryTotalTimeErrorMessage": "Gesamtzeit muss positiv sein!",
+    "entrySelectDateLabel": "Datum wählen",
+    "entryWorkDescriptionLabel": "Was hast du geleistet?",
+    "entryAmountDates": "Anzahl ausgewählter Tage: {value}",
+    "@entryAmountDates": {
+        "placeholders": {
+            "value": {
+                "type": "int"
+            }
+        }
+    },
+    "entryDateRangeExcludeWeekends": "Wochenenden ausschließen",
+
 
     "@Misc": {},
     "saveBtnLabel": "Speichern",

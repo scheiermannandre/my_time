@@ -19,6 +19,8 @@ import 'package:my_time/features/8_authentication/presentation/pages/forgot_pass
 import 'package:my_time/features/8_authentication/presentation/pages/profile_page.dart';
 import 'package:my_time/features/8_authentication/presentation/pages/sign_in_page.dart';
 import 'package:my_time/features/8_authentication/presentation/pages/sign_up_page.dart';
+import 'package:my_time/features/9_timer/presentation/pages/add_days_off_wizard/add_days_off_wizard.dart';
+import 'package:my_time/features/9_timer/presentation/pages/add_entry_wizard/add_entry_wizard.dart';
 import 'package:my_time/features/9_timer/presentation/pages/timer_page.dart';
 import 'package:my_time/router/go_router_refresh_stream.dart';
 import 'package:my_time/router/not_found_screen.dart';
@@ -42,6 +44,8 @@ enum _AppRoute {
   profile,
   timer,
   projectSettings,
+  addEntryWizard,
+  addDaysOffWizard,
 }
 
 /// The routes of the app.
@@ -90,6 +94,12 @@ class AppRoute {
 
   /// The fast access to the timer route.
   static String get projectSettings => _AppRoute.projectSettings.name;
+
+  /// The fast access to the add entry wizard route.
+  static String get addEntryWizard => _AppRoute.addEntryWizard.name;
+
+  /// The fast access to the add days off wizard route.
+  static String get addDaysOffWizard => _AppRoute.addDaysOffWizard.name;
 }
 
 /// Gorouter for the app.
@@ -258,6 +268,24 @@ GoRouter goRouter(GoRouterRef ref) {
                   groupId: state.uri.queryParameters['groupId'] ?? '',
                   projectId: state.uri.queryParameters['projectId'] ?? '',
                   projectName: state.uri.queryParameters['projectName'] ?? '',
+                ),
+              ),
+              GoRoute(
+                path: 'addentrywizard',
+                name: AppRoute.addEntryWizard,
+                builder: (context, state) => AddEntryWizard(
+                  groupId: state.uri.queryParameters['groupId'] ?? '',
+                  projectId: state.uri.queryParameters['projectId'] ?? '',
+                ),
+              ),
+              GoRoute(
+                path: 'adddaysoffwizard',
+                name: AppRoute.addDaysOffWizard,
+                builder: (context, state) => AddDaysOffWizard(
+                  groupId: state.uri.queryParameters['groupId'] ?? '',
+                  projectId: state.uri.queryParameters['projectId'] ?? '',
+                  entryType:
+                      int.parse(state.uri.queryParameters['entryType'] ?? '0'),
                 ),
               ),
             ],
