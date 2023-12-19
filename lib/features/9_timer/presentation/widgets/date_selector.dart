@@ -104,7 +104,9 @@ class _DateSelectorState extends State<DateSelector> {
   @override
   Widget build(BuildContext context) {
     final config = CalendarDatePicker2Config(
-      calendarType: CalendarDatePicker2Type.range,
+      calendarType: widget.isRange
+          ? CalendarDatePicker2Type.range
+          : CalendarDatePicker2Type.single,
       weekdayLabelTextStyle: TextStyleTokens.body(null),
       controlsTextStyle: TextStyleTokens.body(null),
       dayTextStyle: TextStyleTokens.body(null),
@@ -158,7 +160,7 @@ class _DateSelectorState extends State<DateSelector> {
                   excludeWeekends = value;
                   dateRange = getDatesBetween(data, 0, 1, excludeWeekends);
                   if (dateRange.isEmpty) return;
-                  widget.onSelect(dateRange);
+                  widget.onSave(dateRange);
                 });
               },
             ),

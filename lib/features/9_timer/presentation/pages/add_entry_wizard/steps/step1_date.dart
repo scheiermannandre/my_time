@@ -22,7 +22,7 @@ class Step1Date extends StatelessWidget {
           controller: controller,
           onNextEvent: (event) {},
           child: DateSelector(
-            data: [data],
+            data: [data ?? DateTime.now()],
             onSelect: (dates) {
               final date = dates.first;
               controller
