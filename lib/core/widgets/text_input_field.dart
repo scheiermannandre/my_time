@@ -26,7 +26,7 @@ class TextInputField extends StatefulWidget {
     this.onFocus,
     this.onFocusLost,
     this.initialValue,
-    this.maxLines,
+    this.maxLines = 1,
   });
 
   /// The type of keyboard to display for text input.

@@ -190,7 +190,7 @@ class _LabeledIconButtons extends HookWidget {
               },
               isLoading: isLoading,
               label: context.loc.timerPageProjectSettingsBtnLabel,
-              child: const Icon(Icons.settings),
+              child: const Icon(Icons.settings_outlined),
             ),
             ActionButton.iconWithBackgroundAndLabel(
               context: context,
@@ -240,7 +240,16 @@ class _LabeledIconButtons extends HookWidget {
             ),
             ActionButton.iconWithBackgroundAndLabel(
               context: context,
-              onPressed: () {},
+              onPressed: () {
+                context.goNamed(
+                  AppRoute.projectHistory,
+                  queryParameters: {
+                    'groupId': groupId,
+                    'projectId': projectId,
+                    'projectName': projectName,
+                  },
+                );
+              },
               isLoading: isLoading,
               label: context.loc.timerPageHistoryBtnLabel,
               child: const Icon(Icons.history),
@@ -262,14 +271,14 @@ class _LabeledIconButtons extends HookWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               ListTile(
-                leading: Icon(Icons.sick, color: iconColor),
+                leading: Icon(Icons.sick_outlined, color: iconColor),
                 title: Text(context.loc.entryTypeLabelSickLeave),
                 onTap: () {
                   Navigator.of(context).pop(EntryType.sick);
                 },
               ),
               ListTile(
-                leading: Icon(Icons.beach_access, color: iconColor),
+                leading: Icon(Icons.beach_access_outlined, color: iconColor),
                 title: Text(context.loc.entryTypeLabelVacation),
                 onTap: () {
                   Navigator.of(context).pop(EntryType.vacation);

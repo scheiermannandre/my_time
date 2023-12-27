@@ -21,6 +21,8 @@ import 'package:my_time/features/8_authentication/presentation/pages/sign_in_pag
 import 'package:my_time/features/8_authentication/presentation/pages/sign_up_page.dart';
 import 'package:my_time/features/9_timer/presentation/pages/add_days_off_wizard/add_days_off_wizard.dart';
 import 'package:my_time/features/9_timer/presentation/pages/add_entry_wizard/add_entry_wizard.dart';
+import 'package:my_time/features/9_timer/presentation/pages/entry_page.dart';
+import 'package:my_time/features/9_timer/presentation/pages/history_page.dart';
 import 'package:my_time/features/9_timer/presentation/pages/timer_page.dart';
 import 'package:my_time/router/go_router_refresh_stream.dart';
 import 'package:my_time/router/not_found_screen.dart';
@@ -46,6 +48,8 @@ enum _AppRoute {
   projectSettings,
   addEntryWizard,
   addDaysOffWizard,
+  projectHistory,
+  entry,
 }
 
 /// The routes of the app.
@@ -100,6 +104,12 @@ class AppRoute {
 
   /// The fast access to the add days off wizard route.
   static String get addDaysOffWizard => _AppRoute.addDaysOffWizard.name;
+
+  /// The fast access to the project history route.
+  static String get projectHistory => _AppRoute.projectHistory.name;
+
+  /// The fast access to the entry route.
+  static String get entry => _AppRoute.entry.name;
 }
 
 /// Gorouter for the app.
@@ -287,6 +297,25 @@ GoRouter goRouter(GoRouterRef ref) {
                   entryType:
                       int.parse(state.uri.queryParameters['entryType'] ?? '0'),
                 ),
+              ),
+              GoRoute(
+                path: 'entryhistory',
+                name: AppRoute.projectHistory,
+                builder: (context, state) => EntryHistoryPage(
+                  groupId: state.uri.queryParameters['groupId'] ?? '',
+                  projectId: state.uri.queryParameters['projectId'] ?? '',
+                  projectName: state.uri.queryParameters['projectName'] ?? '',
+                ),
+                routes: [
+                  GoRoute(
+                    path: 'entry',
+                    name: AppRoute.entry,
+                    builder: (context, state) => EntryPage(
+                      groupId: state.uri.queryParameters['groupId'] ?? '',
+                      entryId: state.uri.queryParameters['entryId'] ?? '',
+                    ),
+                  ),
+                ],
               ),
             ],
           ),

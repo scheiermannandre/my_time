@@ -3,12 +3,12 @@ import 'package:my_time/common/extensions/build_context_extension.dart';
 import 'package:my_time/config/theme/tokens/space_tokens.dart';
 import 'package:my_time/core/widgets/action_button.dart';
 import 'package:my_time/core/widgets/spaced_column.dart';
-import 'package:my_time/features/9_timer/presentation/widgets/date_picker.dart';
+import 'package:my_time/features/9_timer/presentation/widgets/time_picker.dart';
 
 /// A widget that allows the user to select a number.
-class DateSelector extends StatefulWidget {
+class TimeSelector extends StatefulWidget {
   /// Constructor for the NumberSelector widget.
-  const DateSelector({
+  const TimeSelector({
     required this.initialValue,
     required this.onSave,
     required this.onCancel,
@@ -16,20 +16,20 @@ class DateSelector extends StatefulWidget {
   });
 
   /// The initial value to be displayed.
-  final DateTime initialValue;
+  final Duration initialValue;
 
   /// The callback to be called when a number is chosen.
-  final void Function(DateTime) onSave;
+  final void Function(Duration) onSave;
 
   /// The callback to be called when the user cancels the selection.
   final void Function() onCancel;
 
   @override
-  State<DateSelector> createState() => _DateSelectorState();
+  State<TimeSelector> createState() => _TimeSelectorState();
 }
 
-class _DateSelectorState extends State<DateSelector> {
-  DateTime _currentTime = DateTime.now();
+class _TimeSelectorState extends State<TimeSelector> {
+  Duration _currentTime = Duration.zero;
   bool isNumberPicker = true;
 
   @override
@@ -43,11 +43,9 @@ class _DateSelectorState extends State<DateSelector> {
     return SpacedColumn(
       spacing: SpaceTokens.medium,
       children: <Widget>[
-        DatePicker(
-          data: [_currentTime],
-          onSelect: (dates) {
-            widget.onSave.call(dates.first!);
-          },
+        TimePicker(
+          initialTime: _currentTime,
+          onTimeChanged: (value) => setState(() => _currentTime = value),
         ),
         Align(
           alignment: Alignment.centerRight,
@@ -60,6 +58,12 @@ class _DateSelectorState extends State<DateSelector> {
                   widget.onCancel.call();
                 },
                 child: Text(context.loc.cancelBtnLabel),
+              ),
+              ActionButton.text(
+                onPressed: () async {
+                  widget.onSave.call(_currentTime);
+                },
+                child: Text(context.loc.saveBtnLabel),
               ),
             ],
           ),

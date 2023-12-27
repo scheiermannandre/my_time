@@ -4,7 +4,7 @@ import 'package:my_time/common/common.dart';
 /// The type of an entry.
 enum EntryType {
   /// Regular entry.
-  regular,
+  work,
 
   /// Entry for sick leave.
   sick,
@@ -22,7 +22,7 @@ extension EntryTypeExtension on EntryType {
   /// current locale.
   String displayName(BuildContext context) {
     switch (this) {
-      case EntryType.regular:
+      case EntryType.work:
         return context.loc.entryTypeLabelWork;
       case EntryType.sick:
         return context.loc.entryTypeLabelSickLeave;

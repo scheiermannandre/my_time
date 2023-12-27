@@ -22,10 +22,10 @@ class AddEntryWizardController extends _$AddEntryWizardController {
     // Set the state to indicate loading.
     state = const AsyncLoading();
 
-    final data = RegularEntryEntity.fromMap(
+    final data = WorkEntryEntity.fromMap(
       groupId,
       projectId,
-      EntryType.regular,
+      EntryType.work,
       entryMap,
     );
     // Use AsyncValue.guard to handle errors during the operation.

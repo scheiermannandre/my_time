@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:my_time/config/theme/app_bar_theme.dart';
 import 'package:my_time/config/theme/buttom_sheet_theme.dart';
 import 'package:my_time/config/theme/card_theme.dart';
+import 'package:my_time/config/theme/divider_theme.dart';
 import 'package:my_time/config/theme/input_decoration_theme.dart';
 import 'package:my_time/config/theme/list_tile_theme.dart';
 import 'package:my_time/config/theme/primary_button_theme.dart';
@@ -59,4 +60,5 @@ ThemeData darkTheme = ThemeData(
   listTileTheme: TileTheme.dark(),
   cardTheme: CardThemeData.dark(),
   switchTheme: AppSwitchTheme.dark(),
+  dividerTheme: DividerTheming.dark(),
 );

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:my_time/common/extensions/build_context_extension.dart';
 import 'package:my_time/core/widgets/wizard/wizard_step/wizard_step_event_listener.dart';
 import 'package:my_time/core/widgets/wizard/wizard_step/wizard_step_wrapper.dart';
-import 'package:my_time/features/9_timer/presentation/widgets/date_selector.dart';
+import 'package:my_time/features/9_timer/presentation/widgets/date_picker.dart';
 
 /// Step 1: Date selection step.
 class Step1Date extends StatelessWidget {
@@ -21,7 +21,7 @@ class Step1Date extends StatelessWidget {
         return WizardStepEventListener(
           controller: controller,
           onNextEvent: (event) {},
-          child: DateSelector(
+          child: DatePicker(
             data: [data ?? DateTime.now()],
             onSelect: (dates) {
               final date = dates.first;

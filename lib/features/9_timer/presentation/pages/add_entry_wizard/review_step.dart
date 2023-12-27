@@ -14,6 +14,7 @@ import 'package:my_time/core/widgets/wizard/wizard_review_step/wizard_review_ste
 import 'package:my_time/core/widgets/wizard/wizard_review_step/wizard_review_step_controller.dart';
 import 'package:my_time/core/widgets/wizard/wizard_review_step/wizard_review_step_event_listener.dart';
 import 'package:my_time/features/7_groups_overview/domain/entities/enums/wokrplace.dart';
+import 'package:my_time/features/9_timer/presentation/widgets/responsive_time_data.dart';
 
 /// Review Step in the add project wizard.
 class ReviewStep extends ConsumerWidget {
@@ -66,7 +67,7 @@ class _TimeDataWidgetState extends State<_TimeDataWidget> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        _ResponsiveTimeData(
+        ResponsiveTimeData(
           startTimeWidget: Expanded(
             child: _TimeReview(
               label: context.loc.entryStartTimeLabel,
@@ -119,60 +120,6 @@ class _TimeDataWidgetState extends State<_TimeDataWidget> {
           ),
         ),
       ],
-    );
-  }
-}
-
-class _ResponsiveTimeData extends StatelessWidget {
-  const _ResponsiveTimeData({
-    required this.startTimeWidget,
-    required this.endTimeWidget,
-    required this.breakTimeWidget,
-    required this.totalTimeWidget,
-  });
-
-  final Widget startTimeWidget;
-  final Widget endTimeWidget;
-  final Widget breakTimeWidget;
-  final Widget totalTimeWidget;
-
-  @override
-  Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        if (constraints.maxWidth > 360) {
-          return SpacedRow(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            spacing: SpaceTokens.medium,
-            children: [
-              startTimeWidget,
-              endTimeWidget,
-              breakTimeWidget,
-              totalTimeWidget,
-            ],
-          );
-        } else {
-          return Column(
-            children: [
-              SpacedRow(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                spacing: SpaceTokens.medium,
-                children: [
-                  startTimeWidget,
-                  breakTimeWidget,
-                ],
-              ),
-              SpacedRow(
-                spacing: SpaceTokens.medium,
-                children: [
-                  endTimeWidget,
-                  totalTimeWidget,
-                ],
-              ),
-            ],
-          );
-        }
-      },
     );
   }
 }

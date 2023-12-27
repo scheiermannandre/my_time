@@ -210,7 +210,7 @@ class _LabeledIconButtons extends HookWidget {
               ),
               isLoading: state.isLoading,
               label: context.loc.addGroup,
-              child: const Icon(Icons.category),
+              child: const Icon(Icons.category_outlined),
             ),
             ActionButton.iconWithBackgroundAndLabel(
               context: context,
@@ -218,7 +218,7 @@ class _LabeledIconButtons extends HookWidget {
                   !hasGroups ? null : () => _onAddProjectPressed(context),
               isLoading: state.isLoading,
               label: context.loc.addProject,
-              child: const Icon(Icons.work),
+              child: const Icon(Icons.work_outline),
             ),
             ActionButton.iconWithBackgroundAndLabel(
               context: context,
@@ -245,7 +245,7 @@ class _LabeledIconButtons extends HookWidget {
               onPressed: !hasGroups ? null : () async {},
               isLoading: state.isLoading,
               label: context.loc.openSettings,
-              child: const Icon(Icons.settings),
+              child: const Icon(Icons.settings_outlined),
             ),
           ],
         ),

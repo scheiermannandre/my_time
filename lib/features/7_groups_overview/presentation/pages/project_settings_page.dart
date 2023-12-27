@@ -2,12 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:my_time/common/extensions/async_value_extensions.dart';
 import 'package:my_time/common/extensions/build_context_extension.dart';
-import 'package:my_time/config/theme/tokens/color_tokens.dart';
 import 'package:my_time/config/theme/tokens/space_tokens.dart';
-import 'package:my_time/config/theme/tokens/text_style_tokens.dart';
 import 'package:my_time/core/modals/modal_dialog_ui.dart';
 import 'package:my_time/core/util/extentions/widget_ref_extension.dart';
-import 'package:my_time/core/widgets/wizard/labeled_widgets.dart';
 import 'package:my_time/features/7_groups_overview/domain/entities/enums/currency.dart';
 import 'package:my_time/features/7_groups_overview/domain/entities/enums/payment_interval.dart';
 import 'package:my_time/features/7_groups_overview/domain/entities/enums/payment_status.dart';
@@ -22,6 +19,8 @@ import 'package:my_time/features/7_groups_overview/presentation/widgets/number_s
 import 'package:my_time/features/7_groups_overview/presentation/widgets/payment_interval_selector.dart';
 import 'package:my_time/features/7_groups_overview/presentation/widgets/payment_status_selector.dart';
 import 'package:my_time/features/7_groups_overview/presentation/widgets/reference_period_selector.dart';
+import 'package:my_time/features/7_groups_overview/presentation/widgets/settings_block.dart';
+import 'package:my_time/features/7_groups_overview/presentation/widgets/show_value.dart';
 import 'package:my_time/features/7_groups_overview/presentation/widgets/text_value_selector.dart';
 import 'package:my_time/features/7_groups_overview/presentation/widgets/workplace_selector.dart';
 
@@ -158,10 +157,10 @@ class ProjectSettingsPage extends ConsumerWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  _SettingsBlock(
+                  SettingsBlock(
                     label: context.loc.reviewStepProjectNameLabel,
                     children: [
-                      _ShowValue(
+                      ShowValue(
                         label: project.name,
                         onTap: () async {
                           await settingsPage.controller.updateProjectName(
@@ -172,10 +171,10 @@ class ProjectSettingsPage extends ConsumerWidget {
                       ),
                     ],
                   ),
-                  _SettingsBlock(
+                  SettingsBlock(
                     label: context.loc.notWorkingDaysPaymentLabel,
                     children: [
-                      _ShowValue(
+                      ShowValue(
                         label: context.loc.notWorkingDaysPaymentSickLabel,
                         data: project.sickDaysPayment?.label(context) ?? '',
                         onTap: () async {
@@ -185,7 +184,7 @@ class ProjectSettingsPage extends ConsumerWidget {
                           );
                         },
                       ),
-                      _ShowValue(
+                      ShowValue(
                         label: context
                             .loc.notWorkingDaysPaymentPublicHolidaysLabel,
                         data:
@@ -203,10 +202,10 @@ class ProjectSettingsPage extends ConsumerWidget {
                       ),
                     ],
                   ),
-                  _SettingsBlock(
+                  SettingsBlock(
                     label: context.loc.vacationLabel,
                     children: [
-                      _ShowValue(
+                      ShowValue(
                         label: context.loc.vacationDaysLabel,
                         data: project.vacationInfo?.days.toString() ?? '0',
                         onTap: () async {
@@ -217,7 +216,7 @@ class ProjectSettingsPage extends ConsumerWidget {
                           );
                         },
                       ),
-                      _ShowValue(
+                      ShowValue(
                         label: context.loc.vacationPaymentLabel,
                         data: project.vacationInfo?.paymentStatus
                                 ?.label(context) ??
@@ -233,10 +232,10 @@ class ProjectSettingsPage extends ConsumerWidget {
                       ),
                     ],
                   ),
-                  _SettingsBlock(
+                  SettingsBlock(
                     label: context.loc.timeManagementLabel,
                     children: [
-                      _ShowValue(
+                      ShowValue(
                         label: context.loc.timeManagementReferencePeriodLabel,
                         data: project.timeManagement?.referencePeriod
                             ?.label(context),
@@ -249,7 +248,7 @@ class ProjectSettingsPage extends ConsumerWidget {
                           );
                         },
                       ),
-                      _ShowValue(
+                      ShowValue(
                         label: context.loc.timeManagementWorkingHoursLabel,
                         data: project.timeManagement?.workingHours.toString() ??
                             '0',
@@ -268,10 +267,10 @@ class ProjectSettingsPage extends ConsumerWidget {
                       ),
                     ],
                   ),
-                  _SettingsBlock(
+                  SettingsBlock(
                     label: context.loc.moneyManagementLabel,
                     children: [
-                      _ShowValue(
+                      ShowValue(
                         label: context.loc.moneyManagementPaymentIntervalLabel,
                         data: project.moneyManagement?.paymentInterval
                             ?.label(context),
@@ -285,7 +284,7 @@ class ProjectSettingsPage extends ConsumerWidget {
                           );
                         },
                       ),
-                      _ShowValue(
+                      ShowValue(
                         label: context.loc.moneyManagementCurrencyLabel,
                         data: project.moneyManagement?.currency?.label,
                         onTap: () async {
@@ -298,7 +297,7 @@ class ProjectSettingsPage extends ConsumerWidget {
                           );
                         },
                       ),
-                      _ShowValue(
+                      ShowValue(
                         label: context.loc.moneyManagementPaymentLabel,
                         data: project.moneyManagement?.payment?.toString(),
                         onTap: () async {
@@ -313,10 +312,10 @@ class ProjectSettingsPage extends ConsumerWidget {
                       ),
                     ],
                   ),
-                  _SettingsBlock(
+                  SettingsBlock(
                     label: context.loc.workplaceLabel,
                     children: [
-                      _ShowValue(
+                      ShowValue(
                         label: project.workplace?.label(context) ?? '',
                         onTap: () async {
                           await settingsPage.controller.updateWorkplace(
@@ -541,90 +540,4 @@ class ProjectSettingsPage extends ConsumerWidget {
         step: 1,
         bigValues: false,
       );
-}
-
-class _ShowValue extends StatelessWidget {
-  const _ShowValue({
-    required this.label,
-    required this.onTap,
-    this.hint,
-    this.data,
-  });
-
-  final String label;
-  final String? data;
-  final String? hint;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return ListTile(
-      title: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                label,
-              ),
-              Row(
-                children: [
-                  if (data != null)
-                    Text(
-                      data!,
-                      style: TextStyleTokens.bodyMedium(null),
-                    ),
-                  const SizedBox(width: SpaceTokens.mediumSmall),
-                  const RotatedBox(
-                    quarterTurns: 3,
-                    child: Icon(Icons.expand_more),
-                  ),
-                ],
-              ),
-            ],
-          ),
-          if (hint != null)
-            Text(
-              hint!,
-              style: TextStyleTokens.bodySmall(null)
-                  .copyWith(color: ThemelessColorTokens.darkOrange),
-            ),
-        ],
-      ),
-      // trailing: const RotatedBox(
-      //   quarterTurns: 3,
-      //   child: Icon(Icons.expand_more),
-      // ),
-      onTap: onTap,
-    );
-  }
-}
-
-class _SettingsBlock extends StatelessWidget {
-  const _SettingsBlock({
-    required this.children,
-    required this.label,
-  });
-
-  final List<Widget> children;
-  final String label;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: SpaceTokens.mediumSmall),
-      child: LabeledWidgets(
-        label: label,
-        children: [
-          Card(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: children,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
 }

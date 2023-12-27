@@ -34,7 +34,7 @@ class TimeEntryCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  timeEntry.startTime.toFormattedWeekDayString(languageCode),
+                  timeEntry.startTime.toFormattedWeekDayString(),
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
                 const Padding(padding: EdgeInsets.fromLTRB(0, 8, 0, 0)),

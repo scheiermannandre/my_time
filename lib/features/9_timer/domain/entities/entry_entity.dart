@@ -6,13 +6,13 @@ import 'package:uuid/uuid.dart' as uuid;
 /// Factory for the EntryEntity.
 class EntryEntityFactory {
   /// Creates a RegularEntryEntity.
-  static RegularEntryEntity createRegular(
+  static WorkEntryEntity createWork(
     String groupId,
     String projectId,
     EntryType type,
     Map<int, dynamic> map,
   ) {
-    return RegularEntryEntity.fromMap(groupId, projectId, type, map);
+    return WorkEntryEntity.fromMap(groupId, projectId, type, map);
   }
 
   /// Creates a DayOffEntryEntity.
@@ -36,7 +36,6 @@ abstract class EntryEntity {
     required this.description,
     required this.type,
     String? entryId,
-    this.createdAt,
   }) : id = entryId ?? const uuid.Uuid().v1();
 
   /// Unique ID of the Entry.
@@ -57,14 +56,24 @@ abstract class EntryEntity {
   /// Type of the entry.
   final EntryType type;
 
-  /// CreatedAt of the entry.
-  final DateTime? createdAt;
+  /// Copies the current entry and replaces the given values.
+  EntryEntity copyWith({
+    String? entryId,
+    String? projectId,
+    String? groupId,
+    DateTime? date,
+    String? description,
+    EntryType? type,
+  });
+
+  /// Returns the entry as a string.
+  String asString();
 }
 
 /// Entry Enitity provides data about a single entry.
-class RegularEntryEntity extends EntryEntity {
+class WorkEntryEntity extends EntryEntity {
   /// Constructor for the EntryEntity.
-  RegularEntryEntity({
+  WorkEntryEntity({
     required super.projectId,
     required super.groupId,
     required super.date,
@@ -76,11 +85,10 @@ class RegularEntryEntity extends EntryEntity {
     required super.description,
     required super.type,
     super.entryId,
-    super.createdAt,
   });
 
-  /// Creates an [RegularEntryEntity] from a map.
-  factory RegularEntryEntity.fromMap(
+  /// Creates an [WorkEntryEntity] from a map.
+  factory WorkEntryEntity.fromMap(
     String groupId,
     String projectId,
     EntryType type,
@@ -90,7 +98,7 @@ class RegularEntryEntity extends EntryEntity {
     final endTime = map[2] as Duration;
     final breakTime = map[3] as Duration;
     final totalTime = endTime - startTime - breakTime;
-    return RegularEntryEntity(
+    return WorkEntryEntity(
       groupId: groupId,
       projectId: projectId,
       date: map[0] as DateTime,
@@ -118,6 +126,44 @@ class RegularEntryEntity extends EntryEntity {
 
   /// Workplace of the entry.
   final Workplace workplace;
+
+  @override
+  WorkEntryEntity copyWith({
+    String? entryId,
+    String? projectId,
+    String? groupId,
+    DateTime? date,
+    String? description,
+    EntryType? type,
+    Duration? startTime,
+    Duration? endTime,
+    Duration? breakTime,
+    Duration? totalTime,
+    Workplace? workplace,
+  }) {
+    return WorkEntryEntity(
+      entryId: entryId ?? id,
+      projectId: projectId ?? this.projectId,
+      groupId: groupId ?? this.groupId,
+      date: date ?? this.date,
+      description: description ?? this.description,
+      type: type ?? this.type,
+      startTime: startTime ?? this.startTime,
+      endTime: endTime ?? this.endTime,
+      breakTime: breakTime ?? this.breakTime,
+      totalTime: totalTime ?? this.totalTime,
+      workplace: workplace ?? this.workplace,
+    );
+  }
+
+  @override
+  String asString() => toString();
+
+  @override
+  String toString() {
+    // ignore: lines_longer_than_80_chars
+    return 'WorkEntryEntity(id: $id, projectId: $projectId, groupId: $groupId, date: $date, description: $description, type: $type, startTime: $startTime, endTime: $endTime, breakTime: $breakTime, totalTime: $totalTime, workplace: $workplace)';
+  }
 }
 
 /// Entity that provides data about a day off entry.
@@ -131,7 +177,6 @@ class DayOffEntryEntity extends EntryEntity {
     required super.description,
     required super.type,
     super.entryId,
-    super.createdAt,
   });
 
   /// Creates an [DayOffEntryEntity] from a map.
@@ -153,4 +198,34 @@ class DayOffEntryEntity extends EntryEntity {
 
   /// Compensation of the entry.
   final PaymentStatus paymentStatus;
+
+  @override
+  DayOffEntryEntity copyWith({
+    String? entryId,
+    String? projectId,
+    String? groupId,
+    DateTime? date,
+    String? description,
+    EntryType? type,
+    PaymentStatus? paymentStatus,
+  }) {
+    return DayOffEntryEntity(
+      entryId: entryId ?? id,
+      projectId: projectId ?? this.projectId,
+      groupId: groupId ?? this.groupId,
+      date: date ?? this.date,
+      description: description ?? this.description,
+      type: type ?? this.type,
+      paymentStatus: paymentStatus ?? this.paymentStatus,
+    );
+  }
+
+  @override
+  String asString() => toString();
+
+  @override
+  String toString() {
+    // ignore: lines_longer_than_80_chars
+    return 'DayOffEntryEntity(id: $id, projectId: $projectId, groupId: $groupId, date: $date, description: $description, type: $type, paymentStatus: $paymentStatus)';
+  }
 }

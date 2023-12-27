@@ -27,7 +27,7 @@ class TextStyleTokens {
   /// Returns a text style for headline 4 with the specified [fontColor].
   static TextStyle getHeadline4(Color? fontColor) {
     return GoogleFonts.montserrat(
-      fontSize: 22,
+      fontSize: 20,
       fontWeight: _bold,
     );
   }

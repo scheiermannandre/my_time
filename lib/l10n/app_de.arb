@@ -134,7 +134,7 @@
     "entryPaymentStatusLabel": "Bezahlung während Abwesenheit",
     "entryDateRangeSelectHeader": "Zeitraum wählen",
     "entryCompensationLabel": "Wird deine Abwesenheit bezahlt?",
-    "entryDescriptionLabel": "Beschreibung deiner Abwesenheit",
+    "entryDescriptionLabel": "Beschreibung",
     "entryDateLabel": "Datum",
     "entryStartTimeLabel": "Beginn",
     "entryEndTimeLabel": "Ende",
@@ -152,9 +152,13 @@
         }
     },
     "entryDateRangeExcludeWeekends": "Wochenenden ausschließen",
+    "entryUpdateSuccessSnackbarMessage": "Eintrag erfolgreich aktualisiert!",
+    "entryDeleteSuccessSnackbarMessage": "Eintrag erfolgreich gelöscht!",
 
 
     "@Misc": {},
+    "paginationError": "Beim Laden der Daten ist ein Fehler aufgetreten.",
+    "paginationDataEnd": "Das ist das Ende der Liste.",
     "saveBtnLabel": "Speichern",
     "cancelBtnLabel": "Abbrechen",
     "numberSelectorValueLabel": "Aktueller Wert: {value}",

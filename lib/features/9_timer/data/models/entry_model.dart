@@ -1,4 +1,5 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:my_time/features/7_groups_overview/domain/entities/enums/payment_status.dart';
+import 'package:my_time/features/7_groups_overview/domain/entities/enums/wokrplace.dart';
 import 'package:my_time/features/9_timer/domain/entities/entry_entity.dart';
 import 'package:my_time/features/9_timer/domain/entities/entry_type.dart';
 
@@ -12,7 +13,6 @@ class EntryModel {
     required this.date,
     required this.description,
     required this.type,
-    required this.createdAt,
     this.startTimeInMinutes,
     this.endTimeInMinutes,
     this.breakTimeInMinutes,
@@ -25,7 +25,7 @@ class EntryModel {
   factory EntryModel.fromEntity(
     EntryEntity entity,
   ) {
-    if (entity is RegularEntryEntity) {
+    if (entity is WorkEntryEntity) {
       return EntryModel(
         id: entity.id,
         projectId: entity.projectId,
@@ -38,9 +38,6 @@ class EntryModel {
         workplace: entity.workplace.index,
         description: entity.description,
         type: entity.type.index,
-        createdAt: entity.createdAt != null
-            ? Timestamp.fromDate(entity.createdAt!)
-            : null,
       );
     } else //if (entity is DayOffEntryEntity)
     {
@@ -53,16 +50,13 @@ class EntryModel {
         paymentStatus: entity.paymentStatus.index,
         description: entity.description,
         type: entity.type.index,
-        createdAt: entity.createdAt != null
-            ? Timestamp.fromDate(entity.createdAt!)
-            : null,
       );
     }
   }
 
   /// Converts a map to an [EntryModel].
   factory EntryModel.fromMap(Map<String, Object?> map) {
-    if (map['type']! as int == EntryType.regular.index) {
+    if (map['type']! as int == EntryType.work.index) {
       return EntryModel(
         id: map['id']! as String,
         projectId: map['projectId']! as String,
@@ -75,8 +69,6 @@ class EntryModel {
         workplace: map['workplace']! as int,
         description: map['description']! as String,
         type: map['type']! as int,
-        createdAt:
-            Timestamp.fromDate(DateTime.parse(map['createdAt']! as String)),
       );
     } else {
       return EntryModel(
@@ -87,8 +79,6 @@ class EntryModel {
         paymentStatus: map['paymentStatus']! as int,
         description: map['description']! as String,
         type: map['type']! as int,
-        createdAt:
-            Timestamp.fromDate(DateTime.parse(map['createdAt']! as String)),
       );
     }
   }
@@ -129,9 +119,6 @@ class EntryModel {
   /// Workplace of the entry.
   final int? paymentStatus;
 
-  /// The time the entry was created.
-  final Timestamp? createdAt;
-
   /// Converts the [EntryModel] to a map.
   Map<String, Object?> toMap() {
     return {
@@ -147,7 +134,35 @@ class EntryModel {
       'description': description,
       'type': type,
       'paymentStatus': paymentStatus,
-      'createdAt': createdAt ?? FieldValue.serverTimestamp(),
     };
+  }
+
+  /// Converts the [EntryModel] to an [EntryEntity].
+  EntryEntity toEntity() {
+    if (type == EntryType.work.index) {
+      return WorkEntryEntity(
+        entryId: id,
+        projectId: projectId,
+        groupId: groupId,
+        date: date,
+        startTime: Duration(minutes: startTimeInMinutes!),
+        endTime: Duration(minutes: endTimeInMinutes!),
+        breakTime: Duration(minutes: breakTimeInMinutes!),
+        totalTime: Duration(minutes: totalTimeInMinutes!),
+        workplace: Workplace.values[workplace!],
+        description: description,
+        type: EntryType.values[type],
+      );
+    } else {
+      return DayOffEntryEntity(
+        entryId: id,
+        projectId: projectId,
+        groupId: groupId,
+        date: date,
+        paymentStatus: PaymentStatus.values[paymentStatus!],
+        description: description,
+        type: EntryType.values[type],
+      );
+    }
   }
 }

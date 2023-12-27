@@ -77,10 +77,8 @@ class ProjectHistoryShellPage extends ProjectShellPage {
                               )
                             : null,
                         timeEntries: data[index],
-                        label: data[index]
-                            .first
-                            .startTime
-                            .toMonthAndYearString(languageCode),
+                        label:
+                            data[index].first.startTime.toMonthAndYearString(),
                       );
                     },
                   ),

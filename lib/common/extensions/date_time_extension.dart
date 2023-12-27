@@ -10,15 +10,21 @@ extension DateTimeExtension on DateTime {
   }
 
   /// Returns the date as a formatted string using the MMMMEEEEd pattern.
-  String toFormattedWeekDayString(String languageCode) {
+  String toFormattedWeekDayString({String? languageCode}) {
     final locale = Platform.localeName;
     return DateFormat.MMMMEEEEd(locale).format(this);
   }
 
   /// Returns the date as a formatted string using the yMMMM pattern.
-  String toMonthAndYearString(String languageCode) {
+  String toMonthAndYearString({String? languageCode}) {
     final locale = Platform.localeName;
     return DateFormat.yMMMM(locale).format(this);
+  }
+
+  /// Returns the date as a formatted string using the yMMMM pattern.
+  String toShortDateString() {
+    final locale = Platform.localeName;
+    return DateFormat.yMd(locale).format(this);
   }
 
   /// Returns a formatted string using the HH:mm pattern.

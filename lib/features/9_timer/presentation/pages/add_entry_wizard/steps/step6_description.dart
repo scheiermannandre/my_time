@@ -23,9 +23,9 @@ class Step6Description extends StatelessWidget {
         return WizardStepEventListener(
           controller: controller,
           onNextEvent: (event) {},
-          child: DescriptionStep(
+          child: DescriptionField(
             data: data,
-            saveName: controller.saveData,
+            save: controller.saveData,
           ),
         );
       },
