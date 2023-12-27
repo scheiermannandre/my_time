@@ -8,6 +8,7 @@ import 'package:my_time/features/8_authentication/presentation/pages/util/email_
 import 'package:my_time/features/8_authentication/presentation/pages/widgets/auth_action_footer.dart';
 import 'package:my_time/features/8_authentication/presentation/pages/widgets/auth_password_field.dart';
 import 'package:my_time/features/8_authentication/presentation/state_management/sign_up_page_controller.dart';
+import 'package:my_time/foundation/config/config.dart';
 import 'package:my_time/foundation/config/theme/tokens/space_tokens.dart';
 import 'package:my_time/foundation/config/theme/tokens/text_style_tokens.dart';
 import 'package:my_time/foundation/core/modals/mighty_snack_bar.dart';
@@ -16,7 +17,6 @@ import 'package:my_time/foundation/core/widgets/action_button.dart';
 import 'package:my_time/foundation/core/widgets/password_checker/password_checker.dart';
 import 'package:my_time/foundation/core/widgets/spaced_column.dart';
 import 'package:my_time/foundation/core/widgets/text_input_field.dart';
-import 'package:my_time/router/app_route.dart';
 
 /// A widget representing the sign-up/authentication page.
 class SignUpPage extends StatefulHookConsumerWidget with EmailValidator {

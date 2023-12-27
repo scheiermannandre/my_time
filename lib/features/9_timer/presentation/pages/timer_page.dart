@@ -13,6 +13,7 @@ import 'package:my_time/features/9_timer/domain/services/timer_service.dart';
 import 'package:my_time/features/9_timer/presentation/state_management/timer_page_controller.dart';
 import 'package:my_time/features/9_timer/presentation/widgets/time_display.dart';
 import 'package:my_time/features/9_timer/presentation/widgets/timer_action_buttons.dart';
+import 'package:my_time/foundation/config/config.dart';
 import 'package:my_time/foundation/config/theme/tokens/color_tokens.dart';
 import 'package:my_time/foundation/config/theme/tokens/space_tokens.dart';
 import 'package:my_time/foundation/core/modals/modal_bottom_sheet_ui.dart';
@@ -20,7 +21,6 @@ import 'package:my_time/foundation/core/util/extentions/widget_ref_extension.dar
 import 'package:my_time/foundation/core/widgets/action_button.dart';
 import 'package:my_time/foundation/core/widgets/persistent_sheet_scaffold.dart';
 import 'package:my_time/foundation/core/widgets/spaced_column.dart';
-import 'package:my_time/router/app_route.dart';
 
 /// The TimerPage lets the user start a work timer to automatically
 /// track the time spent on a project.

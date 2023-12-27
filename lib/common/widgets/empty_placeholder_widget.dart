@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:my_time/common/widgets/standard_button.dart';
 import 'package:my_time/constants/app_sizes.dart';
-import 'package:my_time/router/app_route.dart';
+import 'package:my_time/foundation/config/config.dart';
 
 /// Placeholder widget showing a message and CTA to go back to the home screen.
 class EmptyPlaceholderWidget extends StatelessWidget {

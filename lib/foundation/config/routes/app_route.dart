@@ -1,14 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:my_time/common/screens/shell_screen.dart';
-import 'package:my_time/features/1_groups/views/add_group_screen.dart';
-import 'package:my_time/features/2_projects/views/add_project_screen.dart';
-import 'package:my_time/features/2_projects/views/group_projects_shell_page.dart';
-import 'package:my_time/features/3_project_timer_page/view/project_shell_screen.dart';
-import 'package:my_time/features/3_project_timer_page/view/project_timer_shell_page.dart';
-import 'package:my_time/features/4_time_entry_form/view/time_entry_form_screen.dart';
-import 'package:my_time/features/5_project_history/view/proejct_history_shell_page.dart';
-import 'package:my_time/features/6_group_analytics/view/group_analytics_shell_page.dart';
 import 'package:my_time/features/7_groups_overview/presentation/pages/add_project_wizard/add_project_wizard.dart';
 import 'package:my_time/features/7_groups_overview/presentation/pages/groups_overview.dart';
 import 'package:my_time/features/7_groups_overview/presentation/pages/project_settings_page.dart';
@@ -344,89 +335,89 @@ GoRouter goRouter(GoRouterRef ref) {
       //   },
       // ),
 
-      GoRoute(
-        path: '/group/:gid',
-        name: AppRoute.group,
-        pageBuilder: (context, state) {
-          final groupId = state.pathParameters['gid']!;
-          return MaterialPage(
-            key: state.pageKey,
-            child: ShellScreen(
-              children: [
-                GroupProjectsShellPage(
-                  groupId: groupId,
-                ),
-                GroupAnalyticsShellPage(
-                  groupId: groupId,
-                ),
-              ],
-            ),
-          );
-        },
-      ),
-      GoRoute(
-        path: '/newgroup',
-        name: AppRoute.addGroup,
-        pageBuilder: (context, state) {
-          return MaterialPage(
-            key: state.pageKey,
-            child: const AddGroupScreen(),
-          );
-        },
-      ),
-      GoRoute(
-        path: '/newproject',
-        name: AppRoute.addProject,
-        pageBuilder: (context, state) {
-          final groupId = state.uri.queryParameters['gid'];
-          return MaterialPage(
-            key: state.pageKey,
-            child: AddProjectScreen(
-              groupId: groupId,
-            ),
-          );
-        },
-      ),
-      GoRoute(
-        path: '/project/:pid',
-        name: AppRoute.project,
-        pageBuilder: (context, state) {
-          final projectId = state.pathParameters['pid']!;
-          return MaterialPage(
-            key: state.pageKey,
-            child: ProjectShellScreen(
-              projectId: projectId,
-              children: [
-                ProjectTimerShellPage(
-                  projectId: projectId,
-                ),
-                ProjectHistoryShellPage(projectId: projectId),
-              ],
-            ),
-          );
-        },
-        routes: [
-          GoRoute(
-            path: 'timeentryform',
-            name: AppRoute.timeEntryForm,
-            pageBuilder: (context, state) {
-              final projectID = state.pathParameters['pid'] ?? '';
-              final isEdit = state.uri.queryParameters['isEdit'] ?? 'false';
-              final tid = state.uri.queryParameters['tid'] ?? '';
-              final projectName = state.uri.queryParameters['pname'] ?? '';
-              return MaterialPage(
-                key: state.pageKey,
-                child: TimeEntryFormScreen(
-                  isEdit: isEdit == 'true',
-                  timeEntryId: tid,
-                  projectId: projectID,
-                  projectName: projectName,
-                ),
-              );
-            },
-          ),
-        ],
-      ),
+      // GoRoute(
+      //   path: '/group/:gid',
+      //   name: AppRoute.group,
+      //   pageBuilder: (context, state) {
+      //     final groupId = state.pathParameters['gid']!;
+      //     return MaterialPage(
+      //       key: state.pageKey,
+      //       child: ShellScreen(
+      //         children: [
+      //           GroupProjectsShellPage(
+      //             groupId: groupId,
+      //           ),
+      //           GroupAnalyticsShellPage(
+      //             groupId: groupId,
+      //           ),
+      //         ],
+      //       ),
+      //     );
+      //   },
+      // ),
+      // GoRoute(
+      //   path: '/newgroup',
+      //   name: AppRoute.addGroup,
+      //   pageBuilder: (context, state) {
+      //     return MaterialPage(
+      //       key: state.pageKey,
+      //       child: const AddGroupScreen(),
+      //     );
+      //   },
+      // ),
+      // GoRoute(
+      //   path: '/newproject',
+      //   name: AppRoute.addProject,
+      //   pageBuilder: (context, state) {
+      //     final groupId = state.uri.queryParameters['gid'];
+      //     return MaterialPage(
+      //       key: state.pageKey,
+      //       child: AddProjectScreen(
+      //         groupId: groupId,
+      //       ),
+      //     );
+      //   },
+      // ),
+      // GoRoute(
+      //   path: '/project/:pid',
+      //   name: AppRoute.project,
+      //   pageBuilder: (context, state) {
+      //     final projectId = state.pathParameters['pid']!;
+      //     return MaterialPage(
+      //       key: state.pageKey,
+      //       child: ProjectShellScreen(
+      //         projectId: projectId,
+      //         children: [
+      //           ProjectTimerShellPage(
+      //             projectId: projectId,
+      //           ),
+      //           ProjectHistoryShellPage(projectId: projectId),
+      //         ],
+      //       ),
+      //     );
+      //   },
+      //   routes: [
+      //     GoRoute(
+      //       path: 'timeentryform',
+      //       name: AppRoute.timeEntryForm,
+      //       pageBuilder: (context, state) {
+      //         final projectID = state.pathParameters['pid'] ?? '';
+      //         final isEdit = state.uri.queryParameters['isEdit'] ?? 'false';
+      //         final tid = state.uri.queryParameters['tid'] ?? '';
+      //         final projectName = state.uri.queryParameters['pname'] ?? '';
+      //         return MaterialPage(
+      //           key: state.pageKey,
+      //           child: TimeEntryFormScreen(
+      //             isEdit: isEdit == 'true',
+      //             timeEntryId: tid,
+      //             projectId: projectID,
+      //             projectName: projectName,
+      //           ),
+      //         );
+      //       },
+      //     ),
+      //   ],
+      // ),
     ],
     errorBuilder: (context, state) => const NotFoundScreen(),
   );

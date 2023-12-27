@@ -6,6 +6,7 @@ import 'package:my_time/common/common.dart';
 import 'package:my_time/features/7_groups_overview/data/repositories/group_repository_impl.dart';
 import 'package:my_time/features/7_groups_overview/domain/entities/group_entity.dart';
 import 'package:my_time/features/7_groups_overview/presentation/state_management/groups_overview_controller.dart';
+import 'package:my_time/foundation/config/config.dart';
 import 'package:my_time/foundation/config/theme/tokens/color_tokens.dart';
 import 'package:my_time/foundation/config/theme/tokens/space_tokens.dart';
 import 'package:my_time/foundation/core/modals/modal_bottom_sheet_ui.dart';
@@ -20,7 +21,6 @@ import 'package:my_time/foundation/core/widgets/loading_indicator.dart';
 import 'package:my_time/foundation/core/widgets/persistent_sheet_scaffold.dart';
 import 'package:my_time/foundation/core/widgets/spaced_column.dart';
 import 'package:my_time/foundation/core/widgets/text_input_field.dart';
-import 'package:my_time/router/app_route.dart';
 
 /// GroupsOverviewInheritedWidget.
 class GroupsOverviewInheritedWidget extends InheritedWidget {

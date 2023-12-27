@@ -5,9 +5,9 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_time/common/extensions/build_context_extension.dart';
 import 'package:my_time/features/8_authentication/presentation/pages/widgets/auth_change_password_widget.dart';
 import 'package:my_time/features/8_authentication/presentation/state_management/auth_reset_password_page_controller.dart';
+import 'package:my_time/foundation/config/config.dart';
 import 'package:my_time/foundation/core/modals/modal_dialog_ui.dart';
 import 'package:my_time/foundation/core/util/extentions/widget_ref_extension.dart';
-import 'package:my_time/router/app_route.dart';
 
 /// Page widget handling the password reset functionality.
 class AuthRestPasswordPage extends StatefulHookConsumerWidget {

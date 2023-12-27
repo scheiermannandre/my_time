@@ -4,9 +4,9 @@ import 'package:go_router/go_router.dart';
 import 'package:my_time/common/extensions/build_context_extension.dart';
 import 'package:my_time/features/8_authentication/presentation/pages/util/email_handle_mode.dart';
 import 'package:my_time/features/8_authentication/presentation/state_management/auth_actioncode_handler_page_controller.dart';
+import 'package:my_time/foundation/config/config.dart';
 import 'package:my_time/foundation/core/modals/modal_dialog_ui.dart';
 import 'package:my_time/foundation/core/widgets/loading_indicator.dart';
-import 'package:my_time/router/app_route.dart';
 
 /// A page widget handling various actions based on an authentication code.
 class AuthActionCodeHandlerPage extends ConsumerStatefulWidget {

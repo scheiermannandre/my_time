@@ -7,11 +7,11 @@ import 'package:my_time/common/extensions/build_context_extension.dart';
 import 'package:my_time/features/8_authentication/presentation/pages/widgets/auth_action_footer.dart';
 import 'package:my_time/features/8_authentication/presentation/pages/widgets/authentication_widget.dart';
 import 'package:my_time/features/8_authentication/presentation/state_management/sign_in_page_controller.dart';
+import 'package:my_time/foundation/config/config.dart';
 import 'package:my_time/foundation/config/theme/tokens/space_tokens.dart';
 import 'package:my_time/foundation/config/theme/tokens/text_style_tokens.dart';
 import 'package:my_time/foundation/core/util/extentions/widget_ref_extension.dart';
 import 'package:my_time/foundation/core/widgets/spaced_column.dart';
-import 'package:my_time/router/app_route.dart';
 
 /// Widget representing the sign-in/authentication page.
 class SignInPage extends StatefulHookConsumerWidget {
