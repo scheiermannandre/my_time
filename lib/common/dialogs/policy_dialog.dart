@@ -3,11 +3,11 @@ import 'package:flutter/services.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:my_time/common/extensions/build_context_extension.dart';
-import 'package:my_time/config/theme/tokens/color_tokens.dart';
-import 'package:my_time/config/theme/tokens/corner_radius_tokens.dart';
-import 'package:my_time/config/theme/tokens/space_tokens.dart';
-import 'package:my_time/config/theme/tokens/text_style_tokens.dart';
-import 'package:my_time/core/widgets/action_button.dart';
+import 'package:my_time/foundation/config/theme/tokens/color_tokens.dart';
+import 'package:my_time/foundation/config/theme/tokens/corner_radius_tokens.dart';
+import 'package:my_time/foundation/config/theme/tokens/space_tokens.dart';
+import 'package:my_time/foundation/config/theme/tokens/text_style_tokens.dart';
+import 'package:my_time/foundation/core/widgets/action_button.dart';
 
 /// Utility class to display a dialog with a markdown file content.
 class MightyMarkDownDialog {

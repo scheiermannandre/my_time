@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:my_time/config/theme/tokens/space_tokens.dart';
-import 'package:my_time/core/widgets/action_button.dart';
 import 'package:my_time/features/9_timer/domain/entities/timer_state.dart';
+import 'package:my_time/foundation/config/theme/tokens/space_tokens.dart';
+import 'package:my_time/foundation/core/widgets/action_button.dart';
 
 /// A widget that displays the timer action buttons.
 class TimerActionButtons extends StatefulHookWidget {

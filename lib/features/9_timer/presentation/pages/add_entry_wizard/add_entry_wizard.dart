@@ -2,10 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_time/common/extensions/build_context_extension.dart';
-import 'package:my_time/core/util/extentions/widget_ref_extension.dart';
-import 'package:my_time/core/widgets/wizard/wizard/wizard.dart';
-import 'package:my_time/core/widgets/wizard/wizard/wizard_step_indicator.dart';
-import 'package:my_time/core/widgets/wizard/wizard_button_data.dart';
 import 'package:my_time/features/7_groups_overview/domain/entities/project_entity.dart';
 import 'package:my_time/features/7_groups_overview/domain/usecase_services/project_service.dart';
 import 'package:my_time/features/9_timer/presentation/pages/add_entry_wizard/review_step.dart';
@@ -16,6 +12,10 @@ import 'package:my_time/features/9_timer/presentation/pages/add_entry_wizard/ste
 import 'package:my_time/features/9_timer/presentation/pages/add_entry_wizard/steps/step5_workplace.dart';
 import 'package:my_time/features/9_timer/presentation/pages/add_entry_wizard/steps/step6_description.dart';
 import 'package:my_time/features/9_timer/presentation/state_management/add_entry_wizard_controller.dart';
+import 'package:my_time/foundation/core/util/extentions/widget_ref_extension.dart';
+import 'package:my_time/foundation/core/widgets/wizard/wizard/wizard.dart';
+import 'package:my_time/foundation/core/widgets/wizard/wizard/wizard_step_indicator.dart';
+import 'package:my_time/foundation/core/widgets/wizard/wizard_button_data.dart';
 
 /// A widget representing the add project wizard.
 class AddEntryWizard extends ConsumerWidget {

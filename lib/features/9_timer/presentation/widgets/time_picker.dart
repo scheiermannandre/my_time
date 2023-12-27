@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:my_time/config/theme/tokens/text_style_tokens.dart';
-import 'package:my_time/core/widgets/number_picker.dart';
+import 'package:my_time/foundation/config/theme/tokens/text_style_tokens.dart';
+import 'package:my_time/foundation/core/widgets/number_picker.dart';
 
 /// A time picker widget that allows the user to select a time.
 class TimePicker extends StatefulWidget {

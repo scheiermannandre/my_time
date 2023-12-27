@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_time/common/extensions/build_context_extension.dart';
 import 'package:my_time/common/extensions/date_time_extension.dart';
-import 'package:my_time/config/theme/tokens/space_tokens.dart';
-import 'package:my_time/core/widgets/spaced_column.dart';
-import 'package:my_time/core/widgets/wizard/wizard_review_step/review_card.dart';
-import 'package:my_time/core/widgets/wizard/wizard_review_step/show_review_value.dart';
-import 'package:my_time/core/widgets/wizard/wizard_review_step/wizard_review_step.dart';
-import 'package:my_time/core/widgets/wizard/wizard_review_step/wizard_review_step_event_listener.dart';
 import 'package:my_time/features/7_groups_overview/domain/entities/enums/payment_status.dart';
 import 'package:my_time/features/9_timer/domain/entities/entry_type.dart';
 import 'package:my_time/features/9_timer/presentation/pages/add_days_off_wizard/add_days_off_wizard.dart';
+import 'package:my_time/foundation/config/theme/tokens/space_tokens.dart';
+import 'package:my_time/foundation/core/widgets/spaced_column.dart';
+import 'package:my_time/foundation/core/widgets/wizard/wizard_review_step/review_card.dart';
+import 'package:my_time/foundation/core/widgets/wizard/wizard_review_step/show_review_value.dart';
+import 'package:my_time/foundation/core/widgets/wizard/wizard_review_step/wizard_review_step.dart';
+import 'package:my_time/foundation/core/widgets/wizard/wizard_review_step/wizard_review_step_event_listener.dart';
 
 /// Review Step in the add project wizard.
 class DaysOffReviewStep extends ConsumerWidget {

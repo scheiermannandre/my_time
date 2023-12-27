@@ -1,11 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_time/common/extensions/build_context_extension.dart';
-import 'package:my_time/config/theme/tokens/space_tokens.dart';
-import 'package:my_time/core/widgets/wizard/wizard_review_step/review_card.dart';
-import 'package:my_time/core/widgets/wizard/wizard_review_step/show_review_value.dart';
-import 'package:my_time/core/widgets/wizard/wizard_review_step/wizard_review_step.dart';
-import 'package:my_time/core/widgets/wizard/wizard_review_step/wizard_review_step_event_listener.dart';
 import 'package:my_time/features/7_groups_overview/domain/entities/enums/currency.dart';
 import 'package:my_time/features/7_groups_overview/domain/entities/enums/payment_interval.dart';
 import 'package:my_time/features/7_groups_overview/domain/entities/enums/payment_status.dart';
@@ -15,6 +10,11 @@ import 'package:my_time/features/7_groups_overview/domain/entities/group_entity.
 import 'package:my_time/features/7_groups_overview/domain/entities/project_money_management_entity.dart';
 import 'package:my_time/features/7_groups_overview/domain/entities/project_time_management_entity.dart';
 import 'package:my_time/features/7_groups_overview/domain/entities/vacation_entity.dart';
+import 'package:my_time/foundation/config/theme/tokens/space_tokens.dart';
+import 'package:my_time/foundation/core/widgets/wizard/wizard_review_step/review_card.dart';
+import 'package:my_time/foundation/core/widgets/wizard/wizard_review_step/show_review_value.dart';
+import 'package:my_time/foundation/core/widgets/wizard/wizard_review_step/wizard_review_step.dart';
+import 'package:my_time/foundation/core/widgets/wizard/wizard_review_step/wizard_review_step_event_listener.dart';
 
 /// Review Step in the add project wizard.
 class ReviewStep extends ConsumerWidget {

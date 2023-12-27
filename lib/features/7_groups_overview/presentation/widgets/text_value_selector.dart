@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:my_time/common/extensions/build_context_extension.dart';
-import 'package:my_time/config/theme/tokens/space_tokens.dart';
-import 'package:my_time/core/widgets/action_button.dart';
-import 'package:my_time/core/widgets/spaced_column.dart';
-import 'package:my_time/core/widgets/text_input_field.dart';
+import 'package:my_time/foundation/config/theme/tokens/space_tokens.dart';
+import 'package:my_time/foundation/core/widgets/action_button.dart';
+import 'package:my_time/foundation/core/widgets/spaced_column.dart';
+import 'package:my_time/foundation/core/widgets/text_input_field.dart';
 
 /// A widget that allows the user to select a text value.
 class TextValueSelector extends StatefulHookWidget {

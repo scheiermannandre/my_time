@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:my_time/common/extensions/build_context_extension.dart';
-import 'package:my_time/core/modals/modal_dialog_ui.dart';
 import 'package:my_time/exceptions/custom_app_exception.dart';
+import 'package:my_time/foundation/core/modals/modal_dialog_ui.dart';
 
 /// Extension for the [AsyncValue] class.
 extension AsyncValueUI<T> on AsyncValue<T> {

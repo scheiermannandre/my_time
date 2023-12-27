@@ -7,9 +7,9 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 // ignore:depend_on_referenced_packages
 import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:my_time/config/theme/dark_theme.dart';
-import 'package:my_time/config/theme/light_theme.dart';
 import 'package:my_time/firebase_options.dart';
+import 'package:my_time/foundation/config/theme/dark_theme.dart';
+import 'package:my_time/foundation/config/theme/light_theme.dart';
 import 'package:my_time/router/app_route.dart';
 // import 'package:realm/realm.dart';
 // import 'package:my_time/features/0_common/realmModel/realm_model.dart';

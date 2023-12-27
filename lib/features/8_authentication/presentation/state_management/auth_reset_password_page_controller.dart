@@ -1,6 +1,6 @@
-import 'package:my_time/core/widgets/password_checker/password_checker.dart';
 import 'package:my_time/features/8_authentication/data/repositories/auth_repository_impl.dart';
 import 'package:my_time/features/8_authentication/presentation/pages/util/email_handle_mode.dart';
+import 'package:my_time/foundation/core/widgets/password_checker/password_checker.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'auth_reset_password_page_controller.g.dart';

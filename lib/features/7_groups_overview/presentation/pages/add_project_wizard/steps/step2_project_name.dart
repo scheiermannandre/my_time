@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_time/common/extensions/build_context_extension.dart';
-import 'package:my_time/config/theme/tokens/space_tokens.dart';
-import 'package:my_time/core/widgets/text_input_field.dart';
-import 'package:my_time/core/widgets/wizard/wizard_step/wizard_step_event_listener.dart';
-import 'package:my_time/core/widgets/wizard/wizard_step/wizard_step_wrapper.dart';
+import 'package:my_time/foundation/config/theme/tokens/space_tokens.dart';
+import 'package:my_time/foundation/core/widgets/text_input_field.dart';
+import 'package:my_time/foundation/core/widgets/wizard/wizard_step/wizard_step_event_listener.dart';
+import 'package:my_time/foundation/core/widgets/wizard/wizard_step/wizard_step_wrapper.dart';
 
 /// Step 2: Project Name Entry Step in a wizard.
 class Step2ProjectName extends StatelessWidget {

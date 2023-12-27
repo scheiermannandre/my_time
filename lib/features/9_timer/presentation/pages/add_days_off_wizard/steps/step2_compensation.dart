@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:my_time/common/extensions/build_context_extension.dart';
-import 'package:my_time/core/widgets/wizard/wizard_step/wizard_step_event_listener.dart';
-import 'package:my_time/core/widgets/wizard/wizard_step/wizard_step_wrapper.dart';
 import 'package:my_time/features/7_groups_overview/domain/entities/enums/payment_status.dart';
 import 'package:my_time/features/7_groups_overview/presentation/widgets/payment_status_selector.dart';
 import 'package:my_time/features/9_timer/domain/entities/entry_type.dart';
 import 'package:my_time/features/9_timer/presentation/pages/add_days_off_wizard/add_days_off_wizard.dart';
+import 'package:my_time/foundation/core/widgets/wizard/wizard_step/wizard_step_event_listener.dart';
+import 'package:my_time/foundation/core/widgets/wizard/wizard_step/wizard_step_wrapper.dart';
 
 /// Step 2 of the AddDaysOffWizard.
 class Step2Compensation extends StatelessWidget {

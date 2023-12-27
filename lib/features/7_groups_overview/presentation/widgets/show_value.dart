@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:my_time/config/theme/tokens/color_tokens.dart';
-import 'package:my_time/config/theme/tokens/space_tokens.dart';
-import 'package:my_time/config/theme/tokens/text_style_tokens.dart';
+import 'package:my_time/foundation/config/theme/tokens/color_tokens.dart';
+import 'package:my_time/foundation/config/theme/tokens/space_tokens.dart';
+import 'package:my_time/foundation/config/theme/tokens/text_style_tokens.dart';
 
 /// A card with a label on top to display a setting.
 class ShowValue extends StatelessWidget {

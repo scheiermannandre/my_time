@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_time/common/extensions/build_context_extension.dart';
-import 'package:my_time/core/util/extentions/widget_ref_extension.dart';
 import 'package:my_time/features/8_authentication/presentation/pages/widgets/auth_change_password_widget.dart';
 import 'package:my_time/features/8_authentication/presentation/state_management/auth_update_password_page_controller.dart';
+import 'package:my_time/foundation/core/util/extentions/widget_ref_extension.dart';
 
 /// Page widget handling the password reset functionality.
 class AuthUpdatePasswordPage extends StatefulHookConsumerWidget {

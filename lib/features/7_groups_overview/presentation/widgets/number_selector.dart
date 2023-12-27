@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:my_time/common/extensions/build_context_extension.dart';
-import 'package:my_time/config/theme/tokens/space_tokens.dart';
-import 'package:my_time/config/theme/tokens/text_style_tokens.dart';
-import 'package:my_time/core/widgets/action_button.dart';
-import 'package:my_time/core/widgets/number_picker.dart';
-import 'package:my_time/core/widgets/spaced_column.dart';
-import 'package:my_time/core/widgets/text_input_field.dart';
+import 'package:my_time/foundation/config/theme/tokens/space_tokens.dart';
+import 'package:my_time/foundation/config/theme/tokens/text_style_tokens.dart';
+import 'package:my_time/foundation/core/widgets/action_button.dart';
+import 'package:my_time/foundation/core/widgets/number_picker.dart';
+import 'package:my_time/foundation/core/widgets/spaced_column.dart';
+import 'package:my_time/foundation/core/widgets/text_input_field.dart';
 
 /// A widget that allows the user to select a number.
 class NumberSelector extends StatefulWidget {

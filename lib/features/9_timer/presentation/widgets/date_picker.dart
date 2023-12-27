@@ -2,8 +2,8 @@ import 'package:calendar_date_picker2/calendar_date_picker2.dart';
 import 'package:flutter/material.dart';
 import 'package:my_time/common/extensions/build_context_extension.dart';
 import 'package:my_time/common/extensions/date_time_extension.dart';
-import 'package:my_time/config/theme/tokens/color_tokens.dart';
-import 'package:my_time/config/theme/tokens/text_style_tokens.dart';
+import 'package:my_time/foundation/config/theme/tokens/color_tokens.dart';
+import 'package:my_time/foundation/config/theme/tokens/text_style_tokens.dart';
 
 /// A widget representing the date selector.
 class DatePicker extends StatefulWidget {

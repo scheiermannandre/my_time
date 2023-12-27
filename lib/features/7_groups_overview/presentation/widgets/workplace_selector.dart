@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:my_time/common/extensions/build_context_extension.dart';
-import 'package:my_time/config/theme/tokens/space_tokens.dart';
-import 'package:my_time/core/widgets/action_button.dart';
 import 'package:my_time/features/7_groups_overview/domain/entities/enums/wokrplace.dart';
 import 'package:my_time/features/7_groups_overview/presentation/widgets/value_selector.dart';
+import 'package:my_time/foundation/config/theme/tokens/space_tokens.dart';
+import 'package:my_time/foundation/core/widgets/action_button.dart';
 
 /// A widget that allows the user to select a workplace.
 class WorkplaceSelector extends StatelessWidget {

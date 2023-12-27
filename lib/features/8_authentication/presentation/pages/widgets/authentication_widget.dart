@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:my_time/common/extensions/build_context_extension.dart';
-import 'package:my_time/config/theme/tokens/space_tokens.dart';
-import 'package:my_time/config/theme/tokens/text_style_tokens.dart';
-import 'package:my_time/core/widgets/action_button.dart';
-import 'package:my_time/core/widgets/password_checker/enum/password_strength_enum.dart';
-import 'package:my_time/core/widgets/spaced_column.dart';
-import 'package:my_time/core/widgets/text_input_field.dart';
+import 'package:my_time/foundation/config/theme/tokens/space_tokens.dart';
+import 'package:my_time/foundation/config/theme/tokens/text_style_tokens.dart';
+import 'package:my_time/foundation/core/widgets/action_button.dart';
+import 'package:my_time/foundation/core/widgets/password_checker/enum/password_strength_enum.dart';
+import 'package:my_time/foundation/core/widgets/spaced_column.dart';
+import 'package:my_time/foundation/core/widgets/text_input_field.dart';
 
 /// A Widget for authentication pages.
 class AuthenticationWidget extends StatelessWidget {

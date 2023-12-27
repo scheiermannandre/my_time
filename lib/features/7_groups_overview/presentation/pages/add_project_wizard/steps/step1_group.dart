@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:my_time/common/extensions/build_context_extension.dart';
-import 'package:my_time/config/theme/tokens/color_tokens.dart';
-import 'package:my_time/config/theme/tokens/space_tokens.dart';
-import 'package:my_time/core/widgets/async_value_widget.dart';
-import 'package:my_time/core/widgets/loading_error_widget.dart';
-import 'package:my_time/core/widgets/loading_indicator.dart';
-import 'package:my_time/core/widgets/wizard/wizard_step/wizard_step_event_listener.dart';
-import 'package:my_time/core/widgets/wizard/wizard_step/wizard_step_wrapper.dart';
 import 'package:my_time/features/7_groups_overview/data/repositories/group_repository_impl.dart';
 import 'package:my_time/features/7_groups_overview/domain/entities/group_entity.dart';
+import 'package:my_time/foundation/config/theme/tokens/color_tokens.dart';
+import 'package:my_time/foundation/config/theme/tokens/space_tokens.dart';
+import 'package:my_time/foundation/core/widgets/async_value_widget.dart';
+import 'package:my_time/foundation/core/widgets/loading_error_widget.dart';
+import 'package:my_time/foundation/core/widgets/loading_indicator.dart';
+import 'package:my_time/foundation/core/widgets/wizard/wizard_step/wizard_step_event_listener.dart';
+import 'package:my_time/foundation/core/widgets/wizard/wizard_step/wizard_step_wrapper.dart';
 
 /// Step 1: Group Selection Step in a wizard.
 class Step1Group extends StatelessWidget {

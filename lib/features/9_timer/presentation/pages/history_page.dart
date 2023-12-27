@@ -3,16 +3,16 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_time/common/common.dart';
-import 'package:my_time/config/theme/tokens/color_tokens.dart';
-import 'package:my_time/config/theme/tokens/space_tokens.dart';
-import 'package:my_time/config/theme/tokens/text_style_tokens.dart';
-import 'package:my_time/core/modals/mighty_snack_bar.dart';
-import 'package:my_time/core/modals/modal_bottom_sheet_ui.dart';
-import 'package:my_time/core/util/extentions/widget_ref_extension.dart';
-import 'package:my_time/core/widgets/spaced_column.dart';
 import 'package:my_time/features/9_timer/domain/entities/entry_entity.dart';
 import 'package:my_time/features/9_timer/domain/entities/entry_type.dart';
 import 'package:my_time/features/9_timer/presentation/state_management/history_page_controller.dart';
+import 'package:my_time/foundation/config/theme/tokens/color_tokens.dart';
+import 'package:my_time/foundation/config/theme/tokens/space_tokens.dart';
+import 'package:my_time/foundation/config/theme/tokens/text_style_tokens.dart';
+import 'package:my_time/foundation/core/modals/mighty_snack_bar.dart';
+import 'package:my_time/foundation/core/modals/modal_bottom_sheet_ui.dart';
+import 'package:my_time/foundation/core/util/extentions/widget_ref_extension.dart';
+import 'package:my_time/foundation/core/widgets/spaced_column.dart';
 import 'package:my_time/router/app_route.dart';
 
 /// EntryHistoryPage

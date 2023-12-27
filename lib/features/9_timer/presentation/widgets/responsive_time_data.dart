@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:my_time/config/theme/tokens/space_tokens.dart';
-import 'package:my_time/core/widgets/spaced_row.dart';
+import 'package:my_time/foundation/config/theme/tokens/space_tokens.dart';
+import 'package:my_time/foundation/core/widgets/spaced_row.dart';
 
 /// A widget that displays the time data in a responsive way.
 class ResponsiveTimeData extends StatelessWidget {

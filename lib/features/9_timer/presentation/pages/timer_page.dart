@@ -4,13 +4,6 @@ import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_time/common/extensions/async_value_extensions.dart';
 import 'package:my_time/common/extensions/build_context_extension.dart';
-import 'package:my_time/config/theme/tokens/color_tokens.dart';
-import 'package:my_time/config/theme/tokens/space_tokens.dart';
-import 'package:my_time/core/modals/modal_bottom_sheet_ui.dart';
-import 'package:my_time/core/util/extentions/widget_ref_extension.dart';
-import 'package:my_time/core/widgets/action_button.dart';
-import 'package:my_time/core/widgets/persistent_sheet_scaffold.dart';
-import 'package:my_time/core/widgets/spaced_column.dart';
 import 'package:my_time/features/7_groups_overview/domain/entities/project_entity.dart';
 import 'package:my_time/features/7_groups_overview/domain/usecase_services/project_service.dart';
 import 'package:my_time/features/9_timer/data/repositories/timer_data_repository.dart';
@@ -20,6 +13,13 @@ import 'package:my_time/features/9_timer/domain/services/timer_service.dart';
 import 'package:my_time/features/9_timer/presentation/state_management/timer_page_controller.dart';
 import 'package:my_time/features/9_timer/presentation/widgets/time_display.dart';
 import 'package:my_time/features/9_timer/presentation/widgets/timer_action_buttons.dart';
+import 'package:my_time/foundation/config/theme/tokens/color_tokens.dart';
+import 'package:my_time/foundation/config/theme/tokens/space_tokens.dart';
+import 'package:my_time/foundation/core/modals/modal_bottom_sheet_ui.dart';
+import 'package:my_time/foundation/core/util/extentions/widget_ref_extension.dart';
+import 'package:my_time/foundation/core/widgets/action_button.dart';
+import 'package:my_time/foundation/core/widgets/persistent_sheet_scaffold.dart';
+import 'package:my_time/foundation/core/widgets/spaced_column.dart';
 import 'package:my_time/router/app_route.dart';
 
 /// The TimerPage lets the user start a work timer to automatically

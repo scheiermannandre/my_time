@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:my_time/common/common.dart';
-import 'package:my_time/core/modals/modal_bottom_sheet_ui.dart';
-import 'package:my_time/core/modals/modal_dialog_ui.dart';
-import 'package:my_time/core/widgets/labeled_list_tiles.dart';
+import 'package:my_time/foundation/core/modals/modal_bottom_sheet_ui.dart';
+import 'package:my_time/foundation/core/modals/modal_dialog_ui.dart';
+import 'package:my_time/foundation/core/widgets/labeled_list_tiles.dart';
 import 'package:open_mail_app/open_mail_app.dart';
 
 /// A utility class to fetch and work with email apps available on the device.

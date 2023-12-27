@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:my_time/config/theme/tokens/color_tokens.dart';
-import 'package:my_time/config/theme/tokens/space_tokens.dart';
+import 'package:my_time/foundation/config/theme/tokens/color_tokens.dart';
+import 'package:my_time/foundation/config/theme/tokens/space_tokens.dart';
 
 /// A widget for selecting a value from a list of options.
 class ValueSelector extends StatefulWidget {

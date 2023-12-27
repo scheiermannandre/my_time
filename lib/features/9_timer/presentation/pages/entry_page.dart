@@ -2,16 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:my_time/common/common.dart';
-import 'package:my_time/config/theme/tokens/color_tokens.dart';
-import 'package:my_time/config/theme/tokens/space_tokens.dart';
-import 'package:my_time/config/theme/tokens/text_style_tokens.dart';
-import 'package:my_time/core/modals/modal_bottom_sheet_ui.dart';
-import 'package:my_time/core/modals/modal_dialog_ui.dart';
-import 'package:my_time/core/util/extentions/widget_ref_extension.dart';
-import 'package:my_time/core/widgets/action_button.dart';
-import 'package:my_time/core/widgets/spaced_row.dart';
-import 'package:my_time/core/widgets/text_input_field.dart';
-import 'package:my_time/core/widgets/wizard/labeled_widgets.dart';
 import 'package:my_time/features/7_groups_overview/domain/entities/enums/payment_status.dart';
 import 'package:my_time/features/7_groups_overview/domain/entities/enums/wokrplace.dart';
 import 'package:my_time/features/7_groups_overview/presentation/widgets/payment_status_selector.dart';
@@ -24,6 +14,16 @@ import 'package:my_time/features/9_timer/domain/entities/entry_type.dart';
 import 'package:my_time/features/9_timer/presentation/state_management/entry_page_controller.dart';
 import 'package:my_time/features/9_timer/presentation/widgets/date_selector.dart';
 import 'package:my_time/features/9_timer/presentation/widgets/time_selector.dart';
+import 'package:my_time/foundation/config/theme/tokens/color_tokens.dart';
+import 'package:my_time/foundation/config/theme/tokens/space_tokens.dart';
+import 'package:my_time/foundation/config/theme/tokens/text_style_tokens.dart';
+import 'package:my_time/foundation/core/modals/modal_bottom_sheet_ui.dart';
+import 'package:my_time/foundation/core/modals/modal_dialog_ui.dart';
+import 'package:my_time/foundation/core/util/extentions/widget_ref_extension.dart';
+import 'package:my_time/foundation/core/widgets/action_button.dart';
+import 'package:my_time/foundation/core/widgets/spaced_row.dart';
+import 'package:my_time/foundation/core/widgets/text_input_field.dart';
+import 'package:my_time/foundation/core/widgets/wizard/labeled_widgets.dart';
 
 /// Page to display and modify the settings of a project.
 class EntryPage extends ConsumerWidget {

@@ -2,10 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_time/common/extensions/build_context_extension.dart';
-import 'package:my_time/core/util/extentions/widget_ref_extension.dart';
-import 'package:my_time/core/widgets/wizard/wizard/wizard.dart';
-import 'package:my_time/core/widgets/wizard/wizard/wizard_step_indicator.dart';
-import 'package:my_time/core/widgets/wizard/wizard_button_data.dart';
 import 'package:my_time/features/7_groups_overview/presentation/pages/add_project_wizard/steps/step1_group.dart';
 import 'package:my_time/features/7_groups_overview/presentation/pages/add_project_wizard/steps/step2_project_name.dart';
 import 'package:my_time/features/7_groups_overview/presentation/pages/add_project_wizard/steps/step3_sick_days.dart';
@@ -16,6 +12,10 @@ import 'package:my_time/features/7_groups_overview/presentation/pages/add_projec
 import 'package:my_time/features/7_groups_overview/presentation/pages/add_project_wizard/steps/step8_workplace.dart';
 import 'package:my_time/features/7_groups_overview/presentation/pages/add_project_wizard/steps/step9_review.dart';
 import 'package:my_time/features/7_groups_overview/presentation/state_management/add_project_wizard_controller.dart';
+import 'package:my_time/foundation/core/util/extentions/widget_ref_extension.dart';
+import 'package:my_time/foundation/core/widgets/wizard/wizard/wizard.dart';
+import 'package:my_time/foundation/core/widgets/wizard/wizard/wizard_step_indicator.dart';
+import 'package:my_time/foundation/core/widgets/wizard/wizard_button_data.dart';
 
 /// A widget representing the add project wizard.
 class AddProjectWizard extends ConsumerWidget {

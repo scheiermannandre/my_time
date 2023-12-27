@@ -2,9 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:my_time/common/extensions/async_value_extensions.dart';
 import 'package:my_time/common/extensions/build_context_extension.dart';
-import 'package:my_time/config/theme/tokens/space_tokens.dart';
-import 'package:my_time/core/modals/modal_dialog_ui.dart';
-import 'package:my_time/core/util/extentions/widget_ref_extension.dart';
 import 'package:my_time/features/7_groups_overview/domain/entities/enums/currency.dart';
 import 'package:my_time/features/7_groups_overview/domain/entities/enums/payment_interval.dart';
 import 'package:my_time/features/7_groups_overview/domain/entities/enums/payment_status.dart';
@@ -23,6 +20,9 @@ import 'package:my_time/features/7_groups_overview/presentation/widgets/settings
 import 'package:my_time/features/7_groups_overview/presentation/widgets/show_value.dart';
 import 'package:my_time/features/7_groups_overview/presentation/widgets/text_value_selector.dart';
 import 'package:my_time/features/7_groups_overview/presentation/widgets/workplace_selector.dart';
+import 'package:my_time/foundation/config/theme/tokens/space_tokens.dart';
+import 'package:my_time/foundation/core/modals/modal_dialog_ui.dart';
+import 'package:my_time/foundation/core/util/extentions/widget_ref_extension.dart';
 
 /// Page to display and modify the settings of a project.
 class ProjectSettingsPage extends ConsumerWidget {

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:my_time/config/theme/tokens/text_style_tokens.dart';
+import 'package:my_time/foundation/config/theme/tokens/text_style_tokens.dart';
 
 /// Widget that Displays the time on the ProjectTimerPage.
 class TimeDisplay extends StatelessWidget {

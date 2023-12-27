@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:my_time/common/extensions/build_context_extension.dart';
-import 'package:my_time/config/theme/tokens/color_tokens.dart';
-import 'package:my_time/config/theme/tokens/corner_radius_tokens.dart';
-import 'package:my_time/config/theme/tokens/space_tokens.dart';
-import 'package:my_time/core/widgets/password_checker/password_checker.dart';
-import 'package:my_time/core/widgets/spaced_column.dart';
-import 'package:my_time/core/widgets/text_input_field.dart';
+import 'package:my_time/foundation/config/theme/tokens/color_tokens.dart';
+import 'package:my_time/foundation/config/theme/tokens/corner_radius_tokens.dart';
+import 'package:my_time/foundation/config/theme/tokens/space_tokens.dart';
+import 'package:my_time/foundation/core/widgets/password_checker/password_checker.dart';
+import 'package:my_time/foundation/core/widgets/spaced_column.dart';
+import 'package:my_time/foundation/core/widgets/text_input_field.dart';
 
 /// A widget representing the password field for authentication.
 class AuthPasswordField extends StatelessWidget {

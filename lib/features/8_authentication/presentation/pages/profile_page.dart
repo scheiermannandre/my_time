@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:my_time/common/extensions/build_context_extension.dart';
-import 'package:my_time/config/theme/tokens/space_tokens.dart';
-import 'package:my_time/core/modals/mighty_snack_bar.dart';
-import 'package:my_time/core/modals/modal_bottom_sheet_ui.dart';
 import 'package:my_time/features/8_authentication/data/repositories/auth_repository_impl.dart';
 import 'package:my_time/features/8_authentication/presentation/pages/auth_update_password_page.dart';
 import 'package:my_time/features/8_authentication/presentation/pages/reauthentication_page.dart';
+import 'package:my_time/foundation/config/theme/tokens/space_tokens.dart';
+import 'package:my_time/foundation/core/modals/mighty_snack_bar.dart';
+import 'package:my_time/foundation/core/modals/modal_bottom_sheet_ui.dart';
 
 /// A page widget representing the profile page.
 class ProfilePage extends ConsumerWidget {

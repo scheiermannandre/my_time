@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:my_time/config/theme/tokens/space_tokens.dart';
-import 'package:my_time/core/widgets/wizard/labeled_widgets.dart';
+import 'package:my_time/foundation/config/theme/tokens/space_tokens.dart';
+import 'package:my_time/foundation/core/widgets/wizard/labeled_widgets.dart';
 
 /// A card with a label on top to display a setting.
 class SettingsBlock extends StatelessWidget {

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:my_time/common/extensions/build_context_extension.dart';
-import 'package:my_time/config/theme/tokens/space_tokens.dart';
-import 'package:my_time/core/widgets/action_button.dart';
-import 'package:my_time/core/widgets/spaced_column.dart';
 import 'package:my_time/features/9_timer/presentation/widgets/date_picker.dart';
+import 'package:my_time/foundation/config/theme/tokens/space_tokens.dart';
+import 'package:my_time/foundation/core/widgets/action_button.dart';
+import 'package:my_time/foundation/core/widgets/spaced_column.dart';
 
 /// A widget that allows the user to select a number.
 class DateSelector extends StatefulWidget {

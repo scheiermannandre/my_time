@@ -3,18 +3,18 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_time/common/extensions/build_context_extension.dart';
 import 'package:my_time/common/extensions/date_time_extension.dart';
 import 'package:my_time/common/extensions/duration_extension.dart';
-import 'package:my_time/config/theme/tokens/color_tokens.dart';
-import 'package:my_time/config/theme/tokens/space_tokens.dart';
-import 'package:my_time/config/theme/tokens/text_style_tokens.dart';
-import 'package:my_time/core/widgets/spaced_column.dart';
-import 'package:my_time/core/widgets/spaced_row.dart';
-import 'package:my_time/core/widgets/wizard/wizard_review_step/review_card.dart';
-import 'package:my_time/core/widgets/wizard/wizard_review_step/show_review_value.dart';
-import 'package:my_time/core/widgets/wizard/wizard_review_step/wizard_review_step.dart';
-import 'package:my_time/core/widgets/wizard/wizard_review_step/wizard_review_step_controller.dart';
-import 'package:my_time/core/widgets/wizard/wizard_review_step/wizard_review_step_event_listener.dart';
 import 'package:my_time/features/7_groups_overview/domain/entities/enums/wokrplace.dart';
 import 'package:my_time/features/9_timer/presentation/widgets/responsive_time_data.dart';
+import 'package:my_time/foundation/config/theme/tokens/color_tokens.dart';
+import 'package:my_time/foundation/config/theme/tokens/space_tokens.dart';
+import 'package:my_time/foundation/config/theme/tokens/text_style_tokens.dart';
+import 'package:my_time/foundation/core/widgets/spaced_column.dart';
+import 'package:my_time/foundation/core/widgets/spaced_row.dart';
+import 'package:my_time/foundation/core/widgets/wizard/wizard_review_step/review_card.dart';
+import 'package:my_time/foundation/core/widgets/wizard/wizard_review_step/show_review_value.dart';
+import 'package:my_time/foundation/core/widgets/wizard/wizard_review_step/wizard_review_step.dart';
+import 'package:my_time/foundation/core/widgets/wizard/wizard_review_step/wizard_review_step_controller.dart';
+import 'package:my_time/foundation/core/widgets/wizard/wizard_review_step/wizard_review_step_event_listener.dart';
 
 /// Review Step in the add project wizard.
 class ReviewStep extends ConsumerWidget {
