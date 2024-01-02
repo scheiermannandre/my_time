@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:my_time/common/extensions/async_value_extensions.dart';
 import 'package:my_time/common/extensions/build_context_extension.dart';
-import 'package:my_time/features/7_groups_overview/domain/entities/enums/currency.dart';
-import 'package:my_time/features/7_groups_overview/domain/entities/enums/payment_interval.dart';
-import 'package:my_time/features/7_groups_overview/domain/entities/enums/payment_status.dart';
-import 'package:my_time/features/7_groups_overview/domain/entities/enums/reference_period.dart';
-import 'package:my_time/features/7_groups_overview/domain/entities/enums/wokrplace.dart';
-import 'package:my_time/features/7_groups_overview/domain/entities/project_entity.dart';
-import 'package:my_time/features/7_groups_overview/domain/entities/project_time_management_entity.dart';
+import 'package:my_time/domain/group_domain/models/enums/currency.dart';
+import 'package:my_time/domain/group_domain/models/enums/payment_interval.dart';
+import 'package:my_time/domain/group_domain/models/enums/payment_status.dart';
+import 'package:my_time/domain/group_domain/models/enums/reference_period.dart';
+import 'package:my_time/domain/group_domain/models/enums/wokrplace.dart';
+import 'package:my_time/domain/group_domain/models/project_entity.dart';
+import 'package:my_time/domain/group_domain/models/project_time_management_entity.dart';
 import 'package:my_time/features/7_groups_overview/domain/usecase_services/project_service.dart';
 import 'package:my_time/features/7_groups_overview/presentation/state_management/project_settings_page_controller.dart';
 import 'package:my_time/features/7_groups_overview/presentation/widgets/currency_selector.dart';
@@ -95,7 +95,7 @@ class ProjectSettingsPage extends ConsumerWidget {
   }
 
   String? _getWorkingHourHint(
-    ProjectTimeManagementEntity? timeManagement,
+    NewProjectTimeManagementModel? timeManagement,
     BuildContext context,
   ) {
     if (timeManagement == null ||
@@ -340,7 +340,7 @@ class ProjectSettingsPage extends ConsumerWidget {
 
   Future<Workplace?> _setWorkplace(
     BuildContext context,
-    ProjectEntity project,
+    NewProjectModel project,
   ) async {
     return ModalDialogUI.show<Workplace>(
       context: context,
@@ -362,7 +362,7 @@ class ProjectSettingsPage extends ConsumerWidget {
 
   Future<PaymentStatus?> _setPublicHolidayPayment(
     BuildContext context,
-    ProjectEntity project,
+    NewProjectModel project,
   ) async {
     final status = await _changePaymentStatus(
       context,
@@ -374,7 +374,7 @@ class ProjectSettingsPage extends ConsumerWidget {
 
   Future<PaymentStatus?> _setSickDaysPayment(
     BuildContext context,
-    ProjectEntity project,
+    NewProjectModel project,
   ) async {
     final status = await _changePaymentStatus(
       context,
@@ -386,7 +386,7 @@ class ProjectSettingsPage extends ConsumerWidget {
 
   Future<String?> _setProjectName(
     BuildContext context,
-    ProjectEntity project,
+    NewProjectModel project,
   ) async {
     return ModalDialogUI.show<String>(
       context: context,
@@ -407,7 +407,8 @@ class ProjectSettingsPage extends ConsumerWidget {
     );
   }
 
-  Future<int?> _setPayment(BuildContext context, ProjectEntity project) async {
+  Future<int?> _setPayment(
+      BuildContext context, NewProjectModel project) async {
     final payment = await _changeNumber(
       context: context,
       title: context.loc.moneyManagementPaymentLabel,
@@ -422,7 +423,7 @@ class ProjectSettingsPage extends ConsumerWidget {
 
   Future<Currency?> _setCurrency(
     BuildContext context,
-    ProjectEntity project,
+    NewProjectModel project,
   ) async {
     return ModalDialogUI.show<Currency>(
       context: context,
@@ -444,7 +445,7 @@ class ProjectSettingsPage extends ConsumerWidget {
 
   Future<PaymentInterval?> _setPaymentInterval(
     BuildContext context,
-    ProjectEntity project,
+    NewProjectModel project,
   ) async {
     return ModalDialogUI.show<PaymentInterval>(
       context: context,
@@ -466,7 +467,7 @@ class ProjectSettingsPage extends ConsumerWidget {
 
   Future<ReferencePeriod?> _setReferencePeriod(
     BuildContext context,
-    ProjectEntity project,
+    NewProjectModel project,
   ) async {
     return ModalDialogUI.show<ReferencePeriod>(
       context: context,
@@ -487,7 +488,7 @@ class ProjectSettingsPage extends ConsumerWidget {
   }
 
   Future<int?> _setWorkingHours(
-    ProjectEntity project,
+    NewProjectModel project,
     BuildContext context,
   ) async {
     var maxValue = 8760;
@@ -519,7 +520,7 @@ class ProjectSettingsPage extends ConsumerWidget {
 
   Future<PaymentStatus?> _setVacationDayPayment(
     BuildContext context,
-    ProjectEntity project,
+    NewProjectModel project,
   ) =>
       _changePaymentStatus(
         context,
@@ -529,7 +530,7 @@ class ProjectSettingsPage extends ConsumerWidget {
 
   Future<int?> _setVacationDays(
     BuildContext context,
-    ProjectEntity project,
+    NewProjectModel project,
   ) =>
       _changeNumber(
         context: context,

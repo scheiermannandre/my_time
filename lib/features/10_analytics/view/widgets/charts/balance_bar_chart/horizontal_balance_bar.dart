@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:my_time/features/6_group_analytics/models/balance_bar_chart_configuration.dart';
 import 'package:my_time/features/6_group_analytics/models/balance_bar_item.dart';
 import 'package:my_time/features/6_group_analytics/models/diagram_frame_configuration.dart';
-import 'package:my_time/features/6_group_analytics/widgets/painters/balance_bar_painter.dart';
+import 'package:my_time/features/10_analytics/view/widgets/charts/balance_bar_chart/balance_bar_painter.dart';
 
 /// The Horizontal BalanceBar
 class HorizontalBalanceBar extends StatefulWidget {

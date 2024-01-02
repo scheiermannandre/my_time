@@ -85,6 +85,12 @@ class ThemelessColorTokens {
 
   /// Green
   static const green = Color(0xff52CC15);
+
+  /// Desired
+  static const desired = Color(0xff256B6F);
+
+  /// Undesired
+  static const undesired = Color(0xffc85552);
 }
 
 /// A class that provides Colors based on the current [ThemeMode].
@@ -148,6 +154,15 @@ class ThemeColorBuilder {
         return LightThemeColorTokens.darkColor;
       case Brightness.dark:
         return DarkThemeColorTokens.primaryColor;
+    }
+  }
+
+  Color getBodyTextColor() {
+    switch (Theme.of(_context).brightness) {
+      case Brightness.light:
+        return LightThemeColorTokens.darkestColor;
+      case Brightness.dark:
+        return DarkThemeColorTokens.lightestColor;
     }
   }
 }

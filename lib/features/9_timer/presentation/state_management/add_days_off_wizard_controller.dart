@@ -1,4 +1,5 @@
-import 'package:my_time/features/7_groups_overview/domain/entities/enums/payment_status.dart';
+import 'package:my_time/domain/entry_domain/models/entry/new_entry_model.dart';
+import 'package:my_time/domain/group_domain/models/enums/payment_status.dart';
 import 'package:my_time/features/9_timer/data/repositories/entry_repository.dart';
 import 'package:my_time/features/9_timer/domain/entities/entry_entity.dart';
 import 'package:my_time/features/9_timer/domain/entities/entry_type.dart';
@@ -24,20 +25,21 @@ class AddDaysOffWizardController extends _$AddDaysOffWizardController {
     // Set the state to indicate loading.
     state = const AsyncLoading();
 
-    final entries = <DayOffEntryEntity>[];
+    final entries = <NewDayOffEntryModel>[];
 
     final daysOff = daysOffMap[0] as List<DateTime?>;
     final compensation = daysOffMap[1] as PaymentStatus;
     final description = daysOffMap[2] as String;
-
+    final projectName = daysOffMap[3] as String;
     for (final element in daysOff) {
       final entryMap = <int, dynamic>{}..addAll({
           0: element,
           1: compensation,
           2: description,
+          3: projectName,
         });
 
-      final data = EntryEntityFactory.createDayOff(
+      final data = NewEntryModelFactory.createDayOff(
         groupId,
         projectId,
         entryType,

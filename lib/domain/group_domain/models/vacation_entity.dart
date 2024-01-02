@@ -1,9 +1,19 @@
-import 'package:my_time/features/7_groups_overview/domain/entities/enums/payment_status.dart';
+import 'package:my_time/domain/group_domain/models/enums/payment_status.dart';
 
 /// Represents vacation-related information for an entity.
-class VacationEntity {
+class NewVacationModel {
   /// Constructor for VacationEntity.
-  VacationEntity({this.paymentStatus, this.days});
+  NewVacationModel({this.paymentStatus, this.days});
+
+  /// Converts a `Map<String, dynamic>` instance to a `VacationModel` instance.
+  factory NewVacationModel.fromMap(Map<String, dynamic> map) {
+    return NewVacationModel(
+      paymentStatus: map['paymentStatus'] != null
+          ? PaymentStatus.values[map['paymentStatus'] as int]
+          : null,
+      days: map['days'] as int?,
+    );
+  }
 
   /// The payment status associated with the vacation.
   final PaymentStatus? paymentStatus;
@@ -20,11 +30,11 @@ class VacationEntity {
   }
 
   /// Returns a copy of the `VacationEntity` instance
-  VacationEntity copyWith({
+  NewVacationModel copyWith({
     PaymentStatus? paymentStatus,
     int? days,
   }) {
-    return VacationEntity(
+    return NewVacationModel(
       paymentStatus: paymentStatus ?? this.paymentStatus,
       days: days ?? this.days,
     );

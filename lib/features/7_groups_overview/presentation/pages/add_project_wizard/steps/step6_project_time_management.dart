@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:my_time/common/extensions/build_context_extension.dart';
-import 'package:my_time/features/7_groups_overview/domain/entities/enums/reference_period.dart';
-import 'package:my_time/features/7_groups_overview/domain/entities/project_time_management_entity.dart';
+import 'package:my_time/domain/group_domain/models/enums/reference_period.dart';
+import 'package:my_time/domain/group_domain/models/project_time_management_entity.dart';
 import 'package:my_time/features/7_groups_overview/presentation/widgets/reference_period_selector.dart';
 import 'package:my_time/foundation/config/theme/tokens/space_tokens.dart';
 import 'package:my_time/foundation/core/widgets/text_input_field.dart';
@@ -20,7 +20,7 @@ class Step6ProjectTimeManagement extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return WizardStepWrapper<ProjectTimeManagementEntity?>(
+    return WizardStepWrapper<NewProjectTimeManagementModel?>(
       title: context.loc.step6Title,
       stepNumber: 5,
       showNextBtn: true,
@@ -53,9 +53,9 @@ class _TimeManagementStep extends StatefulHookWidget {
     required this.disableNext,
     required this.data,
   });
-  final ProjectTimeManagementEntity? data;
+  final NewProjectTimeManagementModel? data;
 
-  final void Function(ProjectTimeManagementEntity) saveProjectTimeManagement;
+  final void Function(NewProjectTimeManagementModel) saveProjectTimeManagement;
   final VoidCallback enableNext;
   final VoidCallback disableNext;
 
@@ -130,7 +130,7 @@ class _TimeManagementStepState extends State<_TimeManagementStep> {
                     _fieldKey.currentState?.validate();
                   }
                   widget.saveProjectTimeManagement(
-                    ProjectTimeManagementEntity(
+                    NewProjectTimeManagementModel(
                       referencePeriod: period,
                       workingHours: workingHours,
                     ),
@@ -159,7 +159,7 @@ class _TimeManagementStepState extends State<_TimeManagementStep> {
                     }
                     widget.enableNext();
                     widget.saveProjectTimeManagement(
-                      ProjectTimeManagementEntity(
+                      NewProjectTimeManagementModel(
                         referencePeriod: period,
                         workingHours: int.parse(value),
                       ),

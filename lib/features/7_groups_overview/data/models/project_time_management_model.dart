@@ -1,6 +1,6 @@
 import 'package:my_time/common/common.dart';
-import 'package:my_time/features/7_groups_overview/domain/entities/enums/reference_period.dart';
-import 'package:my_time/features/7_groups_overview/domain/entities/project_time_management_entity.dart';
+import 'package:my_time/domain/group_domain/models/enums/reference_period.dart';
+import 'package:my_time/domain/group_domain/models/project_time_management_entity.dart';
 
 /// Represents a model for a project's time management.
 class ProjectTimeManagementModel {
@@ -21,7 +21,7 @@ class ProjectTimeManagementModel {
 
   /// Factory to create a ProjectTimeManagementModel from an entity.
   factory ProjectTimeManagementModel.fromEntity(
-    ProjectTimeManagementEntity entity,
+    NewProjectTimeManagementModel entity,
   ) {
     return ProjectTimeManagementModel(
       referencePeriod: entity.referencePeriod?.index,
@@ -31,8 +31,8 @@ class ProjectTimeManagementModel {
 
   /// Factory to create a ProjectTimeManagementEntity
   /// from a ProjectTimeManagementModel.
-  ProjectTimeManagementEntity toEntity() {
-    return ProjectTimeManagementEntity(
+  NewProjectTimeManagementModel toEntity() {
+    return NewProjectTimeManagementModel(
       referencePeriod: ReferencePeriod.values
           .firstWhereOrNull((p0) => p0.index == referencePeriod),
       workingHours: workingHours,

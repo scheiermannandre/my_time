@@ -34,6 +34,17 @@ extension DateTimeExtension on DateTime {
     return '$hourStr:$minuteStr';
   }
 
+    String toFormattedDayString() {
+    final dayStr = day.toString().padLeft(2, '0');
+    final monthStr = month.toString().padLeft(2, '0');
+    return '$dayStr.$monthStr';
+  }
+
+  String toDayOfWeekString() {
+    final locale = Platform.localeName;
+    return DateFormat.E(locale).format(this);
+  }
+
   /// Returns a DateTime only containing the year and month as the
   /// current DateTime.
   DateTime yearAndMonth() {

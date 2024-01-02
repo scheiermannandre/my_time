@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_time/common/extensions/build_context_extension.dart';
 import 'package:my_time/common/extensions/date_time_extension.dart';
-import 'package:my_time/features/7_groups_overview/domain/entities/enums/payment_status.dart';
+import 'package:my_time/domain/group_domain/models/enums/payment_status.dart';
 import 'package:my_time/features/9_timer/domain/entities/entry_type.dart';
 import 'package:my_time/features/9_timer/presentation/pages/add_days_off_wizard/add_days_off_wizard.dart';
 import 'package:my_time/foundation/config/theme/tokens/space_tokens.dart';

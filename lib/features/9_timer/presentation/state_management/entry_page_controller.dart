@@ -1,3 +1,4 @@
+import 'package:my_time/domain/entry_domain/models/entry/new_entry_model.dart';
 import 'package:my_time/features/9_timer/data/repositories/entry_repository.dart';
 import 'package:my_time/features/9_timer/domain/entities/entry_entity.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -10,18 +11,18 @@ class EntryPageState {
   EntryPageState({this.entry});
 
   /// The entry to display.
-  final EntryEntity? entry;
+  final NewEntryModel? entry;
 
   /// Returns true if the entry is invalid.
   bool get isInvalid {
-    if (entry == null || entry is DayOffEntryEntity) return false;
-    final workEntry = entry! as WorkEntryEntity;
+    if (entry == null || entry is NewDayOffEntryModel) return false;
+    final workEntry = entry! as NewWorkEntryModel;
     return workEntry.totalTime.isNegative;
   }
 
   /// Copies the current state and replaces the given values.
   EntryPageState copyWith({
-    EntryEntity? entry,
+    NewEntryModel? entry,
   }) {
     return EntryPageState(
       entry: entry ?? this.entry,
@@ -58,7 +59,7 @@ class EntryPageController extends _$EntryPageController {
   }
 
   /// Updates the project entity.
-  Future<void> cacheEntry(EntryEntity entry) async {
+  Future<void> cacheEntry(NewEntryModel entry) async {
     state = AsyncData(state.value!.copyWith(entry: entry));
   }
 

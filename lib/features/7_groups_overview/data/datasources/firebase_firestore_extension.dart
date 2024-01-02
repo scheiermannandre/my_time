@@ -19,10 +19,16 @@ extension FirebaseFirestoreExtension on FirebaseFirestore {
     String uid,
     String groupId,
   ) =>
-      doc(_groupPath(uid, groupId)).withConverter(
+      groupDocumentRaw(uid, groupId).withConverter(
         fromFirestore: (doc, _) => GroupModel.fromMap(doc.data()!),
         toFirestore: (GroupModel group, options) => group.toMap(),
       );
+
+  DocumentReference<Map<String, dynamic>> groupDocumentRaw(
+    String uid,
+    String groupId,
+  ) =>
+      doc(_groupPath(uid, groupId));
 
   /// Query for a group of a user.
   Query<GroupModel> groupsQuery(String uid) {

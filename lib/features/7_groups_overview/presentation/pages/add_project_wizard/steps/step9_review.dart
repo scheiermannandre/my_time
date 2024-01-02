@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_time/common/extensions/build_context_extension.dart';
-import 'package:my_time/features/7_groups_overview/domain/entities/enums/currency.dart';
-import 'package:my_time/features/7_groups_overview/domain/entities/enums/payment_interval.dart';
-import 'package:my_time/features/7_groups_overview/domain/entities/enums/payment_status.dart';
-import 'package:my_time/features/7_groups_overview/domain/entities/enums/reference_period.dart';
-import 'package:my_time/features/7_groups_overview/domain/entities/enums/wokrplace.dart';
-import 'package:my_time/features/7_groups_overview/domain/entities/group_entity.dart';
-import 'package:my_time/features/7_groups_overview/domain/entities/project_money_management_entity.dart';
-import 'package:my_time/features/7_groups_overview/domain/entities/project_time_management_entity.dart';
-import 'package:my_time/features/7_groups_overview/domain/entities/vacation_entity.dart';
+import 'package:my_time/domain/group_domain/models/enums/currency.dart';
+import 'package:my_time/domain/group_domain/models/enums/payment_interval.dart';
+import 'package:my_time/domain/group_domain/models/enums/payment_status.dart';
+import 'package:my_time/domain/group_domain/models/enums/reference_period.dart';
+import 'package:my_time/domain/group_domain/models/enums/wokrplace.dart';
+import 'package:my_time/domain/group_domain/models/group_entity.dart';
+import 'package:my_time/domain/group_domain/models/project_money_management_entity.dart';
+import 'package:my_time/domain/group_domain/models/project_time_management_entity.dart';
+import 'package:my_time/domain/group_domain/models/vacation_entity.dart';
 import 'package:my_time/foundation/config/theme/tokens/space_tokens.dart';
 import 'package:my_time/foundation/core/widgets/wizard/wizard_review_step/review_card.dart';
 import 'package:my_time/foundation/core/widgets/wizard/wizard_review_step/show_review_value.dart';
@@ -58,7 +58,7 @@ class _GroupReview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ReviewDataCard<GroupEntity?>(
+    return ReviewDataCard<NewGroupModel?>(
       label: context.loc.reviewStepGroupLabel,
       stepToJumpTo: 0,
       evaluateVisibility: (data) {
@@ -146,7 +146,7 @@ class _VacationInfoReview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ReviewDataCard<VacationEntity?>(
+    return ReviewDataCard<NewVacationModel?>(
       label: context.loc.reviewStepVacationLabel,
       stepToJumpTo: 4,
       evaluateVisibility: (data) {
@@ -176,7 +176,7 @@ class _TimeManagementReview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ReviewDataCard<ProjectTimeManagementEntity?>(
+    return ReviewDataCard<NewProjectTimeManagementModel?>(
       label: context.loc.reviewStepTimeManagementLabel,
       stepToJumpTo: 5,
       evaluateVisibility: (data) {
@@ -208,7 +208,7 @@ class _MoneyManagementReview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ReviewDataCard<ProjectMoneyManagementEntity?>(
+    return ReviewDataCard<NewProjectMoneyManagementModel?>(
       label: context.loc.reviewStepMoneyManagementLabel,
       stepToJumpTo: 6,
       evaluateVisibility: (data) {

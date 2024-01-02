@@ -1,3 +1,4 @@
+import 'package:my_time/domain/entry_domain/models/entry/new_entry_model.dart';
 import 'package:my_time/features/9_timer/data/repositories/entry_repository.dart';
 import 'package:my_time/features/9_timer/domain/entities/entry_entity.dart';
 import 'package:my_time/features/9_timer/domain/entities/entry_type.dart';
@@ -22,7 +23,7 @@ class AddEntryWizardController extends _$AddEntryWizardController {
     // Set the state to indicate loading.
     state = const AsyncLoading();
 
-    final data = WorkEntryEntity.fromMap(
+    final data = NewEntryModelFactory.createWork(
       groupId,
       projectId,
       EntryType.work,

@@ -1,8 +1,8 @@
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
+import 'package:my_time/domain/group_domain/models/group_entity.dart';
 import 'package:my_time/features/7_groups_overview/data/models/project_model.dart';
-import 'package:my_time/features/7_groups_overview/domain/entities/group_entity.dart';
 import 'package:uuid/uuid.dart' as uuid;
 
 @immutable
@@ -78,8 +78,8 @@ class GroupModel {
   }
 
   /// Converts the `GroupModel` object to a `GroupEntity` object.
-  GroupEntity toEntity() {
-    return GroupEntity(
+  NewGroupModel toEntity() {
+    return NewGroupModel(
       id: id,
       name: name,
       projects: projects.map((project) => project.toEntity()).toList(),

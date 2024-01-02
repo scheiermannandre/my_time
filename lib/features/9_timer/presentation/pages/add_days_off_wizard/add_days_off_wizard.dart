@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_time/common/extensions/build_context_extension.dart';
-import 'package:my_time/features/7_groups_overview/domain/entities/project_entity.dart';
+import 'package:my_time/domain/group_domain/models/project_entity.dart';
 import 'package:my_time/features/7_groups_overview/domain/usecase_services/project_service.dart';
 import 'package:my_time/features/9_timer/domain/entities/entry_type.dart';
 import 'package:my_time/features/9_timer/presentation/pages/add_days_off_wizard/days_off_review_step.dart';
@@ -23,14 +23,17 @@ class AddDaysOffWizard extends ConsumerWidget {
     required String groupId,
     required String projectId,
     required int entryType,
+    required String projectName,
     super.key,
   })  : _groupId = groupId,
         _projectId = projectId,
-        _entryType = EntryType.values[entryType];
+        _entryType = EntryType.values[entryType],
+        _projectName = projectName;
 
   final String _groupId;
   final String _projectId;
   final EntryType _entryType;
+  final String _projectName;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -49,6 +52,7 @@ class AddDaysOffWizard extends ConsumerWidget {
         project: data,
         child: Wizard(
           onFinish: (event) async {
+            event.data[3] = _projectName;
             final isSuccess = await ref
                 .read(addDaysOffWizardControllerProvider.notifier)
                 .addEntries(_groupId, _projectId, _entryType, event.data);
@@ -89,7 +93,7 @@ class AddDaysOffWizard extends ConsumerWidget {
   }
 }
 
-/// A widget that provides the [ProjectEntity] to its children.
+/// A widget that provides the [NewProjectModel] to its children.
 class AddDaysOffWizardInherited extends InheritedWidget {
   /// Constructs an [AddDaysOffWizardInherited] with required parameters.
   const AddDaysOffWizardInherited({
@@ -99,8 +103,8 @@ class AddDaysOffWizardInherited extends InheritedWidget {
     super.key,
   });
 
-  /// The [ProjectEntity] to provide.
-  final ProjectEntity project;
+  /// The [NewProjectModel] to provide.
+  final NewProjectModel project;
 
   /// The [EntryType] to provide.
   final EntryType entryType;

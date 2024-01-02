@@ -1,7 +1,7 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:my_time/domain/group_domain/models/project_entity.dart';
 import 'package:my_time/features/7_groups_overview/data/datasources/firestore_projects_data_source.dart';
 import 'package:my_time/features/7_groups_overview/data/models/project_model.dart';
-import 'package:my_time/features/7_groups_overview/domain/entities/project_entity.dart';
 import 'package:my_time/features/7_groups_overview/domain/repositories/project_repository.dart';
 import 'package:my_time/features/8_authentication/data/repositories/auth_repository_impl.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -18,7 +18,7 @@ class ProjectRepositoryImpl extends ProjectRepository {
 
   @override
   Future<void> addProject(
-    ProjectEntity project,
+    NewProjectModel project,
   ) async {
     final uid = ref.read(authRepositoryProvider).currentUser!.uid;
     return ref
@@ -28,7 +28,7 @@ class ProjectRepositoryImpl extends ProjectRepository {
 
   @override
   Future<void> updateProject(
-    ProjectEntity project,
+    NewProjectModel project,
   ) async {
     final uid = ref.read(authRepositoryProvider).currentUser!.uid;
     return ref
@@ -37,7 +37,7 @@ class ProjectRepositoryImpl extends ProjectRepository {
   }
 
   @override
-  Future<ProjectEntity> fetchProject(
+  Future<NewProjectModel> fetchProject(
     String groupId,
     String projectId,
   ) async {
@@ -49,7 +49,7 @@ class ProjectRepositoryImpl extends ProjectRepository {
   }
 
   @override
-  Stream<ProjectEntity> streamProject(
+  Stream<NewProjectModel> streamProject(
     String groupId,
     String projectId,
   ) {

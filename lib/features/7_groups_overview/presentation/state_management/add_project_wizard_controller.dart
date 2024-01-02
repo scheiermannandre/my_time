@@ -1,4 +1,4 @@
-import 'package:my_time/features/7_groups_overview/domain/entities/project_entity.dart';
+import 'package:my_time/domain/group_domain/models/project_entity.dart';
 import 'package:my_time/features/7_groups_overview/domain/usecase_services/project_service.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -35,7 +35,7 @@ class AddProjectWizardController extends _$AddProjectWizardController {
     state = const AsyncLoading();
 
     // Create a ProjectWithSettingsEntity using the provided projectMap.
-    final data = ProjectEntity.fromMap(projectMap);
+    final data = NewProjectModel.fromWizard(projectMap);
     final projectService = ref.read(projectServiceProvider);
     // Use AsyncValue.guard to handle errors during the operation.
     state = await AsyncValue.guard(

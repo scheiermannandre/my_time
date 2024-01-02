@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:my_time/features/10_analytics/view/pages/analytics_page.dart';
+import 'package:my_time/features/10_analytics/view/pages/days_analytics/days_tab_page.dart';
 import 'package:my_time/features/7_groups_overview/presentation/pages/add_project_wizard/add_project_wizard.dart';
 import 'package:my_time/features/7_groups_overview/presentation/pages/groups_overview.dart';
 import 'package:my_time/features/7_groups_overview/presentation/pages/project_settings_page.dart';
@@ -41,6 +43,7 @@ enum _AppRoute {
   addDaysOffWizard,
   projectHistory,
   entry,
+  analytics,
 }
 
 /// The routes of the app.
@@ -101,6 +104,7 @@ class AppRoute {
 
   /// The fast access to the entry route.
   static String get entry => _AppRoute.entry.name;
+  static String get analytics => _AppRoute.analytics.name;
 }
 
 /// Gorouter for the app.
@@ -277,6 +281,7 @@ GoRouter goRouter(GoRouterRef ref) {
                 builder: (context, state) => AddEntryWizard(
                   groupId: state.uri.queryParameters['groupId'] ?? '',
                   projectId: state.uri.queryParameters['projectId'] ?? '',
+                  projectName: state.uri.queryParameters['projectName'] ?? '',
                 ),
               ),
               GoRoute(
@@ -287,6 +292,7 @@ GoRouter goRouter(GoRouterRef ref) {
                   projectId: state.uri.queryParameters['projectId'] ?? '',
                   entryType:
                       int.parse(state.uri.queryParameters['entryType'] ?? '0'),
+                  projectName: state.uri.queryParameters['projectName'] ?? '',
                 ),
               ),
               GoRoute(
@@ -305,6 +311,84 @@ GoRouter goRouter(GoRouterRef ref) {
                       groupId: state.uri.queryParameters['groupId'] ?? '',
                       entryId: state.uri.queryParameters['entryId'] ?? '',
                     ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+          // GoRoute(
+          //   path: 'analytics',
+          //   name: AppRoute.analytics,
+          //   pageBuilder: (context, state) => MaterialPage<void>(
+          //     fullscreenDialog: true,
+          //     key: state.pageKey,
+          //     child: const AnalyticsPage(),
+          //   ),
+          // ),
+          StatefulShellRoute.indexedStack(
+            pageBuilder: (context, state, navigationShell) {
+              return MaterialPage(
+                fullscreenDialog: true,
+                child: AnalyticsPage(
+                  navigationShell: navigationShell,
+                ),
+              );
+            },
+            branches: <StatefulShellBranch>[
+              StatefulShellBranch(
+                //navigatorKey: _sectionANavigatorKey,
+                routes: <RouteBase>[
+                  GoRoute(
+                      // The screen to display as the root in the first tab of the
+                      // bottom navigation bar.
+                      name: 'day',
+                      path: 'day',
+                      builder: (BuildContext context, GoRouterState state) {
+                        final groupId =
+                            state.uri.queryParameters['groupId'] ?? '';
+                        return  DaysTabPage(groupId: groupId);
+                      }),
+                ],
+              ),
+              StatefulShellBranch(
+                // It's not necessary to provide a navigatorKey if it isn't also
+                // needed elsewhere. If not provided, a default key will be used.
+                routes: <RouteBase>[
+                  GoRoute(
+                    // The screen to display as the root in the second tab of the
+                    // bottom navigation bar.
+                    name: 'week',
+                    path: 'week',
+                    builder: (BuildContext context, GoRouterState state) =>
+                        const WeeksPage(),
+                  ),
+                ],
+              ),
+              StatefulShellBranch(
+                // It's not necessary to provide a navigatorKey if it isn't also
+                // needed elsewhere. If not provided, a default key will be used.
+                routes: <RouteBase>[
+                  GoRoute(
+                    // The screen to display as the root in the second tab of the
+                    // bottom navigation bar.
+                    name: 'month',
+                    path: 'month',
+                    builder: (BuildContext context, GoRouterState state) =>
+                        const MonthsPage(),
+                  ),
+                ],
+              ),
+              StatefulShellBranch(
+                // It's not necessary to provide a navigatorKey if it isn't also
+                // needed elsewhere. If not provided, a default key will be used.
+                routes: <RouteBase>[
+                  GoRoute(
+                    // The screen to display as the root in the second tab of the
+                    // bottom navigation bar.
+                    name: 'year',
+                    path: 'year',
+                    builder: (BuildContext context, GoRouterState state) =>
+                        const YearsPage(),
                   ),
                 ],
               ),
@@ -422,3 +506,72 @@ GoRouter goRouter(GoRouterRef ref) {
     errorBuilder: (context, state) => const NotFoundScreen(),
   );
 }
+
+
+// // private navigators
+// final _rootNavigatorKey = GlobalKey<NavigatorState>();
+// final _shellNavigatorAKey = GlobalKey<NavigatorState>(debugLabel: 'shellA');
+// final _shellNavigatorBKey = GlobalKey<NavigatorState>(debugLabel: 'shellB');
+
+// // the one and only GoRouter instance
+// final goRouter2 = 
+
+// GoRouter(
+//   initialLocation: '/a',
+//   navigatorKey: _rootNavigatorKey,
+//   routes: [
+//     // Stateful nested navigation based on:
+//     // https://github.com/flutter/packages/blob/main/packages/go_router/example/lib/stateful_shell_route.dart
+//     StatefulShellRoute.indexedStack(
+//       builder: (context, state, navigationShell) {
+//         // the UI shell
+//         return AnalyticsPage(
+//             navigationShell: navigationShell);
+//       },
+//       branches: [
+//         // first branch (A)
+//         StatefulShellBranch(
+//           navigatorKey: _shellNavigatorAKey,
+//           routes: [
+//             // top route inside branch
+//             GoRoute(
+//               path: '/a',
+//               pageBuilder: (context, state) => const NoTransitionPage(
+//                 child: RootScreen(label: 'A', detailsPath: '/a/details'),
+//               ),
+//               routes: [
+//                 // child route
+//                 GoRoute(
+//                   path: 'details',
+//                   builder: (context, state) =>
+//                       const DetailsScreen(label: 'A'),
+//                 ),
+//               ],
+//             ),
+//           ],
+//         ),
+//         // second branch (B)
+//         StatefulShellBranch(
+//           navigatorKey: _shellNavigatorBKey,
+//           routes: [
+//             // top route inside branch
+//             GoRoute(
+//               path: '/b',
+//               pageBuilder: (context, state) => const NoTransitionPage(
+//                 child: RootScreen(label: 'B', detailsPath: '/b/details'),
+//               ),
+//               routes: [
+//                 // child route
+//                 GoRoute(
+//                   path: 'details',
+//                   builder: (context, state) =>
+//                       const DetailsScreen(label: 'B'),
+//                 ),
+//               ],
+//             ),
+//           ],
+//         ),
+//       ],
+//     ),
+//   ],
+// );

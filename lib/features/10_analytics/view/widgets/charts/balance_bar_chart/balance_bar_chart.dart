@@ -3,9 +3,8 @@ import 'package:my_time/common/extensions/time_of_day_extension.dart';
 import 'package:my_time/features/6_group_analytics/models/balance_bar_chart_configuration.dart';
 import 'package:my_time/features/6_group_analytics/models/balance_bar_item.dart';
 import 'package:my_time/features/6_group_analytics/models/diagram_frame_configuration.dart';
-import 'package:my_time/features/6_group_analytics/widgets/diagram_frame.dart';
-import 'package:my_time/features/6_group_analytics/widgets/horizontal_balance_bar.dart';
-
+import 'package:my_time/features/10_analytics/view/widgets/charts/diagram_frame.dart';
+import 'package:my_time/features/10_analytics/view/widgets/charts/balance_bar_chart/horizontal_balance_bar.dart';
 /// The BalanceBarChart.
 class BalanceBarChart extends StatelessWidget {
   /// Creates a BalanceBarChart.

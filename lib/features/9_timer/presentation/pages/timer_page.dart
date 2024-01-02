@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_time/common/extensions/async_value_extensions.dart';
 import 'package:my_time/common/extensions/build_context_extension.dart';
-import 'package:my_time/features/7_groups_overview/domain/entities/project_entity.dart';
+import 'package:my_time/domain/group_domain/models/project_entity.dart';
 import 'package:my_time/features/7_groups_overview/domain/usecase_services/project_service.dart';
 import 'package:my_time/features/9_timer/data/repositories/timer_data_repository.dart';
 import 'package:my_time/features/9_timer/domain/entities/entry_type.dart';
@@ -163,7 +163,7 @@ class _LabeledIconButtons extends HookWidget {
   final String groupId;
   final String projectId;
   final String projectName;
-  final ProjectEntity project;
+  final NewProjectModel project;
   final VoidCallback quickAccess;
 
   @override

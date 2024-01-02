@@ -1,17 +1,17 @@
-import 'package:my_time/features/7_groups_overview/domain/entities/enums/payment_status.dart';
-import 'package:my_time/features/7_groups_overview/domain/entities/enums/wokrplace.dart';
-import 'package:my_time/features/7_groups_overview/domain/entities/group_entity.dart';
-import 'package:my_time/features/7_groups_overview/domain/entities/project_money_management_entity.dart';
-import 'package:my_time/features/7_groups_overview/domain/entities/project_time_management_entity.dart';
-import 'package:my_time/features/7_groups_overview/domain/entities/vacation_entity.dart';
+import 'package:my_time/domain/group_domain/models/enums/payment_status.dart';
+import 'package:my_time/domain/group_domain/models/enums/wokrplace.dart';
+import 'package:my_time/domain/group_domain/models/group_entity.dart';
+import 'package:my_time/domain/group_domain/models/project_money_management_entity.dart';
+import 'package:my_time/domain/group_domain/models/project_time_management_entity.dart';
+import 'package:my_time/domain/group_domain/models/vacation_entity.dart';
 import 'package:uuid/uuid.dart' as uuid;
 
 /// Represents an entity for a project containing basic information such
 /// as `id`, `name`, `groupId`, and whether it is marked as a favorite.
-class ProjectEntity {
+class NewProjectModel {
   /// Constructs a `ProjectEntity` instance with required parameters
   /// `name`, `groupId`, and `isFavorite`.
-  ProjectEntity({
+  NewProjectModel({
     required this.name,
     required this.groupId,
     required this.isFavorite,
@@ -26,19 +26,54 @@ class ProjectEntity {
 
   /// Factory method to create a `ProjectWithSettingsEntity` instance from
   /// the add project wizard.
-  factory ProjectEntity.fromMap(
+  factory NewProjectModel.fromWizard(
     Map<int, dynamic> projectMap,
   ) {
-    return ProjectEntity(
-      groupId: (projectMap[0] as GroupEntity).id,
+    return NewProjectModel(
+      groupId: (projectMap[0] as NewGroupModel).id,
       name: projectMap[1] as String,
       sickDaysPayment: projectMap[2] as PaymentStatus?,
       publicHolidaysPayment: projectMap[3] as PaymentStatus?,
-      vacationInfo: projectMap[4] as VacationEntity?,
-      timeManagement: projectMap[5] as ProjectTimeManagementEntity?,
-      moneyManagement: projectMap[6] as ProjectMoneyManagementEntity?,
+      vacationInfo: projectMap[4] as NewVacationModel?,
+      timeManagement: projectMap[5] as NewProjectTimeManagementModel?,
+      moneyManagement: projectMap[6] as NewProjectMoneyManagementModel?,
       workplace: projectMap[7] as Workplace?,
       isFavorite: false,
+    );
+  }
+
+  /// Factory method to create a `ProjectModel`
+  /// instance from a map representation.
+  factory NewProjectModel.fromMap(Map<String, dynamic> map) {
+    return NewProjectModel(
+      projectId: map['id'] as String,
+      name: map['name'] as String,
+      groupId: map['groupId'] as String,
+      isFavorite: map['isFavorite'] as bool,
+      sickDaysPayment: map['sickDaysPayment'] != null
+          ? PaymentStatus.values[map['sickDaysPayment'] as int]
+          : null,
+      publicHolidaysPayment: map['publicHolidaysPayment'] != null
+          ? PaymentStatus.values[map['publicHolidaysPayment'] as int]
+          : null,
+      vacationInfo: map['vacationInfo'] != null
+          ? NewVacationModel.fromMap(
+              map['vacationInfo'] as Map<String, dynamic>,
+            )
+          : null,
+      timeManagement: map['timeManagement'] != null
+          ? NewProjectTimeManagementModel.fromMap(
+              map['timeManagement'] as Map<String, dynamic>,
+            )
+          : null,
+      moneyManagement: map['moneyManagement'] != null
+          ? NewProjectMoneyManagementModel.fromMap(
+              map['moneyManagement'] as Map<String, dynamic>,
+            )
+          : null,
+      workplace: map['workplace'] != null
+          ? Workplace.values[map['workplace'] as int]
+          : null,
     );
   }
 
@@ -61,31 +96,31 @@ class ProjectEntity {
   final PaymentStatus? publicHolidaysPayment;
 
   /// Represents the vacation information for the project.
-  final VacationEntity? vacationInfo;
+  final NewVacationModel? vacationInfo;
 
   /// Represents the time management settings for the project.
-  final ProjectTimeManagementEntity? timeManagement;
+  final NewProjectTimeManagementModel? timeManagement;
 
   /// Represents the money management settings for the project.
-  final ProjectMoneyManagementEntity? moneyManagement;
+  final NewProjectMoneyManagementModel? moneyManagement;
 
   /// Represents the workplace settings for the project.
   final Workplace? workplace;
 
   /// Returns a copy of the current instance with the specified fields
-  ProjectEntity copyWith({
+  NewProjectModel copyWith({
     String? id,
     String? name,
     String? groupId,
     bool? isFavorite,
     PaymentStatus? sickDaysPayment,
     PaymentStatus? publicHolidaysPayment,
-    VacationEntity? vacationInfo,
-    ProjectTimeManagementEntity? timeManagement,
-    ProjectMoneyManagementEntity? moneyManagement,
+    NewVacationModel? vacationInfo,
+    NewProjectTimeManagementModel? timeManagement,
+    NewProjectMoneyManagementModel? moneyManagement,
     Workplace? workplace,
   }) {
-    return ProjectEntity(
+    return NewProjectModel(
       projectId: id ?? this.id,
       name: name ?? this.name,
       groupId: groupId ?? this.groupId,

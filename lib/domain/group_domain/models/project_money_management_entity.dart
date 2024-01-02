@@ -1,14 +1,26 @@
-import 'package:my_time/features/7_groups_overview/domain/entities/enums/currency.dart';
-import 'package:my_time/features/7_groups_overview/domain/entities/enums/payment_interval.dart';
+import 'package:my_time/domain/group_domain/models/enums/currency.dart';
+import 'package:my_time/domain/group_domain/models/enums/payment_interval.dart';
 
 /// Represents the money management details for a project entity.
-class ProjectMoneyManagementEntity {
+class NewProjectMoneyManagementModel {
   /// Constructor for ProjectMoneyManagementEntity.
-  ProjectMoneyManagementEntity({
+  NewProjectMoneyManagementModel({
     this.currency,
     this.paymentInterval,
     this.payment,
   });
+
+  factory NewProjectMoneyManagementModel.fromMap(Map<String, dynamic> map) {
+    return NewProjectMoneyManagementModel(
+      paymentInterval: map['paymentInterval'] != null
+          ? PaymentInterval.values[map['paymentInterval'] as int]
+          : null,
+      payment: map['payment'] as double?,
+      currency: map['currency'] != null
+          ? Currency.values[map['currency'] as int]
+          : null,
+    );
+  }
 
   /// The payment interval for the project.
   final PaymentInterval? paymentInterval;
@@ -30,12 +42,12 @@ class ProjectMoneyManagementEntity {
   }
 
   /// Returns a copy of the `ProjectMoneyManagementEntity` instance
-  ProjectMoneyManagementEntity copyWith({
+  NewProjectMoneyManagementModel copyWith({
     PaymentInterval? paymentInterval,
     double? payment,
     Currency? currency,
   }) {
-    return ProjectMoneyManagementEntity(
+    return NewProjectMoneyManagementModel(
       paymentInterval: paymentInterval ?? this.paymentInterval,
       payment: payment ?? this.payment,
       currency: currency ?? this.currency,

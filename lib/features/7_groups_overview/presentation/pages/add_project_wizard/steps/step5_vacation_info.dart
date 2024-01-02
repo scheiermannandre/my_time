@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:my_time/common/extensions/build_context_extension.dart';
-import 'package:my_time/features/7_groups_overview/domain/entities/enums/payment_status.dart';
-import 'package:my_time/features/7_groups_overview/domain/entities/vacation_entity.dart';
+import 'package:my_time/domain/group_domain/models/enums/payment_status.dart';
+import 'package:my_time/domain/group_domain/models/vacation_entity.dart';
 import 'package:my_time/features/7_groups_overview/presentation/widgets/payment_status_selector.dart';
 import 'package:my_time/foundation/config/theme/tokens/space_tokens.dart';
 import 'package:my_time/foundation/core/widgets/number_picker.dart';
@@ -20,7 +20,7 @@ class Step5VacationInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return WizardStepWrapper<VacationEntity?>(
+    return WizardStepWrapper<NewVacationModel?>(
       title: context.loc.step5Title,
       stepNumber: 4,
       showNextBtn: true,
@@ -53,9 +53,9 @@ class _VacationDaysStep extends StatefulHookWidget {
     required this.disableNext,
     required this.data,
   });
-  final VacationEntity? data;
+  final NewVacationModel? data;
 
-  final void Function(VacationEntity) saveVacationInfo;
+  final void Function(NewVacationModel) saveVacationInfo;
   final VoidCallback enableNext;
   final VoidCallback disableNext;
 
@@ -107,7 +107,7 @@ class _VacationDaysStepState extends State<_VacationDaysStep> {
                     if (paymentStatus != null) {
                       widget.enableNext();
                     }
-                    widget.saveVacationInfo(VacationEntity(days: value));
+                    widget.saveVacationInfo(NewVacationModel(days: value));
                     _finishedEditingVacationDays = true;
                   },
                 ),
@@ -135,7 +135,7 @@ class _VacationDaysStepState extends State<_VacationDaysStep> {
                       widget.enableNext();
 
                       widget.saveVacationInfo(
-                        VacationEntity(
+                        NewVacationModel(
                           paymentStatus: paymentStatus,
                           days: days,
                         ),

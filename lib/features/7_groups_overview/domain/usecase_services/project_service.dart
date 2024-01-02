@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:my_time/domain/group_domain/models/project_entity.dart';
 import 'package:my_time/features/7_groups_overview/data/repositories/project_repository_impl.dart';
-import 'package:my_time/features/7_groups_overview/domain/entities/project_entity.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'project_service.g.dart';
@@ -15,20 +15,20 @@ class ProjectService {
 
   /// Adds a new project with the given [project] settings.
   Future<void> addProject(
-    ProjectEntity project,
+    NewProjectModel project,
   ) async {
     return ref.read(projectRepositoryImplProvider).addProject(project);
   }
 
   /// Updates a project with the given [project] settings.
   Future<void> updateProject(
-    ProjectEntity project,
+    NewProjectModel project,
   ) async {
     return ref.read(projectRepositoryImplProvider).updateProject(project);
   }
 
   /// Fetches a project with the specified [groupId] and [projectId].
-  Future<ProjectEntity> fetchProject(
+  Future<NewProjectModel> fetchProject(
     String groupId,
     String projectId,
   ) {
@@ -38,7 +38,7 @@ class ProjectService {
   }
 
   /// Streams a project with the specified [groupId] and [projectId].
-  Stream<ProjectEntity> streamProject(
+  Stream<NewProjectModel> streamProject(
     String groupId,
     String projectId,
   ) {
@@ -56,7 +56,7 @@ ProjectService projectService(ProjectServiceRef ref) {
 
 /// Riverpod provider for fetching a Project class.
 @riverpod
-FutureOr<ProjectEntity> fetchProject(
+FutureOr<NewProjectModel> fetchProject(
   Ref ref, {
   required String groupId,
   required String projectId,
@@ -66,7 +66,7 @@ FutureOr<ProjectEntity> fetchProject(
 
 /// Riverpod provider for streaming a Project class.
 @riverpod
-Stream<ProjectEntity> streamProject(
+Stream<NewProjectModel> streamProject(
   StreamProjectRef ref, {
   required String groupId,
   required String projectId,

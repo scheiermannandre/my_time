@@ -1,5 +1,5 @@
-import 'package:my_time/features/7_groups_overview/domain/entities/enums/payment_status.dart';
-import 'package:my_time/features/7_groups_overview/domain/entities/enums/wokrplace.dart';
+import 'package:my_time/domain/group_domain/models/enums/payment_status.dart';
+import 'package:my_time/domain/group_domain/models/enums/wokrplace.dart';
 import 'package:my_time/features/9_timer/domain/entities/entry_entity.dart';
 import 'package:my_time/features/9_timer/domain/entities/entry_type.dart';
 
@@ -30,7 +30,7 @@ class EntryModel {
         id: entity.id,
         projectId: entity.projectId,
         groupId: entity.groupId,
-        date: entity.date,
+        date: entity.date.millisecondsSinceEpoch,
         startTimeInMinutes: entity.startTime.inMinutes,
         endTimeInMinutes: entity.endTime.inMinutes,
         breakTimeInMinutes: entity.breakTime.inMinutes,
@@ -46,7 +46,7 @@ class EntryModel {
         id: entity.id,
         projectId: entity.projectId,
         groupId: entity.groupId,
-        date: entity.date,
+        date: entity.date.millisecondsSinceEpoch,
         paymentStatus: entity.paymentStatus.index,
         description: entity.description,
         type: entity.type.index,
@@ -56,12 +56,13 @@ class EntryModel {
 
   /// Converts a map to an [EntryModel].
   factory EntryModel.fromMap(Map<String, Object?> map) {
+    print(map);
     if (map['type']! as int == EntryType.work.index) {
       return EntryModel(
         id: map['id']! as String,
         projectId: map['projectId']! as String,
         groupId: map['groupId']! as String,
-        date: DateTime.parse(map['date']! as String),
+        date: map['date']! as int,
         startTimeInMinutes: map['startTimeInMinutes']! as int,
         endTimeInMinutes: map['endTimeInMinutes']! as int,
         breakTimeInMinutes: map['breakTimeInMinutes']! as int,
@@ -75,7 +76,7 @@ class EntryModel {
         id: map['id']! as String,
         projectId: map['projectId']! as String,
         groupId: map['groupId']! as String,
-        date: DateTime.parse(map['date']! as String),
+        date: map['date']! as int,
         paymentStatus: map['paymentStatus']! as int,
         description: map['description']! as String,
         type: map['type']! as int,
@@ -93,7 +94,7 @@ class EntryModel {
   final String groupId;
 
   /// Date of the entry.
-  final DateTime date;
+  final int date;
 
   /// Description of the entry.
   final String description;
@@ -125,7 +126,7 @@ class EntryModel {
       'id': id,
       'projectId': projectId,
       'groupId': groupId,
-      'date': date.toIso8601String(),
+      'date': date,
       'startTimeInMinutes': startTimeInMinutes,
       'endTimeInMinutes': endTimeInMinutes,
       'breakTimeInMinutes': breakTimeInMinutes,
@@ -144,7 +145,7 @@ class EntryModel {
         entryId: id,
         projectId: projectId,
         groupId: groupId,
-        date: date,
+        date: DateTime.fromMillisecondsSinceEpoch(date),
         startTime: Duration(minutes: startTimeInMinutes!),
         endTime: Duration(minutes: endTimeInMinutes!),
         breakTime: Duration(minutes: breakTimeInMinutes!),
@@ -158,7 +159,7 @@ class EntryModel {
         entryId: id,
         projectId: projectId,
         groupId: groupId,
-        date: date,
+        date: DateTime.fromMillisecondsSinceEpoch(date),
         paymentStatus: PaymentStatus.values[paymentStatus!],
         description: description,
         type: EntryType.values[type],

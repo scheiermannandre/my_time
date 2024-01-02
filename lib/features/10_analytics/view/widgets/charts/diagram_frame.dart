@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_time/features/6_group_analytics/models/diagram_frame_configuration.dart';
-import 'package:my_time/features/6_group_analytics/widgets/painters/diagram_frame_painter.dart';
+import 'package:my_time/features/10_analytics/view/widgets/charts/painters/diagram_frame_painter.dart';
 
 /// The DiagramFrame.
 class DiagramFrame extends StatelessWidget {

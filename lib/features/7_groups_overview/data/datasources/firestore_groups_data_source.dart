@@ -35,6 +35,14 @@ class FirestoreGroupsDataSource {
   Future<List<GroupModel>> fetchGroups(String uid) {
     return _firestore.groupsQuery(uid).get().then(_querySnapshotToGroups);
   }
+
+  /// Fetches the list of groups.
+  Future<Map<String, dynamic>> fetchGroup(String uid, String groupId) {
+    return _firestore
+        .groupDocumentRaw(uid, groupId)
+        .get()
+        .then((value) => value.data()!);
+  }
 }
 
 /// Riverpod provider for creating an instance of [FirestoreGroupsDataSource].

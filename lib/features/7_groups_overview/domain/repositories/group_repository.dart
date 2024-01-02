@@ -1,4 +1,4 @@
-import 'package:my_time/features/7_groups_overview/domain/entities/group_entity.dart';
+import 'package:my_time/domain/group_domain/models/group_entity.dart';
 
 /// Abstract class representing operations on groups and projects.
 abstract class GroupRepository {
@@ -9,8 +9,8 @@ abstract class GroupRepository {
   Future<void> addGroup(String name);
 
   /// Fetches the list of groups.
-  Future<List<GroupEntity>> fetchGroups();
+  Future<List<NewGroupModel>> fetchGroups();
 
   /// Stream to listen for changes to the list of groups.
-  Stream<List<GroupEntity>> watchGroups();
+  Stream<List<NewGroupModel>> watchGroups();
 }

@@ -1,7 +1,8 @@
 import 'dart:async';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:my_time/common/common.dart';
-import 'package:my_time/features/9_timer/data/datasources/firestore_entry_data_source.dart';
+import 'package:my_time/domain/entry_domain/data_sources/firestore_entry_data_source.dart';
+import 'package:my_time/domain/entry_domain/models/entry/new_entry_model.dart';
 import 'package:my_time/features/9_timer/data/repositories/entry_repository.dart';
 import 'package:my_time/features/9_timer/domain/entities/entry_entity.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -35,7 +36,7 @@ class HistoryPageState {
   static const int limit = 30;
 
   /// The list of entries.
-  final List<EntryEntity> entries;
+  final List<NewEntryModel> entries;
 
   /// The number of entries fetched in the last batch.
   final int lastBatchCount;
@@ -44,15 +45,15 @@ class HistoryPageState {
   final Object? lastSnapshot;
 
   /// The entries grouped by month and year.
-  final Map<String, List<EntryEntity>> _sortedEntries = {};
+  final Map<String, List<NewEntryModel>> _sortedEntries = {};
 
   /// The entries grouped by month and year.
-  Map<String, List<EntryEntity>> get sortedEntries => _sortedEntries;
+  Map<String, List<NewEntryModel>> get sortedEntries => _sortedEntries;
 
   /// Indicates whether the end of the list has been reached.
   bool get hasReachedEnd => lastBatchCount < limit;
 
-  void _convertToMap(List<EntryEntity> entries) {
+  void _convertToMap(List<NewEntryModel> entries) {
     for (final entry in entries) {
       final key = entry.date.toMonthAndYearString();
       if (!_sortedEntries.containsKey(key)) {
@@ -65,7 +66,7 @@ class HistoryPageState {
   /// Creates a copy of the [HistoryPageState] with the given fields
   /// replaced with the new values.
   HistoryPageState copyWith({
-    List<EntryEntity>? entries,
+    List<NewEntryModel>? entries,
     int? lastBatchCount,
     Object? lastSnapshot,
   }) {
@@ -81,7 +82,7 @@ class HistoryPageState {
 
 /// Controller for the history page.
 class HistoryPageController extends _$HistoryPageController {
-  ProviderSubscription<AsyncValue<EntryEntity?>>? _subscription;
+  ProviderSubscription<AsyncValue<NewEntryModel?>>? _subscription;
 
   @override
   FutureOr<HistoryPageState> build(
@@ -96,7 +97,7 @@ class HistoryPageController extends _$HistoryPageController {
     );
   }
 
-  Future<PaginatedResult<EntryEntity>> _fetchEntries(
+  Future<PaginatedResult<NewEntryModel>> _fetchEntries(
     String groupId,
     String projectId,
     Object? lastSnapshot,
@@ -137,7 +138,7 @@ class HistoryPageController extends _$HistoryPageController {
     void Function(EntryEditStatus) showSnackbar,
   ) {
     _subscription?.close();
-    _subscription = ref.listen<AsyncValue<EntryEntity?>>(
+    _subscription = ref.listen<AsyncValue<NewEntryModel?>>(
       streamEntryProvider(groupId, entryId),
       (previous, next) {
         if (previous is! AsyncData || next is! AsyncData) return;

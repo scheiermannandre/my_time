@@ -1,12 +1,12 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:my_time/common/common.dart';
+import 'package:my_time/domain/group_domain/models/enums/payment_status.dart';
+import 'package:my_time/domain/group_domain/models/enums/wokrplace.dart';
+import 'package:my_time/domain/group_domain/models/project_entity.dart';
 import 'package:my_time/features/7_groups_overview/data/models/project_money_management_model.dart';
 import 'package:my_time/features/7_groups_overview/data/models/project_time_management_model.dart';
 import 'package:my_time/features/7_groups_overview/data/models/vacation_model.dart';
-import 'package:my_time/features/7_groups_overview/domain/entities/enums/payment_status.dart';
-import 'package:my_time/features/7_groups_overview/domain/entities/enums/wokrplace.dart';
-import 'package:my_time/features/7_groups_overview/domain/entities/project_entity.dart';
 
 @immutable
 
@@ -29,7 +29,7 @@ class ProjectModel {
   });
 
   /// Factory method to create a `ProjectModel` instance from a `ProjectEntity`.
-  factory ProjectModel.fromEntity(ProjectEntity entity) {
+  factory ProjectModel.fromEntity(NewProjectModel entity) {
     return ProjectModel(
       id: entity.id,
       name: entity.name,
@@ -144,8 +144,8 @@ class ProjectModel {
   }
 
   /// Converts the `ProjectModel` object to a `ProjectEntity` object.
-  ProjectEntity toEntity() {
-    return ProjectEntity(
+  NewProjectModel toEntity() {
+    return NewProjectModel(
       projectId: id,
       name: name,
       groupId: groupId,

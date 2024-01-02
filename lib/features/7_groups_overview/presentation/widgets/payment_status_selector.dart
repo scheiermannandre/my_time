@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_time/common/extensions/build_context_extension.dart';
-import 'package:my_time/features/7_groups_overview/domain/entities/enums/payment_status.dart';
+import 'package:my_time/domain/group_domain/models/enums/payment_status.dart';
 import 'package:my_time/features/7_groups_overview/presentation/widgets/value_selector.dart';
 import 'package:my_time/foundation/config/theme/tokens/space_tokens.dart';
 import 'package:my_time/foundation/core/widgets/action_button.dart';

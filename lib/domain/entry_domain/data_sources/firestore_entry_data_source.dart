@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:my_time/domain/entry_domain/models/entry/new_entry_model.dart';
 import 'package:my_time/features/9_timer/data/models/entry_model.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -37,31 +38,29 @@ class FirestoreEntryDataSource {
       'users/$uid/groups/$groupId/entries/$entryId';
 
   /// Document reference for a group of a user.
-  DocumentReference<EntryModel?> entriesDocument(
+  DocumentReference<Map<String, dynamic>?> entriesDocument(
     String uid,
     String groupId,
     String entryId,
   ) =>
       _firestore.doc(_entryPath(uid, groupId, entryId)).withConverter(
-        fromFirestore: (doc, _) {
-          if (doc.exists) {
-            return EntryModel.fromMap(doc.data()!);
-          }
-          return null;
-        },
-        toFirestore: (entryModel, options) {
-          final map = entryModel?.toMap() ?? <String, Object?>{};
-          return map;
-        },
-      );
+            fromFirestore: (doc, _) {
+              if (doc.exists) {
+                return doc.data();
+              }
+              return null;
+            },
+            toFirestore: (entryModel, options) => entryModel!,
+          );
 
   /// Saves the [entry] to the database.
   Future<void> createEntry(
     String uid,
     String groupId,
-    EntryModel entry,
+    String entryId,
+    Map<String, dynamic> entry,
   ) {
-    return entriesDocument(uid, groupId, entry.id).set(entry);
+    return entriesDocument(uid, groupId, entryId).set(entry);
   }
 
   /// Saves the [entries] to the database.
@@ -69,18 +68,20 @@ class FirestoreEntryDataSource {
     String uid,
     String groupId,
     String projectId,
-    List<EntryModel> entries,
+    List<String> entryIds,
+    List<Map<String, dynamic>> entries,
   ) {
     final writeBatch = _firestore.batch();
 
     for (final entry in entries) {
-      writeBatch.set(entriesDocument(uid, groupId, entry.id), entry);
+      final index = entries.indexOf(entry);
+      writeBatch.set(entriesDocument(uid, groupId, entryIds[index]), entry);
     }
     return writeBatch.commit();
   }
 
   /// Fetches the [EntryModel] from the database.
-  Future<EntryModel?> fetchEntry(
+  Future<Map<String, dynamic>?> fetchEntry(
     String uid,
     String groupId,
     String entryId,
@@ -90,20 +91,11 @@ class FirestoreEntryDataSource {
         .then((value) => value.data());
   }
 
-  /// Query for fetching [EntryModel]s from the database.
-  Query<EntryModel> entriesQuery(
+  Query<Map<String, dynamic>> entriesQueryRaw(
     String uid,
     String groupId,
-    String projectId,
   ) {
-    return _firestore
-        .collection('users/$uid/groups/$groupId/entries')
-        .withConverter(
-          fromFirestore: (doc, _) => EntryModel.fromMap(doc.data()!),
-          toFirestore: (entry, _) => entry.toMap(),
-        )
-        .where('projectId', isEqualTo: projectId)
-        .orderBy('date', descending: true);
+    return _firestore.collection('users/$uid/groups/$groupId/entries');
   }
 
   /// Fetches all [EntryModel]s from the database.
@@ -114,7 +106,9 @@ class FirestoreEntryDataSource {
     int limit, {
     Object? lastSnapshot,
   }) async {
-    var query = entriesQuery(uid, groupId, projectId);
+    var query = entriesQueryRaw(uid, groupId)
+        .where('projectId', isEqualTo: projectId)
+        .orderBy('date', descending: true);
     if (lastSnapshot != null) {
       query =
           query.startAfterDocument(lastSnapshot as DocumentSnapshot<Object?>);
@@ -133,13 +127,13 @@ class FirestoreEntryDataSource {
   }
 
   /// Streams the [EntryModel] from the database.
-  Stream<EntryModel?> streamEntry<EntryModel>(
+  Stream<Map<String, dynamic>?> streamEntry(
     String uid,
     String groupId,
     String entryId,
   ) {
     return entriesDocument(uid, groupId, entryId).snapshots().map(
-          (snapshot) => snapshot.data() as EntryModel,
+          (snapshot) => snapshot.data(),
         );
   }
 
@@ -156,10 +150,44 @@ class FirestoreEntryDataSource {
   Future<void> updateEntry(
     String uid,
     String groupId,
-    EntryModel entry,
+    String entryId,
+    Map<String, dynamic> entry,
   ) {
-    return entriesDocument(uid, groupId, entry.id).set(entry);
+    return entriesDocument(uid, groupId, entryId).set(entry);
   }
+
+  //////
+  /// Analytics
+  /// Fetches all Entry from the database that lie in between the range.
+  Future<List<Map<String, dynamic>>> fetchEntriesByDateRange(
+    String uid,
+    String groupId,
+    DateTime lowerBoundary,
+    DateTime upperBoundary,
+  ) async {
+    final lower = DateTime(
+      lowerBoundary.year,
+      lowerBoundary.month,
+      lowerBoundary.day,
+    );
+    final upper = DateTime(
+      upperBoundary.year,
+      upperBoundary.month,
+      upperBoundary.day,
+    );
+
+    final query = entriesQueryRaw(uid, groupId).where(
+      'date',
+      isGreaterThanOrEqualTo: lower.millisecondsSinceEpoch,
+      isLessThanOrEqualTo: upper.millisecondsSinceEpoch,
+    );
+
+    final data = await query.get().then(
+          (value) => value.docs.map((e) => e.data()).toList(),
+        );
+    return data;
+  }
+  //////
 }
 
 /// Riverpod provider for creating an instance

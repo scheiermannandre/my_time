@@ -1,7 +1,7 @@
 import 'package:my_time/common/common.dart';
-import 'package:my_time/features/7_groups_overview/domain/entities/enums/currency.dart';
-import 'package:my_time/features/7_groups_overview/domain/entities/enums/payment_interval.dart';
-import 'package:my_time/features/7_groups_overview/domain/entities/project_money_management_entity.dart';
+import 'package:my_time/domain/group_domain/models/enums/currency.dart';
+import 'package:my_time/domain/group_domain/models/enums/payment_interval.dart';
+import 'package:my_time/domain/group_domain/models/project_money_management_entity.dart';
 
 /// Represents a model for a project's money management.
 class ProjectMoneyManagementModel {
@@ -24,7 +24,7 @@ class ProjectMoneyManagementModel {
 
   /// Factory to create a ProjectMoneyManagementModel from an entity.
   factory ProjectMoneyManagementModel.fromEntity(
-    ProjectMoneyManagementEntity entity,
+    NewProjectMoneyManagementModel entity,
   ) {
     return ProjectMoneyManagementModel(
       paymentInterval: entity.paymentInterval?.index,
@@ -35,8 +35,8 @@ class ProjectMoneyManagementModel {
 
   /// Factory to create a ProjectMoneyManagementEntity
   /// from a ProjectMoneyManagementModel.
-  ProjectMoneyManagementEntity toEntity() {
-    return ProjectMoneyManagementEntity(
+  NewProjectMoneyManagementModel toEntity() {
+    return NewProjectMoneyManagementModel(
       paymentInterval: PaymentInterval.values
           .firstWhereOrNull((p0) => p0.index == paymentInterval),
       payment: payment,

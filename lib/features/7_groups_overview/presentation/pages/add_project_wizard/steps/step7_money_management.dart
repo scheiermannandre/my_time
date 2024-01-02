@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:my_time/common/extensions/build_context_extension.dart';
-import 'package:my_time/features/7_groups_overview/domain/entities/enums/currency.dart';
-import 'package:my_time/features/7_groups_overview/domain/entities/enums/payment_interval.dart';
-import 'package:my_time/features/7_groups_overview/domain/entities/project_money_management_entity.dart';
+import 'package:my_time/domain/group_domain/models/enums/currency.dart';
+import 'package:my_time/domain/group_domain/models/enums/payment_interval.dart';
+import 'package:my_time/domain/group_domain/models/project_money_management_entity.dart';
 import 'package:my_time/features/7_groups_overview/presentation/widgets/payment_interval_selector.dart';
 import 'package:my_time/foundation/config/theme/tokens/space_tokens.dart';
 import 'package:my_time/foundation/core/widgets/dropdown.dart';
@@ -22,7 +22,7 @@ class Step7MoneyManagement extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return WizardStepWrapper<ProjectMoneyManagementEntity?>(
+    return WizardStepWrapper<NewProjectMoneyManagementModel?>(
       title: context.loc.step7Title,
       stepNumber: 6,
       showNextBtn: true,
@@ -55,9 +55,9 @@ class _MoneyManagementStep extends StatefulHookWidget {
     required this.disableNext,
     required this.data,
   });
-  final ProjectMoneyManagementEntity? data;
+  final NewProjectMoneyManagementModel? data;
 
-  final void Function(ProjectMoneyManagementEntity) saveProjectTimeManagement;
+  final void Function(NewProjectMoneyManagementModel) saveProjectTimeManagement;
   final VoidCallback enableNext;
   final VoidCallback disableNext;
 
@@ -90,7 +90,7 @@ class _MoneyManagementStepState extends State<_MoneyManagementStep> {
 
   void saveData() {
     widget.saveProjectTimeManagement(
-      ProjectMoneyManagementEntity(
+      NewProjectMoneyManagementModel(
         paymentInterval: paymentInterval,
         currency: currency,
         payment: payment,

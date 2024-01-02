@@ -3,6 +3,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_time/common/common.dart';
+import 'package:my_time/domain/entry_domain/models/entry/new_entry_model.dart';
 import 'package:my_time/features/9_timer/domain/entities/entry_entity.dart';
 import 'package:my_time/features/9_timer/domain/entities/entry_type.dart';
 import 'package:my_time/features/9_timer/presentation/state_management/history_page_controller.dart';
@@ -37,7 +38,7 @@ class EntryHistoryPage extends StatefulHookConsumerWidget {
 }
 
 class _EntryHistoryPageState extends ConsumerState<EntryHistoryPage> {
-  Map<String, List<EntryEntity>> _entries = {};
+  Map<String, List<NewEntryModel>> _entries = {};
   VoidCallback onDismissedCallback = () {};
   void showSnackbar(EntryEditStatus status) {
     if (status == EntryEditStatus.none) return;
@@ -226,10 +227,10 @@ class EntryListTile extends StatelessWidget {
   /// Creates an EntryListTile from an EntryEntity.
   factory EntryListTile.withEntryEntity({
     required BuildContext context,
-    required EntryEntity entry,
+    required NewEntryModel entry,
     required VoidCallback onTap,
   }) {
-    if (entry is WorkEntryEntity) {
+    if (entry is NewWorkEntryModel) {
       return EntryListTile._fromWorkEntryEntity(
         context: context,
         entry: entry,
@@ -239,7 +240,7 @@ class EntryListTile extends StatelessWidget {
     {
       return EntryListTile._fromDayOffEntryEntity(
         context: context,
-        entry: entry as DayOffEntryEntity,
+        entry: entry as NewDayOffEntryModel,
         onTap: onTap,
       );
     }
@@ -247,7 +248,7 @@ class EntryListTile extends StatelessWidget {
 
   factory EntryListTile._fromDayOffEntryEntity({
     required BuildContext context,
-    required DayOffEntryEntity entry,
+    required NewDayOffEntryModel entry,
     required VoidCallback onTap,
   }) {
     return EntryListTile(
@@ -272,7 +273,7 @@ class EntryListTile extends StatelessWidget {
   factory EntryListTile._fromWorkEntryEntity({
     // ignore: avoid_unused_constructor_parameters
     required BuildContext context,
-    required WorkEntryEntity entry,
+    required NewWorkEntryModel entry,
     required VoidCallback onTap,
   }) {
     return EntryListTile(

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class DiagrammFrameConfiguration {
   /// Creates a DiagrammFrameConfiguration.
   DiagrammFrameConfiguration({
-    required List<String> labels,
+    required this.labels,
     required int labelCount,
     required double barHeight,
     required double barPadding,
@@ -79,6 +79,8 @@ class DiagrammFrameConfiguration {
 
   /// The color of the frame.
   final Color frameColor;
+
+  final List<String> labels;
 
   ({double textWidth, double textCenterWidth, double textHeight})
       _getTextMetaData(String text) {

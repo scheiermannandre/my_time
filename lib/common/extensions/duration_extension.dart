@@ -1,10 +1,17 @@
+import 'package:flutter/material.dart';
+
 /// Duration extension
 extension DurationExtension on Duration {
   /// Returns a formatted string using the HH:mm pattern.
   String toFormattedString() {
+    String sign = '';
+    if (inMinutes < 0) {
+      sign = '-';
+    }
+    final absDuration = Duration(minutes: inMinutes.abs());
     String twoDigits(int n) => n.toString().padLeft(2, '0');
-    final twoDigitMinutes = twoDigits(inMinutes.remainder(60));
-    return '${twoDigits(inHours)}:$twoDigitMinutes';
+    final twoDigitMinutes = twoDigits(absDuration.inMinutes.remainder(60));
+    return '$sign${twoDigits(absDuration.inHours)}:$twoDigitMinutes';
   }
 
   /// Returns a Duration from a string that prevously was a duration.
@@ -23,5 +30,16 @@ extension DurationExtension on Duration {
       microseconds: components[3],
     );
     return duration;
+  }
+
+  TimeOfDay toTimeOfDay() {
+    return TimeOfDay(
+      hour: inHours,
+      minute: inMinutes.remainder(60),
+    );
+  }
+
+  double toHours() {
+    return inMinutes / 60;
   }
 }

@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:my_time/domain/entry_domain/data_sources/firestore_timer_data_data_source.dart';
 import 'package:my_time/features/8_authentication/data/repositories/auth_repository_impl.dart';
-import 'package:my_time/features/9_timer/data/datasources/firestore_timer_data_data_source.dart';
 import 'package:my_time/features/9_timer/data/models/timer_data_model.dart';
 import 'package:my_time/features/9_timer/domain/entities/timer_data_entity.dart';
 import 'package:my_time/features/9_timer/domain/repositories/i_timer_data_repository.dart';

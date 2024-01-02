@@ -1,5 +1,5 @@
+import 'package:my_time/domain/group_domain/models/project_entity.dart';
 import 'package:my_time/features/7_groups_overview/data/repositories/project_repository_impl.dart';
-import 'package:my_time/features/7_groups_overview/domain/entities/project_entity.dart';
 import 'package:my_time/features/9_timer/data/repositories/timer_data_repository.dart';
 import 'package:my_time/features/9_timer/domain/entities/timer_data_entity.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -31,7 +31,7 @@ class TimerPageController extends _$TimerPageController {
   }
 
   /// Updates the projects quick access status.
-  bool updateQuickAccessStatus(ProjectEntity project) {
+  bool updateQuickAccessStatus(NewProjectModel project) {
     final cachedProject = project.copyWith(
       isFavorite: !project.isFavorite,
     );

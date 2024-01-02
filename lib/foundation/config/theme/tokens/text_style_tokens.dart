@@ -53,6 +53,7 @@ class TextStyleTokens {
     return GoogleFonts.montserrat(
       fontSize: 18,
       fontWeight: _normal,
+      color: fontColor,
     );
   }
 
@@ -65,11 +66,20 @@ class TextStyleTokens {
     );
   }
 
+   static TextStyle bodyTickMoreMedium(Color? fontColor) {
+    return GoogleFonts.montserrat(
+      fontSize: 16,
+      fontWeight: _normal,
+      color: fontColor,
+    );
+  }
+
   /// Returns a text style for small text with the specified [fontColor].
   static TextStyle bodyMedium(Color? fontColor) {
     return GoogleFonts.montserrat(
       fontSize: 14,
       fontWeight: _normal,
+      color: fontColor,
     );
   }
 

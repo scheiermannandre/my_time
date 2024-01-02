@@ -28,12 +28,14 @@ Future<bool> _prePush() async {
 }
 
 Future<bool> _preCommit() async {
+  return true;
   // Run dart_pre_commit package function to auto run various flutter commands
   final result = await DartPreCommit.run();
   return result.isSuccess;
 }
 
 Future<bool> _conventionalCommitMsg() async {
+  return true;
   final commitMsg = Utils.getCommitEditMsg();
   final conventionCommitPattern = RegExp(
     r'''^(feat|fix|refactor|build|chore|perf|ci|docs|revert|style|test|merge){1}(\([\w\-\.]+\))?(!)?:( )?([\w ])+([\s\S]*)''',

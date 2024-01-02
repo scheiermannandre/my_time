@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_time/common/extensions/build_context_extension.dart';
-import 'package:my_time/features/7_groups_overview/domain/entities/project_entity.dart';
+import 'package:my_time/domain/group_domain/models/project_entity.dart';
 import 'package:my_time/features/7_groups_overview/domain/usecase_services/project_service.dart';
 import 'package:my_time/features/9_timer/presentation/pages/add_entry_wizard/review_step.dart';
 import 'package:my_time/features/9_timer/presentation/pages/add_entry_wizard/steps/step1_date.dart';
@@ -23,12 +23,15 @@ class AddEntryWizard extends ConsumerWidget {
   const AddEntryWizard({
     required String groupId,
     required String projectId,
+    required String projectName,
     super.key,
   })  : _groupId = groupId,
-        _projectId = projectId;
+        _projectId = projectId,
+        _projectName = projectName;
 
   final String _groupId;
   final String _projectId;
+  final String _projectName;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -46,6 +49,7 @@ class AddEntryWizard extends ConsumerWidget {
         project: data,
         child: Wizard(
           onFinish: (event) async {
+            event.data[6] = _projectName;
             final isSuccess = await ref
                 .read(addEntryWizardControllerProvider.notifier)
                 .addEntry(_groupId, _projectId, event.data);
@@ -89,7 +93,7 @@ class AddEntryWizard extends ConsumerWidget {
   }
 }
 
-/// A widget that provides the [ProjectEntity] to its children.
+/// A widget that provides the [NewProjectModel] to its children.
 class AddEntryWizardInherited extends InheritedWidget {
   /// Constructs an [AddEntryWizardInherited] with required parameters.
   const AddEntryWizardInherited({
@@ -98,8 +102,8 @@ class AddEntryWizardInherited extends InheritedWidget {
     super.key,
   });
 
-  /// The [ProjectEntity] to provide.
-  final ProjectEntity project;
+  /// The [NewProjectModel] to provide.
+  final NewProjectModel project;
 
   /// Method to get the [AddEntryWizardInherited] from the [BuildContext].
   static AddEntryWizardInherited? of(BuildContext context) {

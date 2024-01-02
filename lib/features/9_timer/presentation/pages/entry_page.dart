@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:my_time/common/common.dart';
-import 'package:my_time/features/7_groups_overview/domain/entities/enums/payment_status.dart';
-import 'package:my_time/features/7_groups_overview/domain/entities/enums/wokrplace.dart';
+import 'package:my_time/domain/entry_domain/models/entry/new_entry_model.dart';
+import 'package:my_time/domain/group_domain/models/enums/payment_status.dart';
+import 'package:my_time/domain/group_domain/models/enums/wokrplace.dart';
 import 'package:my_time/features/7_groups_overview/presentation/widgets/payment_status_selector.dart';
 import 'package:my_time/features/7_groups_overview/presentation/widgets/settings_block.dart';
 import 'package:my_time/features/7_groups_overview/presentation/widgets/show_value.dart';
@@ -182,19 +183,19 @@ class _EntryEditWidget extends StatelessWidget {
 
   factory _EntryEditWidget.withEntry(
     BuildContext context,
-    EntryEntity entry, {
-    required void Function(EntryEntity) onChange,
+    NewEntryModel entry, {
+    required void Function(NewEntryModel) onChange,
   }) {
     if (entry.type == EntryType.work) {
       return _EntryEditWidget._fromWorkEntry(
         context,
-        entry as WorkEntryEntity,
+        entry as NewWorkEntryModel,
         onChange,
       );
     } else {
       return _EntryEditWidget._fromDayOffEntry(
         context,
-        entry as DayOffEntryEntity,
+        entry as NewDayOffEntryModel,
         onChange,
       );
     }
@@ -202,8 +203,8 @@ class _EntryEditWidget extends StatelessWidget {
 
   factory _EntryEditWidget._fromDayOffEntry(
     BuildContext context,
-    DayOffEntryEntity entry,
-    void Function(EntryEntity) onChange,
+    NewDayOffEntryModel entry,
+    void Function(NewEntryModel) onChange,
   ) {
     return _EntryEditWidget(
       entry: entry,
@@ -249,8 +250,8 @@ class _EntryEditWidget extends StatelessWidget {
 
   factory _EntryEditWidget._fromWorkEntry(
     BuildContext context,
-    WorkEntryEntity entry,
-    void Function(EntryEntity) onChange,
+    NewWorkEntryModel entry,
+    void Function(NewEntryModel) onChange,
   ) {
     return _EntryEditWidget(
       entry: entry,
@@ -396,10 +397,10 @@ class _EntryEditWidget extends StatelessWidget {
       ],
     );
   }
-  final EntryEntity entry;
+  final NewEntryModel entry;
   final List<Widget> children;
 
-  final void Function(EntryEntity) onChange;
+  final void Function(NewEntryModel) onChange;
 
   static Future<Duration?> _showTimeSelector(
     BuildContext context,

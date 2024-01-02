@@ -1,8 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:my_time/domain/group_domain/models/group_entity.dart';
 import 'package:my_time/features/7_groups_overview/data/datasources/firestore_groups_data_source.dart';
 import 'package:my_time/features/7_groups_overview/data/models/group_model.dart';
-import 'package:my_time/features/7_groups_overview/domain/entities/group_entity.dart';
-import 'package:my_time/features/7_groups_overview/domain/entities/project_entity.dart';
 import 'package:my_time/features/7_groups_overview/domain/repositories/group_repository.dart';
 import 'package:my_time/features/8_authentication/data/repositories/auth_repository_impl.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -34,7 +33,7 @@ class GroupRepositoryImpl extends GroupRepository {
   }
 
   @override
-  Future<List<GroupEntity>> fetchGroups() {
+  Future<List<NewGroupModel>> fetchGroups() {
     final uid = ref.read(authRepositoryProvider).currentUser!.uid;
     return ref
         .read(groupFirestoreDataSourceProvider)
@@ -43,7 +42,7 @@ class GroupRepositoryImpl extends GroupRepository {
   }
 
   @override
-  Stream<List<GroupEntity>> watchGroups() {
+  Stream<List<NewGroupModel>> watchGroups() {
     final uid = ref.read(authRepositoryProvider).currentUser!.uid;
     return ref
         .read(groupFirestoreDataSourceProvider)
@@ -60,14 +59,14 @@ GroupRepositoryImpl groupRepositoryImpl(GroupRepositoryImplRef ref) {
   return GroupRepositoryImpl(ref: ref);
 }
 
-/// Riverpod provider for streaming a list of [GroupEntity].
+/// Riverpod provider for streaming a list of [NewGroupModel].
 @riverpod
-Stream<List<GroupEntity>> groupsStream(GroupsStreamRef ref) async* {
+Stream<List<NewGroupModel>> groupsStream(GroupsStreamRef ref) async* {
   yield* ref.read(groupRepositoryImplProvider).watchGroups();
 }
 
 /// Riverpod provider for streaming a list of [ProjectEntity].
 @riverpod
-FutureOr<List<GroupEntity>> groupsFuture(GroupsFutureRef ref) {
+FutureOr<List<NewGroupModel>> groupsFuture(GroupsFutureRef ref) {
   return ref.read(groupRepositoryImplProvider).fetchGroups();
 }

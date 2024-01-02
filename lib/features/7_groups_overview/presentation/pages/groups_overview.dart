@@ -3,8 +3,8 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_time/common/common.dart';
+import 'package:my_time/domain/group_domain/models/group_entity.dart';
 import 'package:my_time/features/7_groups_overview/data/repositories/group_repository_impl.dart';
-import 'package:my_time/features/7_groups_overview/domain/entities/group_entity.dart';
 import 'package:my_time/features/7_groups_overview/presentation/state_management/groups_overview_controller.dart';
 import 'package:my_time/foundation/config/config.dart';
 import 'package:my_time/foundation/config/theme/tokens/color_tokens.dart';
@@ -36,7 +36,7 @@ class GroupsOverviewInheritedWidget extends InheritedWidget {
   /// The theme controller.
 
   /// The groups.
-  final AsyncValue<List<GroupEntity>> groups;
+  final AsyncValue<List<NewGroupModel>> groups;
 
   /// The groups overview controller.
   final GroupsOverviewController groupsOverviewController;
@@ -65,7 +65,7 @@ class GroupsOverview extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final groups = ref.watchAndListenAsyncValueErrors<List<GroupEntity>>(
+    final groups = ref.watchAndListenAsyncValueErrors<List<NewGroupModel>>(
       context,
       groupsStreamProvider,
     );
@@ -179,7 +179,7 @@ class _LabeledIconButtons extends HookWidget {
   const _LabeledIconButtons({
     required this.groups,
   });
-  final List<GroupEntity> groups;
+  final List<NewGroupModel> groups;
 
   @override
   Widget build(BuildContext context) {
@@ -235,7 +235,22 @@ class _LabeledIconButtons extends HookWidget {
             ),
             ActionButton.iconWithBackgroundAndLabel(
               context: context,
-              onPressed: !hasGroups ? null : () async {},
+              onPressed: !hasGroups
+                  ? null
+                  : () async {
+                      final index = await _showGroupBottomSheet(
+                        context,
+                        animationController,
+                      );
+                      if (index == null) return;
+                      if (!context.mounted) return;
+                      context.goNamed(
+                        'day',
+                        queryParameters: {
+                          'groupId': groups[index].id,
+                        },
+                      );
+                    },
               isLoading: state.isLoading,
               label: context.loc.showStatistics,
               child: const Icon(Icons.insert_chart_outlined_rounded),

@@ -1,13 +1,13 @@
+import 'package:my_time/domain/group_domain/models/enums/currency.dart';
+import 'package:my_time/domain/group_domain/models/enums/payment_interval.dart';
+import 'package:my_time/domain/group_domain/models/enums/payment_status.dart';
+import 'package:my_time/domain/group_domain/models/enums/reference_period.dart';
+import 'package:my_time/domain/group_domain/models/enums/wokrplace.dart';
+import 'package:my_time/domain/group_domain/models/project_entity.dart';
+import 'package:my_time/domain/group_domain/models/project_money_management_entity.dart';
+import 'package:my_time/domain/group_domain/models/project_time_management_entity.dart';
+import 'package:my_time/domain/group_domain/models/vacation_entity.dart';
 import 'package:my_time/features/7_groups_overview/data/repositories/project_repository_impl.dart';
-import 'package:my_time/features/7_groups_overview/domain/entities/enums/currency.dart';
-import 'package:my_time/features/7_groups_overview/domain/entities/enums/payment_interval.dart';
-import 'package:my_time/features/7_groups_overview/domain/entities/enums/payment_status.dart';
-import 'package:my_time/features/7_groups_overview/domain/entities/enums/reference_period.dart';
-import 'package:my_time/features/7_groups_overview/domain/entities/enums/wokrplace.dart';
-import 'package:my_time/features/7_groups_overview/domain/entities/project_entity.dart';
-import 'package:my_time/features/7_groups_overview/domain/entities/project_money_management_entity.dart';
-import 'package:my_time/features/7_groups_overview/domain/entities/project_time_management_entity.dart';
-import 'package:my_time/features/7_groups_overview/domain/entities/vacation_entity.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'project_settings_page_controller.g.dart';
@@ -21,7 +21,7 @@ class ProjectSettingsPageController extends _$ProjectSettingsPageController {
 
   /// Updates the project name.
   Future<void> updateProjectName(
-    ProjectEntity project,
+    NewProjectModel project,
     Future<String?> Function() projectNameSetter,
   ) async {
     final projectName = await projectNameSetter.call();
@@ -35,7 +35,7 @@ class ProjectSettingsPageController extends _$ProjectSettingsPageController {
 
   /// Updates the value that tells if sick days are paid.
   Future<void> updateSickDaysPayment(
-    ProjectEntity project,
+    NewProjectModel project,
     Future<PaymentStatus?> Function() sickDaysPaymentSetter,
   ) async {
     final sickDaysPayment = await sickDaysPaymentSetter.call();
@@ -49,7 +49,7 @@ class ProjectSettingsPageController extends _$ProjectSettingsPageController {
 
   /// Updates the value that tells if public holidays are paid.
   Future<void> updatePublicHolidaysPayment(
-    ProjectEntity project,
+    NewProjectModel project,
     Future<PaymentStatus?> Function() publicHolidaysPaymentSetter,
   ) async {
     final publicHolidaysPayment = await publicHolidaysPaymentSetter.call();
@@ -63,7 +63,7 @@ class ProjectSettingsPageController extends _$ProjectSettingsPageController {
 
   /// Updates the amount of vacation days.
   Future<void> updateVacationDays(
-    ProjectEntity project,
+    NewProjectModel project,
     Future<int?> Function() vacationDaySetter,
     Future<PaymentStatus?> Function() vacationPaymentSetter,
   ) async {
@@ -77,7 +77,7 @@ class ProjectSettingsPageController extends _$ProjectSettingsPageController {
       if (payment == null) return;
 
       newProject = project.copyWith(
-        vacationInfo: VacationEntity(
+        vacationInfo: NewVacationModel(
           days: vacationDays,
           paymentStatus: payment,
         ),
@@ -95,7 +95,7 @@ class ProjectSettingsPageController extends _$ProjectSettingsPageController {
 
   /// Updates the payment status for vacation days.
   Future<void> updateVacationDaysPayment(
-    ProjectEntity project,
+    NewProjectModel project,
     Future<PaymentStatus?> Function() vacationPaymentSetter,
     Future<int?> Function() vacationDaySetter,
   ) async {
@@ -108,7 +108,7 @@ class ProjectSettingsPageController extends _$ProjectSettingsPageController {
 
       if (vacationDays == null) return;
       newProject = project.copyWith(
-        vacationInfo: VacationEntity(
+        vacationInfo: NewVacationModel(
           days: vacationDays,
           paymentStatus: payment,
         ),
@@ -125,7 +125,7 @@ class ProjectSettingsPageController extends _$ProjectSettingsPageController {
 
   /// Updates the reference period for time management.
   Future<void> updateTimeManagementReferencePeriod(
-    ProjectEntity project,
+    NewProjectModel project,
     Future<ReferencePeriod?> Function() referencePeriodSetter,
     Future<int?> Function() workingHoursSetter,
   ) async {
@@ -138,7 +138,7 @@ class ProjectSettingsPageController extends _$ProjectSettingsPageController {
 
       if (workingHours == null) return;
       newProject = project.copyWith(
-        timeManagement: ProjectTimeManagementEntity(
+        timeManagement: NewProjectTimeManagementModel(
           workingHours: workingHours,
           referencePeriod: referencePeriod,
         ),
@@ -155,7 +155,7 @@ class ProjectSettingsPageController extends _$ProjectSettingsPageController {
 
   /// Updates the working hours for time management.
   Future<void> updateTimeManagementWorkingHours(
-    ProjectEntity project,
+    NewProjectModel project,
     Future<int?> Function() workingHoursSetter,
     Future<ReferencePeriod?> Function() referencePeriodSetter,
   ) async {
@@ -167,7 +167,7 @@ class ProjectSettingsPageController extends _$ProjectSettingsPageController {
       final referencePeriod = await referencePeriodSetter.call();
       if (referencePeriod == null) return;
       newProject = project.copyWith(
-        timeManagement: ProjectTimeManagementEntity(
+        timeManagement: NewProjectTimeManagementModel(
           workingHours: workingHours,
           referencePeriod: referencePeriod,
         ),
@@ -184,7 +184,7 @@ class ProjectSettingsPageController extends _$ProjectSettingsPageController {
 
   /// Updates the payment interval for money management.
   Future<void> updateMoneyManagementInterval(
-    ProjectEntity project,
+    NewProjectModel project,
     Future<PaymentInterval?> Function() intervalSetter,
     Future<Currency?> Function() currencySetter,
     Future<int?> Function() amountSetter,
@@ -201,7 +201,7 @@ class ProjectSettingsPageController extends _$ProjectSettingsPageController {
       if (amount == null) return;
 
       newProject = project.copyWith(
-        moneyManagement: ProjectMoneyManagementEntity(
+        moneyManagement: NewProjectMoneyManagementModel(
           paymentInterval: interval,
           currency: currency,
           payment: amount.toDouble(),
@@ -219,7 +219,7 @@ class ProjectSettingsPageController extends _$ProjectSettingsPageController {
 
   /// Updates the currency for money management.
   Future<void> updateMoneyManagementCurrency(
-    ProjectEntity project,
+    NewProjectModel project,
     Future<Currency?> Function() currencySetter,
     Future<PaymentInterval?> Function() intervalSetter,
     Future<int?> Function() amountSetter,
@@ -236,7 +236,7 @@ class ProjectSettingsPageController extends _$ProjectSettingsPageController {
       if (amount == null) return;
 
       newProject = project.copyWith(
-        moneyManagement: ProjectMoneyManagementEntity(
+        moneyManagement: NewProjectMoneyManagementModel(
           paymentInterval: interval,
           currency: currency,
           payment: amount.toDouble(),
@@ -254,7 +254,7 @@ class ProjectSettingsPageController extends _$ProjectSettingsPageController {
 
   /// Updates the payment amount for money management.
   Future<void> updateMoneyManagementPayment(
-    ProjectEntity project,
+    NewProjectModel project,
     Future<int?> Function() amountSetter,
     Future<PaymentInterval?> Function() intervalSetter,
     Future<Currency?> Function() currencySetter,
@@ -271,7 +271,7 @@ class ProjectSettingsPageController extends _$ProjectSettingsPageController {
       if (currency == null) return;
 
       newProject = project.copyWith(
-        moneyManagement: ProjectMoneyManagementEntity(
+        moneyManagement: NewProjectMoneyManagementModel(
           paymentInterval: interval,
           currency: currency,
           payment: amount.toDouble(),
@@ -289,7 +289,7 @@ class ProjectSettingsPageController extends _$ProjectSettingsPageController {
 
   /// Updates the workplace for the project.
   Future<void> updateWorkplace(
-    ProjectEntity project,
+    NewProjectModel project,
     Future<Workplace?> Function() workplaceSetter,
   ) async {
     final workplace = await workplaceSetter.call();
@@ -302,7 +302,7 @@ class ProjectSettingsPageController extends _$ProjectSettingsPageController {
   }
 
   /// Updates the project entity.
-  Future<void> updateProject(ProjectEntity project) async {
+  Future<void> updateProject(NewProjectModel project) async {
     state = const AsyncLoading();
 
     state = await AsyncValue.guard(

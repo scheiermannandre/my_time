@@ -1,6 +1,6 @@
 import 'package:my_time/common/common.dart';
-import 'package:my_time/features/7_groups_overview/domain/entities/enums/payment_status.dart';
-import 'package:my_time/features/7_groups_overview/domain/entities/vacation_entity.dart';
+import 'package:my_time/domain/group_domain/models/enums/payment_status.dart';
+import 'package:my_time/domain/group_domain/models/vacation_entity.dart';
 
 /// Represents a model for a project's vacation.
 class VacationModel {
@@ -16,7 +16,7 @@ class VacationModel {
   }
 
   /// Factory to create a VacationModel from an VacationEntity.
-  factory VacationModel.fromEntity(VacationEntity entity) {
+  factory VacationModel.fromEntity(NewVacationModel entity) {
     return VacationModel(
       paymentStatus: entity.paymentStatus?.index,
       days: entity.days,
@@ -24,8 +24,8 @@ class VacationModel {
   }
 
   /// Factory to create a VacationEntity from a VacationModel.
-  VacationEntity toEntity() {
-    return VacationEntity(
+  NewVacationModel toEntity() {
+    return NewVacationModel(
       paymentStatus: PaymentStatus.values
           .firstWhereOrNull((p0) => p0.index == paymentStatus),
       days: days,
